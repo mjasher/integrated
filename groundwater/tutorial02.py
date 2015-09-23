@@ -32,9 +32,10 @@ nstp = [1, 100, 100]
 steady = [True, False, False]
 
 # Flopy objects
-modelname = 'tutorial2'
+model_name = 'tutorial2'
 MODFLOW_executable = '/home/mikey/Dropbox/gac/GAC/pymake/pymade'
-mf = flopy.modflow.Modflow(modelname, exe_name=MODFLOW_executable)
+model_dir = "MODFLOW_IO/"+model_name+"/"
+mf = flopy.modflow.Modflow(model_name, exe_name=MODFLOW_executable, model_ws=model_dir)
 dis = flopy.modflow.ModflowDis(mf, nlay, nrow, ncol, delr=delr, delc=delc,
                                top=ztop, botm=botm[1:],
                                nper=nper, perlen=perlen, nstp=nstp,
@@ -108,9 +109,9 @@ import matplotlib.pyplot as plt
 import flopy.utils.binaryfile as bf
 
 # Create the headfile and budget file objects
-headobj = bf.HeadFile(modelname+'.hds')
+headobj = bf.HeadFile(model_dir+model_name+'.hds')
 times = headobj.get_times()
-cbb = bf.CellBudgetFile(modelname+'.cbc')
+cbb = bf.CellBudgetFile(model_dir+model_name+'.cbc')
 
 # Setup contour parameters
 levels = np.linspace(0, 10, 11)
