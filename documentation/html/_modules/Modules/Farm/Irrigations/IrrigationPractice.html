@@ -49,6 +49,7 @@
             
   <h1>Source code for Modules.Farm.Irrigations.IrrigationPractice</h1><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">Modules.Core.IntegratedModelComponent</span> <span class="kn">import</span> <span class="n">Component</span>
+<span class="kn">from</span> <span class="nn">Modules.Core.GeneralFunctions</span> <span class="kn">import</span> <span class="o">*</span>
 
 <div class="viewcode-block" id="IrrigationPractice"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice">[docs]</a><span class="k">class</span> <span class="nc">IrrigationPractice</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
 
@@ -168,7 +169,8 @@
 
 <span class="sd">        :param water_delivered_to_field: Amount of water (in ML) applied to the field</span>
 <span class="sd">        :type water_delivered_to_field: numeric, MegaLitres</span>
-<span class="sd">        :returns: (numeric) percentage (e.g. 0.76 = 76 percent = 76)</span>
+<span class="sd">        :returns: percentage (e.g. 0.76 = 76 percent = 76)</span>
+<span class="sd">        :return type: numeric</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -186,6 +188,9 @@
 <span class="sd">        Calculates water savings</span>
 
 <span class="sd">        :math:`Water Saved = Irrigation Area * Crop Water Requirement In ML per Ha * Irrigation Efficiency`</span>
+
+<span class="sd">        :returns: water saved in ML</span>
+<span class="sd">        :return type: numeric</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">efficiency</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigation_efficiency</span> <span class="k">if</span> <span class="n">efficiency</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">efficiency</span>
@@ -199,17 +204,21 @@
 <div class="viewcode-block" id="IrrigationPractice.calcWaterAppliedMLperHa"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcWaterAppliedMLperHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcWaterAppliedMLperHa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_application_ML_per_Ha</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        WARNING: DEPRECATED, DO NOT USE</span>
+
 <span class="sd">        Calculate how much water needs to be applied in MegaLitres per Hectare</span>
 
 <span class="sd">        Based on given required amount of water for a given crop</span>
 
-<span class="sd">        water applied = ((crop_water_req / irrigation efficiency) * 100) * irrigation rate</span>
-
 <span class="sd">        This is different from Crop Water Requirement.</span>
 
-<span class="sd">        Water Applied is the amount of water sent out to the field</span>
+<span class="sd">        Water Applied is the amount of water sent out to the field to satisfy crop water requirements</span>
 
-<span class="sd">        Crop Water Requirement is the amount of water actually used by the crop</span>
+<span class="sd">        Crop Water Requirement is the amount of water actually needed by the crop</span>
+
+<span class="sd">        :param base_application_ML_per_Ha: Suggested application amount for given crop type</span>
+<span class="sd">        :returns: adjusted amount of water to apply</span>
+<span class="sd">        :return type: numeric</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -221,6 +230,11 @@
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate irrigation area, capped to max irrigation area</span>
+
+<span class="sd">        :param water_applied_ML_per_Ha: Amount of water applied in ML per Hectare</span>
+<span class="sd">        :param available_water_ML: Amount of water currently available</span>
+<span class="sd">        :returns: Area (in Hectares) that can be irrigated, constrained by maximum irrigation area</span>
+<span class="sd">        :return type: numeric</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">irrigation_area</span> <span class="o">=</span> <span class="p">(</span><span class="n">available_water_ML</span> <span class="o">/</span> <span class="n">water_applied_ML_per_Ha</span><span class="p">)</span>
@@ -238,6 +252,8 @@
 <span class="sd">        Calculate the implementation cost of this irrigation practice</span>
 
 <span class="sd">        :param irrigation_area_Ha: Area under irrigation in Hectares</span>
+<span class="sd">        :returns: Capital cost of implementing irrigation practice/technology</span>
+<span class="sd">        :return type: numeric</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="n">irrigation_area_Ha</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span>
@@ -251,7 +267,8 @@
 <span class="sd">          Replacement cost is assumed to be equal to the initial cost per Hectare.</span>
 
 <span class="sd">        :param irrigation_area_Ha: Area of irrigation system</span>
-<span class="sd">        :returns: replacement cost in dollar terms (float)</span>
+<span class="sd">        :returns: replacement cost in dollar terms</span>
+<span class="sd">        :return type: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">replacement_cost_per_Ha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replacement_cost_per_Ha</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span>
@@ -274,6 +291,11 @@
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates Capital Cost of irrigation system on a per year basis, discounted to present day value</span>
+
+<span class="sd">        :param irrigation_area_Ha: Area under irrigation in Hectares</span>
+<span class="sd">        :param discount_rate: Percentage to discount future value to get present day value</span>
+<span class="sd">        :returns: annualised NPV ($)</span>
+<span class="sd">        :return type: numeric</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">capital_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcCapitalCost</span><span class="p">(</span><span class="n">irrigation_area_Ha</span><span class="p">)</span>

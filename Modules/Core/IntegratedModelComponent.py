@@ -155,6 +155,9 @@ class Component(object):
 
         """
         Count total number of parameters for this object
+
+        :returns: number of parameters
+        :return type: int
         """
 
         return len(dir(self))

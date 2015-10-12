@@ -1,4 +1,5 @@
 from Modules.Core.IntegratedModelComponent import Component
+from Modules.Core.GeneralFunctions import *
 
 class IrrigationPractice(Component):
 
@@ -118,7 +119,8 @@ class IrrigationPractice(Component):
 
         :param water_delivered_to_field: Amount of water (in ML) applied to the field
         :type water_delivered_to_field: numeric, MegaLitres
-        :returns: (numeric) percentage (e.g. 0.76 = 76 percent = 76)
+        :returns: percentage (e.g. 0.76 = 76 percent = 76)
+        :return type: numeric
 
         """
 
@@ -136,6 +138,9 @@ class IrrigationPractice(Component):
         Calculates water savings
 
         :math:`Water Saved = Irrigation Area * Crop Water Requirement In ML per Ha * Irrigation Efficiency`
+
+        :returns: water saved in ML
+        :return type: numeric
         """
 
         efficiency = self.irrigation_efficiency if efficiency is None else efficiency
@@ -149,17 +154,21 @@ class IrrigationPractice(Component):
     def calcWaterAppliedMLperHa(self, base_application_ML_per_Ha):
 
         """
+        WARNING: DEPRECATED, DO NOT USE
+
         Calculate how much water needs to be applied in MegaLitres per Hectare
 
         Based on given required amount of water for a given crop
 
-        water applied = ((crop_water_req / irrigation efficiency) * 100) * irrigation rate
-
         This is different from Crop Water Requirement.
 
-        Water Applied is the amount of water sent out to the field
+        Water Applied is the amount of water sent out to the field to satisfy crop water requirements
 
-        Crop Water Requirement is the amount of water actually used by the crop
+        Crop Water Requirement is the amount of water actually needed by the crop
+
+        :param base_application_ML_per_Ha: Suggested application amount for given crop type
+        :returns: adjusted amount of water to apply
+        :return type: numeric
 
         """
 
@@ -171,6 +180,11 @@ class IrrigationPractice(Component):
 
         """
         Calculate irrigation area, capped to max irrigation area
+
+        :param water_applied_ML_per_Ha: Amount of water applied in ML per Hectare
+        :param available_water_ML: Amount of water currently available
+        :returns: Area (in Hectares) that can be irrigated, constrained by maximum irrigation area
+        :return type: numeric
         """
 
         irrigation_area = (available_water_ML / water_applied_ML_per_Ha)
@@ -188,6 +202,8 @@ class IrrigationPractice(Component):
         Calculate the implementation cost of this irrigation practice
 
         :param irrigation_area_Ha: Area under irrigation in Hectares
+        :returns: Capital cost of implementing irrigation practice/technology
+        :return type: numeric
         """
 
         return irrigation_area_Ha * self.cost_per_Ha
@@ -201,7 +217,8 @@ class IrrigationPractice(Component):
           Replacement cost is assumed to be equal to the initial cost per Hectare.
 
         :param irrigation_area_Ha: Area of irrigation system
-        :returns: replacement cost in dollar terms (float)
+        :returns: replacement cost in dollar terms
+        :return type: float
         """
 
         self.replacement_cost_per_Ha = self.replacement_cost_per_Ha if self.cost_per_Ha == 0 else self.cost_per_Ha
@@ -224,6 +241,11 @@ class IrrigationPractice(Component):
 
         """
         Calculates Capital Cost of irrigation system on a per year basis, discounted to present day value
+
+        :param irrigation_area_Ha: Area under irrigation in Hectares
+        :param discount_rate: Percentage to discount future value to get present day value
+        :returns: annualised NPV ($)
+        :return type: numeric
         """
 
         capital_cost = self.calcCapitalCost(irrigation_area_Ha)

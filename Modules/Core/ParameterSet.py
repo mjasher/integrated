@@ -15,8 +15,10 @@ class ParameterSet(object):
     def getParams(self):
 
         """
+        Gets all parameters within the set
 
-        :returns: a dict of all parameters/attributes
+        :returns: a Dict of all parameters/attributes
+        :return type: Dict
 
         """
 
@@ -31,9 +33,10 @@ class ParameterSet(object):
     def getNumParams(self):
 
         """
-        Count total number of parameters
+        Get total number of parameters
 
-        :returns: (int) Number of parameters 
+        :returns: Number of parameters 
+        :return type: int
         """
 
         return len(dir(self))

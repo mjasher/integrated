@@ -13,12 +13,12 @@ TODO: Split out non-farm model related stuff
 
 #import ClimateVariables
 
-from Modules.Core.ParameterSet import *
-from Modules.Farm.WaterSources import WaterSources
+from integrated.Modules.Core.ParameterSet import *
+from integrated.Modules.Farm.WaterSources import WaterSources
 
-from Modules.Farm.Irrigations.IrrigationPractice import IrrigationPractice
-from Modules.Core.GeneralFunctions import *
-from Modules.Farm.Crops.CropInfo import CropInfo
+from integrated.Modules.Farm.Irrigations.IrrigationPractice import IrrigationPractice
+from integrated.Modules.Core.GeneralFunctions import *
+from integrated.Modules.Farm.Crops.CropInfo import CropInfo
 
 #Water sources in MegaLitres
 #200ML = 20-25% of average long term seasonal balance for regulated surface water licences on the Namoi river

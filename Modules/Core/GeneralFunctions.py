@@ -1,4 +1,4 @@
-#GeneralFunctions
+from __future__ import division
 import pandas as pd
 import paths
 
@@ -15,6 +15,7 @@ def calcCapitalCostPerYear(capital, discount_rate, num_years):
     :param discount_rate: The percentage to discount future value to get present-day value; Arshad et al. (2013) used 7%
     :param num_years: Number of years for the scenario
     :returns: Annualised capital cost discounted to present day value 
+    :return type: numeric
     
     """
 
