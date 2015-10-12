@@ -203,7 +203,7 @@ returns (dict)</p>
 <dl class="method">
 <dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.getIrrigationEfficiency">
 <tt class="descname">getIrrigationEfficiency</tt><big>(</big><em>irrigation_name=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.getIrrigationEfficiency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.getIrrigationEfficiency" title="Permalink to this definition">¶</a></dt>
-<dd><p>Defunct method, replace any use of this with getParam()</p>
+<dd><p>Deprecated method, replace any use of this with getParam()</p>
 </dd></dl>
 
 <dl class="method">
@@ -219,23 +219,22 @@ returns (dict)</p>
 <dl class="method">
 <dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.setIrrigationEfficiency">
 <tt class="descname">setIrrigationEfficiency</tt><big>(</big><em>irrigation_name=None</em>, <em>amount=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.setIrrigationEfficiency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.setIrrigationEfficiency" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Defunct method, replace any use of this with setParam()</dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
+<dd><p>Defunct method, replace any use of this with setParam()</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">irrigation_name:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Name of irrigation method</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>irrigation_name</strong> &#8211; Name of irrigation method</li>
+<li><strong>amount</strong> &#8211; efficiency of irrigation method, 0 to 1</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">amount:</th><td class="field-body">efficiency of irrigation method, 0 to 1</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body">original value so that efficiency can be set back to &#8216;normal&#8217; if necessary</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">original value so that efficiency can be set back to &#8216;normal&#8217; if necessary</p>
+</td>
 </tr>
 </tbody>
 </table>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="method">
@@ -256,66 +255,80 @@ returns (dict)</p>
 <dl class="method">
 <dt id="Modules.Farm.Farms.Management.FarmManager.applyWater">
 <tt class="descname">applyWater</tt><big>(</big><em>water_to_apply</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.applyWater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.applyWater" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Applies water to each field under management</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="Modules.Farm.Farms.Management.FarmManager.calcCumulativeSWD">
-<tt class="descname">calcCumulativeSWD</tt><big>(</big><em>timestep</em>, <em>timestep_ET</em>, <em>water_applied</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.calcCumulativeSWD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.calcCumulativeSWD" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">calcCumulativeSWD</tt><big>(</big><em>timestep</em>, <em>timestep_ET</em>, <em>gross_water_applied</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.calcCumulativeSWD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.calcCumulativeSWD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates Soil Water Deficit within a timestep and updates Field attribute</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>timestep</strong> &#8211; Datetime (REMOVE?)</li>
+<li><strong>timestep_ET</strong> &#8211; Average evapotranspiration within given timestep</li>
+<li><strong>gross_water_applied</strong> &#8211; Total water applied to the field in ML</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Modules.Farm.Farms.Management.FarmManager.calcGrossIrrigationWaterAmount">
 <tt class="descname">calcGrossIrrigationWaterAmount</tt><big>(</big><em>Field</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.calcGrossIrrigationWaterAmount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.calcGrossIrrigationWaterAmount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decide how much water to send out to the fields per Hectare</p>
-<blockquote>
-<div><p>TODO: Optimisation</p>
+<p>TODO: Optimisation</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param field:</th><td class="field-body">Dictionary association of {irrigation, crop, area in hectares}</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>Field</strong> &#8211; Dictionary association of {irrigation, crop, area in hectares}</td>
 </tr>
-<tr class="field-even field"><th class="field-name">returns:</th><td class="field-body">Total amount of water to apply in ML</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Total amount of water to apply in ML</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </dd></dl>
 
 <dl class="method">
 <dt id="Modules.Farm.Farms.Management.FarmManager.calcWaterApplication">
 <tt class="descname">calcWaterApplication</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.calcWaterApplication"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.calcWaterApplication" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate amount of water to apply to each field</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body">Dict of {Field Object: amount of water to apply in ML}</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dict of {Field Object: amount of water to apply in ML}</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </dd></dl>
 
 <dl class="method">
 <dt id="Modules.Farm.Farms.Management.FarmManager.determineCropAreaToGrow">
 <tt class="descname">determineCropAreaToGrow</tt><big>(</big><em>crop</em>, <em>initial_area</em>, <em>soils=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.determineCropAreaToGrow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.determineCropAreaToGrow" title="Permalink to this definition">¶</a></dt>
-<dd><p>For the available water and soil type of a field, determine how much area to crop
-Includes dryland and irrigations</p>
-<blockquote>
-<div><p>:crop        : crop name as found in Farm.crops
-:initial_area: available area to irrigate
-:soils       : soil types as found in area</p>
+<dd><p>For the available water and soil type of a field, determine how much area to crop</p>
+<p>Includes dryland and irrigations</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body">list of lists [[irrigation, crop type, area in Hectares]]</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>crop</strong> &#8211; crop name as found in Farm.crops</li>
+<li><strong>initial_area</strong> &#8211; available area to irrigate</li>
+<li><strong>soils</strong> &#8211; soil types as found in area</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of lists [[irrigation, crop type, area in Hectares]]</p>
+</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </dd></dl>
 
 <dl class="method">
@@ -342,8 +355,7 @@ Return harvest amount as DataFrame</p>
 <dt id="Modules.Farm.Farms.Management.FarmManager.plantCrops">
 <tt class="descname">plantCrops</tt><big>(</big><em>initial_area</em>, <em>soils</em>, <em>timestep</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.plantCrops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.plantCrops" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine what crops to plant</p>
-<blockquote>
-<div>TODO: Factor in available water</div></blockquote>
+<p>TODO: Factor in available water</p>
 </dd></dl>
 
 </dd></dl>

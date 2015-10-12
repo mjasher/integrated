@@ -49,6 +49,7 @@
             
   <h1>Source code for Modules.Farm.Farms.Management</h1><div class="highlight"><pre>
 <span class="c">#Management</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">from</span> <span class="nn">Modules.Core.IntegratedModelComponent</span> <span class="kn">import</span> <span class="n">Component</span>
 <span class="kn">from</span> <span class="nn">Modules.Farm.Fields.Field</span> <span class="kn">import</span> <span class="n">FarmField</span>
 <span class="kn">from</span> <span class="nn">Modules.Farm.Fields.Soil</span> <span class="kn">import</span> <span class="n">SoilType</span>
@@ -76,7 +77,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determine what crops to plant</span>
 
-<span class="sd">          TODO: Factor in available water</span>
+<span class="sd">        TODO: Factor in available water</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">area_allocation</span> <span class="o">=</span> <span class="p">[]</span>
@@ -110,13 +111,14 @@
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        For the available water and soil type of a field, determine how much area to crop</span>
+
 <span class="sd">        Includes dryland and irrigations</span>
 
-<span class="sd">          :crop        : crop name as found in Farm.crops</span>
-<span class="sd">          :initial_area: available area to irrigate</span>
-<span class="sd">          :soils       : soil types as found in area</span>
+<span class="sd">        :param crop: crop name as found in Farm.crops</span>
+<span class="sd">        :param initial_area: available area to irrigate</span>
+<span class="sd">        :param soils: soil types as found in area</span>
 
-<span class="sd">          :returns: list of lists [[irrigation, crop type, area in Hectares]]</span>
+<span class="sd">        :returns: list of lists [[irrigation, crop type, area in Hectares]]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c">#Optimise input-output</span>
@@ -149,11 +151,12 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Decide how much water to send out to the fields per Hectare</span>
 
-<span class="sd">          TODO: Optimisation</span>
+<span class="sd">        TODO: Optimisation</span>
 
-<span class="sd">          :param field: Dictionary association of {irrigation, crop, area in hectares}</span>
+<span class="sd">        :param Field: Dictionary association of {irrigation, crop, area in hectares}</span>
 
-<span class="sd">          :returns: Total amount of water to apply in ML</span>
+<span class="sd">        :returns: Total amount of water to apply in ML</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">RAW_mm</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">calcRAW</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="n">Field</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">depletion_fraction</span><span class="p">)</span>
@@ -186,7 +189,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate amount of water to apply to each field</span>
 
-<span class="sd">          :returns: Dict of {Field Object: amount of water to apply in ML}</span>
+<span class="sd">        :returns: Dict of {Field Object: amount of water to apply in ML}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c">#Calculate amount of water to apply to each field</span>
@@ -199,11 +202,21 @@
 
     <span class="c">#End calcWaterApplication()</span>
 </div>
-<div class="viewcode-block" id="FarmManager.calcCumulativeSWD"><a class="viewcode-back" href="../../../../Modules.Farm.Farms.html#Modules.Farm.Farms.Management.FarmManager.calcCumulativeSWD">[docs]</a>    <span class="k">def</span> <span class="nf">calcCumulativeSWD</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">timestep_ET</span><span class="p">,</span> <span class="n">water_applied</span><span class="p">):</span>
+<div class="viewcode-block" id="FarmManager.calcCumulativeSWD"><a class="viewcode-back" href="../../../../Modules.Farm.Farms.html#Modules.Farm.Farms.Management.FarmManager.calcCumulativeSWD">[docs]</a>    <span class="k">def</span> <span class="nf">calcCumulativeSWD</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">timestep_ET</span><span class="p">,</span> <span class="n">gross_water_applied</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates Soil Water Deficit within a timestep and updates Field attribute</span>
+
+<span class="sd">        :param timestep: Datetime (REMOVE?)</span>
+<span class="sd">        :param timestep_ET: Average evapotranspiration within given timestep</span>
+<span class="sd">        :param gross_water_applied: Total water applied to the field in ML</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
 
         <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
 
-            <span class="n">field</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">+</span> <span class="p">(</span> <span class="nb">float</span><span class="p">((</span><span class="n">water_applied</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">/</span> <span class="n">field</span><span class="o">.</span><span class="n">area</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">)</span> <span class="p">)</span>
+            <span class="n">field</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">+</span> <span class="p">(</span> <span class="nb">float</span><span class="p">((</span><span class="n">gross_water_applied</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">/</span> <span class="n">field</span><span class="o">.</span><span class="n">area</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">)</span> <span class="p">)</span>
 
             <span class="n">ET_c</span> <span class="o">=</span> <span class="n">timestep_ET</span> <span class="o">*</span> <span class="n">field</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">getCurrentStageCoef</span><span class="p">(</span><span class="n">timestep</span><span class="p">)</span>
             <span class="n">field</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">-</span> <span class="n">ET_c</span>
@@ -213,6 +226,10 @@
     <span class="c">#End calcCumulativeSWD()</span>
 </div>
 <div class="viewcode-block" id="FarmManager.applyWater"><a class="viewcode-back" href="../../../../Modules.Farm.Farms.html#Modules.Farm.Farms.Management.FarmManager.applyWater">[docs]</a>    <span class="k">def</span> <span class="nf">applyWater</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">water_to_apply</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies water to each field under management</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c">#water_to_apply = self.calcWaterApplication(Fields)</span>
 

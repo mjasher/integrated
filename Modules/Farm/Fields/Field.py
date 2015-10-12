@@ -26,17 +26,18 @@ class FarmField(Component):
         Puts water on the field
 
         :param gross_applied_water_ML: water in ML applied to field
-        :returns: (float) water in ML that goes to recharge
+        :returns: Water in ML that goes to recharge
+        :return type: float
 
         """
 
         #print "Applied {x} ML on {a} Ha for {c} using {i}".format(x=gross_applied_water_ML, a=self.area, c=self.crop.name, i=self.irrigation.name)
 
-        gross_water_mm = gross_applied_water_ML * 100
+        #gross_water_mm = gross_applied_water_ML * 100
 
         #print "This is calculated to be {g} mm ".format(g=gross_water_mm)
 
-        #get irrigation efficiency
+        #Calculate crop water use (ET_c)
         crop_water_use = gross_applied_water_ML * self.irrigation.irrigation_efficiency
         seepage = gross_applied_water_ML - crop_water_use
 

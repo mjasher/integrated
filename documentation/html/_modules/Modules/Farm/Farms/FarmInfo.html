@@ -139,9 +139,11 @@
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Defunct method, replace any use of this with setParam()</span>
-<span class="sd">          :irrigation_name: Name of irrigation method</span>
-<span class="sd">          :amount: efficiency of irrigation method, 0 to 1</span>
-<span class="sd">          :returns: original value so that efficiency can be set back to &#39;normal&#39; if necessary</span>
+
+<span class="sd">        :param irrigation_name: Name of irrigation method</span>
+<span class="sd">        :param amount: efficiency of irrigation method, 0 to 1</span>
+<span class="sd">        :returns: original value so that efficiency can be set back to &#39;normal&#39; if necessary</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">irrigation_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">irrigation_name</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">irrigation_name</span>
@@ -159,7 +161,7 @@
 <div class="viewcode-block" id="FarmInfo.getIrrigationEfficiency"><a class="viewcode-back" href="../../../../Modules.Farm.Farms.html#Modules.Farm.Farms.FarmInfo.FarmInfo.getIrrigationEfficiency">[docs]</a>    <span class="k">def</span> <span class="nf">getIrrigationEfficiency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Defunct method, replace any use of this with getParam()</span>
+<span class="sd">        Deprecated method, replace any use of this with getParam()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">irrigation_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">irrigation_name</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">irrigation_name</span>

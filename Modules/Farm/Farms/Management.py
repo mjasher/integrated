@@ -1,4 +1,5 @@
 #Management
+from __future__ import division
 from Modules.Core.IntegratedModelComponent import Component
 from Modules.Farm.Fields.Field import FarmField
 from Modules.Farm.Fields.Soil import SoilType
@@ -26,7 +27,7 @@ class FarmManager(Component):
         """
         Determine what crops to plant
 
-          TODO: Factor in available water
+        TODO: Factor in available water
         """
 
         area_allocation = []
@@ -60,13 +61,14 @@ class FarmManager(Component):
 
         """
         For the available water and soil type of a field, determine how much area to crop
+
         Includes dryland and irrigations
 
-          :crop        : crop name as found in Farm.crops
-          :initial_area: available area to irrigate
-          :soils       : soil types as found in area
+        :param crop: crop name as found in Farm.crops
+        :param initial_area: available area to irrigate
+        :param soils: soil types as found in area
 
-          :returns: list of lists [[irrigation, crop type, area in Hectares]]
+        :returns: list of lists [[irrigation, crop type, area in Hectares]]
         """
 
         #Optimise input-output
@@ -99,11 +101,12 @@ class FarmManager(Component):
         """
         Decide how much water to send out to the fields per Hectare
 
-          TODO: Optimisation
+        TODO: Optimisation
 
-          :param field: Dictionary association of {irrigation, crop, area in hectares}
+        :param Field: Dictionary association of {irrigation, crop, area in hectares}
 
-          :returns: Total amount of water to apply in ML
+        :returns: Total amount of water to apply in ML
+        
         """
 
         RAW_mm = Field.soil.calcRAW(fraction=Field.crop.depletion_fraction)
@@ -136,7 +139,7 @@ class FarmManager(Component):
         """
         Calculate amount of water to apply to each field
 
-          :returns: Dict of {Field Object: amount of water to apply in ML}
+        :returns: Dict of {Field Object: amount of water to apply in ML}
         """
 
         #Calculate amount of water to apply to each field
@@ -149,11 +152,21 @@ class FarmManager(Component):
 
     #End calcWaterApplication()
 
-    def calcCumulativeSWD(self, timestep, timestep_ET, water_applied):
+    def calcCumulativeSWD(self, timestep, timestep_ET, gross_water_applied):
+
+        """
+        Calculates Soil Water Deficit within a timestep and updates Field attribute
+
+        :param timestep: Datetime (REMOVE?)
+        :param timestep_ET: Average evapotranspiration within given timestep
+        :param gross_water_applied: Total water applied to the field in ML
+
+        """
+
 
         for field in self.Farm.fields:
 
-            field.c_swd = field.c_swd + ( float((water_applied[field] / field.area) * 100.0) )
+            field.c_swd = field.c_swd + ( float((gross_water_applied[field] / field.area) * 100.0) )
 
             ET_c = timestep_ET * field.crop.getCurrentStageCoef(timestep)
             field.c_swd = field.c_swd - ET_c
@@ -163,6 +176,10 @@ class FarmManager(Component):
     #End calcCumulativeSWD()
 
     def applyWater(self, water_to_apply):
+
+        """
+        Applies water to each field under management
+        """
 
         #water_to_apply = self.calcWaterApplication(Fields)
 

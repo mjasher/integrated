@@ -59,6 +59,7 @@ if __name__ == "__main__":
 		print "Recharge: {r}".format(r=recharge)
 
 		#Calculate Cumulative Soil Water Deficit
+		#7.5 is assumed evapotranspiration of development purposes
 		Manager.calcCumulativeSWD(loop_timestep, 7.5*step, water_to_apply)
 
 		#print "{r} ML of water went to recharge".format(r=recharge)

@@ -89,9 +89,11 @@ class FarmInfo(Component):
 
         """
         Defunct method, replace any use of this with setParam()
-          :irrigation_name: Name of irrigation method
-          :amount: efficiency of irrigation method, 0 to 1
-          :returns: original value so that efficiency can be set back to 'normal' if necessary
+
+        :param irrigation_name: Name of irrigation method
+        :param amount: efficiency of irrigation method, 0 to 1
+        :returns: original value so that efficiency can be set back to 'normal' if necessary
+
         """
 
         irrigation_name = self.irrigations.keys()[0] if irrigation_name is None else irrigation_name
@@ -109,7 +111,7 @@ class FarmInfo(Component):
     def getIrrigationEfficiency(self, irrigation_name=None):
 
         """
-        Defunct method, replace any use of this with getParam()
+        Deprecated method, replace any use of this with getParam()
         """
 
         irrigation_name = self.irrigations.keys()[0] if irrigation_name is None else irrigation_name
