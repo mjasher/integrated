@@ -1,0 +1,22 @@
+Modules.Farm.Crops package
+==========================
+
+Submodules
+----------
+
+Modules.Farm.Crops.CropInfo module
+----------------------------------
+
+.. automodule:: Modules.Farm.Crops.CropInfo
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: Modules.Farm.Crops
+    :members:
+    :undoc-members:
+    :show-inheritance:

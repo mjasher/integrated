@@ -1,0 +1,22 @@
+Modules.Farm.DataHandlers package
+=================================
+
+Submodules
+----------
+
+Modules.Farm.DataHandlers.BOMHandler module
+-------------------------------------------
+
+.. automodule:: Modules.Farm.DataHandlers.BOMHandler
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: Modules.Farm.DataHandlers
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Modules.Farm.WaterStorages.ASRStorage &mdash; Integrated Framework 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for Modules.Farm.WaterStorages.ASRStorage</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">BasinStorage</span> <span class="kn">import</span> <span class="n">BasinStorage</span>
+<span class="c">#from Common.GeneralFunctions import *</span>
+
+<div class="viewcode-block" id="ASRStorage"><a class="viewcode-back" href="../../../../Modules.Farm.WaterStorages.html#Modules.Farm.WaterStorages.ASRStorage.ASRStorage">[docs]</a><span class="k">class</span> <span class="nc">ASRStorage</span><span class="p">(</span><span class="n">BasinStorage</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Defines MAR with injection, a type of Basin storage</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        ASR Storage system (Injection)</span>
+
+<span class="sd">        ASR Specific variables</span>
+
+<span class="sd">        cost_temp_storage_per_ML</span>
+<span class="sd">        cost_treatment_capital_cost</span>
+<span class="sd">        cost_treatment_per_ML</span>
+<span class="sd">        cost_of_design</span>
+<span class="sd">        cost_of_design_as_proportion_of_capital</span>
+
+<span class="sd">        See BasinStorage class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">BasinStorage</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c">#Set up derived parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net_water_available</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">WaterSources</span><span class="o">.</span><span class="n">calcGrossWaterAvailable</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MAR_loss_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAR_ML</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updatePumpVolML</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">capture_pump_cost_dollar_per_ML</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcCapturePumpCostPerML</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">annual_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcAnnualCosts</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cost_capital</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c">#End init()</span>
+
+<div class="viewcode-block" id="ASRStorage.calcDesignCosts"><a class="viewcode-back" href="../../../../Modules.Farm.WaterStorages.html#Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcDesignCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcDesignCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c">#design_cost = (self.cost_capital + self.capital_cost_treatment) * self.cost_of_design_as_proportion_of_capital</span>
+        <span class="n">design_cost</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcCapitalCostTreatment</span><span class="p">())</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_of_design_as_proportion_of_capital</span>
+
+        <span class="k">return</span> <span class="n">design_cost</span>
+    <span class="c">#End calcDesignCost()</span>
+</div>
+<div class="viewcode-block" id="ASRStorage.calcCapturePumpCostPerML"><a class="viewcode-back" href="../../../../Modules.Farm.WaterStorages.html#Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcCapturePumpCostPerML">[docs]</a>    <span class="k">def</span> <span class="nf">calcCapturePumpCostPerML</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pump_cost_dollar_per_ML</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">capture_pump_cost_ratio</span>
+
+</div>
+<div class="viewcode-block" id="ASRStorage.calcCapitalCostTreatment"><a class="viewcode-back" href="../../../../Modules.Farm.WaterStorages.html#Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcCapitalCostTreatment">[docs]</a>    <span class="k">def</span> <span class="nf">calcCapitalCostTreatment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">capital_cost_treatment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">capital_cost_treatment_per_ML</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">storage_capacity_ML</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">capital_cost_treatment</span>
+
+    <span class="c">#End calcCapitalCostTreatment()</span>
+</div>
+<div class="viewcode-block" id="ASRStorage.calcSurfacePumpCost"><a class="viewcode-back" href="../../../../Modules.Farm.WaterStorages.html#Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcSurfacePumpCost">[docs]</a>    <span class="k">def</span> <span class="nf">calcSurfacePumpCost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">total_surface_water</span><span class="p">):</span>
+
+        <span class="n">surface_pump_cost</span> <span class="o">=</span> <span class="n">total_surface_water</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcCapturePumpCostPerML</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">surface_pump_cost</span>
+    <span class="c">#End calcSurfacePumpCost()</span>
+</div>
+<div class="viewcode-block" id="ASRStorage.calcOngoingCosts"><a class="viewcode-back" href="../../../../Modules.Farm.WaterStorages.html#Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcOngoingCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcOngoingCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c">#pump_cost = self.pump_vol_ML * self.pump_cost_dollar_per_ML</span>
+
+        <span class="n">maintenance_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maintenance_rate</span>  <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cost_capital</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">capital_cost_treatment</span><span class="p">)</span>
+        <span class="n">pump_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcPumpCost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_vol_ML</span><span class="p">)</span>
+
+        <span class="n">surface_pump_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcSurfacePumpCost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">WaterSources</span><span class="o">.</span><span class="n">water_source</span><span class="p">[</span><span class="s">&#39;flood_harvest&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cost_treatment_per_ML</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAR_ML</span><span class="p">)</span> <span class="o">+</span> <span class="n">maintenance_cost</span> <span class="o">+</span> <span class="n">pump_cost</span> <span class="o">+</span> <span class="n">surface_pump_cost</span>
+    <span class="c">#End calcOngoingCosts()</span>
+</div>
+<div class="viewcode-block" id="ASRStorage.calcTotalCapitalCosts"><a class="viewcode-back" href="../../../../Modules.Farm.WaterStorages.html#Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcTotalCapitalCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalCapitalCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c">#From parent class</span>
+        <span class="n">temp_storage_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTemporaryStorageCosts</span><span class="p">()</span>
+        <span class="n">capital_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcDesignCosts</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_capital</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">capital_cost_treatment</span> <span class="o">+</span> <span class="n">temp_storage_cost</span>
+
+        <span class="c">#storage_capital_cost = self.calcStorageCapitalCostPerML(self.capital_cost_per_ML_at_02_per_day) * self.storage_capacity_ML</span>
+        <span class="c">#storage_capital_cost = capital_cost * self.storage_capacity_ML</span>
+        <span class="c">#self.capital_cost = 0 #capital.cost is 0 in original code.</span>
+
+        <span class="c">#capital_cost = self.calcDesignCosts() + self.calcStorageCapitalCosts() + self.calcTemporaryStorageCosts()</span>
+        <span class="k">return</span> <span class="n">capital_cost</span>
+
+    <span class="c">#End calcCapitalCosts()</span>
+</div>
+<div class="viewcode-block" id="ASRStorage.calcAnnualCosts"><a class="viewcode-back" href="../../../../Modules.Farm.WaterStorages.html#Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcAnnualCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcAnnualCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c">#total_surface_water = self.WaterSources.water_source[&#39;flood_harvest&#39;]</span>
+
+        <span class="n">capital_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTotalCapitalCosts</span><span class="p">()</span>
+        
+        <span class="n">ongoing_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcOngoingCosts</span><span class="p">()</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="n">calcCapitalCostPerYear</span><span class="p">(</span><span class="n">capital_cost</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">discount_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_years</span><span class="p">)</span> <span class="o">+</span> <span class="n">ongoing_cost</span>
+
+        <span class="c">#cost = cost + net_environmental_cost</span>
+
+        <span class="c">#Debugging, comparing to original code</span>
+        <span class="c"># print &quot;Number of Years: &quot;+str(self.num_years)</span>
+        <span class="c"># print &quot;Storage Capacity: &quot;+str(self.storage_capacity_ML)</span>
+        <span class="c"># print &quot;Capital Cost per ML: &quot;+str(self.capital_cost_per_ML) + &quot; | Should be: 700&quot;</span>
+        <span class="c"># print &quot;Capital cost of Treatment per ML: &quot;+str(self.capital_cost_treatment_per_ML)+ &quot;| Should be: 250&quot;</span>
+        <span class="c"># print &quot;Cost of Treatment (NOT capital cost) per ML: &quot;+str(self.cost_treatment_per_ML)+ &quot;| Should be: 150&quot;</span>
+        <span class="c"># print &quot;Storage capital cost: &quot;+str(self.cost_capital)+&quot; | Should be: 0&quot;</span>
+        <span class="c"># print &quot;Calc capital cost: &quot;+str(capital_cost)+&quot; | Should be: 55000&quot;</span>
+        <span class="c"># print &quot;Discount Rate: &quot;+str(self.discount_rate)+&quot; | Should be: 0.07&quot;</span>
+        <span class="c"># print &quot;Number of Years: &quot;+str(self.num_years)+&quot; | Should be: 25&quot;</span>
+        <span class="c"># print &quot;Pump Cost: &quot;+str(pump_cost)+&quot; | Should be: 6650&quot;</span>
+        <span class="c"># print &quot;Design Cost: &quot;+str( self.calcDesignCosts() )+&quot; | Should be: 5000&quot;</span>
+        <span class="c"># print &quot;Storage Capital Cost: &quot;+str(storage_capital_cost)+&quot; | Should be: 0&quot;</span>
+        <span class="c"># print &quot;Treatment Capital Cost: &quot;+str(self.capital_cost_treatment) + &quot; | should be: 50000&quot;</span>
+        <span class="c"># print &quot;Temp Storage Cost: &quot;+str(temp_storage_cost)+&quot; | should be: 0&quot;</span>
+        <span class="c"># print &quot;Maintenance Rate: &quot;+str(self.maintenance_rate)+ &quot; | should be 0.07&quot;</span>
+        <span class="c"># print &quot;Maintenance Cost: &quot;+str(maintenance_cost)+ &quot; | should be 3500&quot;</span>
+        <span class="c"># print &quot;--------------------------------&quot;</span>
+        <span class="c"># print &quot;Ongoing Cost: &quot;+str(ongoing_cost)+ &quot;| should be: 44350&quot;</span>
+        <span class="c"># print &quot;Annual Cost: &quot;+str(cost)+&quot; | Should be: 49541.61&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">annual_cost</span> <span class="o">=</span> <span class="n">cost</span>
+
+        <span class="k">return</span> <span class="n">cost</span>
+
+    <span class="c">#End calcAnnualCosts()</span>
+
+<span class="c">#End class</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Takuya Iwanaga.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

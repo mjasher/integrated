@@ -1,0 +1,1 @@
+sphinx-apidoc -o C:\UserData\takuyai\ownCloud\integrated\sphinxdoc\apidoc C:\UserData\takuyai\ownCloud\integrated\Modules -s txt

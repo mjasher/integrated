@@ -1,0 +1,16 @@
+Create text files to generate HTML documentation:
+
+Edit apidoc.bat with a text editor. Change the directory paths to your apidoc output and source paths.
+
+apidoc.bat
+
+This will create txt files inside the "apidoc" folder.
+If you are trying to recreate all txt files, delete the existing txt files first.
+Copy the txt files from "documentation/apidoc" to "documentation/source/"
+
+WARNING: DO NOT DELETE/REMOVE THE index.txt FILE FROM documentation/source
+
+Generate HTML documentation:
+make html
+
+HTML files should appear in "documentation/html"

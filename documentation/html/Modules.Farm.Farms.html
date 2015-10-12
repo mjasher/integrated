@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Modules.Farm.Farms package &mdash; Integrated Framework 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
+    <link rel="up" title="Modules.Farm package" href="Modules.Farm.html" />
+    <link rel="next" title="Modules.Farm.Fields package" href="Modules.Farm.Fields.html" />
+    <link rel="prev" title="Modules.Farm.DataHandlers package" href="Modules.Farm.DataHandlers.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Modules.Farm.Fields.html" title="Modules.Farm.Fields package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Modules.Farm.DataHandlers.html" title="Modules.Farm.DataHandlers package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="Modules.html" >Modules package</a> &raquo;</li>
+          <li><a href="Modules.Farm.html" accesskey="U">Modules.Farm package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="modules-farm-farms-package">
+<h1>Modules.Farm.Farms package<a class="headerlink" href="#modules-farm-farms-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-Modules.Farm.Farms.FarmInfo">
+<span id="modules-farm-farms-farminfo-module"></span><h2>Modules.Farm.Farms.FarmInfo module<a class="headerlink" href="#module-Modules.Farm.Farms.FarmInfo" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo">
+<em class="property">class </em><tt class="descclassname">Modules.Farm.Farms.FarmInfo.</tt><tt class="descname">FarmInfo</tt><big>(</big><em>name</em>, <em>storages</em>, <em>irrigations</em>, <em>crops</em>, <em>water_sources</em>, <em>max_irrigation_area_Ha=None</em>, <em>fields=None</em>, <em>discount_rate=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="Modules.Core.html#Modules.Core.IntegratedModelComponent.Component" title="Modules.Core.IntegratedModelComponent.Component"><tt class="xref py py-class docutils literal"><span class="pre">Modules.Core.IntegratedModelComponent.Component</span></tt></a></p>
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.applyCropLosses">
+<tt class="descname">applyCropLosses</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.applyCropLosses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.applyCropLosses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcAnnualizedCosts">
+<tt class="descname">calcAnnualizedCosts</tt><big>(</big><em>store_name</em>, <em>irrigation_name</em>, <em>irrig_area</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcAnnualizedCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcAnnualizedCosts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate Annualised implementation costs</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcAnnualizedNetIncome">
+<tt class="descname">calcAnnualizedNetIncome</tt><big>(</big><em>irrigation_area=None</em>, <em>irrigation_name=None</em>, <em>crop_name='Cotton'</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcAnnualizedNetIncome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcAnnualizedNetIncome" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Calculate Annualised Net Income</dt>
+<dd>annualized_income = (gross_income - implementation_cost) * ((1 + self.discount_rate)**(-max_life) - 1)/(-self.discount_rate)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcFarmIrrigationArea">
+<tt class="descname">calcFarmIrrigationArea</tt><big>(</big><em>water_applied_ML_per_Ha</em>, <em>available_water_ML</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcFarmIrrigationArea"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcFarmIrrigationArea" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate irrigation area, capped to max irrigation area</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcFarmOverheadCost">
+<tt class="descname">calcFarmOverheadCost</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcFarmOverheadCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcFarmOverheadCost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcGPWUI">
+<tt class="descname">calcGPWUI</tt><big>(</big><em>crop_name='Cotton'</em>, <em>crop_yield=None</em>, <em>irrigation=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcGPWUI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcGPWUI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate Gross Production Water Use Index
+GPWUI = yield / total water at start of scenario (before losses etc)
+Returns Bale/ML</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcIWUI">
+<tt class="descname">calcIWUI</tt><big>(</big><em>crop_name='Cotton'</em>, <em>crop_yield=None</em>, <em>irrigation_water=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcIWUI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcIWUI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate Irrigation Water Use Index
+IWUI = yield / water used for irrigation
+Returns Bale/ML</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcIrrigationAreas">
+<tt class="descname">calcIrrigationAreas</tt><big>(</big><em>crop_name=None</em>, <em>net_available_water=None</em>, <em>irrigation_name=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcIrrigationAreas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcIrrigationAreas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines how much land can be irrigated if only one crop type is grown
+If amount of water is not specified, uses all available water</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcIrrigationCapitalCosts">
+<tt class="descname">calcIrrigationCapitalCosts</tt><big>(</big><em>irrigation_area</em>, <em>irrigation_name</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcIrrigationCapitalCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcIrrigationCapitalCosts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcNetFarmIncome">
+<tt class="descname">calcNetFarmIncome</tt><big>(</big><em>irrigation_area=None</em>, <em>irrigation_name=None</em>, <em>crop_name='Cotton'</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcNetFarmIncome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcNetFarmIncome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate net income by calculating total gross margin then subtract capital costs</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcNetStorageCost">
+<tt class="descname">calcNetStorageCost</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcNetStorageCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcNetStorageCost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcNetWaterAvailable">
+<tt class="descname">calcNetWaterAvailable</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcNetWaterAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcNetWaterAvailable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sums all the available water in all the water stores on the farm AFTER losses</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcReqWaterApplicationMLperHa">
+<tt class="descname">calcReqWaterApplicationMLperHa</tt><big>(</big><em>crop_name</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcReqWaterApplicationMLperHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcReqWaterApplicationMLperHa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate required amount of water to be applied in ML per Ha
+NOTE: This is calculated for each irrigation strategy
+returns (dict)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalCapitalCosts">
+<tt class="descname">calcTotalCapitalCosts</tt><big>(</big><em>irrigation_name</em>, <em>irrigation_area</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcTotalCapitalCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalCapitalCosts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate total capital costs of farm</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalCropYield">
+<tt class="descname">calcTotalCropYield</tt><big>(</big><em>crop_name='Cotton'</em>, <em>irrigation_area=None</em>, <em>irrigation_name=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcTotalCropYield"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalCropYield" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalFarmGrossMarginPerHa">
+<tt class="descname">calcTotalFarmGrossMarginPerHa</tt><big>(</big><em>land_use_Ha</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcTotalFarmGrossMarginPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalFarmGrossMarginPerHa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the total amount of money generated by irrigation per Ha</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalFarmGrossMargins">
+<tt class="descname">calcTotalFarmGrossMargins</tt><big>(</big><em>land_use_Ha</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcTotalFarmGrossMargins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalFarmGrossMargins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate total farm gross margin</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalWaterInput">
+<tt class="descname">calcTotalWaterInput</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcTotalWaterInput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalWaterInput" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.calcValueAtX">
+<tt class="descname">calcValueAtX</tt><big>(</big><em>x</em>, <em>set_param_set</em>, <em>comp_param_set</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.calcValueAtX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.calcValueAtX" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Calculate the farm result when a variable is set to a specified value &#8216;x&#8217;</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param x:</th><td class="field-body">value for variable</td>
+</tr>
+<tr class="field-even field"><th class="field-name">set_param_set:</th><td class="field-body">Values for other parameters at &#8216;x&#8217;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">comp_param_set:</th><td class="field-body">Values to use for comparison</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.getIrrigationEfficiency">
+<tt class="descname">getIrrigationEfficiency</tt><big>(</big><em>irrigation_name=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.getIrrigationEfficiency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.getIrrigationEfficiency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defunct method, replace any use of this with getParam()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.getNetWaterInWaterStore">
+<tt class="descname">getNetWaterInWaterStore</tt><big>(</big><em>store_name</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.getNetWaterInWaterStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.getNetWaterInWaterStore" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.resetParams">
+<tt class="descname">resetParams</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.resetParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.resetParams" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.setIrrigationEfficiency">
+<tt class="descname">setIrrigationEfficiency</tt><big>(</big><em>irrigation_name=None</em>, <em>amount=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.setIrrigationEfficiency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.setIrrigationEfficiency" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Defunct method, replace any use of this with setParam()</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">irrigation_name:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Name of irrigation method</td>
+</tr>
+<tr class="field-even field"><th class="field-name">amount:</th><td class="field-body">efficiency of irrigation method, 0 to 1</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body">original value so that efficiency can be set back to &#8216;normal&#8217; if necessary</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.FarmInfo.FarmInfo.updateDiscountRate">
+<tt class="descname">updateDiscountRate</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/FarmInfo.html#FarmInfo.updateDiscountRate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.FarmInfo.FarmInfo.updateDiscountRate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Modules.Farm.Farms.Management">
+<span id="modules-farm-farms-management-module"></span><h2>Modules.Farm.Farms.Management module<a class="headerlink" href="#module-Modules.Farm.Farms.Management" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Modules.Farm.Farms.Management.FarmManager">
+<em class="property">class </em><tt class="descclassname">Modules.Farm.Farms.Management.</tt><tt class="descname">FarmManager</tt><big>(</big><em>Farm</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="Modules.Core.html#Modules.Core.IntegratedModelComponent.Component" title="Modules.Core.IntegratedModelComponent.Component"><tt class="xref py py-class docutils literal"><span class="pre">Modules.Core.IntegratedModelComponent.Component</span></tt></a></p>
+<p>Farm Manager</p>
+<dl class="method">
+<dt id="Modules.Farm.Farms.Management.FarmManager.applyWater">
+<tt class="descname">applyWater</tt><big>(</big><em>water_to_apply</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.applyWater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.applyWater" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.Management.FarmManager.calcCumulativeSWD">
+<tt class="descname">calcCumulativeSWD</tt><big>(</big><em>timestep</em>, <em>timestep_ET</em>, <em>water_applied</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.calcCumulativeSWD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.calcCumulativeSWD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.Management.FarmManager.calcGrossIrrigationWaterAmount">
+<tt class="descname">calcGrossIrrigationWaterAmount</tt><big>(</big><em>Field</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.calcGrossIrrigationWaterAmount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.calcGrossIrrigationWaterAmount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decide how much water to send out to the fields per Hectare</p>
+<blockquote>
+<div><p>TODO: Optimisation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param field:</th><td class="field-body">Dictionary association of {irrigation, crop, area in hectares}</td>
+</tr>
+<tr class="field-even field"><th class="field-name">returns:</th><td class="field-body">Total amount of water to apply in ML</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.Management.FarmManager.calcWaterApplication">
+<tt class="descname">calcWaterApplication</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.calcWaterApplication"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.calcWaterApplication" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate amount of water to apply to each field</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body">Dict of {Field Object: amount of water to apply in ML}</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.Management.FarmManager.determineCropAreaToGrow">
+<tt class="descname">determineCropAreaToGrow</tt><big>(</big><em>crop</em>, <em>initial_area</em>, <em>soils=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.determineCropAreaToGrow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.determineCropAreaToGrow" title="Permalink to this definition">¶</a></dt>
+<dd><p>For the available water and soil type of a field, determine how much area to crop
+Includes dryland and irrigations</p>
+<blockquote>
+<div><p>:crop        : crop name as found in Farm.crops
+:initial_area: available area to irrigate
+:soils       : soil types as found in area</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body">list of lists [[irrigation, crop type, area in Hectares]]</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.Management.FarmManager.determineFieldSize">
+<tt class="descname">determineFieldSize</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.determineFieldSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.determineFieldSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does nothing. Remove?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.Management.FarmManager.getHarvestableCrops">
+<tt class="descname">getHarvestableCrops</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.getHarvestableCrops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.getHarvestableCrops" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO: Actually check if a crop is ready for harvest</p>
+<p>Return list of harvestable crops, and the field</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.Management.FarmManager.harvestCrops">
+<tt class="descname">harvestCrops</tt><big>(</big><em>fields_to_harvest</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.harvestCrops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.harvestCrops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Harvest crops
+Return harvest amount as DataFrame</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Farm.Farms.Management.FarmManager.plantCrops">
+<tt class="descname">plantCrops</tt><big>(</big><em>initial_area</em>, <em>soils</em>, <em>timestep</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Farms/Management.html#FarmManager.plantCrops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Farms.Management.FarmManager.plantCrops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine what crops to plant</p>
+<blockquote>
+<div>TODO: Factor in available water</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Modules.Farm.Farms">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Modules.Farm.Farms" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Modules.Farm.Farms package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-Modules.Farm.Farms.FarmInfo">Modules.Farm.Farms.FarmInfo module</a></li>
+<li><a class="reference internal" href="#module-Modules.Farm.Farms.Management">Modules.Farm.Farms.Management module</a></li>
+<li><a class="reference internal" href="#module-Modules.Farm.Farms">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Modules.Farm.DataHandlers.html"
+                        title="previous chapter">Modules.Farm.DataHandlers package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Modules.Farm.Fields.html"
+                        title="next chapter">Modules.Farm.Fields package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Modules.Farm.Farms.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Modules.Farm.Fields.html" title="Modules.Farm.Fields package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Modules.Farm.DataHandlers.html" title="Modules.Farm.DataHandlers package"
+             >previous</a> |</li>
+        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="Modules.html" >Modules package</a> &raquo;</li>
+          <li><a href="Modules.Farm.html" >Modules.Farm package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Takuya Iwanaga.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

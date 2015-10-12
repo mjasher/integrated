@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Modules.Farm.Irrigations.IrrigationPractice &mdash; Integrated Framework 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for Modules.Farm.Irrigations.IrrigationPractice</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">Modules.Core.IntegratedModelComponent</span> <span class="kn">import</span> <span class="n">Component</span>
+
+<div class="viewcode-block" id="IrrigationPractice"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice">[docs]</a><span class="k">class</span> <span class="nc">IrrigationPractice</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents an irrigation practice/technology.</span>
+
+<span class="sd">    Methods defined in this parent class should be considered stubs, to be redefined by child Classes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">irrigation_efficiency</span><span class="p">,</span> <span class="n">cost_per_Ha</span><span class="p">,</span> <span class="n">replacement_cost_per_Ha</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation_rate</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lifespan</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">max_irrigation_area_Ha</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span> <span class="c">#discount_rate=0.07</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">irrigation_rate</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">irrigation_rate</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">irrigation_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">irrigation_efficiency</span> <span class="o">=</span> <span class="n">irrigation_efficiency</span>
+
+        <span class="c">#Cost of replacing the irrigation system after lifespan.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replacement_cost_per_Ha</span> <span class="o">=</span> <span class="n">cost_per_Ha</span> <span class="k">if</span> <span class="n">replacement_cost_per_Ha</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">replacement_cost_per_Ha</span>
+
+        <span class="c">#Implementation cost for Flood is always 0 as it is already implemented</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span> <span class="o">=</span> <span class="n">cost_per_Ha</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="s">&#39;Flood&#39;</span> <span class="k">else</span> <span class="mf">0.0</span>
+        
+        <span class="c">#max irrigation area default value (782 Ha) from Powell &amp; Scott (2011), Representative farm model, p 25</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_irrigation_area_Ha</span> <span class="o">=</span> <span class="n">max_irrigation_area_Ha</span> <span class="k">if</span> <span class="n">max_irrigation_area_Ha</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="mf">782.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lifespan</span> <span class="o">=</span> <span class="n">lifespan</span> <span class="k">if</span> <span class="n">lifespan</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="mi">10</span>
+        <span class="c">#self.discount_rate = discount_rate</span>
+
+        <span class="c">#self.irrigation_area = 0.0 if irrigation_area is None else irrigation_area</span>
+
+        <span class="c">#Set default params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default_params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="c">#End For</span>
+
+    <span class="c">#End init()</span>
+
+<div class="viewcode-block" id="IrrigationPractice.resetParams"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.resetParams">[docs]</a>    <span class="k">def</span> <span class="nf">resetParams</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_params</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="c">#End for</span>
+    <span class="c">#End resetParams()</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcCropWaterRequirement"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcCropWaterRequirement">[docs]</a>    <span class="k">def</span> <span class="nf">calcCropWaterRequirement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">applied_ML_per_Ha</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate how much water is required for a given crop, determined from the base applied water</span>
+
+<span class="sd">        applied_ML_per_Ha: Water applied for crop MegaLitres per Ha under flood irrigation</span>
+
+<span class="sd">        This is different from Water Applied.</span>
+
+<span class="sd">        Water Applied is the amount of water sent out to the field</span>
+
+<span class="sd">        Crop Water Requirement is the amount of water actually used by the crop.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">applied_ML_per_Ha</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcIrrigationEfficiencySaving</span><span class="p">(</span><span class="n">applied_ML_per_Ha</span><span class="p">)</span>
+
+    <span class="c">#End calcWaterRequirement</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcIrrigationEfficiencySaving"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcIrrigationEfficiencySaving">[docs]</a>    <span class="k">def</span> <span class="nf">calcIrrigationEfficiencySaving</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_water_req_ML_per_Ha</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the amount of water saved per Hectare due to efficiency increase</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">crop_water_req_ML_per_Ha</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigation_efficiency</span><span class="p">))</span>
+
+    <span class="c">#End calcIrrigationEfficiencySaving()</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcIrrigationEfficiency"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcIrrigationEfficiency">[docs]</a>    <span class="k">def</span> <span class="nf">calcIrrigationEfficiency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_water_req_ML_per_Ha</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        In this model, irrigation efficiency is an assumed/known value.</span>
+<span class="sd">        With breakeven analysis we vary this value to determine a point of concern.</span>
+<span class="sd">        This method is a stub which should be overwritten by implementing Classes.</span>
+
+<span class="sd">        In the interest of context:</span>
+
+<span class="sd">        Percentage of water delivered to the field that is used beneficially (Irrigation Efficiency - :math:`E_{i}`) can be calculated as</span>
+
+<span class="sd">          :math:`E_{i} = 100(W_{b} / W_{f})`, where :math:`W_{b}` is Water used beneficially, and :math:`W_{f}` is water delivered to field</span>
+
+<span class="sd">          Rogers et al. (1997)</span>
+
+<span class="sd">        :param crop_water_req_ML_per_Ha: Amount of water in ML per Ha applied to the field.</span>
+<span class="sd">        :type crop_water_req_ML_per_Ha: float, ML per Hectare</span>
+<span class="sd">        :returns: percent (e.g. 76 percent = 0.76 * 100 = 76)</span>
+<span class="sd">        :return type: numeric</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c">#( (crop_water_req_ML_per_Ha * self.irrigation_efficiency) / crop_water_req_ML_per_Ha)</span>
+        <span class="c"># Should be : 100 * (water used by plant / water sent to field)</span>
+
+        <span class="k">pass</span>
+
+        <span class="c">#irrigation_efficiency = 100 * self.irrigation_efficiency</span>
+
+        <span class="c">#return irrigation_efficiency</span>
+
+    <span class="c">#End calcIrrigationEfficiency()</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcWaterApplicationEfficiency"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcWaterApplicationEfficiency">[docs]</a>    <span class="k">def</span> <span class="nf">calcWaterApplicationEfficiency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">water_delivered_to_field</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Context:</span>
+<span class="sd">        Rogers et al. (1997)</span>
+
+<span class="sd">        Percentage of water delivered to the field used by the crop</span>
+<span class="sd">          :math:`E_{a} = 100(W_{c} / W_{f})`, where :math:`E_{a}` is Water Application Efficiency</span>
+
+<span class="sd">          :math:`W_{c}` is water available for use by the crop</span>
+
+<span class="sd">          :math:`W_{f}` is the water delivered to the field</span>
+
+<span class="sd">        :param water_delivered_to_field: Amount of water (in ML) applied to the field</span>
+<span class="sd">        :type water_delivered_to_field: numeric, MegaLitres</span>
+<span class="sd">        :returns: (numeric) percentage (e.g. 0.76 = 76 percent = 76)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">water_for_crop</span> <span class="o">=</span> <span class="n">water_delivered_to_field</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigation_efficiency</span>
+
+        <span class="n">water_app_efficiency</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">water_for_crop</span> <span class="o">/</span> <span class="n">water_delivered_to_field</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">water_app_efficiency</span>
+
+    <span class="c">#End calcWaterApplicationEfficiency()</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcWaterSavings"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcWaterSavings">[docs]</a>    <span class="k">def</span> <span class="nf">calcWaterSavings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="p">,</span> <span class="n">crop_water_req_ML_per_Ha</span><span class="p">,</span> <span class="n">efficiency</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates water savings</span>
+
+<span class="sd">        :math:`Water Saved = Irrigation Area * Crop Water Requirement In ML per Ha * Irrigation Efficiency`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">efficiency</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigation_efficiency</span> <span class="k">if</span> <span class="n">efficiency</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">efficiency</span>
+
+        <span class="n">saved_water</span> <span class="o">=</span> <span class="n">irrigation_area</span> <span class="o">*</span> <span class="p">(</span><span class="n">crop_water_req_ML_per_Ha</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">efficiency</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">saved_water</span>
+
+    <span class="c">#End calcWaterSavings</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcWaterAppliedMLperHa"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcWaterAppliedMLperHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcWaterAppliedMLperHa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_application_ML_per_Ha</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate how much water needs to be applied in MegaLitres per Hectare</span>
+
+<span class="sd">        Based on given required amount of water for a given crop</span>
+
+<span class="sd">        water applied = ((crop_water_req / irrigation efficiency) * 100) * irrigation rate</span>
+
+<span class="sd">        This is different from Crop Water Requirement.</span>
+
+<span class="sd">        Water Applied is the amount of water sent out to the field</span>
+
+<span class="sd">        Crop Water Requirement is the amount of water actually used by the crop</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">((</span><span class="n">base_application_ML_per_Ha</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">irrigation_efficiency</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigation_rate</span>
+
+    <span class="c">#End calcWaterAppliedMLperHa</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcIrrigationArea"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcIrrigationArea">[docs]</a>    <span class="k">def</span> <span class="nf">calcIrrigationArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">water_applied_ML_per_Ha</span><span class="p">,</span> <span class="n">available_water_ML</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate irrigation area, capped to max irrigation area</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">irrigation_area</span> <span class="o">=</span> <span class="p">(</span><span class="n">available_water_ML</span> <span class="o">/</span> <span class="n">water_applied_ML_per_Ha</span><span class="p">)</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">irrigation_area</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_irrigation_area_Ha</span><span class="p">):</span>
+            <span class="n">irrigation_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_irrigation_area_Ha</span>
+
+        <span class="k">return</span> <span class="n">irrigation_area</span>
+
+    <span class="c">#End calcIrrigationArea()</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcCapitalCost"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcCapitalCost">[docs]</a>    <span class="k">def</span> <span class="nf">calcCapitalCost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area_Ha</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the implementation cost of this irrigation practice</span>
+
+<span class="sd">        :param irrigation_area_Ha: Area under irrigation in Hectares</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">irrigation_area_Ha</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span>
+
+    <span class="c">#End calcCapitalCost()</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcReplacementCost"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcReplacementCost">[docs]</a>    <span class="k">def</span> <span class="nf">calcReplacementCost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area_Ha</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the replacement cost for a given irrigation system.</span>
+<span class="sd">          Replacement cost is assumed to be equal to the initial cost per Hectare.</span>
+
+<span class="sd">        :param irrigation_area_Ha: Area of irrigation system</span>
+<span class="sd">        :returns: replacement cost in dollar terms (float)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">replacement_cost_per_Ha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replacement_cost_per_Ha</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span>
+
+        <span class="k">return</span> <span class="n">irrigation_area_Ha</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">replacement_cost_per_Ha</span>
+    <span class="c">#End calcReplacementCost()</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcOngoingCost"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcOngoingCost">[docs]</a>    <span class="k">def</span> <span class="nf">calcOngoingCost</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Not included due to lack of information</span>
+<span class="sd">          See Powell &amp; Scott 2011 (p 42) for overhead costs</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="c">#End calcOngoingCost()</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcAnnualCapitalCost"><a class="viewcode-back" href="../../../../Modules.Farm.Irrigations.html#Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcAnnualCapitalCost">[docs]</a>    <span class="k">def</span> <span class="nf">calcAnnualCapitalCost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area_Ha</span><span class="p">,</span> <span class="n">discount_rate</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates Capital Cost of irrigation system on a per year basis, discounted to present day value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">capital_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcCapitalCost</span><span class="p">(</span><span class="n">irrigation_area_Ha</span><span class="p">)</span>
+        <span class="n">ongoing_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcOngoingCost</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">calcCapitalCostPerYear</span><span class="p">(</span><span class="n">capital_cost</span><span class="p">,</span> <span class="n">discount_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lifespan</span><span class="p">)</span> <span class="o">+</span> <span class="n">ongoing_cost</span>
+
+    <span class="c">#End calcAnnualCost()</span>
+
+<span class="c">#End IrrigationPractice()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Takuya Iwanaga.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

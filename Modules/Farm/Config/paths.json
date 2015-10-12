@@ -1,0 +1,13 @@
+{
+  "working_dir": "C:/UserData/takuyai/Google Drive/ANU/Masters Dissertation/Model/",
+  "relative_paths": {
+	"ecological": "ecological",
+	"hydrological": "hydrological",
+	"climate": "climate",
+	"farm_decision": "farm_decision"
+  },
+  "test_data": {
+  		"climate": "climate",
+  		"crop": "crop"
+  }
+}

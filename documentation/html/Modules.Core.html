@@ -1,0 +1,500 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Modules.Core package &mdash; Integrated Framework 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
+    <link rel="up" title="Modules package" href="Modules.html" />
+    <link rel="next" title="Modules.Farm package" href="Modules.Farm.html" />
+    <link rel="prev" title="Modules.Climate package" href="Modules.Climate.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Modules.Farm.html" title="Modules.Farm package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Modules.Climate.html" title="Modules.Climate package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="Modules.html" accesskey="U">Modules package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="modules-core-package">
+<h1>Modules.Core package<a class="headerlink" href="#modules-core-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-Modules.Core.FileHandler">
+<span id="modules-core-filehandler-module"></span><h2>Modules.Core.FileHandler module<a class="headerlink" href="#module-Modules.Core.FileHandler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Modules.Core.FileHandler.FileHandler">
+<em class="property">class </em><tt class="descclassname">Modules.Core.FileHandler.</tt><tt class="descname">FileHandler</tt><a class="reference internal" href="_modules/Modules/Core/FileHandler.html#FileHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.FileHandler.FileHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Handles files for all modules</p>
+<dl class="method">
+<dt id="Modules.Core.FileHandler.FileHandler.getFileList">
+<tt class="descname">getFileList</tt><big>(</big><em>folder</em>, <em>ext='.csv'</em>, <em>walk=True</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/FileHandler.html#FileHandler.getFileList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.FileHandler.FileHandler.getFileList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of files with the matching extension in the given folder.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>folder</strong> &#8211; Path of folder to search</li>
+<li><strong>ext</strong> &#8211; File extension to look for</li>
+<li><strong>walk</strong> &#8211; (True | False) Search subfolders found within :folder:</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list of files</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Core.FileHandler.FileHandler.importFiles">
+<tt class="descname">importFiles</tt><big>(</big><em>folder</em>, <em>ext='.csv'</em>, <em>walk=True</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/FileHandler.html#FileHandler.importFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.FileHandler.FileHandler.importFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import files found within a given folder into Pandas DataFrame</p>
+<p>WARNING: Files with matching names will override each other</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>folder</strong> &#8211; Folder to search</li>
+<li><strong>ext</strong> &#8211; File extension to search for</li>
+<li><strong>walk</strong> &#8211; (True | False) search subfolders in the given folder</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dict of Pandas DataFrame for each file found</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Core.FileHandler.FileHandler.loadCSV">
+<tt class="descname">loadCSV</tt><big>(</big><em>filepath</em>, <em>columns=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/FileHandler.html#FileHandler.loadCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.FileHandler.FileHandler.loadCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load data from CSV file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filepath</strong> &#8211; name of file to import</li>
+<li><strong>columns</strong> &#8211; a list of column headers (as found in the file) to return. Returns all if None</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Pandas DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Core.FileHandler.FileHandler.writeCSV">
+<tt class="descname">writeCSV</tt><big>(</big><em>df</em>, <em>filepath=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/FileHandler.html#FileHandler.writeCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.FileHandler.FileHandler.writeCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write out a DataFrame to CSV</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df</strong> &#8211; DataFrame to export</li>
+<li><strong>filepath</strong> &#8211; name and location of where to export the csv file to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">CSV string (if no filepath provided) or true | false depending on success</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Modules.Core.GeneralFunctions">
+<span id="modules-core-generalfunctions-module"></span><h2>Modules.Core.GeneralFunctions module<a class="headerlink" href="#module-Modules.Core.GeneralFunctions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Modules.Core.GeneralFunctions.calcCapitalCostPerYear">
+<tt class="descclassname">Modules.Core.GeneralFunctions.</tt><tt class="descname">calcCapitalCostPerYear</tt><big>(</big><em>capital</em>, <em>discount_rate</em>, <em>num_years</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/GeneralFunctions.html#calcCapitalCostPerYear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.GeneralFunctions.calcCapitalCostPerYear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates capital value per year over a given number of years</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>capital</strong> &#8211; Amount of money in dollars ($)</li>
+<li><strong>discount_rate</strong> &#8211; The percentage to discount future value to get present-day value; Arshad et al. (2013) used 7%</li>
+<li><strong>num_years</strong> &#8211; Number of years for the scenario</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Annualised capital cost discounted to present day value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Modules.Core.GeneralFunctions.getBounds">
+<tt class="descclassname">Modules.Core.GeneralFunctions.</tt><tt class="descname">getBounds</tt><big>(</big><em>params</em>, <em>bounds_list={}</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/GeneralFunctions.html#getBounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.GeneralFunctions.getBounds" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Value range bounds as found in DataFrame parsed from csv files</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Modules.Core.GeneralFunctions.importCropRanges">
+<tt class="descclassname">Modules.Core.GeneralFunctions.</tt><tt class="descname">importCropRanges</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Core/GeneralFunctions.html#importCropRanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.GeneralFunctions.importCropRanges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import Crop value ranges from data paths as set in paths.py</p>
+<p>TODO: Clean up or remove</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Modules.Core.GeneralFunctions.importIrrigationRanges">
+<tt class="descclassname">Modules.Core.GeneralFunctions.</tt><tt class="descname">importIrrigationRanges</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Core/GeneralFunctions.html#importIrrigationRanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.GeneralFunctions.importIrrigationRanges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import Irrigation value ranges from data paths as set in paths.py</p>
+<p>TODO: Clean up or remove</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Modules.Core.GeneralFunctions.importParamsFromDF">
+<tt class="descclassname">Modules.Core.GeneralFunctions.</tt><tt class="descname">importParamsFromDF</tt><big>(</big><em>df</em>, <em>col='best_guess'</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/GeneralFunctions.html#importParamsFromDF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.GeneralFunctions.importParamsFromDF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract parameter values from a given DataFrame</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Modules.Core.GeneralFunctions.importRanges">
+<tt class="descclassname">Modules.Core.GeneralFunctions.</tt><tt class="descname">importRanges</tt><big>(</big><em>component</em>, <em>component_type=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/GeneralFunctions.html#importRanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.GeneralFunctions.importRanges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import range data for a component (Storage, irrigation, crop, etc.) and component_type (Farm Dam, Spray Irrigation, or crop type)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Modules.Core.GeneralFunctions.importSpecificRangesFromFiles">
+<tt class="descclassname">Modules.Core.GeneralFunctions.</tt><tt class="descname">importSpecificRangesFromFiles</tt><big>(</big><em>store</em>, <em>irrigation</em>, <em>crop</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/GeneralFunctions.html#importSpecificRangesFromFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.GeneralFunctions.importSpecificRangesFromFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import best guess parameters, local PoCs, Global PoCs, and breakeven points at best guess</p>
+<p>TODO: Clean up. This is incredibly messy.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Modules.Core.GeneralFunctions.importStorageRanges">
+<tt class="descclassname">Modules.Core.GeneralFunctions.</tt><tt class="descname">importStorageRanges</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Core/GeneralFunctions.html#importStorageRanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.GeneralFunctions.importStorageRanges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import Water Storage value ranges from data paths as set in paths.py</p>
+<p>TODO: Clean up or remove</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Modules.Core.GeneralFunctions.packParams">
+<tt class="descclassname">Modules.Core.GeneralFunctions.</tt><tt class="descname">packParams</tt><big>(</big><em>params</em>, <em>name</em>, <em>defaults_list=[]</em>, <em>bounds_list=[]</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/GeneralFunctions.html#packParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.GeneralFunctions.packParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pack parameters into a series of values to pass to Objective Function</p>
+<p>NOTE: Unpacking order should follow packing order</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Modules.Core.GeneralFunctions.setupParamsForOptScenario">
+<tt class="descclassname">Modules.Core.GeneralFunctions.</tt><tt class="descname">setupParamsForOptScenario</tt><big>(</big><em>ranges</em>, <em>names</em>, <em>case='best_guess'</em>, <em>attrib='best_guess'</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/GeneralFunctions.html#setupParamsForOptScenario"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.GeneralFunctions.setupParamsForOptScenario" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up Farm Component parameters for scenario.</p>
+<p>WARNING: Flood harvest is hardcoded (200ML)</p>
+<p>TODO: Move to CSV files</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Modules.Core.GeneralFunctions.unpackParams">
+<tt class="descclassname">Modules.Core.GeneralFunctions.</tt><tt class="descname">unpackParams</tt><big>(</big><em>start</em>, <em>x</em>, <em>parameters</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/GeneralFunctions.html#unpackParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.GeneralFunctions.unpackParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameter x passed to objective function is a series of values of arbitrary length</p>
+<p>This method reconstructs a dictionary map of {parameter_name: value}</p>
+<p>NOTE: Unpacking order should follow packing order</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-Modules.Core.IntegratedModelComponent">
+<span id="modules-core-integratedmodelcomponent-module"></span><h2>Modules.Core.IntegratedModelComponent module<a class="headerlink" href="#module-Modules.Core.IntegratedModelComponent" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Modules.Core.IntegratedModelComponent.Component">
+<em class="property">class </em><tt class="descclassname">Modules.Core.IntegratedModelComponent.</tt><tt class="descname">Component</tt><a class="reference internal" href="_modules/Modules/Core/IntegratedModelComponent.html#Component"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.IntegratedModelComponent.Component" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<dl class="docutils">
+<dt>Model Component Object.</dt>
+<dd>All model components should inherit (or implement their own versions) of the methods defined here.</dd>
+</dl>
+<dl class="method">
+<dt id="Modules.Core.IntegratedModelComponent.Component.getNumParams">
+<tt class="descname">getNumParams</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Core/IntegratedModelComponent.html#Component.getNumParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.IntegratedModelComponent.Component.getNumParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count total number of parameters for this object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Core.IntegratedModelComponent.Component.getParam">
+<tt class="descname">getParam</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/IntegratedModelComponent.html#Component.getParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.IntegratedModelComponent.Component.getParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the value of a specific attribute.</p>
+<p>kwargs are expected in the format as given in setParam()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>component</strong> &#8211; object that represents a (store/irrigation/etc)</li>
+<li><strong>subcomponent</strong> &#8211; (optional) as above</li>
+<li><strong>comp_name</strong> &#8211; name of component, e.g. flood, FarmDam, etc.</li>
+<li><strong>attr_name</strong> &#8211; attribute to modify</li>
+<li><strong>amount</strong> &#8211; value to assign to attribute</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">value of modified attribute</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Core.IntegratedModelComponent.Component.loadComponentParams">
+<tt class="descname">loadComponentParams</tt><big>(</big><em>component</em>, <em>comp_name</em>, <em>params</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/IntegratedModelComponent.html#Component.loadComponentParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.IntegratedModelComponent.Component.loadComponentParams" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Modules.Core.IntegratedModelComponent.Component.loadParamSet">
+<tt class="descname">loadParamSet</tt><big>(</big><em>param_set</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/IntegratedModelComponent.html#Component.loadParamSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.IntegratedModelComponent.Component.loadParamSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads in parameters from the given ParameterSet object</p>
+<p>WARNING: Does not clear previously set custom attributes or methods unless explicitly included in the given ParameterSet</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Core.IntegratedModelComponent.Component.setMethod">
+<tt class="descname">setMethod</tt><big>(</big><em>name</em>, <em>func</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/IntegratedModelComponent.html#Component.setMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.IntegratedModelComponent.Component.setMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign the given method to the given attribute name.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Test</span> <span class="o">=</span> <span class="n">Component</span><span class="p">()</span>
+
+<span class="c">#Defining an example function</span>
+<span class="k">def</span> <span class="nf">example_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+<span class="c">#End example_function()</span>
+
+<span class="c">#Assign the function to a variable</span>
+<span class="n">example</span> <span class="o">=</span> <span class="n">example_function</span>
+
+<span class="c">#Set the function as a Class method</span>
+<span class="n">Component</span><span class="o">.</span><span class="n">setMethod</span><span class="p">(</span><span class="s">&#39;new_function&#39;</span><span class="p">,</span> <span class="n">example</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">Component</span><span class="o">.</span><span class="n">new_function</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c">#The above should print out &#39;25&#39;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True on success, False on failure</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Core.IntegratedModelComponent.Component.setParam">
+<tt class="descname">setParam</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/IntegratedModelComponent.html#Component.setParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.IntegratedModelComponent.Component.setParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a component attribute</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>component</strong> &#8211; object that represents a (store/irrigation/etc)</li>
+<li><strong>subcomponent</strong> &#8211; (optional) as above</li>
+<li><strong>comp_name</strong> &#8211; name of component, e.g. flood, FarmDam, etc.</li>
+<li><strong>attr_name</strong> &#8211; attribute to modify</li>
+<li><strong>amount</strong> &#8211; value to assign to attribute</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">value of modified attribute</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Modules.Core.ParameterSet">
+<span id="modules-core-parameterset-module"></span><h2>Modules.Core.ParameterSet module<a class="headerlink" href="#module-Modules.Core.ParameterSet" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Modules.Core.ParameterSet.ParameterSet">
+<em class="property">class </em><tt class="descclassname">Modules.Core.ParameterSet.</tt><tt class="descname">ParameterSet</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/Modules/Core/ParameterSet.html#ParameterSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.ParameterSet.ParameterSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Holds parameters to configure integrated model components</p>
+<dl class="method">
+<dt id="Modules.Core.ParameterSet.ParameterSet.getNumParams">
+<tt class="descname">getNumParams</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Core/ParameterSet.html#ParameterSet.getNumParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.ParameterSet.ParameterSet.getNumParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count total number of parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(int) Number of parameters</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Modules.Core.ParameterSet.ParameterSet.getParams">
+<tt class="descname">getParams</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Core/ParameterSet.html#ParameterSet.getParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Core.ParameterSet.ParameterSet.getParams" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a dict of all parameters/attributes</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Modules.Core.paths">
+<span id="modules-core-paths-module"></span><h2>Modules.Core.paths module<a class="headerlink" href="#module-Modules.Core.paths" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-Modules.Core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Modules.Core" title="Permalink to this headline">¶</a></h2>
+<p>Modules and classes that make up the core of the Integrated Modelling Framework</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Modules.Core package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-Modules.Core.FileHandler">Modules.Core.FileHandler module</a></li>
+<li><a class="reference internal" href="#module-Modules.Core.GeneralFunctions">Modules.Core.GeneralFunctions module</a></li>
+<li><a class="reference internal" href="#module-Modules.Core.IntegratedModelComponent">Modules.Core.IntegratedModelComponent module</a></li>
+<li><a class="reference internal" href="#module-Modules.Core.ParameterSet">Modules.Core.ParameterSet module</a></li>
+<li><a class="reference internal" href="#module-Modules.Core.paths">Modules.Core.paths module</a></li>
+<li><a class="reference internal" href="#module-Modules.Core">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Modules.Climate.html"
+                        title="previous chapter">Modules.Climate package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Modules.Farm.html"
+                        title="next chapter">Modules.Farm package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Modules.Core.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Modules.Farm.html" title="Modules.Farm package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Modules.Climate.html" title="Modules.Climate package"
+             >previous</a> |</li>
+        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="Modules.html" >Modules package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Takuya Iwanaga.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
