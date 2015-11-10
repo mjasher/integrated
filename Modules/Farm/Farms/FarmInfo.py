@@ -52,9 +52,11 @@ class FarmInfo(Component):
 
         """
         Calculate the farm result when a variable is set to a specified value 'x'
-          :param x: value for variable
-          :set_param_set: Values for other parameters at 'x'
-          :comp_param_set: Values to use for comparison
+
+        :param x: value for variable
+        :param set_param_set: Values for other parameters at 'x'
+        :param comp_param_set: Values to use for comparison
+        :returns: Farm result when variable is set to 'x'
         """
 
         setting_method = set_param_set['method_name']

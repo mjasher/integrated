@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
 	area_alloc, remaining_area = Manager.plantCrops(initial_area=500.0, soils=[SoilType(**FarmConfig.Light_clay_params.getParams())], timestep=timestep)
 
-	step = 14
+	step = 14 #days for each timestep
 	for ts in xrange(0, 365, step):
 
 		#Assume first time step is week starting June 1
