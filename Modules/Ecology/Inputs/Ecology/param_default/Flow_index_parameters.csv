@@ -1,0 +1,6 @@
+Eco_site,Gauge,Name,ctf_low,ctf_mid,ctf_high,ctf_default,minseparation_mean,minseparation_min,minseparation_max,minduration_mean,minduration_min,minduration_max
+1,406207,Eppalock tail gauge,100,1000,12000,1000,2,1,5,3,1,5
+2,406201,Barnadown,125,1200,14000,1200,2,1,5,3,1,5
+3,406218,Campaspe weir,100,1500,12000,1500,2,1,5,3,1,5
+4,406202,Rochester,100,1500,12000,1500,2,1,5,3,1,5
+5,406265,Echuca,100,1500,9000,1500,2,1,5,3,1,5
