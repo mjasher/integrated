@@ -191,4 +191,4 @@ def run_modflow(plot=False):
     return headobj.get_alldata(), cbb.get_data(text='FLOW RIGHT FACE', kstpkper=(99,2))[0]
 
 if __name__ == '__main__':
-    heads, flows = run_modflow(plot=False)
+    heads, flows = run_modflow(plot=True)
