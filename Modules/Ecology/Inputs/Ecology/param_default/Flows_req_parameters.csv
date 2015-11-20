@@ -1,0 +1,6 @@
+Eco_site,Gauge,Name,slow_min,slow_max,sfresh_min,sfresh_max,wlow_min,wlow_max,whigh_min,whigh_max,wbf_min,wbf_max,wob_min,sfresh_dur,sfresh_freq,whigh_dur,whigh_freq,wbf_dur,wbf_freq,wob_dur,wob_freq
+1,406207,Eppalock tail gauge,10,50,50,200,50,200,1000,1800,10000,,12000,3,3,7,4,2,1,1,1
+2,406201,Barnadown,,,,,,,,,,,,,,,,,,,
+3,406218,Campaspe weir,,,,,,,,,,,,,,,,,,,
+4,406202,Rochester,,,,,,,,,,,,,,,,,,,
+5,406265,Echuca,100,1500,9000,1500,,,,,,,,,,,,,,,
