@@ -3,7 +3,7 @@ import numpy as np
 import os
 import multiprocessing
 
-def run():
+def run(riv_stage_0, riv_stage_1, riv_stage_2, wel_0, nrow):
     modelname = 'campaspe_toy_'  
     modelname += str(multiprocessing.current_process().name) # so each process has own files
 
@@ -20,8 +20,9 @@ def run():
     ztop = 0
     zbot = -20
     nlay = 3 #3
-    nrow = 10
-    ncol = 10
+    # nrow = 10
+    # ncol = 10
+    ncol = nrow
     delr = Lx/ncol
     delc = Ly/nrow
     delv = (ztop-zbot)/nlay
@@ -52,7 +53,7 @@ def run():
     upw = flopy.modflow.ModflowUpw(mf, hk=hk, vka=vka, sy=sy, ss=ss, hdry=-999.9, laytyp=laytyp)
 
     # Add RCH package to the MODFLOW model to represent recharge
-    rchrate = 1.0E-3 * np.random.rand(nrow, ncol)
+    rchrate = 1.0E-3 * np.ones((nrow, ncol))
     rch = flopy.modflow.ModflowRch(mf, rech=rchrate, nrchop=1)
 
     # Add EVT package to the MODFLOW model to represent evapotranspiration
@@ -60,15 +61,24 @@ def run():
     evt = flopy.modflow.ModflowEvt(mf, nevtop=3, evtr=evtr)
 
     # Add RIV package to the MODFLOW model to represent rivers and channels
-    lrcd = {}
-    lrcd[0] = [[0, 4, 0, 0.1, 100., -0.01],[0, 4, 1, 0.1, 100., -0.01],[0, 4, 2, 0.1, 100., -0.01],[0, 4, 3, 0.1, 100., -0.01],
-               [0, 4, 4, 0.1, 100., -0.01],[0, 4, 5, 0.1, 100., -0.01],[0, 4, 6, 0.1, 100., -0.01],[0, 4, 7, 0.1, 100., -0.01],
-               [0, 4, 8, 0.1, 100., -0.01],[0, 4, 9, 0.1, 100., -0.01]]  # layer, row, column, river stage, conductance, river bed
+    lrcd = {0:[]}
+    for i_col in range(ncol):
+        if i_col < ncol/3:
+            riv_stage = riv_stage_0
+        elif i_col < 2*ncol/3:
+            riv_stage = riv_stage_1
+        else:
+            riv_stage = riv_stage_2
+        lrcd[0].append([0, nrow/2, i_col, riv_stage, 100., -0.01])
+
+    # lrcd[0] = [[0, nrow/2, 0, riv_stage_0, 100., -0.01],[0, nrow/2, 1, riv_stage_0, 100., -0.01],[0, nrow/2, 2, riv_stage_1, 100., -0.01],[0, nrow/2, 3, riv_stage_1, 100., -0.01],
+               # [0, nrow/2, 4, riv_stage_1, 100., -0.01],[0, nrow/2, 5, riv_stage_1, 100., -0.01],[0, nrow/2, 6, riv_stage_2, 100., -0.01],[0, nrow/2, 7, riv_stage_2, 100., -0.01],
+               # [0, nrow/2, 8, riv_stage_2, 100., -0.01],[0, nrow/2, 9, riv_stage_2, 100., -0.01]]  # layer, row, column, river stage, conductance, river bed
     riv = flopy.modflow.ModflowRiv(mf, stress_period_data=lrcd)
 
     # Add WEL package to the MODFLOW model to represent pumping wells
     lrcq = {}
-    lrcq[0] = [[0, 7, 7, -100.]] # layer, row, column, flux
+    lrcq[0] = [[0, nrow/3, nrow/3, wel_0]] # layer, row, column, flux
     wel = flopy.modflow.ModflowWel(mf, stress_period_data=lrcq)
 
     # Specify NWT settings
@@ -82,54 +92,66 @@ def run():
     mf.write_input()
 
     # Run the MODFLOW model
-    success, buff = mf.run_model()
+    success, buff = mf.run_model(silent=True)
     if not success:
         raise Exception('MODFLOW did not terminate normally.')
 
     # Imports
-    import matplotlib.pyplot as plt
     import flopy.utils.binaryfile as bf
 
     # Create the headfile object
     headobj = bf.HeadFile(os.path.join(model_dir, modelname+'.hds'))
     times = headobj.get_times()
 
-    # Setup contour parameters
-    levels = np.arange(1, 10, 1)
-    extent = (delr/2., Lx - delr/2., delc/2., Ly - delc/2.)
-    print 'Levels: ', levels
-    print 'Extent: ', extent
+    heads = headobj.get_data(totim=1.0)
 
-    # Well point
-    wpt = (750., 250.)
 
-    # Make the plots
-    mytimes = [1.0]
-    for iplot, time in enumerate(mytimes):
-        print '*****Processing time: ', time
-        head = headobj.get_data(totim=time)
-        #Print statistics
-        print 'Head statistics'
-        print '  min: ', head.min()
-        print '  max: ', head.max()
-        print '  std: ', head.std()
+    return heads[0, nrow/3, :]
 
-        #Create the plot
-        plt.subplot(1, 1, 1, aspect='equal')
-        plt.title('stress period ' + str(iplot + 1))
-        plt.imshow(head[0, :, :], extent=extent, cmap='Spectral', vmin=head.min(), vmax=head.max())
-        plt.colorbar()
-        mfc = 'None'
-        if (iplot+1) == len(mytimes):
-            mfc='black'
-        plt.plot(wpt[0], wpt[1], lw=0, marker='o', markersize=8,
-                 markeredgewidth=0.5,
-                 markeredgecolor='black', markerfacecolor=mfc, zorder=9)
-        plt.text(wpt[0]+25, wpt[1]-25, 'well', size=12, zorder=12)
-        model_map = flopy.plot.ModelMap(model=mf, dis=dis)
-        linecollection = model_map.plot_grid()
-        plt.show()
+
+    # # Setup contour parameters
+    # levels = np.arange(1, 10, 1)
+    # extent = (delr/2., Lx - delr/2., delc/2., Ly - delc/2.)
+    # print 'Levels: ', levels
+    # print 'Extent: ', extent
+
+    # # Well point
+    # wpt = (750., 250.)
+
+    # # Make the plots
+    # mytimes = [1.0]
+    # for iplot, time in enumerate(mytimes):
+    #     print '*****Processing time: ', time
+    #     head = headobj.get_data(totim=time)
+    #     #Print statistics
+    #     print 'Head statistics'
+    #     print '  min: ', head.min()
+    #     print '  max: ', head.max()
+    #     print '  std: ', head.std()
+
+    #     #Create the plot
+    #     plt.subplot(1, 1, 1, aspect='equal')
+    #     plt.title('stress period ' + str(iplot + 1))
+    #     plt.imshow(head[0, :, :], extent=extent, cmap='Spectral', vmin=head.min(), vmax=head.max())
+    #     plt.colorbar()
+    #     mfc = 'None'
+    #     if (iplot+1) == len(mytimes):
+    #         mfc='black'
+    #     plt.plot(wpt[0], wpt[1], lw=0, marker='o', markersize=8,
+    #              markeredgewidth=0.5,
+    #              markeredgecolor='black', markerfacecolor=mfc, zorder=9)
+    #     plt.text(wpt[0]+25, wpt[1]-25, 'well', size=12, zorder=12)
+    #     model_map = flopy.plot.ModelMap(model=mf, dis=dis)
+    #     linecollection = model_map.plot_grid()
+    #     plt.show()
 
 
 if __name__ == '__main__':
-    run()
+    z = [0.1, 0.2, 0.1, -100.]
+    import matplotlib.pyplot as plt
+    lf_heads = run(*z, nrow=10)
+    hf_heads = run(*z, nrow=100)
+    plt.plot(np.linspace(0,1000,10), lf_heads, label='lf')
+    plt.plot(np.linspace(0,1000,100), hf_heads, label='hf')
+    plt.legend()
+    plt.show()
