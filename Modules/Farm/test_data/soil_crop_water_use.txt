@@ -1,0 +1,13 @@
+Source: http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use
+
+Total available water in mm per metre of soil depth
+Texture Class, Min, Max, Average
+Sand, 30, 65, 49
+Sandy Loam, 90, 123, 106
+Loam, 155, 172, 164
+Light Clay Loam, 172, 180, 172
+Clay Loam, 155, 172, 164
+Heavy Clay Loam, 137, 155, 147
+
+For example, if the RAW for clay loam soil is set to be 80 mm of water (50% of total available), 
+irrigation would be needed as soon as that amount is used. Note that the amount of water to be applied will depend on the depth of the crop's root system (Table 1).
