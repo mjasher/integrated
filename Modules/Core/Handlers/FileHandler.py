@@ -52,7 +52,7 @@ class FileHandler(object):
 
 	#End getFileList()
 
-	def importFiles(self, folder, ext=".csv", walk=True):
+	def importFiles(self, folder, ext=".csv", walk=True, **kwargs):
 
 		"""
 		Import files found within a given folder into Pandas DataFrame
@@ -62,6 +62,7 @@ class FileHandler(object):
 		:param folder: Folder to search
 		:param ext: File extension to search for
 		:param walk: (True | False) search subfolders in the given folder
+		:param kwargs: Other arguments accepted by Pandas read_csv()
 		:returns: Dict of Pandas DataFrame for each file found
 
 		"""
@@ -75,10 +76,10 @@ class FileHandler(object):
 			path, fname = os.path.split(fname) #Get filename by itself
 
 			try:
-				imported[fname] = pd.read_csv(f, skiprows=1, skipinitialspace=True)
+				imported[fname] = pd.read_csv(f, skiprows=1, skipinitialspace=True, **kwargs)
 			except IndexError:
 				try:
-					imported[fname] = pd.read_csv(f, skiprows=0, skipinitialspace=True, index_col=0, header=0)
+					imported[fname] = pd.read_csv(f, skiprows=0, skipinitialspace=True, index_col=0, header=0, **kwargs)
 				except Exception:
 					return False
 				#End try
@@ -90,32 +91,35 @@ class FileHandler(object):
 
 	#End importFile()
 
-	def loadCSV(self, filepath, columns=None):
+	def loadCSV(self, filepath, columns=None, **kwargs):
 
 		"""
-		Load data from CSV file
+		Load data from CSV file.
+
+		This may look like a useless wrapper around a Pandas function.
+		It is defined here so that inheriting Classes may modify as appropriate while keeping the same function name
 
 		:param filepath: name of file to import
-		:param columns:  a list of column headers (as found in the file) to return. Returns all if None 
+		:param columns: a list of column headers (as found in the file) to return. Returns all if None
+		:param kwargs: Other arguments accepted by Pandas read_csv()
 		:returns: Pandas DataFrame
 
 		"""
 
-		data = pd.read_csv(filepath, usecols=columns)
-
-		return data
+		return pd.read_csv(filepath, usecols=columns, **kwargs)
 		
 	#End loadData()
 
-	def writeCSV(self, df, filepath=None):
+	def writeCSV(self, df, filepath=None, **kwargs):
 
 		"""
 		Write out a DataFrame to CSV
 
 		:param df: DataFrame to export
 		:param filepath: name and location of where to export the csv file to
+		:param kwargs: Other arguments accepted by Pandas read_csv()
 		:returns: CSV string (if no filepath provided) or true | false depending on success
 		"""
 
-		return df.to_csv(path_or_buf=filepath)
+		return df.to_csv(path_or_buf=filepath, **kwargs)
 	#End writeCSV()
