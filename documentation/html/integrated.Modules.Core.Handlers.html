@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>integrated.Modules.Core.Handlers package &mdash; Integrated Framework 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
+    <link rel="up" title="integrated.Modules.Core package" href="integrated.Modules.Core.html" />
+    <link rel="next" title="integrated.Modules.Farm package" href="integrated.Modules.Farm.html" />
+    <link rel="prev" title="integrated.Modules.Core package" href="integrated.Modules.Core.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="integrated.Modules.Farm.html" title="integrated.Modules.Farm package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="integrated.Modules.Core.html" title="integrated.Modules.Core package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >integrated</a> &raquo;</li>
+          <li><a href="integrated.html" >integrated package</a> &raquo;</li>
+          <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
+          <li><a href="integrated.Modules.Core.html" accesskey="U">integrated.Modules.Core package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="integrated-modules-core-handlers-package">
+<h1>integrated.Modules.Core.Handlers package<a class="headerlink" href="#integrated-modules-core-handlers-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-integrated.Modules.Core.Handlers.BOMHandler">
+<span id="integrated-modules-core-handlers-bomhandler-module"></span><h2>integrated.Modules.Core.Handlers.BOMHandler module<a class="headerlink" href="#module-integrated.Modules.Core.Handlers.BOMHandler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="integrated.Modules.Core.Handlers.BOMHandler.BOMHandler">
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Core.Handlers.BOMHandler.</tt><tt class="descname">BOMHandler</tt><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/BOMHandler.html#BOMHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.BOMHandler.BOMHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler" title="integrated.Modules.Core.Handlers.FileHandler.FileHandler"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Core.Handlers.FileHandler.FileHandler</span></tt></a></p>
+<dl class="method">
+<dt id="integrated.Modules.Core.Handlers.BOMHandler.BOMHandler.loadAllBOMData">
+<tt class="descname">loadAllBOMData</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/BOMHandler.html#BOMHandler.loadAllBOMData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.BOMHandler.BOMHandler.loadAllBOMData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all BOM data</p>
+<blockquote>
+<div>This is adapted from Namoi model. 
+TODO: Separate data source (filepaths and column names)</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Core.Handlers.BOMHandler.BOMHandler.loadBOMCSVData">
+<tt class="descname">loadBOMCSVData</tt><big>(</big><em>filepath</em>, <em>data_cols=None</em>, <em>replace_missing=None</em>, <em>date_range=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/BOMHandler.html#BOMHandler.loadBOMCSVData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.BOMHandler.BOMHandler.loadBOMCSVData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load CSV data from BOM. Concatenating dates from Year, Month, Day columns.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filepath</strong> &#8211; Path to file including filename and extension</li>
+<li><strong>data_cols</strong> &#8211; (List) Data columns to import.</li>
+<li><strong>replace_missing</strong> &#8211; If numeric, replace all with given value. If string (&#8216;ffill&#8217; or &#8216;bfill&#8217;), replace with previous or next value
+See <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/missing_data.html">http://pandas.pydata.org/pandas-docs/stable/missing_data.html</a></li>
+<li><strong>date_range</strong> &#8211; array-like with two string values. Represents date range to extract. First value represents a start datetime, second value represents end datetime</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-integrated.Modules.Core.Handlers.FileHandler">
+<span id="integrated-modules-core-handlers-filehandler-module"></span><h2>integrated.Modules.Core.Handlers.FileHandler module<a class="headerlink" href="#module-integrated.Modules.Core.Handlers.FileHandler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="integrated.Modules.Core.Handlers.FileHandler.FileHandler">
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Core.Handlers.FileHandler.</tt><tt class="descname">FileHandler</tt><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Handles files for all modules</p>
+<dl class="method">
+<dt id="integrated.Modules.Core.Handlers.FileHandler.FileHandler.getFileList">
+<tt class="descname">getFileList</tt><big>(</big><em>folder</em>, <em>ext='.csv'</em>, <em>walk=True</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler.getFileList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler.getFileList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of files with the matching extension in the given folder.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>folder</strong> &#8211; Path of folder to search</li>
+<li><strong>ext</strong> &#8211; File extension to look for</li>
+<li><strong>walk</strong> &#8211; (True | False) Search subfolders found within :folder:</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list of files</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Core.Handlers.FileHandler.FileHandler.importFiles">
+<tt class="descname">importFiles</tt><big>(</big><em>folder</em>, <em>ext='.csv'</em>, <em>walk=True</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler.importFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler.importFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import files found within a given folder into Pandas DataFrame</p>
+<p>WARNING: Files with matching names will override each other</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>folder</strong> &#8211; Folder to search</li>
+<li><strong>ext</strong> &#8211; File extension to search for</li>
+<li><strong>walk</strong> &#8211; (True | False) search subfolders in the given folder</li>
+<li><strong>kwargs</strong> &#8211; Other arguments accepted by Pandas read_csv()</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dict of Pandas DataFrame for each file found</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Core.Handlers.FileHandler.FileHandler.loadCSV">
+<tt class="descname">loadCSV</tt><big>(</big><em>filepath</em>, <em>columns=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler.loadCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler.loadCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load data from CSV file.</p>
+<p>This may look like a useless wrapper around a Pandas function.
+It is defined here so that inheriting Classes may modify as appropriate while keeping the same function name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filepath</strong> &#8211; name of file to import</li>
+<li><strong>columns</strong> &#8211; a list of column headers (as found in the file) to return. Returns all if None</li>
+<li><strong>kwargs</strong> &#8211; Other arguments accepted by Pandas read_csv()</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Pandas DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Core.Handlers.FileHandler.FileHandler.writeCSV">
+<tt class="descname">writeCSV</tt><big>(</big><em>df</em>, <em>filepath=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler.writeCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler.writeCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write out a DataFrame to CSV</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df</strong> &#8211; DataFrame to export</li>
+<li><strong>filepath</strong> &#8211; name and location of where to export the csv file to</li>
+<li><strong>kwargs</strong> &#8211; Other arguments accepted by Pandas read_csv()</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">CSV string (if no filepath provided) or true | false depending on success</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-integrated.Modules.Core.Handlers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-integrated.Modules.Core.Handlers" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">integrated.Modules.Core.Handlers package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Core.Handlers.BOMHandler">integrated.Modules.Core.Handlers.BOMHandler module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Core.Handlers.FileHandler">integrated.Modules.Core.Handlers.FileHandler module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Core.Handlers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="integrated.Modules.Core.html"
+                        title="previous chapter">integrated.Modules.Core package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="integrated.Modules.Farm.html"
+                        title="next chapter">integrated.Modules.Farm package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/integrated.Modules.Core.Handlers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="integrated.Modules.Farm.html" title="integrated.Modules.Farm package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="integrated.Modules.Core.html" title="integrated.Modules.Core package"
+             >previous</a> |</li>
+        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >integrated</a> &raquo;</li>
+          <li><a href="integrated.html" >integrated package</a> &raquo;</li>
+          <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
+          <li><a href="integrated.Modules.Core.html" >integrated.Modules.Core package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Takuya Iwanaga.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

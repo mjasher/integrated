@@ -1,0 +1,20 @@
+integrated.Modules package
+==========================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    integrated.Modules.Climate
+    integrated.Modules.Core
+    integrated.Modules.Farm
+    integrated.Modules.WaterSources
+
+Module contents
+---------------
+
+.. automodule:: integrated.Modules
+    :members:
+    :undoc-members:
+    :show-inheritance:

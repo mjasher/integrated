@@ -1,37 +1,37 @@
-Modules.Farm.WaterStorages package
+modules.Farm.WaterStorages package
 ==================================
 
 Submodules
 ----------
 
-Modules.Farm.WaterStorages.ASRStorage module
+modules.Farm.WaterStorages.ASRStorage module
 --------------------------------------------
 
-.. automodule:: Modules.Farm.WaterStorages.ASRStorage
+.. automodule:: modules.Farm.WaterStorages.ASRStorage
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.Farm.WaterStorages.BasinStorage module
+modules.Farm.WaterStorages.BasinStorage module
 ----------------------------------------------
 
-.. automodule:: Modules.Farm.WaterStorages.BasinStorage
+.. automodule:: modules.Farm.WaterStorages.BasinStorage
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.Farm.WaterStorages.FarmDam module
+modules.Farm.WaterStorages.FarmDam module
 -----------------------------------------
 
-.. automodule:: Modules.Farm.WaterStorages.FarmDam
+.. automodule:: modules.Farm.WaterStorages.FarmDam
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.Farm.WaterStorages.WaterStore module
+modules.Farm.WaterStorages.WaterStore module
 --------------------------------------------
 
-.. automodule:: Modules.Farm.WaterStorages.WaterStore
+.. automodule:: modules.Farm.WaterStorages.WaterStore
     :members:
     :undoc-members:
     :show-inheritance:
@@ -40,7 +40,7 @@ Modules.Farm.WaterStorages.WaterStore module
 Module contents
 ---------------
 
-.. automodule:: Modules.Farm.WaterStorages
+.. automodule:: modules.Farm.WaterStorages
     :members:
     :undoc-members:
     :show-inheritance:

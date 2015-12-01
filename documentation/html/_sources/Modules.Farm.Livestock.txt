@@ -1,10 +1,10 @@
-Modules.Farm.Livestock package
+modules.Farm.Livestock package
 ==============================
 
 Module contents
 ---------------
 
-.. automodule:: Modules.Farm.Livestock
+.. automodule:: modules.Farm.Livestock
     :members:
     :undoc-members:
     :show-inheritance:

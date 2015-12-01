@@ -1,13 +1,13 @@
-Modules.Climate package
+modules.Climate package
 =======================
 
 Submodules
 ----------
 
-Modules.Climate.ClimateVariables module
+modules.Climate.ClimateVariables module
 ---------------------------------------
 
-.. automodule:: Modules.Climate.ClimateVariables
+.. automodule:: modules.Climate.ClimateVariables
     :members:
     :undoc-members:
     :show-inheritance:
@@ -16,7 +16,7 @@ Modules.Climate.ClimateVariables module
 Module contents
 ---------------
 
-.. automodule:: Modules.Climate
+.. automodule:: modules.Climate
     :members:
     :undoc-members:
     :show-inheritance:

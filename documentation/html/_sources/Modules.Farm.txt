@@ -1,4 +1,4 @@
-Modules.Farm package
+modules.Farm package
 ====================
 
 Subpackages
@@ -6,29 +6,44 @@ Subpackages
 
 .. toctree::
 
-    Modules.Farm.Crops
-    Modules.Farm.DataHandlers
-    Modules.Farm.Farms
-    Modules.Farm.Fields
-    Modules.Farm.Irrigations
-    Modules.Farm.Livestock
-    Modules.Farm.WaterStorages
+    modules.Farm.Crops
+    modules.Farm.Farms
+    modules.Farm.Fields
+    modules.Farm.Irrigations
+    modules.Farm.Livestock
+    modules.Farm.WaterStorages
 
 Submodules
 ----------
 
-Modules.Farm.main_dev module
+modules.Farm.SWD_main module
 ----------------------------
 
-.. automodule:: Modules.Farm.main_dev
+.. automodule:: modules.Farm.SWD_main
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.Farm.test module
-------------------------
+modules.Farm.farmer_decision_example module
+-------------------------------------------
 
-.. automodule:: Modules.Farm.test
+.. automodule:: modules.Farm.farmer_decision_example
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+modules.Farm.main_dev module
+----------------------------
+
+.. automodule:: modules.Farm.main_dev
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+modules.Farm.setup_dev module
+-----------------------------
+
+.. automodule:: modules.Farm.setup_dev
     :members:
     :undoc-members:
     :show-inheritance:
@@ -37,7 +52,7 @@ Modules.Farm.test module
 Module contents
 ---------------
 
-.. automodule:: Modules.Farm
+.. automodule:: modules.Farm
     :members:
     :undoc-members:
     :show-inheritance:

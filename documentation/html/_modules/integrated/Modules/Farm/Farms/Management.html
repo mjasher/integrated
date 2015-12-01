@@ -1,0 +1,382 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>integrated.Modules.Farm.Farms.Management &mdash; Integrated Framework 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for integrated.Modules.Farm.Farms.Management</h1><div class="highlight"><pre>
+<span class="c">#Management</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">integrated.Modules.Core.IntegratedModelComponent</span> <span class="kn">import</span> <span class="n">Component</span>
+<span class="kn">from</span> <span class="nn">integrated.Modules.Farm.Fields.Field</span> <span class="kn">import</span> <span class="n">FarmField</span>
+<span class="kn">from</span> <span class="nn">integrated.Modules.Farm.Fields.Soil</span> <span class="kn">import</span> <span class="n">SoilType</span>
+<span class="kn">from</span> <span class="nn">integrated.Modules.Farm.Irrigations.IrrigationPractice</span> <span class="kn">import</span> <span class="n">IrrigationPractice</span>
+
+<span class="c">#remove this when ready</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<div class="viewcode-block" id="FarmManager"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.Management.FarmManager">[docs]</a><span class="k">class</span> <span class="nc">FarmManager</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Farm Manager</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Farm</span><span class="p">,</span> <span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param Farm: Farm Object representing the Farm to manage</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span> <span class="o">=</span> <span class="n">Farm</span>
+
+    <span class="c">#End __init__()</span>
+
+<div class="viewcode-block" id="FarmManager.plantCrops"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.Management.FarmManager.plantCrops">[docs]</a>    <span class="k">def</span> <span class="nf">plantCrops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_area</span><span class="p">,</span> <span class="n">soils</span><span class="p">,</span> <span class="n">timestep</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determine what crops to plant</span>
+
+<span class="sd">        TODO: Factor in available water, crop water use efficiencies, etc.</span>
+<span class="sd">        CURRENTLY USING RANDOM SOIL/CROP TYPE FOR DEVELOPMENT</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">area_allocation</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">remaining_area</span> <span class="o">=</span> <span class="n">initial_area</span>
+        <span class="k">for</span> <span class="n">crop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">crops</span><span class="p">:</span>
+
+            <span class="c">#Get crop coefficient</span>
+            <span class="n">coef</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">crops</span><span class="p">[</span><span class="n">crop</span><span class="p">]</span><span class="o">.</span><span class="n">getCurrentStageCoef</span><span class="p">(</span><span class="n">timestep</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">coef</span> <span class="o">!=</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">crops</span><span class="p">[</span><span class="n">crop</span><span class="p">]</span><span class="o">.</span><span class="n">planted</span> <span class="o">!=</span> <span class="bp">True</span><span class="p">:</span>
+
+                <span class="c">#WARNING</span>
+                <span class="c">#Random soil type for dev purposes</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">soils</span><span class="p">)</span>
+                <span class="n">crop_num</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="c">#Plant the crop</span>
+                <span class="n">remaining_area</span><span class="p">,</span> <span class="n">allocation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">determineCropAreaToGrow</span><span class="p">(</span><span class="n">crop</span><span class="p">,</span> <span class="n">remaining_area</span><span class="p">,</span> <span class="n">soils</span><span class="p">[</span><span class="n">crop_num</span><span class="p">])</span>
+                <span class="n">area_allocation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">allocation</span><span class="p">)</span> 
+
+                <span class="c">#Mark the crop as planted</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">crops</span><span class="p">[</span><span class="n">crop</span><span class="p">]</span><span class="o">.</span><span class="n">planted</span> <span class="o">=</span> <span class="bp">True</span>
+
+                <span class="k">if</span> <span class="n">remaining_area</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="c">#End if</span>
+
+            <span class="c">#End if</span>
+
+        <span class="c">#End for</span>
+
+        <span class="k">return</span> <span class="n">area_allocation</span><span class="p">,</span> <span class="n">remaining_area</span>
+
+</div>
+<div class="viewcode-block" id="FarmManager.determineCropAreaToGrow"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.Management.FarmManager.determineCropAreaToGrow">[docs]</a>    <span class="k">def</span> <span class="nf">determineCropAreaToGrow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop</span><span class="p">,</span> <span class="n">initial_area</span><span class="p">,</span> <span class="n">soil</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For the available water and soil type of a field, determine how much area to crop</span>
+
+<span class="sd">        Includes dryland and irrigations</span>
+<span class="sd">        WARNING: CURRENTLY USES VALUES FOR DEVELOPMENT PURPOSES ONLY</span>
+<span class="sd">        TODO: LP Optimisation</span>
+
+<span class="sd">        :param crop: crop name as found in Farm.crops</span>
+<span class="sd">        :param initial_area: available area to irrigate</span>
+<span class="sd">        :param soil: Dominant soil type found in area</span>
+
+<span class="sd">        :returns: list of lists [[irrigation, crop type, area in Hectares]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c">#Optimise input-output</span>
+
+        <span class="c">#WARNING: FOR DEVELOPMENT PURPOSES ONLY</span>
+        <span class="n">area_allocation</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">available_area</span> <span class="o">=</span> <span class="n">initial_area</span>
+
+        <span class="n">available_area</span> <span class="o">=</span> <span class="n">available_area</span> <span class="o">-</span> <span class="p">(</span><span class="n">available_area</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+        <span class="n">area_allocation</span><span class="p">[</span><span class="n">crop</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">irrigation</span><span class="o">=</span><span class="n">IrrigationPractice</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">irrigations</span><span class="p">[</span><span class="s">&#39;Flood&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getParams</span><span class="p">()),</span> <span class="n">crop</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">crops</span><span class="p">[</span><span class="n">crop</span><span class="p">],</span> <span class="n">area</span><span class="o">=</span><span class="n">available_area</span><span class="p">,</span> <span class="n">soil</span><span class="o">=</span><span class="n">soil</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">FarmField</span><span class="p">(</span><span class="n">irrigation</span><span class="o">=</span><span class="n">area_allocation</span><span class="p">[</span><span class="n">crop</span><span class="p">][</span><span class="s">&#39;irrigation&#39;</span><span class="p">],</span> <span class="n">crop</span><span class="o">=</span><span class="n">area_allocation</span><span class="p">[</span><span class="n">crop</span><span class="p">][</span><span class="s">&#39;crop&#39;</span><span class="p">],</span> <span class="n">area</span><span class="o">=</span><span class="n">area_allocation</span><span class="p">[</span><span class="n">crop</span><span class="p">][</span><span class="s">&#39;area&#39;</span><span class="p">],</span> <span class="n">soil</span><span class="o">=</span><span class="n">area_allocation</span><span class="p">[</span><span class="n">crop</span><span class="p">][</span><span class="s">&#39;soil&#39;</span><span class="p">]))</span>
+
+        <span class="k">return</span> <span class="n">available_area</span><span class="p">,</span> <span class="n">area_allocation</span>
+
+    <span class="c">#End determineCropAreaToGrow()</span>
+</div>
+<div class="viewcode-block" id="FarmManager.determineFieldSize"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.Management.FarmManager.determineFieldSize">[docs]</a>    <span class="k">def</span> <span class="nf">determineFieldSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does nothing. Remove?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c">#Do optimisation?</span>
+
+        <span class="k">return</span> <span class="mf">100.0</span>
+    <span class="c">#End determineFieldSize()</span>
+</div>
+<div class="viewcode-block" id="FarmManager.calcNetIrrigationDepth"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.Management.FarmManager.calcNetIrrigationDepth">[docs]</a>    <span class="k">def</span> <span class="nf">calcNetIrrigationDepth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Field</span><span class="p">):</span>
+
+        <span class="n">RAW_mm</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">calcRAW</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="n">Field</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">depletion_fraction</span><span class="p">)</span>
+        <span class="n">net_irrigation_depth</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">root_depth_m</span> <span class="o">*</span> <span class="n">RAW_mm</span>
+
+        <span class="k">return</span> <span class="n">net_irrigation_depth</span>
+    <span class="c">#End calcNetIrrigationDepth()</span>
+</div>
+<div class="viewcode-block" id="FarmManager.calcGrossIrrigationWaterAmount"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.Management.FarmManager.calcGrossIrrigationWaterAmount">[docs]</a>    <span class="k">def</span> <span class="nf">calcGrossIrrigationWaterAmount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Field</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate how much water is needed to be sent out to the fields per Hectare</span>
+<span class="sd">        Calculations are done in millimeters and then converted to ML.</span>
+
+<span class="sd">        See:</span>
+<span class="sd">        http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use</span>
+<span class="sd">        Especially Table 4</span>
+
+<span class="sd">        TODO: Optimisation</span>
+
+<span class="sd">        :math:`NID = D_{rz} * RAW`, where</span>
+<span class="sd">        * :math:`NID` is Net Irrigation Depth</span>
+<span class="sd">        * :math:`D_{rz}` is Effective Root Depth (Depth of root zone)</span>
+<span class="sd">        * :math:`RAW` is Readily Available Water, see calcRAW() method in Soil class</span>
+
+<span class="sd">        :param Field: Dictionary association of {irrigation, crop, area in hectares}</span>
+
+<span class="sd">        :returns: Total amount of water to apply in ML</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">net_irrigation_depth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcNetIrrigationDepth</span><span class="p">(</span><span class="n">Field</span><span class="p">)</span>
+
+        <span class="c">#Check current Soil Water Deficit</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">Field</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">+</span> <span class="n">net_irrigation_depth</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">water_to_send</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="n">water_application</span> <span class="o">=</span> <span class="n">net_irrigation_depth</span>
+
+            <span class="k">while</span> <span class="p">(</span><span class="n">Field</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">+</span> <span class="n">water_application</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
+                <span class="n">water_application</span> <span class="o">=</span> <span class="n">water_application</span> <span class="o">+</span> <span class="n">net_irrigation_depth</span>
+            <span class="c">#End while</span>
+
+            <span class="c">#Add again to get it over 0.0 (?)</span>
+            <span class="c">#water_application = water_application + net_irrigation_depth</span>
+
+            <span class="n">water_to_send</span> <span class="o">=</span> <span class="p">(</span><span class="n">water_application</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">Field</span><span class="o">.</span><span class="n">area</span>
+
+        <span class="c">#End if</span>
+
+        <span class="k">return</span> <span class="n">water_to_send</span>
+
+    <span class="c">#End calcGrossIrrigationWaterAmount()</span>
+</div>
+<div class="viewcode-block" id="FarmManager.calcWaterApplication"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.Management.FarmManager.calcWaterApplication">[docs]</a>    <span class="k">def</span> <span class="nf">calcWaterApplication</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate amount of water to apply to each field</span>
+
+<span class="sd">        Note: 100mm of water on 1 Hectare is equal to 1ML/Ha</span>
+
+<span class="sd">        :returns: Dict of {Field Object: amount of water to apply in ML}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c">#Calculate amount of water to apply to each field</span>
+        <span class="n">water_to_apply</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
+            <span class="n">water_to_apply</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcGrossIrrigationWaterAmount</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+        <span class="c">#End for</span>
+
+        <span class="k">return</span> <span class="n">water_to_apply</span>
+
+    <span class="c">#End calcWaterApplication()</span>
+</div>
+<div class="viewcode-block" id="FarmManager.calcFieldCumulativeSWD"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.Management.FarmManager.calcFieldCumulativeSWD">[docs]</a>    <span class="k">def</span> <span class="nf">calcFieldCumulativeSWD</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">ETc</span><span class="p">,</span> <span class="n">gross_water_applied</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates Soil Water Deficit within a timestep and updates Field attribute</span>
+
+<span class="sd">        :param timestep: Datetime (REMOVE?)</span>
+<span class="sd">        :param ETc: Amount of evapotranspiration that occured in this timestep (irrigation efficiency)</span>
+<span class="sd">        :param gross_water_applied: Total water applied to the field in ML</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">recharge</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
+            <span class="n">recharge</span> <span class="o">=</span> <span class="n">recharge</span> <span class="o">+</span> <span class="n">field</span><span class="o">.</span><span class="n">updateCumulativeSWD</span><span class="p">(</span><span class="n">timestep</span><span class="p">,</span> <span class="n">ETc</span><span class="p">[</span><span class="n">field</span><span class="p">],</span> <span class="n">gross_water_applied</span><span class="p">[</span><span class="n">field</span><span class="p">])</span>
+        <span class="c">#End field</span>
+
+        <span class="k">return</span> <span class="n">recharge</span>
+
+    <span class="c">#End calcCumulativeSWD()</span>
+</div>
+<div class="viewcode-block" id="FarmManager.applyWater"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.Management.FarmManager.applyWater">[docs]</a>    <span class="k">def</span> <span class="nf">applyWater</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">water_to_apply</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies water to each field under management</span>
+
+<span class="sd">        :returns: total recharge</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c">#water_to_apply = self.calcWaterApplication(Fields)</span>
+
+        <span class="c">#Recharge = (Rainfall + Applied Water) - (ETc + SWD_i)</span>
+
+        <span class="n">recharge</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
+            <span class="n">recharge</span> <span class="o">=</span> <span class="n">recharge</span> <span class="o">+</span> <span class="n">field</span><span class="o">.</span><span class="n">applyWater</span><span class="p">(</span><span class="n">water_to_apply</span><span class="p">[</span><span class="n">field</span><span class="p">])</span>
+
+        <span class="c">#End for</span>
+
+        <span class="k">return</span> <span class="n">recharge</span>
+    <span class="c">#End applyWater()</span>
+</div>
+<div class="viewcode-block" id="FarmManager.getHarvestableCrops"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.Management.FarmManager.getHarvestableCrops">[docs]</a>    <span class="k">def</span> <span class="nf">getHarvestableCrops</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        TODO: Actually check if a crop is ready for harvest</span>
+
+<span class="sd">        Return list of harvestable crops, and the field</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">fields</span>
+
+        <span class="k">return</span> <span class="n">fields</span>
+    <span class="c">#End</span>
+</div>
+<div class="viewcode-block" id="FarmManager.harvestCrops"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.Management.FarmManager.harvestCrops">[docs]</a>    <span class="k">def</span> <span class="nf">harvestCrops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields_to_harvest</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Harvest crops</span>
+<span class="sd">        Return harvest amount as DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">crop_yields</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields_to_harvest</span><span class="p">:</span>
+
+            <span class="n">crop_yields</span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">harvest</span><span class="p">()</span>
+
+        <span class="c">#End for        </span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">crop_yields</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        
+    <span class="c">#End harvestCrop()</span>
+</div>
+<div class="viewcode-block" id="FarmManager.calcPotentialCropYield"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.Management.FarmManager.calcPotentialCropYield">[docs]</a>    <span class="k">def</span> <span class="nf">calcPotentialCropYield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ssm_mm</span><span class="p">,</span> <span class="n">gsr_mm</span><span class="p">,</span> <span class="n">evap_mm_coef</span><span class="p">,</span> <span class="n">wue_mm_coef</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Uses French-Schultz equation </span>
+
+<span class="sd">        TODO: Adapt modified version of French-Schultz from</span>
+<span class="sd">        http://www.regional.org.au/au/asa/2008/concurrent/assessing-yield-potential/5827_oliverym.htm</span>
+
+<span class="sd">        Represents Readily Available Water - (Crop evapotranspiration * Crop Water Use Efficiency Coefficient)</span>
+
+<span class="sd">        :math:`YP = (SSM + GSR) - (E * WUE)`, where</span>
+
+<span class="sd">        * :math:`YP` is yield potential in kg/Ha </span>
+<span class="sd">        * :math:`SSM` is Stored Soil Moisture in mm</span>
+<span class="sd">        * :math:`GSR` is Growing Season Rainfall in mm</span>
+<span class="sd">        * :math:`E` is Crop Evaporation coefficient in mm</span>
+<span class="sd">        * :math:`WUE` is Water Use Efficiency coefficient in kg/mm</span>
+
+<span class="sd">        :param ssm_mm: Stored Soil Moisture (mm)</span>
+<span class="sd">        :param gsr_mm: Growing Season Rainfall (mm)</span>
+<span class="sd">        :param evap_mm_coef: Crop Evaporation coefficient (mm)</span>
+<span class="sd">        :param wue_mm_coef: Water Use Efficiency coefficient (kg/mm)</span>
+
+<span class="sd">        :returns: Potential yield in kg/Ha</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">ssm_mm</span> <span class="o">+</span> <span class="n">gsr_mm</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">evap_mm_coef</span> <span class="o">*</span> <span class="n">wue_mm_coef</span><span class="p">)</span>
+
+    <span class="c">#End calcPotentialCropYield()</span>
+    
+
+<span class="c">#End FarmManagement()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Takuya Iwanaga.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

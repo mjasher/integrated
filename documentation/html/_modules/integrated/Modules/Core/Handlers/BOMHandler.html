@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>integrated.Modules.Core.Handlers.BOMHandler &mdash; Integrated Framework 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for integrated.Modules.Core.Handlers.BOMHandler</h1><div class="highlight"><pre>
+<span class="c">#BOMHandler</span>
+
+<span class="kn">from</span> <span class="nn">integrated.Modules.Core.Handlers.FileHandler</span> <span class="kn">import</span> <span class="n">FileHandler</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="BOMHandler"><a class="viewcode-back" href="../../../../../integrated.Modules.Core.Handlers.html#integrated.Modules.Core.Handlers.BOMHandler.BOMHandler">[docs]</a><span class="k">class</span> <span class="nc">BOMHandler</span><span class="p">(</span><span class="n">FileHandler</span><span class="p">):</span>
+
+	<span class="c"># def __init__(self):</span>
+	<span class="c"># 	super(DataHandler, self).__init__(self)</span>
+	<span class="c"># #End</span>
+
+<div class="viewcode-block" id="BOMHandler.loadBOMCSVData"><a class="viewcode-back" href="../../../../../integrated.Modules.Core.Handlers.html#integrated.Modules.Core.Handlers.BOMHandler.BOMHandler.loadBOMCSVData">[docs]</a>	<span class="k">def</span> <span class="nf">loadBOMCSVData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">data_cols</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">replace_missing</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">date_range</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Load CSV data from BOM. Concatenating dates from Year, Month, Day columns.</span>
+
+<span class="sd">		:param filepath: Path to file including filename and extension</span>
+<span class="sd">		:param data_cols: (List) Data columns to import.</span>
+<span class="sd">		:param replace_missing: If numeric, replace all with given value. If string (&#39;ffill&#39; or &#39;bfill&#39;), replace with previous or next value</span>
+<span class="sd">								 See http://pandas.pydata.org/pandas-docs/stable/missing_data.html</span>
+<span class="sd">		:param date_range: array-like with two string values. Represents date range to extract. First value represents a start datetime, second value represents end datetime</span>
+
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Year&quot;</span><span class="p">,</span> <span class="s">&quot;Month&quot;</span><span class="p">,</span> <span class="s">&quot;Day&quot;</span><span class="p">]</span>
+
+		<span class="k">if</span> <span class="n">data_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">data_cols</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+			<span class="n">request_cols</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[:]</span> <span class="c">#Remember, python is pass-by-reference, to [:] is necessary to copy the values to new variable</span>
+			<span class="n">request_cols</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data_cols</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">request_cols</span> <span class="o">=</span> <span class="n">data_cols</span>
+
+		<span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">BOMHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">loadCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">request_cols</span><span class="p">)</span>
+
+		<span class="c">#Join date columns together</span>
+		<span class="n">data</span><span class="p">[</span><span class="s">&quot;Date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s">&#39;</span><span class="si">%d</span><span class="s">-</span><span class="si">%02d</span><span class="s">-</span><span class="si">%02d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;Year&#39;</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;Month&#39;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;Day&#39;</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+		<span class="c">#Remove date columns from dataframe</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">temp</span><span class="p">:</span>
+			<span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+		<span class="c">#Parse dates into datetime</span>
+		<span class="n">data</span><span class="p">[</span><span class="s">&quot;Date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;Date&quot;</span><span class="p">])</span>
+
+		<span class="k">if</span> <span class="n">date_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="n">start</span> <span class="o">=</span> <span class="n">date_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="n">end</span> <span class="o">=</span> <span class="n">date_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+		<span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;Date&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">start</span><span class="p">)]</span>
+
+		<span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;Date&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">end</span><span class="p">)]</span>
+
+		<span class="c">#remove date columns from request list</span>
+		<span class="n">request_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">request_cols</span> <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">temp</span><span class="p">]</span>
+
+		<span class="c">#is a number</span>
+		<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">replace_missing</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">long</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">complex</span><span class="p">)):</span>
+			<span class="c">#data[np.isnan(data)] = replace_missing</span>
+			<span class="n">data</span><span class="p">[</span><span class="n">request_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">request_cols</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">replace_missing</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">replace_missing</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+			<span class="c">#Forward fill missing data (replace missing with previous known value)</span>
+			<span class="n">data</span><span class="p">[</span><span class="n">request_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">request_cols</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">replace_missing</span><span class="p">)</span>
+		<span class="c">#End if</span>
+
+		<span class="k">return</span> <span class="n">data</span>
+
+	<span class="c">#End loadBOMCSVData()</span>
+</div>
+<div class="viewcode-block" id="BOMHandler.loadAllBOMData"><a class="viewcode-back" href="../../../../../integrated.Modules.Core.Handlers.html#integrated.Modules.Core.Handlers.BOMHandler.BOMHandler.loadAllBOMData">[docs]</a>	<span class="k">def</span> <span class="nf">loadAllBOMData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Load all BOM data</span>
+
+<span class="sd">		  This is adapted from Namoi model. </span>
+<span class="sd">		  TODO: Separate data source (filepaths and column names)</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="c">#Load all BOM data</span>
+		<span class="n">min_temps_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loadBOMCSVData</span><span class="p">(</span><span class="s">&quot;test_data/climate/IDCJAC0011_055023_1800/IDCJAC0011_055023_1800_Data.csv&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;Minimum temperature (Degree C)&quot;</span><span class="p">],</span> <span class="n">date_range</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;1899-01-01&quot;</span><span class="p">,</span> <span class="s">&quot;2011-12-27&quot;</span><span class="p">],</span> <span class="n">replace_missing</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+		<span class="n">max_temps_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loadBOMCSVData</span><span class="p">(</span><span class="s">&quot;test_data/climate/IDCJAC0010_055023_1800/IDCJAC0010_055023_1800_Data.csv&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;Maximum temperature (Degree C)&quot;</span><span class="p">],</span> <span class="n">date_range</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;1899-01-01&quot;</span><span class="p">,</span> <span class="s">&quot;2011-12-27&quot;</span><span class="p">],</span> <span class="n">replace_missing</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+		<span class="n">rain_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loadBOMCSVData</span><span class="p">(</span><span class="s">&quot;test_data/climate/IDCJAC0009_055076_1800/IDCJAC0009_055076_1800_Data.csv&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;Rainfall amount (millimetres)&quot;</span><span class="p">],</span> <span class="n">date_range</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;1899-01-01&quot;</span><span class="p">,</span> <span class="s">&quot;2011-12-27&quot;</span><span class="p">],</span> <span class="n">replace_missing</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+
+		<span class="n">mean_temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">((</span><span class="n">min_temps_df</span><span class="p">[</span><span class="s">&#39;Minimum temperature (Degree C)&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">max_temps_df</span><span class="p">[</span><span class="s">&#39;Maximum temperature (Degree C)&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+		<span class="n">mean_temp</span> <span class="o">=</span> <span class="n">mean_temp</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c">#Returns dataframe</span>
+
+		<span class="n">rain_temp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">&quot;Date&quot;</span><span class="p">:</span> <span class="n">min_temps_df</span><span class="p">[</span><span class="s">&quot;Date&quot;</span><span class="p">]})</span>
+		<span class="n">rain_temp_df</span> <span class="o">=</span> <span class="n">rain_temp_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">rain_df</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&quot;right&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s">&quot;Date&quot;</span><span class="p">)</span>
+
+		<span class="n">rain_temp_df</span><span class="p">[</span><span class="s">&quot;Mean Temperature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">rain_temp_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">rain_temp_df</span><span class="p">[</span><span class="s">&quot;Date&quot;</span><span class="p">]</span>
+
+		<span class="k">return</span> <span class="n">rain_temp_df</span>
+	<span class="c">#End loadAllBOMData()</span>
+
+<span class="c">#End BOMHandler()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Takuya Iwanaga.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

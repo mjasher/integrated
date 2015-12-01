@@ -1,13 +1,13 @@
-Modules.Farm.Crops package
+modules.Farm.Crops package
 ==========================
 
 Submodules
 ----------
 
-Modules.Farm.Crops.CropInfo module
+modules.Farm.Crops.CropInfo module
 ----------------------------------
 
-.. automodule:: Modules.Farm.Crops.CropInfo
+.. automodule:: modules.Farm.Crops.CropInfo
     :members:
     :undoc-members:
     :show-inheritance:
@@ -16,7 +16,7 @@ Modules.Farm.Crops.CropInfo module
 Module contents
 ---------------
 
-.. automodule:: Modules.Farm.Crops
+.. automodule:: modules.Farm.Crops
     :members:
     :undoc-members:
     :show-inheritance:

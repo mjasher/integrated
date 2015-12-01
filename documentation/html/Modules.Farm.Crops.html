@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Modules.Farm.Crops package &mdash; Integrated Framework 0.1 documentation</title>
+    <title>modules.Farm.Crops package &mdash; Integrated Framework 0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -25,9 +25,9 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
-    <link rel="up" title="Modules.Farm package" href="Modules.Farm.html" />
-    <link rel="next" title="Modules.Farm.DataHandlers package" href="Modules.Farm.DataHandlers.html" />
-    <link rel="prev" title="Modules.Farm package" href="Modules.Farm.html" /> 
+    <link rel="up" title="modules.Farm package" href="modules.Farm.html" />
+    <link rel="next" title="modules.Farm.Farms package" href="modules.Farm.Farms.html" />
+    <link rel="prev" title="modules.Farm package" href="modules.Farm.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,17 +37,14 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="Modules.Farm.DataHandlers.html" title="Modules.Farm.DataHandlers package"
+          <a href="modules.Farm.Farms.html" title="modules.Farm.Farms package"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="Modules.Farm.html" title="Modules.Farm package"
+          <a href="modules.Farm.html" title="modules.Farm package"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="Modules.html" >Modules package</a> &raquo;</li>
-          <li><a href="Modules.Farm.html" accesskey="U">Modules.Farm package</a> &raquo;</li> 
+          <li><a href="modules.html" >modules package</a> &raquo;</li>
+          <li><a href="modules.Farm.html" accesskey="U">modules.Farm package</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,111 +54,15 @@
           <div class="body">
             
   <div class="section" id="modules-farm-crops-package">
-<h1>Modules.Farm.Crops package<a class="headerlink" href="#modules-farm-crops-package" title="Permalink to this headline">¶</a></h1>
+<h1>modules.Farm.Crops package<a class="headerlink" href="#modules-farm-crops-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-Modules.Farm.Crops.CropInfo">
-<span id="modules-farm-crops-cropinfo-module"></span><h2>Modules.Farm.Crops.CropInfo module<a class="headerlink" href="#module-Modules.Farm.Crops.CropInfo" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="Modules.Farm.Crops.CropInfo.CropInfo">
-<em class="property">class </em><tt class="descclassname">Modules.Farm.Crops.CropInfo.</tt><tt class="descname">CropInfo</tt><big>(</big><em>crop_name</em>, <em>price_per_yield</em>, <em>variable_cost_per_Ha</em>, <em>yield_per_Ha=None</em>, <em>gross_margin_per_Ha=None</em>, <em>water_use_ML_per_Ha=None</em>, <em>required_water_ML_per_Ha=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Crops/CropInfo.html#CropInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Crops.CropInfo.CropInfo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="Modules.Core.html#Modules.Core.IntegratedModelComponent.Component" title="Modules.Core.IntegratedModelComponent.Component"><tt class="xref py py-class docutils literal"><span class="pre">Modules.Core.IntegratedModelComponent.Component</span></tt></a></p>
-<p>Crop Object that represents a crop type</p>
-<dl class="method">
-<dt id="Modules.Farm.Crops.CropInfo.CropInfo.calcGrossMarginsPerHa">
-<tt class="descname">calcGrossMarginsPerHa</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Crops/CropInfo.html#CropInfo.calcGrossMarginsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Crops.CropInfo.CropInfo.calcGrossMarginsPerHa" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Calculate Gross Margins per Hectare ($/Ha)</dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body">Dollar value per Hectare</td>
-</tr>
-</tbody>
-</table>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMargin">
-<tt class="descname">calcTotalCropGrossMargin</tt><big>(</big><em>land_used_Ha</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Crops/CropInfo.html#CropInfo.calcTotalCropGrossMargin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMargin" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Calculate gross income from crop for a given irrigated area, taking into account variable costs</dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">param land_used_Ha:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Amount of land dedicated to this crop type</td>
-</tr>
-</tbody>
-</table>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMarginsPerHa">
-<tt class="descname">calcTotalCropGrossMarginsPerHa</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Crops/CropInfo.html#CropInfo.calcTotalCropGrossMarginsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMarginsPerHa" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate total income from crop per Hectare, taking into account variable costs</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body">total gross margins per Hectare based on assumed yield per Ha, price per Yield, and variable costs per Hectare</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.Farm.Crops.CropInfo.CropInfo.getCurrentStageCoef">
-<tt class="descname">getCurrentStageCoef</tt><big>(</big><em>timestep</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Crops/CropInfo.html#CropInfo.getCurrentStageCoef"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Crops.CropInfo.CropInfo.getCurrentStageCoef" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Get crop coefficient for current stage of crop development as indicated by the timestep</dt>
-<dd><p class="first">TODO: Not sure if this method will be used</p>
-<table class="last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param timestep:</th><td class="field-body">Date Object representing current timestep</td>
-</tr>
-</tbody>
-</table>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.Farm.Crops.CropInfo.CropInfo.updateWaterNeedsSatisfied">
-<tt class="descname">updateWaterNeedsSatisfied</tt><big>(</big><em>water_use_ML</em>, <em>area_Ha</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Crops/CropInfo.html#CropInfo.updateWaterNeedsSatisfied"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Crops.CropInfo.CropInfo.updateWaterNeedsSatisfied" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Update water needs for this crop</dt>
-<dd><table class="first last docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">param water_use_ML:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">represents in ML the ET of this crop for the given area</td>
-</tr>
-<tr class="field-even field"><th class="field-name">param area:</th><td class="field-body">total area in Hectares for this crop</td>
-</tr>
-</tbody>
-</table>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="modules-farm-crops-cropinfo-module">
+<h2>modules.Farm.Crops.CropInfo module<a class="headerlink" href="#modules-farm-crops-cropinfo-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-Modules.Farm.Crops">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Modules.Farm.Crops" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -173,23 +74,23 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Modules.Farm.Crops package</a><ul>
+<li><a class="reference internal" href="#">modules.Farm.Crops package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-Modules.Farm.Crops.CropInfo">Modules.Farm.Crops.CropInfo module</a></li>
-<li><a class="reference internal" href="#module-Modules.Farm.Crops">Module contents</a></li>
+<li><a class="reference internal" href="#modules-farm-crops-cropinfo-module">modules.Farm.Crops.CropInfo module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="Modules.Farm.html"
-                        title="previous chapter">Modules.Farm package</a></p>
+  <p class="topless"><a href="modules.Farm.html"
+                        title="previous chapter">modules.Farm package</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="Modules.Farm.DataHandlers.html"
-                        title="next chapter">Modules.Farm.DataHandlers package</a></p>
+  <p class="topless"><a href="modules.Farm.Farms.html"
+                        title="next chapter">modules.Farm.Farms package</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/Modules.Farm.Crops.txt"
+    <li><a href="_sources/modules.Farm.Crops.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -216,17 +117,14 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="Modules.Farm.DataHandlers.html" title="Modules.Farm.DataHandlers package"
+          <a href="modules.Farm.Farms.html" title="modules.Farm.Farms package"
              >next</a> |</li>
         <li class="right" >
-          <a href="Modules.Farm.html" title="Modules.Farm package"
+          <a href="modules.Farm.html" title="modules.Farm package"
              >previous</a> |</li>
         <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="Modules.html" >Modules package</a> &raquo;</li>
-          <li><a href="Modules.Farm.html" >Modules.Farm package</a> &raquo;</li> 
+          <li><a href="modules.html" >modules package</a> &raquo;</li>
+          <li><a href="modules.Farm.html" >modules.Farm package</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

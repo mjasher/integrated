@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Modules.Farm.Fields package &mdash; Integrated Framework 0.1 documentation</title>
+    <title>modules.Farm.Fields package &mdash; Integrated Framework 0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -25,9 +25,9 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
-    <link rel="up" title="Modules.Farm package" href="Modules.Farm.html" />
-    <link rel="next" title="Modules.Farm.Irrigations package" href="Modules.Farm.Irrigations.html" />
-    <link rel="prev" title="Modules.Farm.Farms package" href="Modules.Farm.Farms.html" /> 
+    <link rel="up" title="modules.Farm package" href="modules.Farm.html" />
+    <link rel="next" title="modules.Farm.Irrigations package" href="modules.Farm.Irrigations.html" />
+    <link rel="prev" title="modules.Farm.Farms package" href="modules.Farm.Farms.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,17 +37,14 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="Modules.Farm.Irrigations.html" title="Modules.Farm.Irrigations package"
+          <a href="modules.Farm.Irrigations.html" title="modules.Farm.Irrigations package"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="Modules.Farm.Farms.html" title="Modules.Farm.Farms package"
+          <a href="modules.Farm.Farms.html" title="modules.Farm.Farms package"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="Modules.html" >Modules package</a> &raquo;</li>
-          <li><a href="Modules.Farm.html" accesskey="U">Modules.Farm package</a> &raquo;</li> 
+          <li><a href="modules.html" >modules package</a> &raquo;</li>
+          <li><a href="modules.Farm.html" accesskey="U">modules.Farm package</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,125 +54,21 @@
           <div class="body">
             
   <div class="section" id="modules-farm-fields-package">
-<h1>Modules.Farm.Fields package<a class="headerlink" href="#modules-farm-fields-package" title="Permalink to this headline">¶</a></h1>
+<h1>modules.Farm.Fields package<a class="headerlink" href="#modules-farm-fields-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-Modules.Farm.Fields.Field">
-<span id="modules-farm-fields-field-module"></span><h2>Modules.Farm.Fields.Field module<a class="headerlink" href="#module-Modules.Farm.Fields.Field" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="Modules.Farm.Fields.Field.FarmField">
-<em class="property">class </em><tt class="descclassname">Modules.Farm.Fields.Field.</tt><tt class="descname">FarmField</tt><big>(</big><em>irrigation</em>, <em>crop</em>, <em>soil=None</em>, <em>area=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Fields/Field.html#FarmField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Fields.Field.FarmField" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="Modules.Core.html#Modules.Core.IntegratedModelComponent.Component" title="Modules.Core.IntegratedModelComponent.Component"><tt class="xref py py-class docutils literal"><span class="pre">Modules.Core.IntegratedModelComponent.Component</span></tt></a></p>
-<p>Container to associate an irrigation with a crop type</p>
-<dl class="method">
-<dt id="Modules.Farm.Fields.Field.FarmField.applyCropLoss">
-<tt class="descname">applyCropLoss</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Fields/Field.html#FarmField.applyCropLoss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Fields.Field.FarmField.applyCropLoss" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply losses to crop due to lack of water or other</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.Farm.Fields.Field.FarmField.applyWater">
-<tt class="descname">applyWater</tt><big>(</big><em>gross_applied_water_ML</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Fields/Field.html#FarmField.applyWater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Fields.Field.FarmField.applyWater" title="Permalink to this definition">¶</a></dt>
-<dd><p>Puts water on the field</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>gross_applied_water_ML</strong> &#8211; water in ML applied to field</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Water in ML that goes to recharge</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="Modules.Farm.Fields.Field.FarmField.harvest">
-<tt class="descname">harvest</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Fields/Field.html#FarmField.harvest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Fields.Field.FarmField.harvest" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get crop harvest.</p>
-<p>Sets crop area to 0</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Gross crop yield</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="modules-farm-fields-field-module">
+<h2>modules.Farm.Fields.Field module<a class="headerlink" href="#modules-farm-fields-field-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-Modules.Farm.Fields.Soil">
-<span id="modules-farm-fields-soil-module"></span><h2>Modules.Farm.Fields.Soil module<a class="headerlink" href="#module-Modules.Farm.Fields.Soil" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="Modules.Farm.Fields.Soil.SoilType">
-<em class="property">class </em><tt class="descclassname">Modules.Farm.Fields.Soil.</tt><tt class="descname">SoilType</tt><big>(</big><em>name</em>, <em>TAW_mm</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Fields/Soil.html#SoilType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Fields.Soil.SoilType" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="Modules.Core.html#Modules.Core.IntegratedModelComponent.Component" title="Modules.Core.IntegratedModelComponent.Component"><tt class="xref py py-class docutils literal"><span class="pre">Modules.Core.IntegratedModelComponent.Component</span></tt></a></p>
-<p>Represents soil types</p>
-<dl class="method">
-<dt id="Modules.Farm.Fields.Soil.SoilType.calcRAW">
-<tt class="descname">calcRAW</tt><big>(</big><em>TAW_mm=None</em>, <em>fraction=None</em><big>)</big><a class="reference internal" href="_modules/Modules/Farm/Fields/Soil.html#SoilType.calcRAW"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Modules.Farm.Fields.Soil.SoilType.calcRAW" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate Readily Available Water in mm per metre depth</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="modules-farm-fields-soil-module">
+<h2>modules.Farm.Fields.Soil module<a class="headerlink" href="#modules-farm-fields-soil-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-Modules.Farm.Fields.soil_dev">
-<span id="modules-farm-fields-soil-dev-module"></span><h2>Modules.Farm.Fields.soil_dev module<a class="headerlink" href="#module-Modules.Farm.Fields.soil_dev" title="Permalink to this headline">¶</a></h2>
-<dl class="data">
-<dt id="Modules.Farm.Fields.soil_dev.net_irrigation_depth">
-<tt class="descclassname">Modules.Farm.Fields.soil_dev.</tt><tt class="descname">net_irrigation_depth</tt><em class="property"> = 0.0396*m**2</em><a class="headerlink" href="#Modules.Farm.Fields.soil_dev.net_irrigation_depth" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Calculation for each timestep</dt>
-<dd><dl class="first docutils">
-<dt>Need:</dt>
-<dd>ET_0 in timestep, in mm
-ET_c in timestep, in mm
-Rainfall that occured in timestep, in mm</dd>
-</dl>
-<p>ET_0 * ET_c = Crop Water Use</p>
-<p>Effective Rainfall (in mm) = Rainfall - ET_c</p>
-<p>Net Irrigation Application = amount of water applied (in mm)</p>
-<p>Cumulative Soil Water Deficit = (Effective Rainfall + Net Irrigation Application) - Crop Water Use</p>
-<p>Irrigation water should be applied when Cumulative Soil Water Deficit reaches net irrigation depth</p>
-<p>see Table 4 at
-<a class="reference external" href="http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use">http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use</a></p>
-<p>To calculate effective rainfall, during spring, summer and autumn periods, subtract 5 mm from each of the daily rainfall totals.
-Assume rainfalls of 5 mm or less to be non-significant (zero).
-In winter, all the rainfall is assumed to be effective.</p>
-<dl class="last docutils">
-<dt>1mm = 1L per m^2</dt>
-<dd>= 10,000L per Hectare</dd>
-</dl>
-</dd>
-</dl>
-<p>So we have irrigation efficiency of 0.55 percent (made up number for example purposes)</p>
-<blockquote>
-<div><p>Irrigation water applied = 6ML</p>
-<dl class="docutils">
-<dt>ET_c during irrigation events is assumed to be</dt>
-<dd>Irrigation Water * Irrigation Efficiency</dd>
-<dt>Therefore:</dt>
-<dd><dl class="first last docutils">
-<dt>ET_c = 6 * 0.55</dt>
-<dd>= 3.3</dd>
-</dl>
-</dd>
-<dt>Cumulative Soil Water Deficit = (0.0 + 6.0) - 3.3</dt>
-<dd>= 2.7ML (convert this to mm?)</dd>
-</dl>
-</div></blockquote>
-</dd></dl>
-
+<div class="section" id="modules-farm-fields-soil-dev-module">
+<h2>modules.Farm.Fields.soil_dev module<a class="headerlink" href="#modules-farm-fields-soil-dev-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-Modules.Farm.Fields">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Modules.Farm.Fields" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -187,25 +80,25 @@ In winter, all the rainfall is assumed to be effective.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Modules.Farm.Fields package</a><ul>
+<li><a class="reference internal" href="#">modules.Farm.Fields package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-Modules.Farm.Fields.Field">Modules.Farm.Fields.Field module</a></li>
-<li><a class="reference internal" href="#module-Modules.Farm.Fields.Soil">Modules.Farm.Fields.Soil module</a></li>
-<li><a class="reference internal" href="#module-Modules.Farm.Fields.soil_dev">Modules.Farm.Fields.soil_dev module</a></li>
-<li><a class="reference internal" href="#module-Modules.Farm.Fields">Module contents</a></li>
+<li><a class="reference internal" href="#modules-farm-fields-field-module">modules.Farm.Fields.Field module</a></li>
+<li><a class="reference internal" href="#modules-farm-fields-soil-module">modules.Farm.Fields.Soil module</a></li>
+<li><a class="reference internal" href="#modules-farm-fields-soil-dev-module">modules.Farm.Fields.soil_dev module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="Modules.Farm.Farms.html"
-                        title="previous chapter">Modules.Farm.Farms package</a></p>
+  <p class="topless"><a href="modules.Farm.Farms.html"
+                        title="previous chapter">modules.Farm.Farms package</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="Modules.Farm.Irrigations.html"
-                        title="next chapter">Modules.Farm.Irrigations package</a></p>
+  <p class="topless"><a href="modules.Farm.Irrigations.html"
+                        title="next chapter">modules.Farm.Irrigations package</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/Modules.Farm.Fields.txt"
+    <li><a href="_sources/modules.Farm.Fields.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -232,17 +125,14 @@ In winter, all the rainfall is assumed to be effective.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="Modules.Farm.Irrigations.html" title="Modules.Farm.Irrigations package"
+          <a href="modules.Farm.Irrigations.html" title="modules.Farm.Irrigations package"
              >next</a> |</li>
         <li class="right" >
-          <a href="Modules.Farm.Farms.html" title="Modules.Farm.Farms package"
+          <a href="modules.Farm.Farms.html" title="modules.Farm.Farms package"
              >previous</a> |</li>
         <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="Modules.html" >Modules package</a> &raquo;</li>
-          <li><a href="Modules.Farm.html" >Modules.Farm package</a> &raquo;</li> 
+          <li><a href="modules.html" >modules package</a> &raquo;</li>
+          <li><a href="modules.Farm.html" >modules.Farm package</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

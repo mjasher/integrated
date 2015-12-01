@@ -1,45 +1,44 @@
-Modules.Core package
+modules.Core package
 ====================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    modules.Core.Handlers
 
 Submodules
 ----------
 
-Modules.Core.FileHandler module
--------------------------------
-
-.. automodule:: Modules.Core.FileHandler
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-Modules.Core.GeneralFunctions module
+modules.Core.GeneralFunctions module
 ------------------------------------
 
-.. automodule:: Modules.Core.GeneralFunctions
+.. automodule:: modules.Core.GeneralFunctions
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.Core.IntegratedModelComponent module
+modules.Core.IntegratedModelComponent module
 --------------------------------------------
 
-.. automodule:: Modules.Core.IntegratedModelComponent
+.. automodule:: modules.Core.IntegratedModelComponent
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.Core.ParameterSet module
+modules.Core.ParameterSet module
 --------------------------------
 
-.. automodule:: Modules.Core.ParameterSet
+.. automodule:: modules.Core.ParameterSet
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.Core.paths module
+modules.Core.paths module
 -------------------------
 
-.. automodule:: Modules.Core.paths
+.. automodule:: modules.Core.paths
     :members:
     :undoc-members:
     :show-inheritance:
@@ -48,7 +47,7 @@ Modules.Core.paths module
 Module contents
 ---------------
 
-.. automodule:: Modules.Core
+.. automodule:: modules.Core
     :members:
     :undoc-members:
     :show-inheritance:

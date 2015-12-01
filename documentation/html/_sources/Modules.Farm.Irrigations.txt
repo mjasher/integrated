@@ -1,13 +1,13 @@
-Modules.Farm.Irrigations package
+modules.Farm.Irrigations package
 ================================
 
 Submodules
 ----------
 
-Modules.Farm.Irrigations.IrrigationPractice module
+modules.Farm.Irrigations.IrrigationPractice module
 --------------------------------------------------
 
-.. automodule:: Modules.Farm.Irrigations.IrrigationPractice
+.. automodule:: modules.Farm.Irrigations.IrrigationPractice
     :members:
     :undoc-members:
     :show-inheritance:
@@ -16,7 +16,7 @@ Modules.Farm.Irrigations.IrrigationPractice module
 Module contents
 ---------------
 
-.. automodule:: Modules.Farm.Irrigations
+.. automodule:: modules.Farm.Irrigations
     :members:
     :undoc-members:
     :show-inheritance:

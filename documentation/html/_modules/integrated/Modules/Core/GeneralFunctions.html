@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>integrated.Modules.Core.GeneralFunctions &mdash; Integrated Framework 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for integrated.Modules.Core.GeneralFunctions</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">paths</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Methods that are non-specific to any module.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="calcCapitalCostPerYear"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.GeneralFunctions.calcCapitalCostPerYear">[docs]</a><span class="k">def</span> <span class="nf">calcCapitalCostPerYear</span><span class="p">(</span><span class="n">capital</span><span class="p">,</span> <span class="n">discount_rate</span><span class="p">,</span> <span class="n">num_years</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates capital value per year over a given number of years</span>
+
+<span class="sd">    :param capital: Amount of money in dollars ($)</span>
+<span class="sd">    :param discount_rate: The percentage to discount future value to get present-day value; Arshad et al. (2013) used 7%</span>
+<span class="sd">    :param num_years: Number of years for the scenario</span>
+<span class="sd">    :returns: Annualised capital cost discounted to present day value </span>
+<span class="sd">    :return type: numeric</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">annuity_factor</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">discount_rate</span><span class="p">)</span><span class="o">**</span><span class="n">num_years</span><span class="p">)</span><span class="o">/</span><span class="n">discount_rate</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">capital</span><span class="o">/</span><span class="n">annuity_factor</span><span class="p">)</span>
+
+<span class="c">#End calcCapitalCostPerYear()</span>
+
+
+<span class="c">#Optimization helper methods</span></div>
+<div class="viewcode-block" id="packParams"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.GeneralFunctions.packParams">[docs]</a><span class="k">def</span> <span class="nf">packParams</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">defaults_list</span><span class="o">=</span><span class="p">[],</span> <span class="n">bounds_list</span><span class="o">=</span><span class="p">[]):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pack parameters into a series of values to pass to Objective Function</span>
+<span class="sd">    </span>
+<span class="sd">    NOTE: Unpacking order should follow packing order</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="c">#arg_list[name][row_id] = row.parameter</span>
+        <span class="n">defaults_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;best_guess&#39;</span><span class="p">])</span>
+        <span class="n">bounds_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;min_bound&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;max_bound&#39;</span><span class="p">])</span> <span class="p">)</span>
+    <span class="c">#End for</span>
+
+    <span class="k">return</span> <span class="n">defaults_list</span><span class="p">,</span> <span class="n">bounds_list</span>
+<span class="c">#End packParams()</span>
+</div>
+<div class="viewcode-block" id="unpackParams"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.GeneralFunctions.unpackParams">[docs]</a><span class="k">def</span> <span class="nf">unpackParams</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameter x passed to objective function is a series of values of arbitrary length</span>
+<span class="sd">    </span>
+<span class="sd">    This method reconstructs a dictionary map of {parameter_name: value}</span>
+<span class="sd">    </span>
+<span class="sd">    NOTE: Unpacking order should follow packing order</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">for</span> <span class="n">row_id</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">position</span> <span class="o">+</span> <span class="n">row_id</span>
+        <span class="n">params</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+    <span class="c">#End for</span>
+
+    <span class="n">position</span> <span class="o">=</span> <span class="n">position</span> <span class="o">+</span> <span class="n">row_id</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c">#Return position of x this function got to</span>
+    <span class="k">return</span> <span class="n">params</span><span class="p">,</span> <span class="n">position</span>
+<span class="c">#End unpackParams()</span>
+</div>
+<div class="viewcode-block" id="importParamsFromDF"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.GeneralFunctions.importParamsFromDF">[docs]</a><span class="k">def</span> <span class="nf">importParamsFromDF</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#39;best_guess&#39;</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract parameter values from a given DataFrame</span>
+
+<span class="sd">    :returns: Dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">row_id</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">params</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+    <span class="c">#End for</span>
+
+    <span class="k">return</span> <span class="n">params</span>
+<span class="c">#End importParamsFromDF()</span>
+</div>
+<div class="viewcode-block" id="importSpecificRangesFromFiles"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.GeneralFunctions.importSpecificRangesFromFiles">[docs]</a><span class="k">def</span> <span class="nf">importSpecificRangesFromFiles</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">irrigation</span><span class="p">,</span> <span class="n">crop</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Import best guess parameters, local PoCs, Global PoCs, and breakeven points at best guess</span>
+<span class="sd">    </span>
+<span class="sd">    TODO: Clean up. This is incredibly messy.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+    <span class="n">Data</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c">#Folder paths</span>
+    <span class="n">path_to_ranges</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">path_to_ranges</span>
+    <span class="n">storage_ranges</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">storage_ranges</span>
+    <span class="n">irrigation_ranges</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">irrigation_ranges</span>
+    <span class="n">crop_ranges</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">crop_ranges</span>
+
+    <span class="n">output_path</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">output_path</span>
+
+    <span class="n">farm_id</span> <span class="o">=</span> <span class="n">store</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">irrigation</span><span class="o">+</span><span class="s">&quot;_&quot;</span><span class="o">+</span><span class="n">crop</span>
+
+    <span class="c">### Import Best Guess</span>
+
+    <span class="c">#Import ranges as variables</span>
+    <span class="n">FarmDam_vars</span><span class="p">,</span> <span class="n">BasinStorage_vars</span><span class="p">,</span> <span class="n">ASRStorage_vars</span> <span class="o">=</span> <span class="n">importStorageRanges</span><span class="p">()</span>
+
+    <span class="c">#Irrigation ranges</span>
+    <span class="n">Flood_vars</span><span class="p">,</span> <span class="n">Spray_vars</span><span class="p">,</span> <span class="n">Drip_vars</span> <span class="o">=</span> <span class="n">importIrrigationRanges</span><span class="p">()</span>
+
+    <span class="c">#Crop ranges</span>
+    <span class="n">Cotton_vars</span> <span class="o">=</span> <span class="n">importCropRanges</span><span class="p">()</span>
+
+    <span class="n">Data</span><span class="p">[</span><span class="s">&#39;best_guess&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">Data</span><span class="p">[</span><span class="s">&#39;best_guess&#39;</span><span class="p">][</span><span class="s">&#39;FarmDam&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FarmDam_vars</span>
+    <span class="n">Data</span><span class="p">[</span><span class="s">&#39;best_guess&#39;</span><span class="p">][</span><span class="s">&#39;BasinStorage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BasinStorage_vars</span>
+    <span class="n">Data</span><span class="p">[</span><span class="s">&#39;best_guess&#39;</span><span class="p">][</span><span class="s">&#39;ASRStorage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ASRStorage_vars</span>
+
+    <span class="n">Data</span><span class="p">[</span><span class="s">&#39;best_guess&#39;</span><span class="p">][</span><span class="s">&#39;Flood&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Flood_vars</span>
+    <span class="n">Data</span><span class="p">[</span><span class="s">&#39;best_guess&#39;</span><span class="p">][</span><span class="s">&#39;Spray&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Spray_vars</span>
+    <span class="n">Data</span><span class="p">[</span><span class="s">&#39;best_guess&#39;</span><span class="p">][</span><span class="s">&#39;Drip&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Drip_vars</span>
+
+    <span class="n">Data</span><span class="p">[</span><span class="s">&#39;best_guess&#39;</span><span class="p">][</span><span class="s">&#39;Cotton&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Cotton_vars</span>
+
+    <span class="c">### Import local optimised variables (individual variables close to best guess) ###</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">store_path</span> <span class="o">=</span> <span class="n">output_path</span><span class="o">+</span><span class="s">&quot;local/&quot;</span><span class="o">+</span><span class="n">farm_id</span><span class="o">+</span><span class="s">&quot;/storages/&quot;</span>
+        <span class="n">store_opt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">store_path</span><span class="o">+</span><span class="n">store</span><span class="o">+</span><span class="s">&quot;.csv&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c">#Irrigation ranges</span>
+        <span class="n">irrig_path</span> <span class="o">=</span> <span class="n">output_path</span><span class="o">+</span><span class="s">&quot;local/&quot;</span><span class="o">+</span><span class="n">farm_id</span><span class="o">+</span><span class="s">&quot;/irrigations/&quot;</span>
+        <span class="n">irrig_opt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">irrig_path</span><span class="o">+</span><span class="n">irrigation</span><span class="o">+</span><span class="s">&quot;.csv&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c">#Crop ranges</span>
+        <span class="n">Cotton_opt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">output_path</span><span class="o">+</span><span class="s">&quot;local/&quot;</span><span class="o">+</span><span class="n">farm_id</span><span class="o">+</span><span class="s">&quot;/crops/cotton.csv&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">Data</span><span class="p">[</span><span class="s">&#39;local&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">Data</span><span class="p">[</span><span class="s">&#39;local&#39;</span><span class="p">][</span><span class="n">store</span><span class="p">]</span> <span class="o">=</span> <span class="n">store_opt</span>
+        <span class="n">Data</span><span class="p">[</span><span class="s">&#39;local&#39;</span><span class="p">][</span><span class="n">irrigation</span><span class="p">]</span> <span class="o">=</span> <span class="n">irrig_opt</span>
+        <span class="n">Data</span><span class="p">[</span><span class="s">&#39;local&#39;</span><span class="p">][</span><span class="s">&#39;Cotton&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Cotton_opt</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Error occured loading local PoCs&quot;</span>
+        <span class="k">print</span> <span class="n">e</span>
+
+    <span class="c">#### Breakeven Points ####</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">store_path</span> <span class="o">=</span> <span class="n">output_path</span><span class="o">+</span><span class="s">&quot;breakeven/&quot;</span><span class="o">+</span><span class="n">farm_id</span><span class="o">+</span><span class="s">&quot;/storages/&quot;</span>
+        <span class="n">store_opt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">store_path</span><span class="o">+</span><span class="n">store</span><span class="o">+</span><span class="s">&quot;.csv&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c">#Irrigation ranges</span>
+        <span class="n">irrig_path</span> <span class="o">=</span> <span class="n">output_path</span><span class="o">+</span><span class="s">&quot;breakeven/&quot;</span><span class="o">+</span><span class="n">farm_id</span><span class="o">+</span><span class="s">&quot;/irrigations/&quot;</span>
+        <span class="n">irrig_opt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">irrig_path</span><span class="o">+</span><span class="n">irrigation</span><span class="o">+</span><span class="s">&quot;.csv&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c">#Crop ranges</span>
+        <span class="n">Cotton_opt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">output_path</span><span class="o">+</span><span class="s">&quot;breakeven/&quot;</span><span class="o">+</span><span class="n">farm_id</span><span class="o">+</span><span class="s">&quot;/crops/cotton.csv&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">Data</span><span class="p">[</span><span class="s">&#39;breakeven&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">Data</span><span class="p">[</span><span class="s">&#39;breakeven&#39;</span><span class="p">][</span><span class="n">store</span><span class="p">]</span> <span class="o">=</span> <span class="n">store_opt</span>
+        <span class="n">Data</span><span class="p">[</span><span class="s">&#39;breakeven&#39;</span><span class="p">][</span><span class="n">irrigation</span><span class="p">]</span> <span class="o">=</span> <span class="n">irrig_opt</span>
+        <span class="n">Data</span><span class="p">[</span><span class="s">&#39;breakeven&#39;</span><span class="p">][</span><span class="s">&#39;Cotton&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Cotton_opt</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Breakeven folder not found&quot;</span>
+        <span class="k">print</span> <span class="n">e</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c">### Import Global optimised variables (close to best guess) ###</span>
+        <span class="n">store_path</span> <span class="o">=</span> <span class="n">output_path</span><span class="o">+</span><span class="s">&quot;closest/&quot;</span><span class="o">+</span><span class="n">farm_id</span><span class="o">+</span><span class="s">&quot;_(Points_of_Concern)&quot;</span><span class="o">+</span><span class="s">&quot;/storages/&quot;</span>
+        <span class="n">store_closest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">store_path</span><span class="o">+</span><span class="n">store</span><span class="o">+</span><span class="s">&quot;.csv&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c">#Irrigation ranges</span>
+        <span class="n">irrig_path</span> <span class="o">=</span> <span class="n">output_path</span><span class="o">+</span><span class="s">&quot;closest/&quot;</span><span class="o">+</span><span class="n">farm_id</span><span class="o">+</span><span class="s">&quot;_(Points_of_Concern)&quot;</span><span class="o">+</span><span class="s">&quot;/irrigations/&quot;</span>
+        <span class="n">irrig_closest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">irrig_path</span><span class="o">+</span><span class="n">irrigation</span><span class="o">+</span><span class="s">&quot;.csv&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c">#Crop ranges</span>
+        <span class="n">Cotton_closest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">output_path</span><span class="o">+</span><span class="s">&quot;closest/&quot;</span><span class="o">+</span><span class="n">farm_id</span><span class="o">+</span><span class="s">&quot;_(Points_of_Concern)&quot;</span><span class="o">+</span><span class="s">&quot;/crops/cotton.csv&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">Data</span><span class="p">[</span><span class="s">&#39;closest&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">Data</span><span class="p">[</span><span class="s">&#39;closest&#39;</span><span class="p">][</span><span class="n">store</span><span class="p">]</span> <span class="o">=</span> <span class="n">store_closest</span>
+        <span class="n">Data</span><span class="p">[</span><span class="s">&#39;closest&#39;</span><span class="p">][</span><span class="n">irrigation</span><span class="p">]</span> <span class="o">=</span> <span class="n">irrig_closest</span>
+        <span class="n">Data</span><span class="p">[</span><span class="s">&#39;closest&#39;</span><span class="p">][</span><span class="s">&#39;Cotton&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Cotton_closest</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Error loading globally optimised variables (closest to best guess)&quot;</span>
+        <span class="k">print</span> <span class="n">e</span>
+    <span class="c">#End</span>
+
+    <span class="k">return</span> <span class="n">Data</span>
+
+<span class="c">#End importDataFromFiles()</span>
+</div>
+<div class="viewcode-block" id="importStorageRanges"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.GeneralFunctions.importStorageRanges">[docs]</a><span class="k">def</span> <span class="nf">importStorageRanges</span><span class="p">():</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Import Water Storage value ranges from data paths as set in paths.py</span>
+<span class="sd">    </span>
+<span class="sd">    TODO: Clean up or remove</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="kn">import</span> <span class="nn">paths</span>
+
+    <span class="n">storage_ranges</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">storage_ranges</span>
+
+    <span class="c">#Import ranges as variables</span>
+    <span class="c">#Using FileHandler, seems to work</span>
+    <span class="kn">import</span> <span class="nn">Common.FileHandler</span>
+    <span class="n">Importer</span> <span class="o">=</span> <span class="n">Common</span><span class="o">.</span><span class="n">FileHandler</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">()</span>
+    <span class="n">storage_files</span> <span class="o">=</span> <span class="n">Importer</span><span class="o">.</span><span class="n">importFiles</span><span class="p">(</span><span class="n">storage_ranges</span><span class="p">)</span>
+
+    <span class="n">FarmDam_vars</span> <span class="o">=</span> <span class="n">storage_files</span><span class="p">[</span><span class="s">&#39;farmdam&#39;</span><span class="p">]</span>
+    <span class="n">BasinStorage_vars</span> <span class="o">=</span> <span class="n">storage_files</span><span class="p">[</span><span class="s">&#39;basin&#39;</span><span class="p">]</span>
+    <span class="n">ASRStorage_vars</span> <span class="o">=</span> <span class="n">storage_files</span><span class="p">[</span><span class="s">&#39;ASR&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">FarmDam_vars</span><span class="p">,</span> <span class="n">BasinStorage_vars</span><span class="p">,</span> <span class="n">ASRStorage_vars</span>
+<span class="c">#End importStorageRanges()</span>
+</div>
+<div class="viewcode-block" id="importIrrigationRanges"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.GeneralFunctions.importIrrigationRanges">[docs]</a><span class="k">def</span> <span class="nf">importIrrigationRanges</span><span class="p">():</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Import Irrigation value ranges from data paths as set in paths.py</span>
+<span class="sd">    </span>
+<span class="sd">    TODO: Clean up or remove</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">import</span> <span class="nn">paths</span>
+    
+    <span class="n">irrigation_ranges</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">irrigation_ranges</span>
+
+    <span class="kn">import</span> <span class="nn">Common.FileHandler</span>
+    <span class="n">Importer</span> <span class="o">=</span> <span class="n">Common</span><span class="o">.</span><span class="n">FileHandler</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">()</span>
+    <span class="n">irrigation_files</span> <span class="o">=</span> <span class="n">Importer</span><span class="o">.</span><span class="n">importFiles</span><span class="p">(</span><span class="n">irrigation_ranges</span><span class="p">)</span>
+
+    <span class="n">Flood_vars</span> <span class="o">=</span> <span class="n">irrigation_files</span><span class="p">[</span><span class="s">&#39;flood&#39;</span><span class="p">]</span>
+    <span class="n">Spray_vars</span> <span class="o">=</span> <span class="n">irrigation_files</span><span class="p">[</span><span class="s">&#39;spray&#39;</span><span class="p">]</span>
+    <span class="n">Drip_vars</span> <span class="o">=</span> <span class="n">irrigation_files</span><span class="p">[</span><span class="s">&#39;drip&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">Flood_vars</span><span class="p">,</span> <span class="n">Spray_vars</span><span class="p">,</span> <span class="n">Drip_vars</span>
+
+<span class="c">#End importIrrigationData()</span>
+</div>
+<div class="viewcode-block" id="importCropRanges"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.GeneralFunctions.importCropRanges">[docs]</a><span class="k">def</span> <span class="nf">importCropRanges</span><span class="p">():</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Import Crop value ranges from data paths as set in paths.py</span>
+<span class="sd">    </span>
+<span class="sd">    TODO: Clean up or remove</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="kn">import</span> <span class="nn">paths</span>
+
+    <span class="n">crop_ranges</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">crop_ranges</span>
+
+    <span class="kn">import</span> <span class="nn">Common.FileHandler</span>
+    <span class="n">Importer</span> <span class="o">=</span> <span class="n">Common</span><span class="o">.</span><span class="n">FileHandler</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">()</span>
+    <span class="n">crop_files</span> <span class="o">=</span> <span class="n">Importer</span><span class="o">.</span><span class="n">importFiles</span><span class="p">(</span><span class="n">crop_ranges</span><span class="p">)</span>
+
+    <span class="c">#Cotton_vars = pd.read_csv(crop_ranges+&quot;cotton.csv&quot;, skiprows=1, skipinitialspace=True)</span>
+    <span class="n">Cotton_vars</span> <span class="o">=</span> <span class="n">crop_files</span><span class="p">[</span><span class="s">&#39;cotton&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">Cotton_vars</span>
+<span class="c">#End importCropData()</span>
+</div>
+<div class="viewcode-block" id="importRanges"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.GeneralFunctions.importRanges">[docs]</a><span class="k">def</span> <span class="nf">importRanges</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">component_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Import range data for a component (Storage, irrigation, crop, etc.) and component_type (Farm Dam, Spray Irrigation, or crop type)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">#@TODO: Scan folder for folder with same name as component</span>
+    <span class="c">#       Then import file with same name as component type</span>
+    <span class="c">#       Replace use of import_____Ranges() with this one</span>
+
+    <span class="k">pass</span>
+
+    <span class="c">#import paths</span>
+
+<span class="c">#End importRanges()</span>
+
+</div>
+<div class="viewcode-block" id="setupParamsForOptScenario"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.GeneralFunctions.setupParamsForOptScenario">[docs]</a><span class="k">def</span> <span class="nf">setupParamsForOptScenario</span><span class="p">(</span><span class="n">ranges</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="s">&#39;best_guess&#39;</span><span class="p">,</span> <span class="n">attrib</span><span class="o">=</span><span class="s">&#39;best_guess&#39;</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set up Farm Component parameters for scenario.</span>
+<span class="sd">    </span>
+<span class="sd">    WARNING: Flood harvest is hardcoded (200ML)</span>
+<span class="sd">    </span>
+<span class="sd">    TODO: Move to CSV files</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">store_vars</span> <span class="o">=</span> <span class="n">ranges</span><span class="p">[</span><span class="n">case</span><span class="p">][</span><span class="n">names</span><span class="p">[</span><span class="s">&#39;store_name&#39;</span><span class="p">]]</span>
+    <span class="n">irrig_vars</span> <span class="o">=</span> <span class="n">ranges</span><span class="p">[</span><span class="n">case</span><span class="p">][</span><span class="n">names</span><span class="p">[</span><span class="s">&#39;irrig_name&#39;</span><span class="p">]]</span>
+    <span class="n">crop_vars</span> <span class="o">=</span> <span class="n">ranges</span><span class="p">[</span><span class="n">case</span><span class="p">][</span><span class="n">names</span><span class="p">[</span><span class="s">&#39;crop_name&#39;</span><span class="p">]]</span>
+
+    <span class="n">store_params</span> <span class="o">=</span> <span class="n">importParamsFromDF</span><span class="p">(</span><span class="n">store_vars</span><span class="p">,</span> <span class="n">attrib</span><span class="p">)</span>
+
+    <span class="c">#Set up extra attributes</span>
+    <span class="n">store_params</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="s">&#39;store_name&#39;</span><span class="p">]</span>
+
+    <span class="kn">from</span> <span class="nn">ParameterSet</span> <span class="kn">import</span> <span class="n">ParameterSet</span>
+    <span class="kn">import</span> <span class="nn">WaterAvailability</span>
+    <span class="n">store_params</span><span class="p">[</span><span class="s">&#39;WaterSources&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">WaterAvailability</span><span class="o">.</span><span class="n">WaterAvailability</span><span class="p">(</span><span class="n">water_source</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;flood_harvest&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">})</span>
+
+    <span class="n">store_params</span><span class="p">[</span><span class="s">&#39;ClimateVariables&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ParameterSet</span><span class="p">(</span><span class="n">surface_evap_rate</span><span class="o">=</span><span class="n">store_params</span><span class="p">[</span><span class="s">&#39;surface_evap_rate&#39;</span><span class="p">])</span>
+
+    <span class="n">irrig_params</span> <span class="o">=</span> <span class="n">importParamsFromDF</span><span class="p">(</span><span class="n">irrig_vars</span><span class="p">,</span> <span class="n">attrib</span><span class="p">)</span>
+    <span class="n">irrig_params</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="s">&#39;irrig_name&#39;</span><span class="p">]</span>
+    <span class="n">irrig_params</span><span class="p">[</span><span class="s">&#39;irrigation_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">crop_params</span> <span class="o">=</span> <span class="n">importParamsFromDF</span><span class="p">(</span><span class="n">crop_vars</span><span class="p">,</span> <span class="n">attrib</span><span class="p">)</span>
+    <span class="n">crop_params</span><span class="p">[</span><span class="s">&#39;crop_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="s">&#39;crop_name&#39;</span><span class="p">]</span>
+
+    <span class="n">bounds</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">bounds</span><span class="p">[</span><span class="n">names</span><span class="p">[</span><span class="s">&#39;store_name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">getBounds</span><span class="p">(</span><span class="n">store_vars</span><span class="p">)</span>
+    <span class="n">bounds</span><span class="p">[</span><span class="n">names</span><span class="p">[</span><span class="s">&#39;irrig_name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">getBounds</span><span class="p">(</span><span class="n">irrig_vars</span><span class="p">)</span>
+    <span class="n">bounds</span><span class="p">[</span><span class="n">names</span><span class="p">[</span><span class="s">&#39;irrig_name&#39;</span><span class="p">]][</span><span class="s">&#39;irrigation_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">bounds</span><span class="p">[</span><span class="n">names</span><span class="p">[</span><span class="s">&#39;crop_name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">getBounds</span><span class="p">(</span><span class="n">crop_vars</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">store_params</span><span class="p">,</span> <span class="n">irrig_params</span><span class="p">,</span> <span class="n">crop_params</span><span class="p">,</span> <span class="n">bounds</span>
+<span class="c">#End setupParamsForOptScenario()</span>
+</div>
+<div class="viewcode-block" id="getBounds"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.GeneralFunctions.getBounds">[docs]</a><span class="k">def</span> <span class="nf">getBounds</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">bounds_list</span><span class="o">=</span><span class="p">{}):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: Value range bounds as found in DataFrame parsed from csv files</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">bounds_list</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;min_bound&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;max_bound&#39;</span><span class="p">])</span>
+    <span class="c">#End for</span>
+
+    <span class="k">return</span> <span class="n">bounds_list</span>
+<span class="c">#End getBounds()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Takuya Iwanaga.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

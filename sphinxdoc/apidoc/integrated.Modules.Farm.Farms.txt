@@ -1,0 +1,30 @@
+integrated.Modules.Farm.Farms package
+=====================================
+
+Submodules
+----------
+
+integrated.Modules.Farm.Farms.FarmInfo module
+---------------------------------------------
+
+.. automodule:: integrated.Modules.Farm.Farms.FarmInfo
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+integrated.Modules.Farm.Farms.Management module
+-----------------------------------------------
+
+.. automodule:: integrated.Modules.Farm.Farms.Management
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: integrated.Modules.Farm.Farms
+    :members:
+    :undoc-members:
+    :show-inheritance:

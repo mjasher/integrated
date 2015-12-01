@@ -1,20 +1,7 @@
-Modules package
-===============
-
-Subpackages
------------
+integrated
+==========
 
 .. toctree::
+   :maxdepth: 4
 
-    Modules.Climate
-    Modules.Core
-    Modules.Farm
-    Modules.WaterSources
-
-Module contents
----------------
-
-.. automodule:: Modules
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   integrated

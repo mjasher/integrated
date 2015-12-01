@@ -1,29 +1,29 @@
-Modules.Farm.Fields package
+modules.Farm.Fields package
 ===========================
 
 Submodules
 ----------
 
-Modules.Farm.Fields.Field module
+modules.Farm.Fields.Field module
 --------------------------------
 
-.. automodule:: Modules.Farm.Fields.Field
+.. automodule:: modules.Farm.Fields.Field
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.Farm.Fields.Soil module
+modules.Farm.Fields.Soil module
 -------------------------------
 
-.. automodule:: Modules.Farm.Fields.Soil
+.. automodule:: modules.Farm.Fields.Soil
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.Farm.Fields.soil_dev module
+modules.Farm.Fields.soil_dev module
 -----------------------------------
 
-.. automodule:: Modules.Farm.Fields.soil_dev
+.. automodule:: modules.Farm.Fields.soil_dev
     :members:
     :undoc-members:
     :show-inheritance:
@@ -32,7 +32,7 @@ Modules.Farm.Fields.soil_dev module
 Module contents
 ---------------
 
-.. automodule:: Modules.Farm.Fields
+.. automodule:: modules.Farm.Fields
     :members:
     :undoc-members:
     :show-inheritance:

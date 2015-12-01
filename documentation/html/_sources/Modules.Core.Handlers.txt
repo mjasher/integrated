@@ -1,0 +1,30 @@
+modules.Core.Handlers package
+=============================
+
+Submodules
+----------
+
+modules.Core.Handlers.BOMHandler module
+---------------------------------------
+
+.. automodule:: modules.Core.Handlers.BOMHandler
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+modules.Core.Handlers.FileHandler module
+----------------------------------------
+
+.. automodule:: modules.Core.Handlers.FileHandler
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: modules.Core.Handlers
+    :members:
+    :undoc-members:
+    :show-inheritance:

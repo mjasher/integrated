@@ -1,37 +1,37 @@
-Modules.WaterSources package
+modules.WaterSources package
 ============================
 
 Submodules
 ----------
 
-Modules.WaterSources.DamWater module
+modules.WaterSources.DamWater module
 ------------------------------------
 
-.. automodule:: Modules.WaterSources.DamWater
+.. automodule:: modules.WaterSources.DamWater
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.WaterSources.Groundwater module
+modules.WaterSources.Groundwater module
 ---------------------------------------
 
-.. automodule:: Modules.WaterSources.Groundwater
+.. automodule:: modules.WaterSources.Groundwater
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.WaterSources.SurfaceWater module
+modules.WaterSources.SurfaceWater module
 ----------------------------------------
 
-.. automodule:: Modules.WaterSources.SurfaceWater
+.. automodule:: modules.WaterSources.SurfaceWater
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.WaterSources.WaterSources module
+modules.WaterSources.WaterSources module
 ----------------------------------------
 
-.. automodule:: Modules.WaterSources.WaterSources
+.. automodule:: modules.WaterSources.WaterSources
     :members:
     :undoc-members:
     :show-inheritance:
@@ -40,7 +40,7 @@ Modules.WaterSources.WaterSources module
 Module contents
 ---------------
 
-.. automodule:: Modules.WaterSources
+.. automodule:: modules.WaterSources
     :members:
     :undoc-members:
     :show-inheritance:

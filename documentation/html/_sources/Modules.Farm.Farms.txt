@@ -1,21 +1,21 @@
-Modules.Farm.Farms package
+modules.Farm.Farms package
 ==========================
 
 Submodules
 ----------
 
-Modules.Farm.Farms.FarmInfo module
+modules.Farm.Farms.FarmInfo module
 ----------------------------------
 
-.. automodule:: Modules.Farm.Farms.FarmInfo
+.. automodule:: modules.Farm.Farms.FarmInfo
     :members:
     :undoc-members:
     :show-inheritance:
 
-Modules.Farm.Farms.Management module
+modules.Farm.Farms.Management module
 ------------------------------------
 
-.. automodule:: Modules.Farm.Farms.Management
+.. automodule:: modules.Farm.Farms.Management
     :members:
     :undoc-members:
     :show-inheritance:
@@ -24,7 +24,7 @@ Modules.Farm.Farms.Management module
 Module contents
 ---------------
 
-.. automodule:: Modules.Farm.Farms
+.. automodule:: modules.Farm.Farms
     :members:
     :undoc-members:
     :show-inheritance:

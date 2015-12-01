@@ -61,6 +61,10 @@ docs/_build/
 # PyBuilder
 target/
 
+#SUBLIME STUFF
+*.sublime-project
+*.sublime-workspace
+
 
 # LATEX
 *.aux
