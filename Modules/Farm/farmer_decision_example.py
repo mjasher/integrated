@@ -1,9 +1,9 @@
 """
-
 Example for determining irrigated area that maximises profits
 
 Function to be optimised takes the form of negated sum of profits multiplied by area.
 This is then constrained by:
+  
   Available water resources
 
   Available land

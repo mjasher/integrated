@@ -4,12 +4,12 @@ import numpy as np
 import pandas as pd
 
 
-class WaterSuitability: 
+class WaterSuitability(object):
     """
     Model water suitability index for vegetation based on flow and groundwater. 
     The index was identified based on expert knowledge in vegetation water requirements
     """
-    
+
     def __init__(self, **kwargs):
 
         """
@@ -22,7 +22,7 @@ class WaterSuitability:
 
         
         #End init()
-    
+
     def selectCoordinates(self,curve_option):
         """
         Select a set of xy coordinates (imported from csv file) for generating curve.
@@ -43,14 +43,14 @@ class WaterSuitability:
         To be used for uncertainty analysis through allowing the predefined xy coordinates to move around
         """
         return new_coordinates
-    
 
-     def makeIndexCurve(self, coordinates):
-         """
-         Create an index curve based on xy coordinates. 
-         The two ends of the curve extend flat (i.e. the same as the first/last y value)
-         """        
-         return index_curve
+
+    def makeIndexCurve(self, coordinates):
+        """
+        Create an index curve based on xy coordinates. 
+        The two ends of the curve extend flat (i.e. the same as the first/last y value)
+        """
+        return index_curve
     
     def WaterIndexWeightedAvg(self,flow_index, groundwater_index):
         """

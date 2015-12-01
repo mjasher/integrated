@@ -2,14 +2,14 @@
 
 import WaterSuitability
 
-class FlowSuitability:
+class FlowSuitability(object):
         
     def floodEvents(self, flow, threshold, min_separation, min_duration):
-          """
-          Create a list of flood events based on daily flow, like hydromad eventseq
-          Output attributes:
-          event id, start date, end date, duration, month of start date, interflood dry period
-          """
+        """
+        Create a list of flood events based on daily flow, like hydromad eventseq
+        Output attributes:
+        event id, start date, end date, duration, month of start date, interflood dry period
+        """
         return flood_events
     
     def FloodIndexes(self, flood_events):
