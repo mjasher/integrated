@@ -11,7 +11,7 @@ Draft documentation for the Integrated Modelling Framework.
 Contents:
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 4
 
    includeme
 

@@ -1,0 +1,385 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>integrated.Modules.Ecology package &mdash; Integrated Framework 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
+    <link rel="up" title="integrated.Modules package" href="integrated.Modules.html" />
+    <link rel="next" title="integrated.Modules.Farm package" href="integrated.Modules.Farm.html" />
+    <link rel="prev" title="integrated.Modules.Core.Handlers package" href="integrated.Modules.Core.Handlers.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="integrated.Modules.Farm.html" title="integrated.Modules.Farm package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="integrated.Modules.Core.Handlers.html" title="integrated.Modules.Core.Handlers package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >integrated</a> &raquo;</li>
+          <li><a href="integrated.html" >integrated package</a> &raquo;</li>
+          <li><a href="integrated.Modules.html" accesskey="U">integrated.Modules package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="integrated-modules-ecology-package">
+<h1>integrated.Modules.Ecology package<a class="headerlink" href="#integrated-modules-ecology-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-integrated.Modules.Ecology.FLOWS">
+<span id="integrated-modules-ecology-flows-module"></span><h2>integrated.Modules.Ecology.FLOWS module<a class="headerlink" href="#module-integrated.Modules.Ecology.FLOWS" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="integrated.Modules.Ecology.FLOWS.FLOWS">
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Ecology.FLOWS.</tt><tt class="descname">FLOWS</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FLOWS.html#FLOWS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FLOWS.FLOWS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Model how well a flow regime matches environmental flow requirements, based on FLOWS recommendationss. 
+The model does not involve groundwater.</p>
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FLOWS.FLOWS.FlowsAnnualComplience">
+<tt class="descname">FlowsAnnualComplience</tt><big>(</big><em>flows_annual_sum</em>, <em>flows_freq_req</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FLOWS.html#FLOWS.FlowsAnnualComplience"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FLOWS.FLOWS.FlowsAnnualComplience" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate the annual complience of FLOWS requirement
+Input: annual summary of FLOWS, flows_freq_req
+Output: Percentage of days/events matches flows requirement (Year, cease_to_flow, etc)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FLOWS.FLOWS.FlowsAnnualSummary">
+<tt class="descname">FlowsAnnualSummary</tt><big>(</big><em>flows_cat</em>, <em>flows_dur_req</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FLOWS.html#FLOWS.FlowsAnnualSummary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FLOWS.FLOWS.FlowsAnnualSummary" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert daily FLOWS category (Date, flows_cat) into annual summary
+summer cease to flow/summer low flow/winter low flow: calculate the number of days in a year
+summer fresh/winter high/winter bankfull/winter overbank: calculate the number of event meet duration requirements
+Input: flows_cat, flows duration requirement
+Output: annual summary of FLOWS (year, days/events)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FLOWS.FLOWS.FlowsCategory">
+<tt class="descname">FlowsCategory</tt><big>(</big><em>flow</em>, <em>thresholds</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FLOWS.html#FLOWS.FlowsCategory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FLOWS.FLOWS.FlowsCategory" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert flow daily time series into FLOWS category:
+summer cease to flow, summer low flow, summer fresh
+winter low flow, winter high flow, winter bankfull flow, winter overbank flow
+Input: daily flow (Date, ML/d); thresholds for each type of flows (input csv)
+Output: daily FLOWS category (Date, flows_cat)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-integrated.Modules.Ecology.FlowSuitability">
+<span id="integrated-modules-ecology-flowsuitability-module"></span><h2>integrated.Modules.Ecology.FlowSuitability module<a class="headerlink" href="#module-integrated.Modules.Ecology.FlowSuitability" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability">
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Ecology.FlowSuitability.</tt><tt class="descname">FlowSuitability</tt><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.EventIndexMin">
+<tt class="descname">EventIndexMin</tt><big>(</big><em>flood_indexes</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.EventIndexMin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.EventIndexMin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate flood index summary based on min rule
+Output attributes:
+event id, start date, end date, summary flood index</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.EventIndexWeightedAvg">
+<tt class="descname">EventIndexWeightedAvg</tt><big>(</big><em>flood_indexes</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.EventIndexWeightedAvg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.EventIndexWeightedAvg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate flood index summary based on weighted average for each event
+Output attributes:
+event id, start date, end date, summary flood index</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.FloodIndexes">
+<tt class="descname">FloodIndexes</tt><big>(</big><em>flood_events</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.FloodIndexes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.FloodIndexes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate index for each flood attribute based on index curve (defined in WaterSuitability.py)
+Output attributes:
+event id, start date, end date, duration index, timing index, interflood dry period index</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.FlowIndex">
+<tt class="descname">FlowIndex</tt><big>(</big><em>event_index</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.FlowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.FlowIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate daily flow index based on event index
+Output attributes:
+Date, flow_index</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.floodEvents">
+<tt class="descname">floodEvents</tt><big>(</big><em>flow</em>, <em>threshold</em>, <em>min_separation</em>, <em>min_duration</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.floodEvents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.floodEvents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a list of flood events based on daily flow, like hydromad eventseq
+Output attributes:
+event id, start date, end date, duration, month of start date, interflood dry period</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-integrated.Modules.Ecology.GwSuitabiilty">
+<span id="integrated-modules-ecology-gwsuitabiilty-module"></span><h2>integrated.Modules.Ecology.GwSuitabiilty module<a class="headerlink" href="#module-integrated.Modules.Ecology.GwSuitabiilty" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="integrated.Modules.Ecology.GwSuitabiilty.GwSuitability">
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Ecology.GwSuitabiilty.</tt><tt class="descname">GwSuitability</tt><a class="reference internal" href="_modules/integrated/Modules/Ecology/GwSuitabiilty.html#GwSuitability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.GwSuitabiilty.GwSuitability" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="integrated.Modules.Ecology.GwSuitabiilty.GwSuitability.GwIndex">
+<tt class="descname">GwIndex</tt><big>(</big><em>gw_depth_index</em>, <em>salinity_index</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/GwSuitabiilty.html#GwSuitability.GwIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.GwSuitabiilty.GwSuitability.GwIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate daily groundwater index based on groundwater depth and salinity index
+Output attributes:
+Date, gw_index</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-integrated.Modules.Ecology.WaterSuitability">
+<span id="integrated-modules-ecology-watersuitability-module"></span><h2>integrated.Modules.Ecology.WaterSuitability module<a class="headerlink" href="#module-integrated.Modules.Ecology.WaterSuitability" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability">
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Ecology.WaterSuitability.</tt><tt class="descname">WaterSuitability</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Model water suitability index for vegetation based on flow and groundwater. 
+The index was identified based on expert knowledge in vegetation water requirements</p>
+<dl class="method">
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.WaterIndexWeightedAvg">
+<tt class="descname">WaterIndexWeightedAvg</tt><big>(</big><em>flow_index</em>, <em>groundwater_index</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.WaterIndexWeightedAvg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.WaterIndexWeightedAvg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate daily water index summary based on weighted average of daily flow index and groundwater index
+Output attributes:
+Date, water_index</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.makeIndexCurve">
+<tt class="descname">makeIndexCurve</tt><big>(</big><em>coordinates</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.makeIndexCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.makeIndexCurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an index curve based on xy coordinates. 
+The two ends of the curve extend flat (i.e. the same as the first/last y value)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.modifyCoordinates">
+<tt class="descname">modifyCoordinates</tt><big>(</big><em>coordinates</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.modifyCoordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.modifyCoordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjust the predefined xy coordinates e.g. +_ 10%
+To be used for uncertainty analysis through allowing the predefined xy coordinates to move around</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectCoordinates">
+<tt class="descname">selectCoordinates</tt><big>(</big><em>curve_option</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.selectCoordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectCoordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a set of xy coordinates (imported from csv file) for generating curve.
+To be used for uncertainty analysis through selecting different curves</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectWeights">
+<tt class="descname">selectWeights</tt><big>(</big><em>weight_option</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.selectWeights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectWeights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a set of weight (imported from csv file) for aggregating indexes.
+To be used for uncertainty analysis through selecting different weights</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-integrated.Modules.Ecology.baihua_example">
+<span id="integrated-modules-ecology-baihua-example-module"></span><h2>integrated.Modules.Ecology.baihua_example module<a class="headerlink" href="#module-integrated.Modules.Ecology.baihua_example" title="Permalink to this headline">¶</a></h2>
+<p>Example class structure</p>
+<dl class="class">
+<dt id="integrated.Modules.Ecology.baihua_example.Ecological">
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Ecology.baihua_example.</tt><tt class="descname">Ecological</tt><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Ecological"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Ecological" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Documentation example</p>
+<p>flow sequence</p>
+<p>flood attributes</p>
+<p>weightings</p>
+<dl class="docutils">
+<dt>For each:</dt>
+<dd><p class="first">duration</p>
+<p class="last">time</p>
+</dd>
+</dl>
+<p>inter_flood dry period</p>
+<blockquote>
+<div><p>calculate an index</p>
+<p>and weighting based on preferences</p>
+</div></blockquote>
+<p>Range of CTF</p>
+<dl class="docutils">
+<dt>SW:</dt>
+<dd><p class="first">gw level
+salinity</p>
+<p>calculate curves and index for gw and salinity</p>
+<p class="last">calculate suitability of gw factoring in salinity (adjustment factor)</p>
+</dd>
+<dt>Flow methodology:</dt>
+<dd><p class="first">Rules based on environmental flow definitions (low flow, freshes, etc.) frequency based on percentage</p>
+<p class="last">Calculate # of days</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="integrated.Modules.Ecology.baihua_example.Ecological.other_threshold">
+<tt class="descname">other_threshold</tt><big>(</big><em>z1</em>, <em>w1</em>, <em>z2</em>, <em>w2</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Ecological.other_threshold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Ecological.other_threshold" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.baihua_example.Ecological.threshold_func1">
+<tt class="descname">threshold_func1</tt><big>(</big><em>z1</em>, <em>w1</em>, <em>z2</em>, <em>w2</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Ecological.threshold_func1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Ecological.threshold_func1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="integrated.Modules.Ecology.baihua_example.Example">
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Ecology.baihua_example.</tt><tt class="descname">Example</tt><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Example"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Example" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<dl class="method">
+<dt id="integrated.Modules.Ecology.baihua_example.Example.calcCurves">
+<tt class="descname">calcCurves</tt><big>(</big><em>x</em>, <em>y</em>, <em>z</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Example.calcCurves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Example.calcCurves" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.baihua_example.Example.determineEcologicalHealth">
+<tt class="descname">determineEcologicalHealth</tt><big>(</big><em>list_of_species</em>, <em>ecological_data</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Example.determineEcologicalHealth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Example.determineEcologicalHealth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.baihua_example.Example.speciesHealth">
+<tt class="descname">speciesHealth</tt><big>(</big><em>list_of_species</em>, <em>ecological_data</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Example.speciesHealth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Example.speciesHealth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.baihua_example.Example.threshold_func">
+<tt class="descname">threshold_func</tt><big>(</big><em>z1</em>, <em>w1</em>, <em>z2</em>, <em>w2</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Example.threshold_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Example.threshold_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="integrated.Modules.Ecology.baihua_example.NewStudyArea">
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Ecology.baihua_example.</tt><tt class="descname">NewStudyArea</tt><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#NewStudyArea"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.NewStudyArea" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Ecology.baihua_example.Example" title="integrated.Modules.Ecology.baihua_example.Example"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Ecology.baihua_example.Example</span></tt></a></p>
+<dl class="method">
+<dt id="integrated.Modules.Ecology.baihua_example.NewStudyArea.calcDurationCurves">
+<tt class="descname">calcDurationCurves</tt><big>(</big><em>x</em>, <em>y</em>, <em>z</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#NewStudyArea.calcDurationCurves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.NewStudyArea.calcDurationCurves" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.baihua_example.NewStudyArea.threshold_func">
+<tt class="descname">threshold_func</tt><big>(</big><em>z1</em>, <em>w1</em>, <em>z2</em>, <em>w2</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#NewStudyArea.threshold_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.NewStudyArea.threshold_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-integrated.Modules.Ecology">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-integrated.Modules.Ecology" title="Permalink to this headline">¶</a></h2>
+<p>Ecology</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">integrated.Modules.Ecology package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Ecology.FLOWS">integrated.Modules.Ecology.FLOWS module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Ecology.FlowSuitability">integrated.Modules.Ecology.FlowSuitability module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Ecology.GwSuitabiilty">integrated.Modules.Ecology.GwSuitabiilty module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Ecology.WaterSuitability">integrated.Modules.Ecology.WaterSuitability module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Ecology.baihua_example">integrated.Modules.Ecology.baihua_example module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Ecology">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="integrated.Modules.Core.Handlers.html"
+                        title="previous chapter">integrated.Modules.Core.Handlers package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="integrated.Modules.Farm.html"
+                        title="next chapter">integrated.Modules.Farm package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/integrated.Modules.Ecology.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="integrated.Modules.Farm.html" title="integrated.Modules.Farm package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="integrated.Modules.Core.Handlers.html" title="integrated.Modules.Core.Handlers package"
+             >previous</a> |</li>
+        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >integrated</a> &raquo;</li>
+          <li><a href="integrated.html" >integrated package</a> &raquo;</li>
+          <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Takuya Iwanaga.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

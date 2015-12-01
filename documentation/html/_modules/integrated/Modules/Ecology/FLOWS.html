@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>integrated.Modules.Ecology.FLOWS &mdash; Integrated Framework 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for integrated.Modules.Ecology.FLOWS</h1><div class="highlight"><pre>
+<span class="c">#FLOWS.py</span>
+
+<div class="viewcode-block" id="FLOWS"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FLOWS.FLOWS">[docs]</a><span class="k">class</span> <span class="nc">FLOWS</span><span class="p">:</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Model how well a flow regime matches environmental flow requirements, based on FLOWS recommendationss. </span>
+<span class="sd">    The model does not involve groundwater.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        eco_site: ecological model site</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">eco_site</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;eco_site&#39;</span><span class="p">,</span><span class="s">&#39;1&#39;</span><span class="p">)</span>  
+        
+        <span class="c">#End init()</span>
+    
+<div class="viewcode-block" id="FLOWS.FlowsCategory"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FLOWS.FLOWS.FlowsCategory">[docs]</a>    <span class="k">def</span> <span class="nf">FlowsCategory</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        convert flow daily time series into FLOWS category:</span>
+<span class="sd">        summer cease to flow, summer low flow, summer fresh</span>
+<span class="sd">        winter low flow, winter high flow, winter bankfull flow, winter overbank flow</span>
+<span class="sd">        Input: daily flow (Date, ML/d); thresholds for each type of flows (input csv)</span>
+<span class="sd">        Output: daily FLOWS category (Date, flows_cat)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">flows_cat</span>
+        </div>
+<div class="viewcode-block" id="FLOWS.FlowsAnnualSummary"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FLOWS.FLOWS.FlowsAnnualSummary">[docs]</a>    <span class="k">def</span> <span class="nf">FlowsAnnualSummary</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flows_cat</span><span class="p">,</span> <span class="n">flows_dur_req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        convert daily FLOWS category (Date, flows_cat) into annual summary</span>
+<span class="sd">        summer cease to flow/summer low flow/winter low flow: calculate the number of days in a year</span>
+<span class="sd">        summer fresh/winter high/winter bankfull/winter overbank: calculate the number of event meet duration requirements</span>
+<span class="sd">        Input: flows_cat, flows duration requirement</span>
+<span class="sd">        Output: annual summary of FLOWS (year, days/events)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">flows_annual_sum</span>
+        </div>
+<div class="viewcode-block" id="FLOWS.FlowsAnnualComplience"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FLOWS.FLOWS.FlowsAnnualComplience">[docs]</a>    <span class="k">def</span> <span class="nf">FlowsAnnualComplience</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flows_annual_sum</span><span class="p">,</span> <span class="n">flows_freq_req</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculate the annual complience of FLOWS requirement</span>
+<span class="sd">        Input: annual summary of FLOWS, flows_freq_req</span>
+<span class="sd">        Output: Percentage of days/events matches flows requirement (Year, cease_to_flow, etc)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">flows_annual_com</span>
+        
+        
+        
+        </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Takuya Iwanaga.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

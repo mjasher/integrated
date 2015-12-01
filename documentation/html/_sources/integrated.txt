@@ -12,14 +12,6 @@ Subpackages
 Submodules
 ----------
 
-integrated.baihua_example module
---------------------------------
-
-.. automodule:: integrated.baihua_example
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 integrated.main module
 ----------------------
 

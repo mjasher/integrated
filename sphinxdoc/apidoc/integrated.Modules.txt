@@ -8,7 +8,9 @@ Subpackages
 
     integrated.Modules.Climate
     integrated.Modules.Core
+    integrated.Modules.Ecology
     integrated.Modules.Farm
+    integrated.Modules.Recreation
     integrated.Modules.WaterSources
 
 Module contents
