@@ -1,5 +1,6 @@
-from Modules.Core.IntegratedModelComponent import Component
-from Modules.Core.GeneralFunctions import *
+from integrated.Modules.Core.IntegratedModelComponent import Component
+from integrated.Modules.Core.GeneralFunctions import *
+import copy
 
 class IrrigationPractice(Component):
 
@@ -9,7 +10,7 @@ class IrrigationPractice(Component):
     Methods defined in this parent class should be considered stubs, to be redefined by child Classes.
     """
 
-    def __init__(self, name, irrigation_efficiency, cost_per_Ha, replacement_cost_per_Ha=None, irrigation_rate=None, lifespan=None, max_irrigation_area_Ha=None): #discount_rate=0.07
+    def __init__(self, name, irrigation_efficiency, cost_per_Ha, replacement_cost_per_Ha=None, irrigation_rate=None, lifespan=None, max_irrigation_area_Ha=None, maintenance_rate=None, **kwargs): #discount_rate=0.07
 
         self.name = name
 
@@ -20,41 +21,45 @@ class IrrigationPractice(Component):
         self.replacement_cost_per_Ha = cost_per_Ha if replacement_cost_per_Ha is None else replacement_cost_per_Ha
 
         #Implementation cost for Flood is always 0 as it is already implemented
-        self.cost_per_Ha = cost_per_Ha if name is not 'Flood' else 0.0
+        self.cost_per_Ha = cost_per_Ha #if name is not 'Flood' else 0.0
         
         #max irrigation area default value (782 Ha) from Powell & Scott (2011), Representative farm model, p 25
         self.max_irrigation_area_Ha = max_irrigation_area_Ha if max_irrigation_area_Ha is not None else 782.0
         self.lifespan = lifespan if lifespan is not None else 10
-        #self.discount_rate = discount_rate
+
+        self.maintenance_rate = maintenance_rate
 
         #self.irrigation_area = 0.0 if irrigation_area is None else irrigation_area
 
         #Set default params
-        self.default_params = {}
-        for key, value in self.__dict__.iteritems():
-            self.default_params[key] = value
+        # self.default_params = {}
+        # for key, value in self.__dict__.iteritems():
+        #     self.default_params[key] = copy.deepcopy(value)
+        # #End For
+
+        #Set all other kwargs as class attributes
+        for key, value in kwargs.items():
+            setattr(self, key, copy.deepcopy(value))
         #End For
 
     #End init()
 
     def resetParams(self):
         for key, value in self.default_params.iteritems():
-            setattr(self, key, value)
+            setattr(self, key, copy.deepcopy(value))
         #End for
     #End resetParams()
 
     def calcCropWaterRequirement(self, applied_ML_per_Ha):
 
         """
-        Calculate how much water is required for a given crop, determined from the base applied water
+        WARNING: DEPRECATED, DO NOT USE
 
-        applied_ML_per_Ha: Water applied for crop MegaLitres per Ha under flood irrigation
+        Calculate how much water is required for a given crop, determined from the base applied water.
+        This is different from the amount of water applied.
 
-        This is different from Water Applied.
-
-        Water Applied is the amount of water sent out to the field
-
-        Crop Water Requirement is the amount of water actually used by the crop.
+        :param applied_ML_per_Ha: Water applied for crop MegaLitres per Ha under flood irrigation
+        
         """
 
         return applied_ML_per_Ha - self.calcIrrigationEfficiencySaving(applied_ML_per_Ha)
@@ -65,6 +70,9 @@ class IrrigationPractice(Component):
 
         """
         Calculate the amount of water saved per Hectare due to efficiency increase
+
+        :param crop_water_req_ML_per_Ha: Amount of water required by the crop (ML/Ha)
+
         """
 
         return (crop_water_req_ML_per_Ha * (1 - self.irrigation_efficiency))
@@ -84,7 +92,7 @@ class IrrigationPractice(Component):
 
           :math:`E_{i} = 100(W_{b} / W_{f})`, where :math:`W_{b}` is Water used beneficially, and :math:`W_{f}` is water delivered to field
 
-          Rogers et al. (1997)
+        as seen in Rogers et al. (1997)
 
         :param crop_water_req_ML_per_Ha: Amount of water in ML per Ha applied to the field.
         :type crop_water_req_ML_per_Ha: float, ML per Hectare
@@ -214,7 +222,7 @@ class IrrigationPractice(Component):
 
         """
         Calculate the replacement cost for a given irrigation system.
-          Replacement cost is assumed to be equal to the initial cost per Hectare.
+        Replacement cost is assumed to be equal to the initial cost per Hectare.
 
         :param irrigation_area_Ha: Area of irrigation system
         :returns: replacement cost in dollar terms

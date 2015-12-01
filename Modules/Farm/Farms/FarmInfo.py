@@ -1,6 +1,7 @@
 import math
+import copy
 
-from Modules.Core.IntegratedModelComponent import Component
+from integrated.Modules.Core.IntegratedModelComponent import Component
 
 class FarmInfo(Component):
 
@@ -28,7 +29,7 @@ class FarmInfo(Component):
 
         #Set all other kwargs as class attributes
         for key, value in kwargs.items():
-            setattr(self, key, value)
+            setattr(self, key, copy.deepcopy(value))
         #End For
 
     #End init()
@@ -121,6 +122,15 @@ class FarmInfo(Component):
         return self.irrigations[irrigation_name].irrigation_efficiency
     #End getIrrigationEfficiency()
 
+    def getFarmArea(self):
+        total = 0.0
+        for f in self.fields:
+            total = total + f.area
+        #End for
+
+        return total
+    #End getFarmArea()
+
     def calcNetWaterAvailable(self):
 
         """
@@ -182,7 +192,7 @@ class FarmInfo(Component):
     def calcFarmIrrigationArea(self, water_applied_ML_per_Ha, available_water_ML):
 
         """
-        Calculate irrigation area, capped to max irrigation area
+        Calculate irrigation area for a single crop, capped to max irrigation area
         """
 
         irrigation_area = (available_water_ML / water_applied_ML_per_Ha)

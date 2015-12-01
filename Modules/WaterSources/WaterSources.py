@@ -1,4 +1,4 @@
-from Modules.Core.IntegratedModelComponent import Component
+from integrated.Modules.Core.IntegratedModelComponent import Component
 
 class WaterSources(Component):
 

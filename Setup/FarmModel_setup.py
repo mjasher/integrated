@@ -14,7 +14,7 @@ TODO: Split out non-farm model related stuff
 #import ClimateVariables
 
 from integrated.Modules.Core.ParameterSet import *
-from integrated.Modules.Farm.WaterSources import WaterSources
+from integrated.Modules.WaterSources import WaterSources
 
 from integrated.Modules.Farm.Irrigations.IrrigationPractice import IrrigationPractice
 from integrated.Modules.Core.GeneralFunctions import *
@@ -143,28 +143,37 @@ Cotton_params = ParameterSet(
 )
 Cotton = CropInfo(**Cotton_params.getParams())
 
+#Crop Coefficients for French-Schultz taken from
+#http://www.bcg.org.au/cb_pages/files/Explination%20N%20Budgeting.pdf
+#unless stated otherwise
+
 #WARNING: THE NUMBERS BELOW ARE ALL MADE UP
+
+#Root depth
+#http://www.fao.org/nr/water/cropinfo_wheat.html
 Wheat_params = ParameterSet(
     crop_name='Wheat',
-    price_per_yield=400,
-    yield_per_Ha=12,
+    price_per_yield=150,
+    yield_per_Ha=0.7,
     water_use_ML_per_Ha=3.0,
-    variable_cost_per_Ha=2000.0,
+    variable_cost_per_Ha=1000.0,
     planting_info={
         'seed': ['09-01', 0.4],
         'plant': ['11-01', 0.85],
         'harvest': ['01-31', 0.6]
     },
-    root_depth_m=0.55,
+    root_depth_m=0.3,
     depletion_fraction=0.4,
+    et_coef=110, #Crop Evapotranspiration coefficient 110 mm
+    wue_coef=20, #Crop WUE coefficient for French-Schultz
 )
 
 Canola_params = ParameterSet(
     crop_name='Canola',
-    price_per_yield=350,
-    yield_per_Ha=11,
-    water_use_ML_per_Ha=3.0,
-    variable_cost_per_Ha=1800.0,
+    price_per_yield=513,
+    yield_per_Ha=9.5,
+    water_use_ML_per_Ha=6.0,
+    variable_cost_per_Ha=1000.0,
     planting_info={
         'seed': ['09-01', 0.4],
         'plant': ['11-01', 0.85],
@@ -172,15 +181,20 @@ Canola_params = ParameterSet(
     },
     root_depth_m=0.55,
     depletion_fraction=0.4,
+    et_coef=110, #Crop Evapotranspiration coefficient 110 mm DUMMY VALUE FOR DEV PURPOSES!
+    wue_coef=15, #Crop WUE coefficient for French-Schultz
 )
 
 #Seed in September-October, planting in November
 #Start harvesting from late January to end of March
 #http://www.mmg.com.au/local-news/country-news/processing-tomato-harvest-beats-last-year-1.90835
+
+#Root depth
+#http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use
 Tomato_params = ParameterSet(
-    crop_name='Tomato',
-    price_per_yield=600,
-    yield_per_Ha=8,
+    crop_name='Fresh Tomato',
+    price_per_yield=460,
+    yield_per_Ha=45.1,
     water_use_ML_per_Ha=6.0,
     #when to plant Month-Day, #Crop coefficient at plant stages
     planting_info={
@@ -188,14 +202,28 @@ Tomato_params = ParameterSet(
         'plant': ['11-01', 0.85],
         'harvest': ['01-31', 0.6]
     },
-    root_depth_m=0.55,
+    root_depth_m=1.0,
     depletion_fraction=0.4,
     variable_cost_per_Ha=2150.0,
+    et_coef=90,
+    wue_coef=10, 
 )
 
+#Values for soil TAW taken from
+#http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use
 Light_clay_params = ParameterSet(
     name='Light Clay',
-    TAW_mm=180
+    TAW_mm=172
+)
+
+Clay_loam_params = ParameterSet(
+    name='Clay Loam',
+    TAW_mm=164
+)
+
+Loam_params = ParameterSet(
+    name='Loam',
+    TAW_mm=164
 )
 
 MIN_BOUND = 0.3

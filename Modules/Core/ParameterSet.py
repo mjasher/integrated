@@ -1,3 +1,5 @@
+import copy
+
 class ParameterSet(object):
 
     """
@@ -8,27 +10,13 @@ class ParameterSet(object):
 
         #Set all key word arguments as attributes
         for key, value in kwargs.items():
-            setattr(self, key, value)
+            setattr(self, key, copy.deepcopy(value))
         #End For
     #End __init__()
 
     def getParams(self):
 
-        """
-        Gets all parameters within the set
-
-        :returns: a Dict of all parameters/attributes
-        :return type: Dict
-
-        """
-
-        params = {}
-        for key, value in self.__dict__.iteritems():
-            params[key] = value
-        #End For
-
-        return params
-    #End getParameters()
+        return copy.deepcopy(self.__dict__)
 
     def getNumParams(self):
 

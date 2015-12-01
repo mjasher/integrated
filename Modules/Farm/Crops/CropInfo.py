@@ -1,5 +1,6 @@
 from __future__ import division
-from Modules.Core.IntegratedModelComponent import Component
+import copy
+from integrated.Modules.Core.IntegratedModelComponent import Component
 
 class CropInfo(Component):
 
@@ -19,7 +20,7 @@ class CropInfo(Component):
         required_water_ML_per_Ha        : Net amount of water is required by the crop in ML per Hectare
         water_need_distribution         : Dict of growth stages and crop coefficients {'stage name': {'length (in days)': 0, 'coefficient': 0.5}}
 
-        root_depth                      : Root depth of plant
+        root_depth_m                    : Root depth of plant
         growth_stages                   : Length of growth stages in days (see http://www.fao.org/docrep/x0490e/x0490e0b.htm)
         growth_water_requirements       : Required water for each growth stage
 
@@ -35,7 +36,7 @@ class CropInfo(Component):
         """
 
         self.name = crop_name
-        self.yield_per_Ha = yield_per_Ha
+        self.yield_per_Ha = yield_per_Ha if yield_per_Ha is not None else 0.0
         self.price_per_yield = price_per_yield
         self.variable_cost_per_Ha = variable_cost_per_Ha
         self.water_use_ML_per_Ha = water_use_ML_per_Ha if water_use_ML_per_Ha is not None else None
@@ -45,22 +46,23 @@ class CropInfo(Component):
 
         #Set all other kwargs as class attributes
         for key, value in kwargs.items():
-            setattr(self, key, value)
+            setattr(self, key, copy.deepcopy(value))
         #End For
 
         #Set default params
-        self.default_params = {}
-        for key, value in self.__dict__.iteritems():
-            self.default_params[key] = value
-        #End For
+        # self.default_params = {}
+        # for key, value in self.__dict__.iteritems():
+        #     self.default_params[key] = copy.deepcopy(value)
+        # #End For
 
     #End init()
 
     def updateWaterNeedsSatisfied(self, water_use_ML, area_Ha):
         """
         Update water needs for this crop
-          :param water_use_ML: represents in ML the ET of this crop for the given area
-          :param area: total area in Hectares for this crop
+        
+        :param water_use_ML: represents in ML the ET of this crop for the given area
+        :param area: total area in Hectares for this crop
 
         """
         try:
@@ -75,9 +77,10 @@ class CropInfo(Component):
 
         """
         Get crop coefficient for current stage of crop development as indicated by the timestep
-          TODO: Not sure if this method will be used
+        TODO: Not sure if this method will be used
 
-          :param timestep: Date Object representing current timestep
+        :param timestep: Date Object representing current timestep
+        :returns: Coefficient for the development stage of plant
         """
 
         from datetime import datetime
@@ -105,7 +108,7 @@ class CropInfo(Component):
         """
         Calculate total income from crop per Hectare, taking into account variable costs
 
-          :returns: total gross margins per Hectare based on assumed yield per Ha, price per Yield, and variable costs per Hectare
+        :returns: total gross margins per Hectare based on assumed yield per Ha, price per Yield, and variable costs per Hectare
         """
 
         gross_value_per_yield = self.yield_per_Ha * self.price_per_yield
@@ -120,7 +123,7 @@ class CropInfo(Component):
 
         """
         Calculate Gross Margins per Hectare ($/Ha)
-          :returns: Dollar value per Hectare
+        :returns: Dollar value per Hectare
         """
 
         return (self.calcTotalCropGrossMarginsPerHa() / self.water_use_ML_per_Ha)
@@ -131,7 +134,7 @@ class CropInfo(Component):
 
         """
         Calculate gross income from crop for a given irrigated area, taking into account variable costs
-          :param land_used_Ha: Amount of land dedicated to this crop type
+        :param land_used_Ha: Amount of land dedicated to this crop type
         """
 
         total_crop_gross_margin = land_used_Ha * self.calcTotalCropGrossMarginsPerHa()

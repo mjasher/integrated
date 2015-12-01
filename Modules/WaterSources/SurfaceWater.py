@@ -1,4 +1,3 @@
-#from Modules.Core.IntegratedModelComponent import Component
 import WaterSources
 
 class SurfaceWaterSource(WaterSources.WaterSources):

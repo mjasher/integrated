@@ -1,4 +1,5 @@
-from Modules.Core.IntegratedModelComponent import Component
+from __future__ import division
+from integrated.Modules.Core.IntegratedModelComponent import Component
 
 class FarmField(Component):
 
@@ -6,19 +7,36 @@ class FarmField(Component):
     Container to associate an irrigation with a crop type
     """
 
-    def __init__(self, irrigation, crop, soil=None, area=None):
+    def __init__(self, irrigation=None, crop=None, soil=None, area=None):
+        self.name = "{i}-{c}".format(i=irrigation.name, c=crop.name)
         self.irrigation = irrigation
         self.crop = crop
         self.soil = soil
         self.area = area
+        self.water_applied = 0
 
         #Cumulative Soil Water Deficit
-        self.c_swd = 0
+        self.c_swd = self.soil.calcRAW(self.soil.TAW_mm, self.crop.depletion_fraction) - self.soil.calcRAW(self.soil.current_TAW_mm, self.crop.depletion_fraction)
+        #self.soil.TAW_mm - self.soil.current_TAW_mm
 
         if self.crop.required_water_ML_per_Ha is None:
             self.crop.required_water_ML_per_Ha = self.irrigation.irrigation_efficiency * self.crop.water_use_ML_per_Ha
         
     #End init()
+
+    def status(self):
+
+        return {
+            'irrigation': self.irrigation.name,
+            'soil_type': self.soil.name,
+            'soil water deficit': self.c_swd,
+            'area': self.area,
+            'crop': self.crop.name,
+            'root zone': self.crop.root_depth_m
+        }
+
+    #End status()
+
 
     def applyWater(self, gross_applied_water_ML):
 
@@ -28,25 +46,13 @@ class FarmField(Component):
         :param gross_applied_water_ML: water in ML applied to field
         :returns: Water in ML that goes to recharge
         :return type: float
-
         """
-
-        #print "Applied {x} ML on {a} Ha for {c} using {i}".format(x=gross_applied_water_ML, a=self.area, c=self.crop.name, i=self.irrigation.name)
-
-        #gross_water_mm = gross_applied_water_ML * 100
-
-        #print "This is calculated to be {g} mm ".format(g=gross_water_mm)
 
         #Calculate crop water use (ET_c)
         crop_water_use = gross_applied_water_ML * self.irrigation.irrigation_efficiency
         seepage = gross_applied_water_ML - crop_water_use
 
-        #print "{crop} used: {c}".format(c=crop_water_use, crop=self.crop.name)
-
         self.crop.updateWaterNeedsSatisfied(crop_water_use, self.area)
-
-        #Update cumulative soil water deficit
-        #self.c_swd = self.c_swd + (seepage * 100)
 
         return seepage
 
@@ -59,7 +65,9 @@ class FarmField(Component):
         
         """
 
-        self.crop.yield_per_Ha = self.crop.yield_per_Ha * self.crop.water_need_satisfied
+        #self.crop.yield_per_Ha = self.crop.yield_per_Ha * self.crop.water_need_satisfied
+
+        pass
 
     #End applyCropLoss()
 
@@ -76,9 +84,80 @@ class FarmField(Component):
 
         harvest = self.crop.yield_per_Ha * self.area
 
-        self.area = 0
-
         return harvest
     #End harvest()
+
+    def updateCumulativeSWD(self, timestep, timestep_ETc, gross_water_applied):
+
+        """
+        Follows calculation method outlined in
+        http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use
+
+        Calculates the Soil Water Deficit based on the amount of water applied, the crop ET for the timestep, and the crop coefficient for its current growth stage 
+
+        c_swd = c_swd - ET_c, ET_c = reference_ET * Crop ET Coefficient for current stage of development
+
+        :param timestep: Current Timestep (date) [UNUSED]
+        :param timestep_ETc: Crop ET for this timestep (:math:ETc) to be multiplied with Crop ET Coefficient for this timestep
+        :param gross_water_applied: Gross amount of water applied to the field in ML
+
+        :returns: Total recharge for field
+
+        """
+
+        """
+        Have to rethink this cumulative SWD approach.
+
+
+        K_sat = Max Soil saturation of soil type
+
+        SWD_i <= K_sat
+
+        SWD = (SWD_i - ETc) + (Rainfall + Applied Water)
+
+        Recharge = (Rainfall + Applied Water) - (ETc + SWD_i)
+
+        Simplified version:
+        SWD_i = Rainfall + Irrigation - Crop Water Use
+    
+        """
+
+        #mm -> ML = division by 100
+        #ML -> mm = multiplication by 100
+
+        #Divide by 100 to convert Total ML into mm/Ha
+        self.c_swd = self.c_swd + ( ( (gross_water_applied * 100.0) / self.area) - ((timestep_ETc*100) / self.area) )
+
+        #self.c_swd = (self.c_swd - timestep_ETc) + ((gross_water_applied / self.area) * 100.0) #multiplied by 100 to convert to millimetres
+
+        if self.c_swd > 0.0:
+
+            seepage = 0.0
+
+            if self.soil.current_TAW_mm < self.soil.TAW_mm:
+                if (self.soil.current_TAW_mm + self.c_swd) > self.soil.TAW_mm:
+                    seepage = (self.soil.current_TAW_mm + self.c_swd) - self.c_swd
+                    self.soil.current_TAW_mm = self.soil.TAW_mm
+                else:
+                    self.soil.current_TAW_mm = self.soil.current_TAW_mm + self.c_swd
+                    seepage = self.c_swd
+            
+            self.c_swd = 0.0
+
+            seepage = (seepage / 100) #ML per Hectare
+        else:
+            seepage = 0.0
+            
+        return seepage
+
+    #End calcCumulativeSWD()
+
+    def simpleCropWaterUse(self, water_input):
+
+        cwu = water_input * self.irrigation.irrigation_efficiency
+
+        return {'cwu': cwu, 'recharge': water_input-cwu}
+    #End simpleCropWaterUse()
+
 
 #End FarmField()

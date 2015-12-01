@@ -1,6 +1,6 @@
 #WaterStorage.py
 
-class WaterStore:
+class WaterStore(object):
 
     """
     Defines a water store
