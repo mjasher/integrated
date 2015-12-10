@@ -17,7 +17,7 @@ class FLOWS:
         
         #End init()
     
-    def FlowsCategory (self, flow, thresholds):
+    def FlowsCategory (self, flow, flows_thresholds):
         """
         convert flow daily time series into FLOWS category:
         summer cease to flow, summer low flow, summer fresh
