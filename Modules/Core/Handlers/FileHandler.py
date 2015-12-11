@@ -17,6 +17,27 @@ class FileHandler(object):
 
 	#End init()
 
+	def getFolders(self, folder):
+		"""
+		Get a list of folders within the target folder
+
+		:Returns: list of (relative) paths
+		"""
+
+		folder_list = []
+		for f in os.listdir(folder):
+
+			f = folder+'/'+f
+			if os.path.isdir(f):
+				folder_list.append(f)
+			#End if
+		#End for
+
+		return folder_list
+
+	#End getFolders()
+
+
 	def getFileList(self, folder, ext=".csv", walk=True):
 
 		"""
@@ -42,6 +63,8 @@ class FileHandler(object):
 		else:
 			for f in os.listdir(folder):
 				if f.endswith(ext):
+
+					f = folder+'/'+f
 					file_list.append(f)
 				#End if
 			#End for
@@ -52,7 +75,7 @@ class FileHandler(object):
 
 	#End getFileList()
 
-	def importFiles(self, folder, ext=".csv", walk=True, **kwargs):
+	def importFiles(self, folder, ext=".csv", walk=False, date_range=None, **kwargs):
 
 		"""
 		Import files found within a given folder into Pandas DataFrame
@@ -62,6 +85,7 @@ class FileHandler(object):
 		:param folder: Folder to search
 		:param ext: File extension to search for
 		:param walk: (True | False) search subfolders in the given folder
+		:param date_range: Date range to extract; index must be set for this to work
 		:param kwargs: Other arguments accepted by Pandas read_csv()
 		:returns: Dict of Pandas DataFrame for each file found
 
@@ -75,15 +99,27 @@ class FileHandler(object):
 			fname = os.path.splitext(f)[0] #Get filename without extension
 			path, fname = os.path.split(fname) #Get filename by itself
 
-			try:
-				imported[fname] = pd.read_csv(f, skiprows=1, skipinitialspace=True, **kwargs)
-			except IndexError:
-				try:
-					imported[fname] = pd.read_csv(f, skiprows=0, skipinitialspace=True, index_col=0, header=0, **kwargs)
-				except Exception:
-					return False
-				#End try
-			#End try
+			imported[fname] = pd.read_csv(f, **kwargs)
+
+			# try:
+			# 	imported[fname] = pd.read_csv(f, skiprows=0, skipinitialspace=True, **kwargs)
+			# except IndexError:
+			# 	try:
+			# 		imported[fname] = pd.read_csv(f, skiprows=0, skipinitialspace=True, index_col=0, header=0, **kwargs)
+			# 	except Exception:
+			# 		return False
+			# 	#End try
+			# #End try
+
+			if date_range is not None:
+				start = date_range[0]
+				end = date_range[1]
+
+				if start is not None:
+					imported[fname] = imported[fname][imported[fname].index >= pd.to_datetime(start)]
+
+				if end is not None:
+					imported[fname] = imported[fname][imported[fname].index <= pd.to_datetime(end)]
 
 		#End for
 
