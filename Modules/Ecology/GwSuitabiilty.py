@@ -1,8 +1,9 @@
 #GwSuitability.py
 
-import WaterSuitability
-
-class GwSuitability:
+#import WaterSuitability.WaterSuitability
+from WaterSuitability import WaterSuitability
+    
+class GwSuitability(WaterSuitability):
     
     def GwIndex(self,gw_depth_index, salinity_index):
         """

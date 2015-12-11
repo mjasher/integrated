@@ -30,9 +30,21 @@ class WaterSuitability(object):
         inputs: a curve csv file (for one species and one attribute), select one curve (column2-x) from that file
         outputs: coordinates.x, coordinates.y
         """
-        coordinates['x']= index_input['x']
-        coordinates['y']= index_input['curve_option']
-        return coordinates
+
+        #Create 2 column dataframe of Days and desired column
+        temp_df = pd.DataFrame(index_input[curve_option], index=index_input["Days"])
+        temp_df = temp_df.dropna()
+        
+        #Recreate Days column from index
+        temp_df["x"] = temp_df.index
+        
+        temp_df.columns = ["x", "y"]
+        
+        return temp_df
+        
+        #coordinates['x']= index_input['x']
+        #coordinates['y']= index_input['curve_option']
+        #return coordinates
 
     def selectWeights(self, weight_input, weight_option):
         """
@@ -40,9 +52,11 @@ class WaterSuitability(object):
         To be used for uncertainty analysis through selecting different weights
         outputs: duration_weights, timing_weights, dry_weights
         """
-        weights['duration']=weight_input['Duration','weight_option']
-        weights['timing']=weight_input['Timing','weight_option']
-        weights['dry']=weight_input['Dry','weight_opiton']
+        
+        weights = {}
+        weights['duration'] = weight_input[weight_input['Attribute'] == 'Duration'][weight_option]
+        weights['timing'] = weight_input[weight_input['Attribute'] == 'Timing'][weight_option]
+        weights['dry'] = weight_input[weight_input['Attribute'] == 'Dry'][weight_option]
         return weights            
         
     def modifyCoordinates(self, coordinates,adjust):
@@ -68,5 +82,7 @@ class WaterSuitability(object):
         Output attributes:
         Date, water_index  
         """
+        flow_index.merge(groundwater_index, left_index=True)
+        
         water_index = flow_index * (1-groundwater_weight) + groundwater_index * groundwater_weight
         return water_index
