@@ -20,6 +20,14 @@ integrated.main module
     :undoc-members:
     :show-inheritance:
 
+integrated.package_lister module
+--------------------------------
+
+.. automodule:: integrated.package_lister
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

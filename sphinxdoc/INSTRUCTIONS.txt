@@ -1,16 +1,18 @@
-Create text files to generate HTML documentation:
+Advanced Users:
+Changes to sphinxdoc configuration can be made in conf.py in the source directory
 
-Edit apidoc.bat with a text editor. Change the directory paths to your apidoc output and source paths.
+Sphinxdoc is set to generate diagrams. Graphviz must be installed for this to work.
+Get installer from: http://www.graphviz.org/
 
-apidoc.bat
+and do:
+conda install graphviz
 
-This will create txt files inside the "apidoc" folder.
-If you are trying to recreate all txt files, delete the existing txt files first.
-Copy the txt files from "documentation/apidoc" to "documentation/source/"
+In conf.py, change "graphviz_dot" variable that points to the dot.exe file
+e.g:
+  graphviz_dot='c:/PROGRA~2/Graphviz2.38/bin/dot.exe'
 
-WARNING: DO NOT DELETE/REMOVE THE index.txt FILE FROM documentation/source
 
 Generate HTML documentation:
-make html
+make_html.bat
 
 HTML files should appear in "documentation/html"

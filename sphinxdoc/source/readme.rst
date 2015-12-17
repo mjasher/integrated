@@ -8,13 +8,18 @@ Welcome to Integrated Framework's documentation!
 
 Draft documentation for the Integrated Modelling Framework.
 
+Be sure to follow the instructions in :ref:`dev_setup`
+
 Contents:
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
+   
+   dev_setup
+       required_software
 
    includeme
-
+   
    modules
 
 

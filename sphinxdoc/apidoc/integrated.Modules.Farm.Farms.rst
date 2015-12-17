@@ -12,10 +12,18 @@ integrated.Modules.Farm.Farms.FarmInfo module
     :undoc-members:
     :show-inheritance:
 
-integrated.Modules.Farm.Farms.Management module
------------------------------------------------
+integrated.Modules.Farm.Farms.cyclic_list module
+------------------------------------------------
 
-.. automodule:: integrated.Modules.Farm.Farms.Management
+.. automodule:: integrated.Modules.Farm.Farms.cyclic_list
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+integrated.Modules.Farm.Farms.field_crop_water_combinations module
+------------------------------------------------------------------
+
+.. automodule:: integrated.Modules.Farm.Farms.field_crop_water_combinations
     :members:
     :undoc-members:
     :show-inheritance:
