@@ -8,7 +8,7 @@
     
     <title>integrated.Modules.Farm package &mdash; Integrated Framework 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -27,9 +27,16 @@
     <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
     <link rel="up" title="integrated.Modules package" href="integrated.Modules.html" />
     <link rel="next" title="integrated.Modules.Farm.Crops package" href="integrated.Modules.Farm.Crops.html" />
-    <link rel="prev" title="integrated.Modules.Ecology package" href="integrated.Modules.Ecology.html" /> 
+    <link rel="prev" title="integrated.Modules.Ecology package" href="integrated.Modules.Ecology.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
   </head>
   <body>
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -45,8 +52,8 @@
         <li class="right" >
           <a href="integrated.Modules.Ecology.html" title="integrated.Modules.Ecology package"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >integrated</a> &raquo;</li>
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
           <li><a href="integrated.html" >integrated package</a> &raquo;</li>
           <li><a href="integrated.Modules.html" accesskey="U">integrated.Modules package</a> &raquo;</li> 
       </ul>
@@ -66,13 +73,15 @@
 <li class="toctree-l1"><a class="reference internal" href="integrated.Modules.Farm.Crops.html">integrated.Modules.Farm.Crops package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#module-integrated.Modules.Farm.Crops.CropInfo">integrated.Modules.Farm.Crops.CropInfo module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#module-integrated.Modules.Farm.Crops.crop_data_import_dev">integrated.Modules.Farm.Crops.crop_data_import_dev module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#module-integrated.Modules.Farm.Crops">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="integrated.Modules.Farm.Farms.html">integrated.Modules.Farm.Farms package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms.FarmInfo">integrated.Modules.Farm.Farms.FarmInfo module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms.Management">integrated.Modules.Farm.Farms.Management module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms.cyclic_list">integrated.Modules.Farm.Farms.cyclic_list module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms.field_crop_water_combinations">integrated.Modules.Farm.Farms.field_crop_water_combinations module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms">Module contents</a></li>
 </ul>
 </li>
@@ -92,6 +101,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="integrated.Modules.Farm.Livestock.html">integrated.Modules.Farm.Livestock package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Livestock.html#module-integrated.Modules.Farm.Livestock">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="integrated.Modules.Farm.Management.html">integrated.Modules.Farm.Management package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Management.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Management.html#module-integrated.Modules.Farm.Management.Manager">integrated.Modules.Farm.Management.Manager module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Management.html#module-integrated.Modules.Farm.Management.Plastic">integrated.Modules.Farm.Management.Plastic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Management.html#module-integrated.Modules.Farm.Management">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="integrated.Modules.Farm.WaterStorages.html">integrated.Modules.Farm.WaterStorages package</a><ul>
@@ -125,15 +141,12 @@ This is then constrained by:</p>
 <p><span class="math">\(f(x) = P_{1}*x_{1} + P_{2}*x_{2} + P_{3}*x_{3}  ... + P_{n}*x_{n}\)</span>, where <span class="math">\(P\)</span> is negated profits</p>
 <p><span class="math">\(x_{1} + x_{2} + x_{3} ... + x_{n} = A\)</span>, where <span class="math">\(A\)</span> is total available area</p>
 <p><span class="math">\(W_{1}*x_{1} + W_{2}*x_{2} + W_{3}*x_{3}  ... + W_{n}*x_{n} \leqslant AW\)</span>, where <span class="math">\(AW\)</span> is Available Water, <span class="math">\(W\)</span> is required water per Ha for each enterprise</p>
-<p><span class="math">\(0 \leq x_{1} \leq A\)</span></p>
-<p><span class="math">\(0 \leq x_{2} \leq A\)</span></p>
-<p><span class="math">\(0 \leq x_{3} \leq A\)</span></p>
-<p>...</p>
-<p><span class="math">\(0 &lt;= x_{n} &lt;= A\)</span></p>
+<p><span class="math">\(0 \leq x_{1,2,3 ... n} \leq A\)</span></p>
+<p>Each <span class="math">\(x\)</span> therefore represents a combination of soil, crop, irrigation, water source, and soil characteristics</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre>tomato_cost = Tomato.variable_cost_per_Ha + flood_infra_cost + pumping_cost
-wheat_cost = Wheat.variable_cost_per_Ha + flood_infra_cost + pumping_cost
-canola_cost = Canola.variable_cost_per_Ha + flood_infra_cost + pumping_cost
+<div class="highlight-python"><div class="highlight"><pre>tomato_cost = Tomato.variable_cost_per_Ha + flood_infra_cost + (pumping_cost*Tomato.water_use_ML_per_Ha)
+wheat_cost = Wheat.variable_cost_per_Ha + flood_infra_cost + (pumping_cost*Wheat.water_use_ML_per_Ha)
+canola_cost = Canola.variable_cost_per_Ha + flood_infra_cost + (pumping_cost*Canola.water_use_ML_per_Ha)
 
 tomato_profit = Tomato.price_per_yield * Tomato.yield_per_Ha
 wheat_profit = Wheat.price_per_yield * Wheat.yield_per_Ha
@@ -176,6 +189,9 @@ Optimization terminated successfully.
 <div class="section" id="module-integrated.Modules.Farm.main_dev">
 <span id="integrated-modules-farm-main-dev-module"></span><h2>integrated.Modules.Farm.main_dev module<a class="headerlink" href="#module-integrated.Modules.Farm.main_dev" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-integrated.Modules.Farm.setup">
+<span id="integrated-modules-farm-setup-module"></span><h2>integrated.Modules.Farm.setup module<a class="headerlink" href="#module-integrated.Modules.Farm.setup" title="Permalink to this headline">¶</a></h2>
+</div>
 <div class="section" id="module-integrated.Modules.Farm.setup_dev">
 <span id="integrated-modules-farm-setup-dev-module"></span><h2>integrated.Modules.Farm.setup_dev module<a class="headerlink" href="#module-integrated.Modules.Farm.setup_dev" title="Permalink to this headline">¶</a></h2>
 <p>Defines parameters to use for the Farm Model.</p>
@@ -197,7 +213,7 @@ Optimization terminated successfully.
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="readme.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">integrated.Modules.Farm package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
@@ -205,6 +221,7 @@ Optimization terminated successfully.
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.SWD_main">integrated.Modules.Farm.SWD_main module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.farmer_decision_example">integrated.Modules.Farm.farmer_decision_example module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.main_dev">integrated.Modules.Farm.main_dev module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Farm.setup">integrated.Modules.Farm.setup module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.setup_dev">integrated.Modules.Farm.setup_dev module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm">Module contents</a></li>
 </ul>
@@ -217,11 +234,6 @@ Optimization terminated successfully.
   <h4>Next topic</h4>
   <p class="topless"><a href="integrated.Modules.Farm.Crops.html"
                         title="next chapter">integrated.Modules.Farm.Crops package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/integrated.Modules.Farm.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -254,14 +266,15 @@ Optimization terminated successfully.
         <li class="right" >
           <a href="integrated.Modules.Ecology.html" title="integrated.Modules.Ecology package"
              >previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >integrated</a> &raquo;</li>
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
           <li><a href="integrated.html" >integrated package</a> &raquo;</li>
           <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
+      Last updated on 2015-12-16.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

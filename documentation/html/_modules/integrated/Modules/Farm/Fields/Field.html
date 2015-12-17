@@ -8,7 +8,7 @@
     
     <title>integrated.Modules.Farm.Fields.Field &mdash; Integrated Framework 0.1 documentation</title>
     
-    <link rel="stylesheet" href="../../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -25,9 +25,16 @@
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../index.html" />
-    <link rel="up" title="Module code" href="../../../../index.html" /> 
+    <link rel="up" title="Module code" href="../../../../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../../../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
   </head>
   <body>
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -37,7 +44,7 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
           <li><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -57,20 +64,33 @@
 <span class="sd">    Container to associate an irrigation with a crop type</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">soil</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;{i}-{c}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">irrigation</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">crop</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">irrigation</span> <span class="o">=</span> <span class="n">irrigation</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">crop</span> <span class="o">=</span> <span class="n">crop</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">soil</span> <span class="o">=</span> <span class="n">soil</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">soil</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="c">#self.name = &quot;{i}-{c}&quot;.format(i=irrigation.name, c=crop.name)</span>
+
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;{i}-{s}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">irrigation</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">soil</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="c">#End if</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Irrigation</span> <span class="o">=</span> <span class="n">irrigation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Crop</span> <span class="o">=</span> <span class="n">crop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span> <span class="o">=</span> <span class="n">soil</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">area</span> <span class="o">=</span> <span class="n">area</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">water_applied</span> <span class="o">=</span> <span class="mi">0</span>
 
-        <span class="c">#Cumulative Soil Water Deficit</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">calcRAW</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">TAW_mm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">depletion_fraction</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">calcRAW</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">current_TAW_mm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">depletion_fraction</span><span class="p">)</span>
-        <span class="c">#self.soil.TAW_mm - self.soil.current_TAW_mm</span>
+        <span class="k">if</span> <span class="n">crop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c">#Cumulative Soil Water Deficit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">calcRAW</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">TAW_mm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Crop</span><span class="o">.</span><span class="n">depletion_fraction</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">calcRAW</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">current_TAW_mm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Crop</span><span class="o">.</span><span class="n">depletion_fraction</span><span class="p">)</span>
+            <span class="c">#self.Soil.TAW_mm - self.Soil.current_TAW_mm</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">required_water_ML_per_Ha</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">required_water_ML_per_Ha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigation</span><span class="o">.</span><span class="n">irrigation_efficiency</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">water_use_ML_per_Ha</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Crop</span><span class="o">.</span><span class="n">required_water_ML_per_Ha</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Crop</span><span class="o">.</span><span class="n">required_water_ML_per_Ha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Irrigation</span><span class="o">.</span><span class="n">irrigation_efficiency</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Crop</span><span class="o">.</span><span class="n">water_use_ML_per_Ha</span>
+            <span class="c">#End if</span>
+        <span class="c">#End if</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pump_operation_hours</span> <span class="o">=</span> <span class="mi">24</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pump_operation_days</span> <span class="o">=</span> <span class="mi">1</span>
         
     <span class="c">#End init()</span>
 
@@ -78,11 +98,11 @@
 
         <span class="k">return</span> <span class="p">{</span>
             <span class="s">&#39;irrigation&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigation</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="s">&#39;soil_type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s">&#39;soil_type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="s">&#39;soil water deficit&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span><span class="p">,</span>
             <span class="s">&#39;area&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="p">,</span>
-            <span class="s">&#39;crop&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="s">&#39;root zone&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">root_depth_m</span>
+            <span class="s">&#39;crop&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s">&#39;root zone&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">Crop</span><span class="o">.</span><span class="n">root_depth_m</span>
         <span class="p">}</span>
 
     <span class="c">#End status()</span>
@@ -102,7 +122,7 @@
         <span class="n">crop_water_use</span> <span class="o">=</span> <span class="n">gross_applied_water_ML</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigation</span><span class="o">.</span><span class="n">irrigation_efficiency</span>
         <span class="n">seepage</span> <span class="o">=</span> <span class="n">gross_applied_water_ML</span> <span class="o">-</span> <span class="n">crop_water_use</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">updateWaterNeedsSatisfied</span><span class="p">(</span><span class="n">crop_water_use</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Crop</span><span class="o">.</span><span class="n">updateWaterNeedsSatisfied</span><span class="p">(</span><span class="n">crop_water_use</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">seepage</span>
 
@@ -115,7 +135,7 @@
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c">#self.crop.yield_per_Ha = self.crop.yield_per_Ha * self.crop.water_need_satisfied</span>
+        <span class="c">#self.Crop.yield_per_Ha = self.Crop.yield_per_Ha * self.Crop.water_need_satisfied</span>
 
         <span class="k">pass</span>
 
@@ -126,13 +146,11 @@
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get crop harvest.</span>
-
-<span class="sd">        Sets crop area to 0</span>
 <span class="sd">        </span>
 <span class="sd">        :returns: Gross crop yield</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">harvest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">yield_per_Ha</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span>
+        <span class="n">harvest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Crop</span><span class="o">.</span><span class="n">yield_per_Ha</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span>
 
         <span class="k">return</span> <span class="n">harvest</span>
     <span class="c">#End harvest()</span>
@@ -153,11 +171,7 @@
 
 <span class="sd">        :returns: Total recharge for field</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Have to rethink this cumulative SWD approach.</span>
-
+<span class="sd">        May have to rethink this cumulative SWD approach.</span>
 
 <span class="sd">        K_sat = Max Soil saturation of soil type</span>
 
@@ -184,12 +198,12 @@
 
             <span class="n">seepage</span> <span class="o">=</span> <span class="mf">0.0</span>
 
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">current_TAW_mm</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">TAW_mm</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">current_TAW_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">TAW_mm</span><span class="p">:</span>
-                    <span class="n">seepage</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">current_TAW_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">current_TAW_mm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">TAW_mm</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">current_TAW_mm</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">TAW_mm</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">current_TAW_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">TAW_mm</span><span class="p">:</span>
+                    <span class="n">seepage</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">current_TAW_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">current_TAW_mm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">TAW_mm</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">current_TAW_mm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">soil</span><span class="o">.</span><span class="n">current_TAW_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">current_TAW_mm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">current_TAW_mm</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span>
                     <span class="n">seepage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span>
             
             <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -208,7 +222,47 @@
 
         <span class="k">return</span> <span class="p">{</span><span class="s">&#39;cwu&#39;</span><span class="p">:</span> <span class="n">cwu</span><span class="p">,</span> <span class="s">&#39;recharge&#39;</span><span class="p">:</span> <span class="n">water_input</span><span class="o">-</span><span class="n">cwu</span><span class="p">}</span>
     <span class="c">#End simpleCropWaterUse()</span>
+</div>
+<div class="viewcode-block" id="FarmField.calcNetIrrigationDepth"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Field.FarmField.calcNetIrrigationDepth">[docs]</a>    <span class="k">def</span> <span class="nf">calcNetIrrigationDepth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_root_depth_m</span><span class="p">,</span> <span class="n">crop_depletion_fraction</span><span class="p">):</span>
 
+        <span class="n">RAW_mm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">calcRAW</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="n">crop_depletion_fraction</span><span class="p">)</span>
+        <span class="n">net_irrigation_depth</span> <span class="o">=</span> <span class="n">crop_root_depth_m</span> <span class="o">*</span> <span class="n">RAW_mm</span>
+
+        <span class="k">return</span> <span class="n">net_irrigation_depth</span>
+    <span class="c">#End calcNetIrrigationDepth()</span>
+</div>
+<div class="viewcode-block" id="FarmField.calcFlowRate"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Field.FarmField.calcFlowRate">[docs]</a>    <span class="k">def</span> <span class="nf">calcFlowRate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">operational_days</span><span class="p">,</span> <span class="n">Crop</span><span class="p">,</span> <span class="n">irrig_efficiency</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate flow requirements for this field, factoring in crop water requirements</span>
+
+<span class="sd">        :param duration: Number of hours available for pump operation per day.</span>
+<span class="sd">        :param operational_days: Number of days the pump will be operated over</span>
+<span class="sd">        :param Crop: Crop object</span>
+<span class="sd">        :param irrig_efficiency: Irrigation Efficiency. Defaults to value set in Irrigation object.</span>
+
+<span class="sd">        :returns: required flow rate in Litres per second</span>
+
+<span class="sd">        .. :math:</span>
+<span class="sd">            Q = (((27154 * Net_{app}) * A) / (60 * (Hrs * Days))) / E</span>
+
+<span class="sd">        where</span>
+<span class="sd">        * :math:`Q` is total flow rate </span>
+<span class="sd">        * :math:`Net_{app}` is the required application amount per week</span>
+<span class="sd">        * :math:`A` is the area under irrigation</span>
+<span class="sd">        * :math:`Hrs` is the total hours available for pump operation per day</span>
+<span class="sd">        * :math:`Days` is the number of days the pump will be operated over</span>
+<span class="sd">        * :math:`E` is the efficiency of the irrigation system</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">irrig_efficiency</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">irrig_efficiency</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Irrigation</span><span class="o">.</span><span class="n">irrigation_efficiency</span>
+
+        <span class="n">nid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcNetIrrigationDepth</span><span class="p">(</span><span class="n">Crop</span><span class="o">.</span><span class="n">root_depth_m</span><span class="p">,</span> <span class="n">Crop</span><span class="o">.</span><span class="n">depletion_fraction</span><span class="p">)</span>
+        <span class="n">total_flow_rate</span> <span class="o">=</span> <span class="p">(((</span><span class="mi">27154</span> <span class="o">*</span> <span class="n">nid</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="p">(</span><span class="n">duration</span> <span class="o">*</span> <span class="n">operational_days</span><span class="p">)))</span> <span class="o">/</span> <span class="n">irrig_efficiency</span>
+
+        <span class="k">return</span> <span class="n">total_flow_rate</span>
+    <span class="c">#End calcFlowRate()</span>
 
 <span class="c">#End FarmField()</span></div></div>
 </pre></div>
@@ -244,12 +298,13 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
           <li><a href="../../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
+      Last updated on 2015-12-16.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

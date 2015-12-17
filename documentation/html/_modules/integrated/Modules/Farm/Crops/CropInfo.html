@@ -8,7 +8,7 @@
     
     <title>integrated.Modules.Farm.Crops.CropInfo &mdash; Integrated Framework 0.1 documentation</title>
     
-    <link rel="stylesheet" href="../../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -25,9 +25,16 @@
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../index.html" />
-    <link rel="up" title="Module code" href="../../../../index.html" /> 
+    <link rel="up" title="Module code" href="../../../../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../../../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
   </head>
   <body>
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -37,7 +44,7 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
           <li><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -136,11 +143,20 @@
         <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
         <span class="n">year</span> <span class="o">=</span> <span class="n">timestep</span><span class="o">.</span><span class="n">year</span>
+        <span class="k">print</span> <span class="n">timestep</span>
 
         <span class="n">coef</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">planting_info</span>
+
         <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">planting_info</span><span class="p">:</span>
+
             <span class="n">stage_dt</span> <span class="o">=</span> <span class="s">&#39;{y}-{md}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">year</span><span class="p">,</span> <span class="n">md</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">planting_info</span><span class="p">[</span><span class="n">info</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">print</span> <span class="n">stage_dt</span><span class="o">+</span><span class="s">&quot; |||&quot;</span>
+            <span class="c">#Convert string into datetime</span>
             <span class="n">stage_dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">stage_dt</span><span class="p">,</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+            <span class="k">print</span> <span class="n">stage_dt</span>
+            <span class="k">print</span> <span class="s">&quot;-----------&quot;</span>
 
             <span class="k">if</span> <span class="n">timestep</span> <span class="o">&lt;</span> <span class="n">stage_dt</span><span class="p">:</span>
                 <span class="k">continue</span>
@@ -227,12 +243,13 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
           <li><a href="../../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
+      Last updated on 2015-12-16.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

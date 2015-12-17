@@ -11,6 +11,7 @@ Subpackages
     integrated.Modules.Farm.Fields
     integrated.Modules.Farm.Irrigations
     integrated.Modules.Farm.Livestock
+    integrated.Modules.Farm.Management
     integrated.Modules.Farm.WaterStorages
 
 Submodules
@@ -36,6 +37,14 @@ integrated.Modules.Farm.main_dev module
 ---------------------------------------
 
 .. automodule:: integrated.Modules.Farm.main_dev
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+integrated.Modules.Farm.setup module
+------------------------------------
+
+.. automodule:: integrated.Modules.Farm.setup
     :members:
     :undoc-members:
     :show-inheritance:

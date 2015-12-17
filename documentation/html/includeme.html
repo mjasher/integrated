@@ -6,9 +6,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>GROUNDWATER_MODEL &mdash; Integrated Framework 0.1 documentation</title>
+    <title>&lt;no title&gt; &mdash; Integrated Framework 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -25,10 +25,17 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
-    <link rel="next" title="Modules package" href="Modules.html" />
-    <link rel="prev" title="Welcome to Integrated Framework’s documentation!" href="index.html" /> 
+    <link rel="next" title="integrated package" href="integrated.html" />
+    <link rel="prev" title="Setting up for Development" href="dev_setup.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
   </head>
   <body>
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -39,12 +46,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="Modules.html" title="Modules package"
+          <a href="integrated.html" title="integrated package"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to Integrated Framework’s documentation!"
+          <a href="dev_setup.html" title="Setting up for Development"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li> 
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -53,161 +60,19 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <p># integrated
-Integrated surface water, groundwater, farm process, crop yield, water policy, ecological model.</p>
-<div class="section" id="groundwater-model">
-<h1>GROUNDWATER_MODEL<a class="headerlink" href="#groundwater-model" title="Permalink to this headline">¶</a></h1>
-<p>River interaction, MAR, diffuse recharge and evapotranspiration, pumping.</p>
-<p>Inputs (by MODFLOW package)
-* BAS</p>
-<blockquote>
-<div><ul class="simple">
-<li>domain (row, col, lay)</li>
-<li>initial_head (row, col, lay)</li>
-</ul>
-</div></blockquote>
-<ul>
-<li><p class="first">DIS</p>
-</li>
-<li><dl class="first docutils">
-<dt>RIV</dt>
-<dd><ul class="first last simple">
-<li>river_stages (day, row, col, lay, stage_height, conductance, river_bottom)</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>WEL</dt>
-<dd><ul class="first last simple">
-<li>wells (day, row, col, lay, flow)</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>RCH</dt>
-<dd><ul class="first last simple">
-<li>recharge (day, row, col, lay)</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>FLOW (eg. LPF)</dt>
-<dd><ul class="first last simple">
-<li>hydraulic_conductivity (row, col, lay)</li>
-<li>storage (row, col, lay)</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p class="first">SOLVER (eg. SIP)</p>
-</li>
-</ul>
-<p>Outputs
-* storage (day, row, col, lay)
-* heads (day, row, col, lay)
-* flows (day, row, col, lay, side)</p>
-</div>
-<div class="section" id="surface-water-model">
-<h1>SURFACE_WATER_MODEL<a class="headerlink" href="#surface-water-model" title="Permalink to this headline">¶</a></h1>
-<p>Routing through rivers, tributaries, canals.</p>
-<p>Inputs
-* rainfall (day, location, volume)
-* temperature (day, location, temperature)
-* humidity (day, location, humidity)
-* boundary inflows and discharges (day, river_stage, volume)</p>
-<blockquote>
-<div><ul class="simple">
-<li>inflows from dam, canals</li>
-<li>discharge downstream</li>
-<li>diversions, extractions</li>
-</ul>
-</div></blockquote>
-<p>Outputs
-* river_stages (day, row, col, lay, stage_height, conductance, river_bottom)</p>
-</div>
-<div class="section" id="farm-decision-model">
-<h1>FARM_DECISION_MODEL<a class="headerlink" href="#farm-decision-model" title="Permalink to this headline">¶</a></h1>
-<p>Crop, irrigation, investment choice.</p>
-<p>Inputs
-* crop_prices (year)
-* water_allocation (year ?)
-* farm_area
-* crop_costs
-*
-* climate</p>
-<p>Outputs
-* farm_profit (year)
-* water_use (day, type)</p>
-</div>
-<div class="section" id="crop-model">
-<h1>CROP_MODEL<a class="headerlink" href="#crop-model" title="Permalink to this headline">¶</a></h1>
-<p>Crop growth and water demand.</p>
-<p>Inputs
-* crop_type
-* water (day)</p>
-<p>Outputs
-* yield (year)</p>
-</div>
-<div class="section" id="ecological-model">
-<h1>ECOLOGICAL_MODEL<a class="headerlink" href="#ecological-model" title="Permalink to this headline">¶</a></h1>
-<p>Inputs
-* river_stages (day, row, col, lay, stage_height, conductance, river_bottom)
-* heads (day, row, col, lay)</p>
-<p>Outputs
-* ecological_index (day, row, col, lay)</p>
-</div>
-<div class="section" id="integrated-model">
-<h1>INTEGRATED_MODEL<a class="headerlink" href="#integrated-model" title="Permalink to this headline">¶</a></h1>
-<p>Inputs
-* rainfall_driver (day, volume)
-* temperature_driver (day, temperature)
-* crop_prices (year, price)</p>
-<p>Outputs
-* ecological_index_average
-* farm_profit_average</p>
-<div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<p>[CATCHCROP model] (<a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S1364815201000743">http://www.sciencedirect.com/science/article/pii/S1364815201000743</a>)
-[MODFLOW Farm Process](<a class="reference external" href="http://water.usgs.gov/nrp/gwsoftware/mf2005_fmp/mf2005_fmp.html">http://water.usgs.gov/nrp/gwsoftware/mf2005_fmp/mf2005_fmp.html</a>)
-[Integrated Decision Making for Reservoir, Irrigation, and Crop Management]
-[Integrating Irrigation Water Demand, Supply, and Delivery Management in a Stochastic Environment]
-[A dynamic model of irrigation and land-use choice: application to the Beauce aquifer in France]</p>
-</div>
-</div>
-
+  
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">GROUNDWATER_MODEL</a></li>
-<li><a class="reference internal" href="#surface-water-model">SURFACE_WATER_MODEL</a></li>
-<li><a class="reference internal" href="#farm-decision-model">FARM_DECISION_MODEL</a></li>
-<li><a class="reference internal" href="#crop-model">CROP_MODEL</a></li>
-<li><a class="reference internal" href="#ecological-model">ECOLOGICAL_MODEL</a></li>
-<li><a class="reference internal" href="#integrated-model">INTEGRATED_MODEL</a><ul>
-<li><a class="reference internal" href="#references">References</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to Integrated Framework&#8217;s documentation!</a></p>
+  <p class="topless"><a href="dev_setup.html"
+                        title="previous chapter">Setting up for Development</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="Modules.html"
-                        title="next chapter">Modules package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/includeme.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
+  <p class="topless"><a href="integrated.html"
+                        title="next chapter">integrated package</a></p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -235,16 +100,17 @@ Integrated surface water, groundwater, farm process, crop yield, water policy, e
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="Modules.html" title="Modules package"
+          <a href="integrated.html" title="integrated package"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to Integrated Framework’s documentation!"
+          <a href="dev_setup.html" title="Setting up for Development"
              >previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li> 
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
+      Last updated on 2015-12-16.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

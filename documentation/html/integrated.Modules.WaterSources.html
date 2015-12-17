@@ -8,7 +8,7 @@
     
     <title>integrated.Modules.WaterSources package &mdash; Integrated Framework 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -27,9 +27,16 @@
     <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
     <link rel="up" title="integrated.Modules package" href="integrated.Modules.html" />
     <link rel="next" title="integrated.Setup package" href="integrated.Setup.html" />
-    <link rel="prev" title="integrated.Modules.Recreation package" href="integrated.Modules.Recreation.html" /> 
+    <link rel="prev" title="integrated.Modules.Recreation package" href="integrated.Modules.Recreation.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
   </head>
   <body>
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -45,8 +52,8 @@
         <li class="right" >
           <a href="integrated.Modules.Recreation.html" title="integrated.Modules.Recreation package"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >integrated</a> &raquo;</li>
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
           <li><a href="integrated.html" >integrated package</a> &raquo;</li>
           <li><a href="integrated.Modules.html" accesskey="U">integrated.Modules package</a> &raquo;</li> 
       </ul>
@@ -71,16 +78,8 @@
 </dd></dl>
 
 </div>
-<div class="section" id="module-integrated.Modules.WaterSources.Groundwater">
-<span id="integrated-modules-watersources-groundwater-module"></span><h2>integrated.Modules.WaterSources.Groundwater module<a class="headerlink" href="#module-integrated.Modules.WaterSources.Groundwater" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="integrated.Modules.WaterSources.Groundwater.GroundwaterSource">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.WaterSources.Groundwater.</tt><tt class="descname">GroundwaterSource</tt><big>(</big><em>name</em>, <em>water_level</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/WaterSources/Groundwater.html#GroundwaterSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.WaterSources.Groundwater.GroundwaterSource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.WaterSources.WaterSources.WaterSources" title="integrated.Modules.WaterSources.WaterSources.WaterSources"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.WaterSources.WaterSources.WaterSources</span></tt></a></p>
-<p>The Groundwater Model.
-Could define Groundwater Model here, but probably will be a wrapper to external model</p>
-</dd></dl>
-
+<div class="section" id="integrated-modules-watersources-groundwater-module">
+<h2>integrated.Modules.WaterSources.Groundwater module<a class="headerlink" href="#integrated-modules-watersources-groundwater-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-integrated.Modules.WaterSources.SurfaceWater">
 <span id="integrated-modules-watersources-surfacewater-module"></span><h2>integrated.Modules.WaterSources.SurfaceWater module<a class="headerlink" href="#module-integrated.Modules.WaterSources.SurfaceWater" title="Permalink to this headline">¶</a></h2>
@@ -109,9 +108,32 @@ Could define Groundwater Model here, but probably will be a wrapper to external 
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.WaterSources.WaterSources.WaterSources.updateWaterLevel">
-<tt class="descname">updateWaterLevel</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/WaterSources/WaterSources.html#WaterSources.updateWaterLevel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.WaterSources.WaterSources.WaterSources.updateWaterLevel" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="integrated.Modules.WaterSources.WaterSources.WaterSources.calcPumpingCostsPerML">
+<tt class="descname">calcPumpingCostsPerML</tt><big>(</big><em>flow_rate_Lps</em>, <em>duration=24</em>, <em>pump_efficiency=0.7</em>, <em>derating=1</em>, <em>fuel_per_Kw=0.25</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/WaterSources/WaterSources.html#WaterSources.calcPumpingCostsPerML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.WaterSources.WaterSources.WaterSources.calcPumpingCostsPerML" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>flow_rate_Lps</strong> &#8211; required flow rate in Litres per second over the irrigation duration</li>
+<li><strong>duration</strong> &#8211; Irrigation duration in hours, defaults to 24 hours</li>
+<li><strong>pump_efficiency</strong> &#8211; Efficiency of pump. Defaults to 0.7 (70%)</li>
+<li><strong>derating</strong> &#8211; Accounts for efficiency losses between the energy required at the pump shaft and the total energy required. Defaults to 1</li>
+<li><strong>fuel_per_Kw</strong> &#8211; Amount of fuel required for a Kilowatt hour. Defaults to 0.25L for diesel.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>See </dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://www.clw.csiro.au/publications/technical2002/tr20-02.pdf">Robinson, D. W., 2002</a></li>
+<li><a class="reference external" href="http://agriculture.vic.gov.au/agriculture/farm-management/soil-and-water/irrigation/border-check-irrigation-design">Vic. Dept. Agriculture, 2006</a></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -127,12 +149,12 @@ Could define Groundwater Model here, but probably will be a wrapper to external 
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="readme.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">integrated.Modules.WaterSources package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.WaterSources.DamWater">integrated.Modules.WaterSources.DamWater module</a></li>
-<li><a class="reference internal" href="#module-integrated.Modules.WaterSources.Groundwater">integrated.Modules.WaterSources.Groundwater module</a></li>
+<li><a class="reference internal" href="#integrated-modules-watersources-groundwater-module">integrated.Modules.WaterSources.Groundwater module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.WaterSources.SurfaceWater">integrated.Modules.WaterSources.SurfaceWater module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.WaterSources.WaterSources">integrated.Modules.WaterSources.WaterSources module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.WaterSources">Module contents</a></li>
@@ -146,11 +168,6 @@ Could define Groundwater Model here, but probably will be a wrapper to external 
   <h4>Next topic</h4>
   <p class="topless"><a href="integrated.Setup.html"
                         title="next chapter">integrated.Setup package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/integrated.Modules.WaterSources.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -183,14 +200,15 @@ Could define Groundwater Model here, but probably will be a wrapper to external 
         <li class="right" >
           <a href="integrated.Modules.Recreation.html" title="integrated.Modules.Recreation package"
              >previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >integrated</a> &raquo;</li>
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
           <li><a href="integrated.html" >integrated package</a> &raquo;</li>
           <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
+      Last updated on 2015-12-16.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

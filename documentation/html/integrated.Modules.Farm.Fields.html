@@ -8,7 +8,7 @@
     
     <title>integrated.Modules.Farm.Fields package &mdash; Integrated Framework 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -27,9 +27,16 @@
     <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
     <link rel="up" title="integrated.Modules.Farm package" href="integrated.Modules.Farm.html" />
     <link rel="next" title="integrated.Modules.Farm.Irrigations package" href="integrated.Modules.Farm.Irrigations.html" />
-    <link rel="prev" title="integrated.Modules.Farm.Farms package" href="integrated.Modules.Farm.Farms.html" /> 
+    <link rel="prev" title="integrated.Modules.Farm.Farms package" href="integrated.Modules.Farm.Farms.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
   </head>
   <body>
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -45,8 +52,8 @@
         <li class="right" >
           <a href="integrated.Modules.Farm.Farms.html" title="integrated.Modules.Farm.Farms package"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >integrated</a> &raquo;</li>
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
           <li><a href="integrated.html" >integrated package</a> &raquo;</li>
           <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
           <li><a href="integrated.Modules.Farm.html" accesskey="U">integrated.Modules.Farm package</a> &raquo;</li> 
@@ -67,14 +74,13 @@
 <span id="integrated-modules-farm-fields-field-module"></span><h2>integrated.Modules.Farm.Fields.Field module<a class="headerlink" href="#module-integrated.Modules.Farm.Fields.Field" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.Fields.Field.FarmField">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.Fields.Field.</tt><tt class="descname">FarmField</tt><big>(</big><em>irrigation=None</em>, <em>crop=None</em>, <em>soil=None</em>, <em>area=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.Fields.Field.</tt><tt class="descname">FarmField</tt><big>(</big><em>name=None</em>, <em>irrigation=None</em>, <em>crop=None</em>, <em>soil=None</em>, <em>area=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component" title="integrated.Modules.Core.IntegratedModelComponent.Component"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Core.IntegratedModelComponent.Component</span></tt></a></p>
 <p>Container to associate an irrigation with a crop type</p>
 <dl class="method">
-<dt id="integrated.Modules.Farm.Fields.Field.FarmField.applyCropLoss">
-<tt class="descname">applyCropLoss</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.applyCropLoss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.applyCropLoss" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply losses to crop due to lack of water or other</p>
-</dd></dl>
+<dt id="integrated.Modules.Farm.Fields.Field.FarmField.status">
+<tt class="descname">status</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Fields.Field.FarmField.applyWater">
@@ -95,10 +101,15 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="integrated.Modules.Farm.Fields.Field.FarmField.applyCropLoss">
+<tt class="descname">applyCropLoss</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.applyCropLoss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.applyCropLoss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply losses to crop due to lack of water or other</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="integrated.Modules.Farm.Fields.Field.FarmField.harvest">
 <tt class="descname">harvest</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.harvest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.harvest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get crop harvest.</p>
-<p>Sets crop area to 0</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -108,16 +119,6 @@
 </tbody>
 </table>
 </dd></dl>
-
-<dl class="method">
-<dt id="integrated.Modules.Farm.Fields.Field.FarmField.simpleCropWaterUse">
-<tt class="descname">simpleCropWaterUse</tt><big>(</big><em>water_input</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.simpleCropWaterUse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.simpleCropWaterUse" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="integrated.Modules.Farm.Fields.Field.FarmField.status">
-<tt class="descname">status</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.status" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Fields.Field.FarmField.updateCumulativeSWD">
@@ -142,6 +143,53 @@
 </tr>
 </tbody>
 </table>
+<p>May have to rethink this cumulative SWD approach.</p>
+<p>K_sat = Max Soil saturation of soil type</p>
+<p>SWD_i &lt;= K_sat</p>
+<p>SWD = (SWD_i - ETc) + (Rainfall + Applied Water)</p>
+<p>Recharge = (Rainfall + Applied Water) - (ETc + SWD_i)</p>
+<p>Simplified version:
+SWD_i = Rainfall + Irrigation - Crop Water Use</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Farm.Fields.Field.FarmField.simpleCropWaterUse">
+<tt class="descname">simpleCropWaterUse</tt><big>(</big><em>water_input</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.simpleCropWaterUse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.simpleCropWaterUse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Farm.Fields.Field.FarmField.calcNetIrrigationDepth">
+<tt class="descname">calcNetIrrigationDepth</tt><big>(</big><em>crop_root_depth_m</em>, <em>crop_depletion_fraction</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.calcNetIrrigationDepth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.calcNetIrrigationDepth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Farm.Fields.Field.FarmField.calcFlowRate">
+<tt class="descname">calcFlowRate</tt><big>(</big><em>duration</em>, <em>operational_days</em>, <em>Crop</em>, <em>irrig_efficiency=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.calcFlowRate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.calcFlowRate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate flow requirements for this field, factoring in crop water requirements</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>duration</strong> &#8211; Number of hours available for pump operation per day.</li>
+<li><strong>operational_days</strong> &#8211; Number of days the pump will be operated over</li>
+<li><strong>Crop</strong> &#8211; Crop object</li>
+<li><strong>irrig_efficiency</strong> &#8211; Irrigation Efficiency. Defaults to value set in Irrigation object.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">required flow rate in Litres per second</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>where
+* <span class="math">\(Q\)</span> is total flow rate 
+* <span class="math">\(Net_{app}\)</span> is the required application amount per week
+* <span class="math">\(A\)</span> is the area under irrigation
+* <span class="math">\(Hrs\)</span> is the total hours available for pump operation per day
+* <span class="math">\(Days\)</span> is the number of days the pump will be operated over
+* <span class="math">\(E\)</span> is the efficiency of the irrigation system</p>
 </dd></dl>
 
 </dd></dl>
@@ -237,7 +285,7 @@ In winter, all the rainfall is assumed to be effective.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="readme.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">integrated.Modules.Farm.Fields package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
@@ -255,11 +303,6 @@ In winter, all the rainfall is assumed to be effective.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="integrated.Modules.Farm.Irrigations.html"
                         title="next chapter">integrated.Modules.Farm.Irrigations package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/integrated.Modules.Farm.Fields.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -292,8 +335,8 @@ In winter, all the rainfall is assumed to be effective.</p>
         <li class="right" >
           <a href="integrated.Modules.Farm.Farms.html" title="integrated.Modules.Farm.Farms package"
              >previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >integrated</a> &raquo;</li>
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
           <li><a href="integrated.html" >integrated package</a> &raquo;</li>
           <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
           <li><a href="integrated.Modules.Farm.html" >integrated.Modules.Farm package</a> &raquo;</li> 
@@ -301,6 +344,7 @@ In winter, all the rainfall is assumed to be effective.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
+      Last updated on 2015-12-16.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

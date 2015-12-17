@@ -8,7 +8,7 @@
     
     <title>integrated.Modules.Farm.Irrigations package &mdash; Integrated Framework 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -27,9 +27,16 @@
     <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
     <link rel="up" title="integrated.Modules.Farm package" href="integrated.Modules.Farm.html" />
     <link rel="next" title="integrated.Modules.Farm.Livestock package" href="integrated.Modules.Farm.Livestock.html" />
-    <link rel="prev" title="integrated.Modules.Farm.Fields package" href="integrated.Modules.Farm.Fields.html" /> 
+    <link rel="prev" title="integrated.Modules.Farm.Fields package" href="integrated.Modules.Farm.Fields.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
   </head>
   <body>
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -45,8 +52,8 @@
         <li class="right" >
           <a href="integrated.Modules.Farm.Fields.html" title="integrated.Modules.Farm.Fields package"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >integrated</a> &raquo;</li>
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
           <li><a href="integrated.html" >integrated package</a> &raquo;</li>
           <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
           <li><a href="integrated.Modules.Farm.html" accesskey="U">integrated.Modules.Farm package</a> &raquo;</li> 
@@ -72,46 +79,9 @@
 <p>Represents an irrigation practice/technology.</p>
 <p>Methods defined in this parent class should be considered stubs, to be redefined by child Classes.</p>
 <dl class="method">
-<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcAnnualCapitalCost">
-<tt class="descname">calcAnnualCapitalCost</tt><big>(</big><em>irrigation_area_Ha</em>, <em>discount_rate</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcAnnualCapitalCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcAnnualCapitalCost" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates Capital Cost of irrigation system on a per year basis, discounted to present day value</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>irrigation_area_Ha</strong> &#8211; Area under irrigation in Hectares</li>
-<li><strong>discount_rate</strong> &#8211; Percentage to discount future value to get present day value</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">annualised NPV ($)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numeric</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcCapitalCost">
-<tt class="descname">calcCapitalCost</tt><big>(</big><em>irrigation_area_Ha</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcCapitalCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcCapitalCost" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the implementation cost of this irrigation practice</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>irrigation_area_Ha</strong> &#8211; Area under irrigation in Hectares</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Capital cost of implementing irrigation practice/technology</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numeric</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.resetParams">
+<tt class="descname">resetParams</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.resetParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.resetParams" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcCropWaterRequirement">
@@ -130,24 +100,14 @@ This is different from the amount of water applied.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcIrrigationArea">
-<tt class="descname">calcIrrigationArea</tt><big>(</big><em>water_applied_ML_per_Ha</em>, <em>available_water_ML</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcIrrigationArea"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcIrrigationArea" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate irrigation area, capped to max irrigation area</p>
+<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcIrrigationEfficiencySaving">
+<tt class="descname">calcIrrigationEfficiencySaving</tt><big>(</big><em>crop_water_req_ML_per_Ha</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcIrrigationEfficiencySaving"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcIrrigationEfficiencySaving" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the amount of water saved per Hectare due to efficiency increase</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>water_applied_ML_per_Ha</strong> &#8211; Amount of water applied in ML per Hectare</li>
-<li><strong>available_water_ML</strong> &#8211; Amount of water currently available</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Area (in Hectares) that can be irrigated, constrained by maximum irrigation area</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numeric</p>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>crop_water_req_ML_per_Ha</strong> &#8211; Amount of water required by the crop (ML/Ha)</td>
 </tr>
 </tbody>
 </table>
@@ -173,48 +133,6 @@ This method is a stub which should be overwritten by implementing Classes.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">percent (e.g. 76 percent = 0.76 * 100 = 76)</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numeric</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcIrrigationEfficiencySaving">
-<tt class="descname">calcIrrigationEfficiencySaving</tt><big>(</big><em>crop_water_req_ML_per_Ha</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcIrrigationEfficiencySaving"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcIrrigationEfficiencySaving" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the amount of water saved per Hectare due to efficiency increase</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>crop_water_req_ML_per_Ha</strong> &#8211; Amount of water required by the crop (ML/Ha)</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcOngoingCost">
-<tt class="descname">calcOngoingCost</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcOngoingCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcOngoingCost" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Not included due to lack of information</dt>
-<dd>See Powell &amp; Scott 2011 (p 42) for overhead costs</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcReplacementCost">
-<tt class="descname">calcReplacementCost</tt><big>(</big><em>irrigation_area_Ha</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcReplacementCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcReplacementCost" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the replacement cost for a given irrigation system.
-Replacement cost is assumed to be equal to the initial cost per Hectare.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>irrigation_area_Ha</strong> &#8211; Area of irrigation system</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">replacement cost in dollar terms</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
 </tr>
 </tbody>
 </table>
@@ -247,6 +165,23 @@ Rogers et al. (1997)</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcWaterSavings">
+<tt class="descname">calcWaterSavings</tt><big>(</big><em>irrigation_area</em>, <em>crop_water_req_ML_per_Ha</em>, <em>efficiency=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcWaterSavings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcWaterSavings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates water savings</p>
+<p><span class="math">\(Water Saved = Irrigation Area * Crop Water Requirement In ML per Ha * Irrigation Efficiency\)</span></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">water saved in ML</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numeric</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcWaterAppliedMLperHa">
 <tt class="descname">calcWaterAppliedMLperHa</tt><big>(</big><em>base_application_ML_per_Ha</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcWaterAppliedMLperHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcWaterAppliedMLperHa" title="Permalink to this definition">¶</a></dt>
 <dd><p>WARNING: DEPRECATED, DO NOT USE</p>
@@ -270,26 +205,98 @@ Rogers et al. (1997)</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcWaterSavings">
-<tt class="descname">calcWaterSavings</tt><big>(</big><em>irrigation_area</em>, <em>crop_water_req_ML_per_Ha</em>, <em>efficiency=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcWaterSavings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcWaterSavings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates water savings</p>
-<p><span class="math">\(Water Saved = Irrigation Area * Crop Water Requirement In ML per Ha * Irrigation Efficiency\)</span></p>
+<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcIrrigationArea">
+<tt class="descname">calcIrrigationArea</tt><big>(</big><em>water_applied_ML_per_Ha</em>, <em>available_water_ML</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcIrrigationArea"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcIrrigationArea" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate irrigation area, capped to max irrigation area</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">water saved in ML</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>water_applied_ML_per_Ha</strong> &#8211; Amount of water applied in ML per Hectare</li>
+<li><strong>available_water_ML</strong> &#8211; Amount of water currently available</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numeric</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Area (in Hectares) that can be irrigated, constrained by maximum irrigation area</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numeric</p>
+</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.resetParams">
-<tt class="descname">resetParams</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.resetParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.resetParams" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcCapitalCost">
+<tt class="descname">calcCapitalCost</tt><big>(</big><em>irrigation_area_Ha</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcCapitalCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcCapitalCost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the implementation cost of this irrigation practice</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>irrigation_area_Ha</strong> &#8211; Area under irrigation in Hectares</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Capital cost of implementing irrigation practice/technology</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numeric</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcReplacementCost">
+<tt class="descname">calcReplacementCost</tt><big>(</big><em>irrigation_area_Ha</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcReplacementCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcReplacementCost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the replacement cost for a given irrigation system.
+Replacement cost is assumed to be equal to the initial cost per Hectare.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>irrigation_area_Ha</strong> &#8211; Area of irrigation system</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">replacement cost in dollar terms</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcOngoingCost">
+<tt class="descname">calcOngoingCost</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcOngoingCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcOngoingCost" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Not included due to lack of information</dt>
+<dd>See Powell &amp; Scott 2011 (p 42) for overhead costs</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcAnnualCapitalCost">
+<tt class="descname">calcAnnualCapitalCost</tt><big>(</big><em>irrigation_area_Ha</em>, <em>discount_rate</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcAnnualCapitalCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcAnnualCapitalCost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates Capital Cost of irrigation system on a per year basis, discounted to present day value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>irrigation_area_Ha</strong> &#8211; Area under irrigation in Hectares</li>
+<li><strong>discount_rate</strong> &#8211; Percentage to discount future value to get present day value</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">annualised NPV ($)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numeric</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -305,7 +312,7 @@ Rogers et al. (1997)</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="readme.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">integrated.Modules.Farm.Irrigations package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
@@ -321,11 +328,6 @@ Rogers et al. (1997)</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="integrated.Modules.Farm.Livestock.html"
                         title="next chapter">integrated.Modules.Farm.Livestock package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/integrated.Modules.Farm.Irrigations.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -358,8 +360,8 @@ Rogers et al. (1997)</p>
         <li class="right" >
           <a href="integrated.Modules.Farm.Fields.html" title="integrated.Modules.Farm.Fields package"
              >previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >integrated</a> &raquo;</li>
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
           <li><a href="integrated.html" >integrated package</a> &raquo;</li>
           <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
           <li><a href="integrated.Modules.Farm.html" >integrated.Modules.Farm package</a> &raquo;</li> 
@@ -367,6 +369,7 @@ Rogers et al. (1997)</p>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
+      Last updated on 2015-12-16.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

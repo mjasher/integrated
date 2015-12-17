@@ -8,7 +8,7 @@
     
     <title>integrated.Modules.Core.Handlers package &mdash; Integrated Framework 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -27,9 +27,16 @@
     <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
     <link rel="up" title="integrated.Modules.Core package" href="integrated.Modules.Core.html" />
     <link rel="next" title="integrated.Modules.Ecology package" href="integrated.Modules.Ecology.html" />
-    <link rel="prev" title="integrated.Modules.Core package" href="integrated.Modules.Core.html" /> 
+    <link rel="prev" title="integrated.Modules.Core package" href="integrated.Modules.Core.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
   </head>
   <body>
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -45,8 +52,8 @@
         <li class="right" >
           <a href="integrated.Modules.Core.html" title="integrated.Modules.Core package"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >integrated</a> &raquo;</li>
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
           <li><a href="integrated.html" >integrated package</a> &raquo;</li>
           <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
           <li><a href="integrated.Modules.Core.html" accesskey="U">integrated.Modules.Core package</a> &raquo;</li> 
@@ -70,15 +77,6 @@
 <em class="property">class </em><tt class="descclassname">integrated.Modules.Core.Handlers.BOMHandler.</tt><tt class="descname">BOMHandler</tt><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/BOMHandler.html#BOMHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.BOMHandler.BOMHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler" title="integrated.Modules.Core.Handlers.FileHandler.FileHandler"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Core.Handlers.FileHandler.FileHandler</span></tt></a></p>
 <dl class="method">
-<dt id="integrated.Modules.Core.Handlers.BOMHandler.BOMHandler.loadAllBOMData">
-<tt class="descname">loadAllBOMData</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/BOMHandler.html#BOMHandler.loadAllBOMData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.BOMHandler.BOMHandler.loadAllBOMData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load all BOM data</p>
-<blockquote>
-<div>This is adapted from Namoi model. 
-TODO: Separate data source (filepaths and column names)</div></blockquote>
-</dd></dl>
-
-<dl class="method">
 <dt id="integrated.Modules.Core.Handlers.BOMHandler.BOMHandler.loadBOMCSVData">
 <tt class="descname">loadBOMCSVData</tt><big>(</big><em>filepath</em>, <em>data_cols=None</em>, <em>replace_missing=None</em>, <em>date_range=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/BOMHandler.html#BOMHandler.loadBOMCSVData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.BOMHandler.BOMHandler.loadBOMCSVData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load CSV data from BOM. Concatenating dates from Year, Month, Day columns.</p>
@@ -99,6 +97,15 @@ See <a class="reference external" href="http://pandas.pydata.org/pandas-docs/sta
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="integrated.Modules.Core.Handlers.BOMHandler.BOMHandler.loadAllBOMData">
+<tt class="descname">loadAllBOMData</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/BOMHandler.html#BOMHandler.loadAllBOMData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.BOMHandler.BOMHandler.loadAllBOMData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all BOM data</p>
+<blockquote>
+<div>This is adapted from Namoi model. 
+TODO: Separate data source (filepaths and column names)</div></blockquote>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -109,6 +116,20 @@ See <a class="reference external" href="http://pandas.pydata.org/pandas-docs/sta
 <em class="property">class </em><tt class="descclassname">integrated.Modules.Core.Handlers.FileHandler.</tt><tt class="descname">FileHandler</tt><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
 <p>Handles files for all modules</p>
+<dl class="method">
+<dt id="integrated.Modules.Core.Handlers.FileHandler.FileHandler.getFolders">
+<tt class="descname">getFolders</tt><big>(</big><em>folder</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler.getFolders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler.getFolders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of folders within the target folder</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of (relative) paths</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="integrated.Modules.Core.Handlers.FileHandler.FileHandler.getFileList">
 <tt class="descname">getFileList</tt><big>(</big><em>folder</em>, <em>ext='.csv'</em>, <em>walk=True</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler.getFileList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler.getFileList" title="Permalink to this definition">¶</a></dt>
@@ -133,7 +154,7 @@ See <a class="reference external" href="http://pandas.pydata.org/pandas-docs/sta
 
 <dl class="method">
 <dt id="integrated.Modules.Core.Handlers.FileHandler.FileHandler.importFiles">
-<tt class="descname">importFiles</tt><big>(</big><em>folder</em>, <em>ext='.csv'</em>, <em>walk=True</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler.importFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler.importFiles" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">importFiles</tt><big>(</big><em>folder</em>, <em>ext='.csv'</em>, <em>walk=False</em>, <em>date_range=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler.importFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler.importFiles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import files found within a given folder into Pandas DataFrame</p>
 <p>WARNING: Files with matching names will override each other</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -144,6 +165,7 @@ See <a class="reference external" href="http://pandas.pydata.org/pandas-docs/sta
 <li><strong>folder</strong> &#8211; Folder to search</li>
 <li><strong>ext</strong> &#8211; File extension to search for</li>
 <li><strong>walk</strong> &#8211; (True | False) search subfolders in the given folder</li>
+<li><strong>date_range</strong> &#8211; Date range to extract; index must be set for this to work</li>
 <li><strong>kwargs</strong> &#8211; Other arguments accepted by Pandas read_csv()</li>
 </ul>
 </td>
@@ -215,7 +237,7 @@ It is defined here so that inheriting Classes may modify as appropriate while ke
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="readme.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">integrated.Modules.Core.Handlers package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
@@ -232,11 +254,6 @@ It is defined here so that inheriting Classes may modify as appropriate while ke
   <h4>Next topic</h4>
   <p class="topless"><a href="integrated.Modules.Ecology.html"
                         title="next chapter">integrated.Modules.Ecology package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/integrated.Modules.Core.Handlers.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -269,8 +286,8 @@ It is defined here so that inheriting Classes may modify as appropriate while ke
         <li class="right" >
           <a href="integrated.Modules.Core.html" title="integrated.Modules.Core package"
              >previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >integrated</a> &raquo;</li>
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
           <li><a href="integrated.html" >integrated package</a> &raquo;</li>
           <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
           <li><a href="integrated.Modules.Core.html" >integrated.Modules.Core package</a> &raquo;</li> 
@@ -278,6 +295,7 @@ It is defined here so that inheriting Classes may modify as appropriate while ke
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
+      Last updated on 2015-12-16.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

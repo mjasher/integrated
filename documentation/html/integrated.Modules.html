@@ -8,7 +8,7 @@
     
     <title>integrated.Modules package &mdash; Integrated Framework 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -27,9 +27,16 @@
     <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
     <link rel="up" title="integrated package" href="integrated.html" />
     <link rel="next" title="integrated.Modules.Climate package" href="integrated.Modules.Climate.html" />
-    <link rel="prev" title="integrated package" href="integrated.html" /> 
+    <link rel="prev" title="integrated package" href="integrated.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
   </head>
   <body>
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -45,8 +52,8 @@
         <li class="right" >
           <a href="integrated.html" title="integrated package"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >integrated</a> &raquo;</li>
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
           <li><a href="integrated.html" accesskey="U">integrated package</a> &raquo;</li> 
       </ul>
     </div>  
@@ -102,13 +109,15 @@
 <li class="toctree-l3"><a class="reference internal" href="integrated.Modules.Farm.Crops.html">integrated.Modules.Farm.Crops package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#module-integrated.Modules.Farm.Crops.CropInfo">integrated.Modules.Farm.Crops.CropInfo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#module-integrated.Modules.Farm.Crops.crop_data_import_dev">integrated.Modules.Farm.Crops.crop_data_import_dev module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#module-integrated.Modules.Farm.Crops">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="integrated.Modules.Farm.Farms.html">integrated.Modules.Farm.Farms package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms.FarmInfo">integrated.Modules.Farm.Farms.FarmInfo module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms.Management">integrated.Modules.Farm.Farms.Management module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms.cyclic_list">integrated.Modules.Farm.Farms.cyclic_list module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms.field_crop_water_combinations">integrated.Modules.Farm.Farms.field_crop_water_combinations module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms">Module contents</a></li>
 </ul>
 </li>
@@ -130,6 +139,13 @@
 <li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Livestock.html#module-integrated.Modules.Farm.Livestock">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="integrated.Modules.Farm.Management.html">integrated.Modules.Farm.Management package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Management.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Management.html#module-integrated.Modules.Farm.Management.Manager">integrated.Modules.Farm.Management.Manager module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Management.html#module-integrated.Modules.Farm.Management.Plastic">integrated.Modules.Farm.Management.Plastic module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.Management.html#module-integrated.Modules.Farm.Management">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="integrated.Modules.Farm.WaterStorages.html">integrated.Modules.Farm.WaterStorages package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.WaterStorages.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="integrated.Modules.Farm.WaterStorages.html#module-integrated.Modules.Farm.WaterStorages.ASRStorage">integrated.Modules.Farm.WaterStorages.ASRStorage module</a></li>
@@ -145,6 +161,7 @@
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.html#module-integrated.Modules.Farm.SWD_main">integrated.Modules.Farm.SWD_main module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.html#module-integrated.Modules.Farm.farmer_decision_example">integrated.Modules.Farm.farmer_decision_example module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.html#module-integrated.Modules.Farm.main_dev">integrated.Modules.Farm.main_dev module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.html#module-integrated.Modules.Farm.setup">integrated.Modules.Farm.setup module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.html#module-integrated.Modules.Farm.setup_dev">integrated.Modules.Farm.setup_dev module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.html#module-integrated.Modules.Farm">Module contents</a></li>
 </ul>
@@ -158,7 +175,7 @@
 <li class="toctree-l1"><a class="reference internal" href="integrated.Modules.WaterSources.html">integrated.Modules.WaterSources package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.WaterSources.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.WaterSources.html#module-integrated.Modules.WaterSources.DamWater">integrated.Modules.WaterSources.DamWater module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.WaterSources.html#module-integrated.Modules.WaterSources.Groundwater">integrated.Modules.WaterSources.Groundwater module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.WaterSources.html#integrated-modules-watersources-groundwater-module">integrated.Modules.WaterSources.Groundwater module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.WaterSources.html#module-integrated.Modules.WaterSources.SurfaceWater">integrated.Modules.WaterSources.SurfaceWater module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.WaterSources.html#module-integrated.Modules.WaterSources.WaterSources">integrated.Modules.WaterSources.WaterSources module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.WaterSources.html#module-integrated.Modules.WaterSources">Module contents</a></li>
@@ -169,6 +186,7 @@
 </div>
 <div class="section" id="module-integrated.Modules">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-integrated.Modules" title="Permalink to this headline">¶</a></h2>
+<p>Modules for integration</p>
 </div>
 </div>
 
@@ -178,7 +196,7 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="readme.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">integrated.Modules package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
@@ -193,11 +211,6 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="integrated.Modules.Climate.html"
                         title="next chapter">integrated.Modules.Climate package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/integrated.Modules.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -230,13 +243,14 @@
         <li class="right" >
           <a href="integrated.html" title="integrated package"
              >previous</a> |</li>
-        <li><a href="index.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >integrated</a> &raquo;</li>
+        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
           <li><a href="integrated.html" >integrated package</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
+      Last updated on 2015-12-16.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
