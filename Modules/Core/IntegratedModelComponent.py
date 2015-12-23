@@ -9,6 +9,15 @@ class Component(object):
         pass
     #End __init__()
 
+    def setAttribute(self, name, value, default_val):
+        """
+        Set Class attribute with a value, or a default if value is None
+        """
+
+        setattr(self, name, value) if value is not None else setattr(self, name, default_val)
+    #End setAttribute
+
+
     def setMethod(self, name, func):
 
         """

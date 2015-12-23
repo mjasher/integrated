@@ -71,8 +71,6 @@ class FileHandler(object):
 
 		return file_list
 
-		#self.file_list[folder] = file_list
-
 	#End getFileList()
 
 	def importFiles(self, folder, ext=".csv", walk=False, date_range=None, **kwargs):
@@ -80,7 +78,7 @@ class FileHandler(object):
 		"""
 		Import files found within a given folder into Pandas DataFrame
 
-		WARNING: Files with matching names will override each other
+		WARNING: Matching folder and file combinations will overwrite each other.
 
 		:param folder: Folder to search
 		:param ext: File extension to search for
@@ -99,27 +97,25 @@ class FileHandler(object):
 			fname = os.path.splitext(f)[0] #Get filename without extension
 			path, fname = os.path.split(fname) #Get filename by itself
 
-			imported[fname] = pd.read_csv(f, **kwargs)
+			#Get parent directory of file
+			parent_dir = os.path.basename(path)
 
-			# try:
-			# 	imported[fname] = pd.read_csv(f, skiprows=0, skipinitialspace=True, **kwargs)
-			# except IndexError:
-			# 	try:
-			# 		imported[fname] = pd.read_csv(f, skiprows=0, skipinitialspace=True, index_col=0, header=0, **kwargs)
-			# 	except Exception:
-			# 		return False
-			# 	#End try
-			# #End try
+			if parent_dir not in imported:
+				imported[parent_dir] = {}
+
+			imported[parent_dir][fname] = pd.read_csv(f, **kwargs)
 
 			if date_range is not None:
 				start = date_range[0]
 				end = date_range[1]
 
+				temp = imported[parent_dir][fname]
+
 				if start is not None:
-					imported[fname] = imported[fname][imported[fname].index >= pd.to_datetime(start)]
+					temp = temp[temp.index >= pd.to_datetime(start)]
 
 				if end is not None:
-					imported[fname] = imported[fname][imported[fname].index <= pd.to_datetime(end)]
+					temp = temp[temp.index <= pd.to_datetime(end)]
 
 		#End for
 
