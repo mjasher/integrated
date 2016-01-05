@@ -1,6 +1,11 @@
 from __future__ import division
 import copy
+import pandas as pd
+from datetime import datetime
+
 from integrated.Modules.Core.IntegratedModelComponent import Component
+
+
 
 class CropInfo(Component):
 
@@ -8,7 +13,7 @@ class CropInfo(Component):
     Crop Object that represents a crop type
     """
 
-    def __init__(self, crop_name, price_per_yield, variable_cost_per_Ha, yield_per_Ha=None, gross_margin_per_Ha=None, water_use_ML_per_Ha=None, required_water_ML_per_Ha=None, **kwargs):
+    def __init__(self, crop_name, price_per_yield, variable_cost_per_Ha, yield_per_Ha=None, gross_margin_per_Ha=None, water_use_ML_per_Ha=None, required_water_ML_per_Ha=None, depletion_fraction=None, **kwargs):
 
         """
         crop_name                       : Human readable name of crop
@@ -21,11 +26,8 @@ class CropInfo(Component):
         water_need_distribution         : Dict of growth stages and crop coefficients {'stage name': {'length (in days)': 0, 'coefficient': 0.5}}
 
         root_depth_m                    : Root depth of plant
-        growth_stages                   : Length of growth stages in days (see http://www.fao.org/docrep/x0490e/x0490e0b.htm)
-        growth_water_requirements       : Required water for each growth stage
-
-        sow_time                        : Month when to sow
-        harvest_time                    : Month when to start harvest
+        planting_info                   : Growth stages and crop coefficient for that stage (see http://www.fao.org/docrep/x0490e/x0490e0b.htm)
+        depletion_fraction              : Fraction of total available water (TAW) that can be depleted from the root zone before moisture stress occurs
 
         See:
         http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use
@@ -36,11 +38,15 @@ class CropInfo(Component):
         """
 
         self.name = crop_name
-        self.yield_per_Ha = yield_per_Ha if yield_per_Ha is not None else 0.0
+
+        #self.yield_per_Ha = yield_per_Ha if yield_per_Ha is not None else 0.0
+        self.setAttribute('yield_per_Ha', yield_per_Ha, 0.0)
+        self.setAttribute('water_use_ML_per_Ha', water_use_ML_per_Ha, None)
+        self.setAttribute('required_water_ML_per_Ha', required_water_ML_per_Ha, None)
+        self.setAttribute('depletion_fraction', depletion_fraction, 0.4)
+        
         self.price_per_yield = price_per_yield
         self.variable_cost_per_Ha = variable_cost_per_Ha
-        self.water_use_ML_per_Ha = water_use_ML_per_Ha if water_use_ML_per_Ha is not None else None
-        self.required_water_ML_per_Ha = required_water_ML_per_Ha if required_water_ML_per_Ha is not None else None
         self.water_need_satisfied = 0.0
         self.planted = False
 
@@ -83,61 +89,94 @@ class CropInfo(Component):
         :returns: Coefficient for the development stage of plant
         """
 
-        from datetime import datetime
+        year = timestep.year
+
+        temp_df = self.planting_info.copy()
+
+        #Prepend year to each crop coefficient entry
+        temp_df['temp_dt'] = "{y}-".format(y=year)+temp_df['Month-Day'].astype(str)
+
+        coef = temp_df[(pd.to_datetime(temp_df['temp_dt']) <= timestep)]['Coefficient']
+
+        if len(coef) == 0:
+            return 0.0
+        else:
+            #Return the coefficient for the given timestep
+            return temp_df[(pd.to_datetime(temp_df['temp_dt']) <= timestep)]['Coefficient'][0]
+        #End if
+        
+    #End getCurrentStageCoef()
+
+    def harvest(self, timestep):
+        temp_df = self.planting_info.copy()
 
         year = timestep.year
 
-        coef = 0.0
-        for info in self.planting_info:
-            stage_dt = '{y}-{md}'.format(y=year, md=self.planting_info[info][0])
-            stage_dt = datetime.strptime(stage_dt, '%Y-%m-%d').date()
+        #Prepend year to each crop coefficient entry
+        temp_df['temp_dt'] = "{y}-".format(y=year)+temp_df['Month-Day'].astype(str)
 
-            if timestep < stage_dt:
-                continue
-            else:
-                coef = self.planting_info[info][1]
-            #End if
+        # harvest_time = "{y}-".format(y=year)+temp_df["harvest":]["Month-Day"].astype(str)
+        
+        harvest_time = pd.to_datetime(temp_df['temp_dt']['harvest'])
 
-        #End for
+        if timestep >= harvest_time.date():
+            print harvest_time.date()
+            print timestep
+            return True
+        #End if
+    #End harvest
 
-        return coef
-    #End getCurrentStageCoef()
-
-    def calcTotalCropGrossMarginsPerHa(self):
+    def calcTotalCropGrossMarginsPerHa(self, yield_per_Ha=None, price_per_yield=None):
 
         """
-        Calculate total income from crop per Hectare, taking into account variable costs
+        Calculate gross income from crop per Hectare
 
-        :returns: total gross margins per Hectare based on assumed yield per Ha, price per Yield, and variable costs per Hectare
+        :returns: total gross margins per Hectare based on the assumed or given crop yield and crop price
         """
 
-        gross_value_per_yield = self.yield_per_Ha * self.price_per_yield
+        if yield_per_Ha is None:
+            yield_per_Ha = self.yield_per_Ha
 
-        total_crop_gross_margin_per_Ha = gross_value_per_yield - self.variable_cost_per_Ha
+        if price_per_yield is None:
+            price_per_yield = self.price_per_yield
 
-        return total_crop_gross_margin_per_Ha
+        gross_margin_per_Ha = yield_per_Ha * price_per_yield
 
-    #End calcTotalCropGrossMarginsPerHa()
+        return gross_margin_per_Ha
 
-    def calcGrossMarginsPerHa(self):
+    #End calcCropGrossMarginsPerHa()
+
+    def calcGrossMarginsPerHa(self, yield_per_Ha, price_per_yield):
 
         """
-        Calculate Gross Margins per Hectare ($/Ha)
-        :returns: Dollar value per Hectare
+        Calculate $/ML/Ha 
+        :returns: Dollar value per MegaLitre, per Hectare
         """
 
-        return (self.calcTotalCropGrossMarginsPerHa() / self.water_use_ML_per_Ha)
+        if yield_per_Ha is None:
+            yield_per_Ha = self.yield_per_Ha
+
+        if price_per_yield is None:
+            price_per_yield = self.price_per_yield
+
+        return (self.calcTotalCropGrossMarginsPerHa(yield_per_Ha, price_per_yield) / self.water_use_ML_per_Ha)
 
     #End calcGrossMarginsML()
 
-    def calcTotalCropGrossMargin(self, land_used_Ha):
+    def calcTotalCropGrossMargin(self, land_used_Ha, yield_per_Ha, price_per_yield):
 
         """
         Calculate gross income from crop for a given irrigated area, taking into account variable costs
         :param land_used_Ha: Amount of land dedicated to this crop type
         """
 
-        total_crop_gross_margin = land_used_Ha * self.calcTotalCropGrossMarginsPerHa()
+        if yield_per_Ha is None:
+            yield_per_Ha = self.yield_per_Ha
+
+        if price_per_yield is None:
+            price_per_yield = self.price_per_yield
+
+        total_crop_gross_margin = land_used_Ha * self.calcTotalCropGrossMarginsPerHa(yield_per_Ha, price_per_yield)
 
         return total_crop_gross_margin
 

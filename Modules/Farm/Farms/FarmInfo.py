@@ -19,7 +19,6 @@ class FarmInfo(Component):
         self.max_irrigation_area_Ha = max_irrigation_area_Ha if max_irrigation_area_Ha is not None else 782.0
         self.name = name
 
-        #self.discount_rate = storages[storages.keys()[0]].discount_rate
         self.discount_rate = discount_rate
         self.water_sources = water_sources
 

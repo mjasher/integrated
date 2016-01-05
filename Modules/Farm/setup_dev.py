@@ -12,19 +12,20 @@ TODO: Split out non-farm model related stuff
 
 
 #import ClimateVariables
-
+from integrated.Modules.Core.GeneralFunctions import *
 from integrated.Modules.Core.ParameterSet import *
+from integrated.Modules.Core.Handlers.FileHandler import FileHandler
+
 from integrated.Modules.WaterSources import WaterSources
 
 from integrated.Modules.Farm.Irrigations.IrrigationPractice import IrrigationPractice
-from integrated.Modules.Core.GeneralFunctions import *
 from integrated.Modules.Farm.Crops.CropInfo import CropInfo
 
 #Water sources in MegaLitres
 #200ML = 20-25% of average long term seasonal balance for regulated surface water licences on the Namoi river
 #p. 14, Powell & Scott (representative farm, but double check with Arshad 2014)
 WATER_SOURCE = {'flood_harvest': 200}
-Water = WaterSources(water_source={'flood_harvest': 200})
+#Water = WaterSources(water_source={'flood_harvest': 200}, pumping_cost=40)
 
 #Climate Variables
 #I thought there would be more, so used a ParameterSet.
@@ -42,7 +43,7 @@ FarmDam_params = ParameterSet(
     capture_pump_cost_ratio=0.5,
     pump_cost_dollar_per_ML=35,
     ClimateVariables=ParameterSet(surface_evap_rate=0.4),
-    WaterSources=WaterSources(water_source={'flood_harvest': 200})
+    # WaterSources=WaterSources(water_source={'flood_harvest': 200})
 )
 
 Dam_params = ParameterSet(
@@ -57,7 +58,7 @@ Dam_params = ParameterSet(
     capture_pump_cost_ratio=0.0,
     pump_cost_dollar_per_ML=35,
     ClimateVariables=ParameterSet(surface_evap_rate=0.4),
-    WaterSources=WaterSources(water_source={'flood_harvest': 200})
+    # WaterSources=WaterSources(water_source={'flood_harvest': 200})
 )
 
 SurfaceWater_params = ParameterSet(
@@ -80,7 +81,7 @@ Basin_params = ParameterSet(
     capture_pump_cost_ratio=0.6,
     pump_cost_dollar_per_ML=35,
     ClimateVariables=ParameterSet(surface_evap_rate=0.4),
-    WaterSources=WaterSources(water_source={'flood_harvest': 200})
+    # WaterSources=WaterSources(water_source={'flood_harvest': 200})
 )
 
 ASR_params = ParameterSet(
@@ -94,7 +95,7 @@ ASR_params = ParameterSet(
     capture_pump_cost_ratio=0.6,
     pump_cost_dollar_per_ML=35,
     ClimateVariables=ParameterSet(surface_evap_rate=0.4),
-    WaterSources=WaterSources(water_source={'flood_harvest': 200})
+    # WaterSources=WaterSources(water_source={'flood_harvest': 200})
 )
 
 #Create irrigation strategies
@@ -104,12 +105,23 @@ Flood_params = ParameterSet(
     irrigation_efficiency=0.55,
     lifespan=10,
     cost_per_Ha=0.0,
-    replacement_cost_per_Ha=2500.0,
+    replacement_cost_per_Ha=2000.0,
     maintenance_rate=0.02 
     #Pipe and Riser irrigation system: www.murraydairy.com.au/LiteratureRetrieve.aspx?ID=138617
     #2% maintenance rate seems to be the usual assumed value, as it is the value used in Arshad et al. (2013) and others
 )
 Flood = IrrigationPractice(**Flood_params.getParams())
+
+PipeAndRiser = IrrigationPractice(**Flood_params.getParams())
+PipeAndRiser.name = 'Pipe and Riser'
+
+#DUMMY VALUES
+PipeAndRiser.irrigation_efficiency = 0.74
+PipeAndRiser.lifespan = 10
+PipeAndRiser.cost_per_Ha=0.0 #3300 / Ha "Pipe and risers irrigation system: is it a good investment" DEPI 2013
+PipeAndRiser.replacement_cost_per_Ha=3300 #Assume PipeAndRiser already installed.
+PipeAndRiser.pumping_cost=15
+
 
 Spray_params = ParameterSet(
     name='Spray',
@@ -121,6 +133,8 @@ Spray_params = ParameterSet(
     cost_per_Ha=2500,
     maintenance_rate=0.02
 )
+Spray = IrrigationPractice(**Spray_params.getParams())
+Spray.cost_per_Ha=0.0
 
 Drip_params = ParameterSet(
     name='Drip',
@@ -132,127 +146,63 @@ Drip_params = ParameterSet(
     cost_per_Ha=6000,
     maintenance_rate=0.02
 )
+Drip = IrrigationPractice(**Drip_params.getParams())
 
-#Create crops
-Cotton_params = ParameterSet(
-    crop_name='Cotton',
-    #price per yield (538) Taken from original code
-    price_per_yield=538,
-    yield_per_Ha=9.5,
-    water_use_ML_per_Ha=7.9, #7.9 (value as found in Arshad et al. 2013) * 0.55 (average flood irrigation efficiency) = 4.345 #6.004 (figure based on 7.9 * 0.76 => national average),
-    #Cotton.water_use_ML_per_Ha = 7.59 #Taken from Montegomery & Bray, Figure 1, p 5
-    #variable cost taken from original code. 153.1 represents pigeon pea, sacrificial crop (uses ~5% of land)
-    variable_cost_per_Ha=2505+153.1,
-    root_depth_m=0.55,
-    depletion_fraction=0.4,
-)
-Cotton = CropInfo(**Cotton_params.getParams())
 
-#Crop Coefficients for French-Schultz taken from
-#http://www.bcg.org.au/cb_pages/files/Explination%20N%20Budgeting.pdf
-#unless stated otherwise
+### Import data from files ###
 
-#Crop Coefficients at different stages
-#Root depth
-#http://www.fao.org/nr/water/cropinfo_wheat.html
+DataHandle = FileHandler()
 
-#WARNING: THE NUMBERS BELOW ARE A MIX OF DUMMY AND POSSIBLE VALUES
-Wheat_params = ParameterSet(
-    crop_name='Wheat',
-    price_per_yield=480,
-    yield_per_Ha=2.5, #tonnes/Ha as given in Jarrod Lukeys 2014, emailed by Rabi
-    water_use_ML_per_Ha=3.0, #Given in Goulburn Broken CMA water savings calculator
-    variable_cost_per_Ha=1000.0,
-    planting_info={
-        'seed': ['09-01', 0.5],
-        'plant': ['11-01', 0.5],
-        'harvest': ['01-31', 0.8]
-    },
-    root_depth_m=0.3,
-    depletion_fraction=0.4,
-    et_coef=110, #Crop Evapotranspiration coefficient 110 mm
-    wue_coef=20, #Crop WUE coefficient for French-Schultz
-)
+crop_data_files = DataHandle.importFiles('Crops/data/variables', walk=True, index_col=0, skipinitialspace=True)
 
-Canola_params = ParameterSet(
-    crop_name='Canola',
-    price_per_yield=513,
-    #yield_per_Ha=1.5, #tonnes/Ha, as given in Jarrod Lukeys 2014, emailed by Rabi
-    yield_per_Ha=2.5, #target yield, as given in http://agriculture.vic.gov.au/agriculture/grains-and-other-crops/crop-production/growing-canola
-    water_use_ML_per_Ha=6.0, #Given in Goulburn Broken CMA water savings calculator
-    variable_cost_per_Ha=1000.0,
-    planting_info={
-        'seed': ['09-01', 0.1],
-        'plant': ['11-01', 1.1],
-        'harvest': ['01-31', 0.35]
-    },
-    root_depth_m=0.55,
-    depletion_fraction=0.4,
-    et_coef=110, #Crop Evapotranspiration coefficient 110 mm DUMMY VALUE FOR DEV PURPOSES!
-    wue_coef=15, #Crop WUE coefficient for French-Schultz
-)
+crop_data = {}
+crop_params = {}
+for folder in crop_data_files:
+    for crop_name in crop_data_files[folder]:
+        crop_data[crop_name] = crop_data_files[folder][crop_name]
 
-#Seed in September-October, planting in November
-#Start harvesting from late January to end of March
-#http://www.mmg.com.au/local-news/country-news/processing-tomato-harvest-beats-last-year-1.90835
+        temp_data = crop_data[crop_name]['Best Guess'].to_dict()
+        temp_data['crop_name'] = crop_name
+        crop_params[crop_name] = ParameterSet(**temp_data)
+    #End for
+#End for
 
-#Crop Yield in Tonnes/Ha
-#http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/vegetable-growing
-#http://agriculture.vic.gov.au/agriculture/grains-and-other-crops/crop-production/growing-wheat
-
-#Root depth and crop coefficents for growth stages
-#http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use
-
-Tomato_params = ParameterSet(
-    crop_name='Processing Tomato',
-    price_per_yield=460,
-    yield_per_Ha=49.4,
-    water_use_ML_per_Ha=6.0, #Given in Goulburn Broken CMA water savings calculator
-    #when to plant Month-Day, #Crop coefficient at plant stages
-    planting_info={
-        'initial': ['09-01', 0.5],
-        'development': ['10-01', 0.7],
-        'mid-season': ['11-01', 1.1],
-        'late': ['12-01', 0.95],
-        'harvest': ['01-31', 0.6]
-    },
-    root_depth_m=1.0,
-    depletion_fraction=0.4,
-    variable_cost_per_Ha=10000.0, #https://www.daf.qld.gov.au/plants/fruit-and-vegetables/vegetables/tomatoes/harvesting-and-marketing-tomatoes
-    et_coef=90,
-    wue_coef=10, 
-)
+crop_coefficients = DataHandle.importFiles('Crops/data/coefficients', index_col=0, skipinitialspace=True)
+for folder in crop_coefficients:
+    for crop_name in crop_coefficients[folder]:
+        crop_params[crop_name].planting_info = crop_coefficients[folder][crop_name] 
+    #End for
+#End for
 
 #Values for soil TAW taken from
 #http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use
 Light_clay_params = ParameterSet(
     name='Light Clay',
     TAW_mm=172,
-    current_TAW_mm=10
+    current_TAW_mm=35
 )
 
 Clay_loam_params = ParameterSet(
     name='Clay Loam',
     TAW_mm=164,
-    current_TAW_mm=30
+    current_TAW_mm=15
 )
 
 Loam_params = ParameterSet(
     name='Loam',
     TAW_mm=164,
-    current_TAW_mm=25
+    current_TAW_mm=10
 )
 
 MIN_BOUND = 0.3
 MAX_BOUND = 0.95
 BOUNDS = {'min': MIN_BOUND, 'max': MAX_BOUND, 'static': False, 'base': False}
 
-import copy
 BASE_FARM = ParameterSet(
     name='Test Farm',
     storages={},
-    water_sources=dict(surface_water=0.0, groundwater=0.0, precipitation=0.0, dam=10000.0),
+    water_sources={}, #dict(surface_water=0.0, groundwater=0.0, precipitation=0.0, dam=10000.0),
     irrigations={'Flood': ParameterSet(**Flood_params.getParams())},
-    crops={'Wheat': CropInfo(**Wheat_params.getParams()), 'Canola': CropInfo(**Canola_params.getParams()), 'Tomato': CropInfo(**Tomato_params.getParams())}
+    crops={crop_name: CropInfo(**cp.getParams()) for crop_name, cp in crop_params.iteritems()}
     #bounds={'min': 0.3, 'max': 0.95, 'static': False, 'base': True}
 )

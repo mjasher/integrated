@@ -31,7 +31,7 @@ class SoilType(Component):
 			current_TAW_mm = self.current_TAW_mm
 
 		if fraction is None:
-			fraction = 0.5
+			fraction = 0.4
 
 		return float(current_TAW_mm) * float(fraction)
 		

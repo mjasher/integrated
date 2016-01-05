@@ -20,22 +20,14 @@ class IrrigationPractice(Component):
         #Cost of replacing the irrigation system after lifespan.
         self.replacement_cost_per_Ha = cost_per_Ha if replacement_cost_per_Ha is None else replacement_cost_per_Ha
 
-        #Implementation cost for Flood is always 0 as it is already implemented
-        self.cost_per_Ha = cost_per_Ha #if name is not 'Flood' else 0.0
+        #Implementation (capital) cost for Flood should always be set to 0 as it is already implemented
+        self.cost_per_Ha = cost_per_Ha
         
         #max irrigation area default value (782 Ha) from Powell & Scott (2011), Representative farm model, p 25
         self.max_irrigation_area_Ha = max_irrigation_area_Ha if max_irrigation_area_Ha is not None else 782.0
         self.lifespan = lifespan if lifespan is not None else 10
 
         self.maintenance_rate = maintenance_rate
-
-        #self.irrigation_area = 0.0 if irrigation_area is None else irrigation_area
-
-        #Set default params
-        # self.default_params = {}
-        # for key, value in self.__dict__.iteritems():
-        #     self.default_params[key] = copy.deepcopy(value)
-        # #End For
 
         #Set all other kwargs as class attributes
         for key, value in kwargs.items():
@@ -203,6 +195,19 @@ class IrrigationPractice(Component):
         return irrigation_area
 
     #End calcIrrigationArea()
+
+    def calcOperationalCostPerHa(self):
+
+        """
+        Calculate the operational cost of this irrigation system
+        """
+
+        op_cost_per_Ha = (self.maintenance_rate * self.cost_per_Ha) \
+                            if self.cost_per_Ha != 0.0 else self.maintenance_rate * self.replacement_cost_per_Ha
+
+        op_cost_per_Ha = op_cost_per_Ha + self.cost_per_Ha
+
+        return op_cost_per_Ha
 
     def calcCapitalCost(self, irrigation_area_Ha):
 

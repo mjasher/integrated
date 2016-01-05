@@ -16,21 +16,15 @@ Profits are negated as the solver attempts to minimize
 
 :math:`W_{1}*x_{1} + W_{2}*x_{2} + W_{3}*x_{3}  ... + W_{n}*x_{n} \leqslant AW`, where :math:`AW` is Available Water, :math:`W` is required water per Ha for each enterprise
 
-:math:`0 \leq x_{1} \leq A` 
+:math:`0 \leq x_{1,2,3 ... n} \leq A`
 
-:math:`0 \leq x_{2} \leq A`
-
-:math:`0 \leq x_{3} \leq A`
-
-...
-
-:math:`0 <= x_{n} <= A`
+Each :math:`x` therefore represents a combination of soil, crop, irrigation, water source, and soil characteristics
 
 Example::
 
-	tomato_cost = Tomato.variable_cost_per_Ha + flood_infra_cost + pumping_cost
-	wheat_cost = Wheat.variable_cost_per_Ha + flood_infra_cost + pumping_cost
-	canola_cost = Canola.variable_cost_per_Ha + flood_infra_cost + pumping_cost
+	tomato_cost = Tomato.variable_cost_per_Ha + flood_infra_cost + (pumping_cost*Tomato.water_use_ML_per_Ha)
+	wheat_cost = Wheat.variable_cost_per_Ha + flood_infra_cost + (pumping_cost*Wheat.water_use_ML_per_Ha)
+	canola_cost = Canola.variable_cost_per_Ha + flood_infra_cost + (pumping_cost*Canola.water_use_ML_per_Ha)
 
 	tomato_profit = Tomato.price_per_yield * Tomato.yield_per_Ha
 	wheat_profit = Wheat.price_per_yield * Wheat.yield_per_Ha

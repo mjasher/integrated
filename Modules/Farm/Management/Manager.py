@@ -24,170 +24,76 @@ class FarmManager(Component):
 
     """
 
-    def __init__(self, Farm):
+    def __init__(self, Farm, water_sources, irrigations, crops, livestocks=None):
 
         """
         :param Farm: Farm Object representing the Farm to manage
+        :param water_sources: List of water_sources to choose from
+        :param irrigations: List of irrigation systems to choose from
+        :param crops: List of crops to choose from
+        :param livestocks: List of livestock to choose from
         """
 
         self.Farm = Farm
+        self.water_sources = water_sources
+        self.irrigations = irrigations
+        self.crops = crops
+        self.livestocks = livestocks
 
     #End __init__()
 
-    # def determineFieldCombinations(self, expected_rainfall_mm):
+    def estIrrigationWaterUse(self, crop_water_use_ML, irrigation_efficiency):
 
-    #     """
-    #     Determine optimal combination of Field (and irrigation) - Crop - Water Source
+        """
+        Estimate amount of irrigation water to send out.
 
-    #     TODO: Include salinity costs in calculation
+        WARNING:
+        This is assuming that the given crop water use does not factor in irrigation efficiency.
+        However, it seems figures given in the literature already include water losses and precipitation.
+        e.g. if a crop is said to need 6ML/Ha/Season, it is with the given irrigation system + "usual" rainfall 
 
-    #     .. math::
-    #       -Crop Profit &= (Cost_{infrastructure} + Cost_{variable} + Cost_{sw pumping} - GrossMarginPerHa)*x_{1} \\\\
-    #       &+ (Cost_{infrastructure} + Cost_{variable} + Cost_{gw pumping} - GrossMarginPerHa)*x_{2}
+        :param crop_water_use_ML: How much water the crop is said to require
+        :param irrigation_efficiency: A percentage indicating how much water actually gets to the field
 
-    #     where
+        """
 
-    #     .. math::
-    #       & x_{1} + x_{2} \leqslant Total Available Area \\\\
-    #       & x_{1} + x_{2} \leqslant (Ent_{sw} / Irrigation_{water}) + (Ent_{gw} / Irrigation_{water}) \\\\
-    #       & 0 \leqslant x_{1,2,3, ... n} \leqslant min((Ent_{sw} / Irrigation_{water}) + (Ent_{gw} / Irrigation_{water}), Total Field Area)
+        return crop_water_use_ML / irrigation_efficiency
 
-    #     wherein
+    #End estIrrigationWaterUse()
 
-    #     * :math:`Ent_{sw, gw}` represents Surface/groundwater entitlements 
-    #     * :math:`Irrigation_{water}` = Water to send out for crop in ML/Ha, determined as :math:`Crop Water Requirement / Irrigation Efficiency`
-    #     * :math:`GrossMarginPerHa` = Expected yield as provided by French-Schultz equation. See :py:meth:`calcPotentialCropYield`
+    def dp_dev_fieldcombos(self):
+        """
+        :param Field: Farm Field object 
+        :param costs_per_Ha: List or Dict of functions or values that calculates each cost (?)
+        :param gross_margin_per_Ha: List or Dict of functions or values that relate to calculating the gross margin
 
-    #     :param expected_rainfall_mm: Expected Growing Season Rainfall in mm
+        Plastic and Static Farm Managers have separate run() method that dictate the behaviour
+        e.g. Plastic runs the DP method every season; whilst static only runs it once a rotation
+
+        For each current field, decide what to do...
+
+        """
+
+        possible_fields = []
+
+        for field_i, Field in enumerate(self.Farm.fields):
+
+            """
+            Possible actions:
+            Upgrade irrigation system (takes ~1-2 years for upgrade)
+            Change crop rotation
+            """
+            possible_fields[field_i] = Field.copy()
+
+            pass
+        #End for
+
+        pass
+
         
-    #     :returns: 
-    #       * field_map: List of Field, Crop, Water Source combinations considered
-    #       * res: scipy.optimize.OptimizeResult object, see `linprog documentation`_
+    #End dev
 
-    #     .. _linprog documentation: http://docs.scipy.org/doc/scipy/reference/optimize.linprog-simplex.html
-
-    #     """
-
-    #     water_sources = self.Farm.water_sources
-    #     crops = self.Farm.crops
-    #     fields = self.Farm.fields
-
-    #     c = []
-    #     max_irrig_area = 0
-    #     b_ub = []
-    #     bounds = []
-    #     field_map = []
-    #     for Field in fields:
-
-    #         Irrigation = Field.Irrigation
-    #         infra_cost_per_Ha = (Irrigation.maintenance_rate * Irrigation.cost_per_Ha) if Irrigation.cost_per_Ha != 0.0 else Irrigation.maintenance_rate * Irrigation.replacement_cost_per_Ha
-    #         infra_cost_per_Ha = infra_cost_per_Ha + Irrigation.cost_per_Ha
-
-    #         max_irrig_area = max_irrig_area + Field.area
-
-    #         for crop_name in crops:
-
-    #             Crop = self.Farm.crops[crop_name]
-
-    #             irrigation_water_ML_per_Ha = Crop.water_use_ML_per_Ha / Irrigation.irrigation_efficiency
-    #             flow_rate_Lps = Field.calcFlowRate(Field.pump_operation_hours, Field.pump_operation_days, Crop=Crop)
-
-    #             b_ub.extend([Field.area])
-
-    #             for water_source in water_sources:
-
-    #                 pumping_cost_per_ML = self.Farm.water_sources[water_source].calcPumpingCostsPerML(flow_rate_Lps=flow_rate_Lps)
-    #                 pumping_cost_per_Ha = pumping_cost_per_ML * irrigation_water_ML_per_Ha
-
-    #                 water_entitlement = self.Farm.water_sources[water_source].entitlement
-    #                 water_value_per_ML = self.Farm.water_sources[water_source].water_value_per_ML
-    #                 water_cost_per_ML = self.Farm.water_sources[water_source].cost_per_ML
-    #                 water_cost_per_Ha = water_cost_per_ML * irrigation_water_ML_per_Ha
-
-    #                 #Include value of saved water. 
-    #                 #Need to do this for each water source, as price of water depends on source
-    #                 #available_water_per_Ha = water_entitlement/Field.area
-    #                 saved_water_value_per_Ha = 0 #(available_water_per_Ha - ((irrigation_water_ML_per_Ha / available_water_per_Ha) * available_water_per_Ha) ) * water_value_per_ML
-
-    #                 RAW_mm = Field.Soil.calcRAW(fraction=Crop.depletion_fraction) #Per cubic metre
-    #                 predicted_total_crop_yield = self.calcPotentialCropYield(RAW_mm, expected_rainfall_mm, Crop.et_coef, Crop.wue_coef)
-
-    #                 gross_margin_per_Ha = (Crop.price_per_yield*predicted_total_crop_yield)
-
-    #                 max_irrig_area = max_irrig_area + (water_entitlement/irrigation_water_ML_per_Ha)
-
-    #                 c.extend([(infra_cost_per_Ha+pumping_cost_per_Ha+Crop.variable_cost_per_Ha+water_cost_per_Ha) - (gross_margin_per_Ha + saved_water_value_per_Ha)])
-
-    #                 # print "Pred. {c} Yield (t/Ha) with {w}: {cy} | {cp}".format(c=crop_name, cy=predicted_total_crop_yield, w=water_source, cp=(infra_cost_per_Ha+pumping_cost+Crop.variable_cost_per_Ha) - (gross_margin_per_Ha + saved_water_value_per_Ha))
-
-    #                 #Create list that maps a combination with a value in 'c'
-    #                 field_map.append({'field_name': Field.name, 'crop_name': crop_name, 'water_source': water_source})
-
-    #                 bounds.append((0, min((water_entitlement/irrigation_water_ML_per_Ha), Field.area)))
-    #             #End for
-    #         #End for
-    #     #End for
-
-    #     num_set = len(water_sources)
-
-    #     #Add constraints for each water source and field combination
-    #     A_ub = []
-    #     for i in xrange(0, len(c), num_set):
-
-    #         #Create a list of elements that represent fields that should be activated for each water source
-    #         temp_list = [y for y in xrange(i, i+(num_set))]
-
-    #         #Create a list of 1's and 0's. 1's represent a field-crop-watersource combination
-    #         #For example, consider the following constraint
-    #         #  x_{1} + x_{2} + x_{3} + x_{4} <= Total Available Area
-    #         #
-    #         #  Can be represented as [1, 1, 1, 1] (1x_{1}, 1x_{2}, etc.)
-    #         #
-    #         #  x_{1} + x_{2}, and x_{3} + x_{4} represents different fields, watered by different sources of water 
-    #         #
-    #         #  So to represent a single field (x_{1} + x_{2}) we have to do
-    #         #  [1, 1, 0, 0] which represents 1x_{1} + 1x_{2} + 0x_{3} + 0x_{4}
-    #         #  In essence, the 0's deactivate a field from consideration
-    #         #
-    #         #  The constraint on the above could be the Field Area
-    #         #  x_{1} + x_{2} + 0x_{3} + 0x_{4} <= Area of Field 1
-    #         #  0x_{1} + 0x_{2} + x_{3} + x_{4} <= Area of Field 2
-    #         #
-    #         A_ub.append([1 if x in temp_list else 0 for x, val in enumerate(c)])
-    #     #End for
-
-    #     #As above, but for each field as a whole
-    #     num_set = int(len(c) / len(fields))
-    #     for i in xrange(0, len(c), num_set):
-
-    #         #Create a list of elements that represent fields that should be activated
-    #         temp_list = [y for y in xrange(i, i+(num_set))]
-    #         A_ub.append([1 if x in temp_list else 0 for x, val in enumerate(c)])
-    #     #End for
-
-    #     #Add constraints for each field as a whole
-    #     for Field in fields:
-    #         b_ub.extend([Field.area])
-    #     #End for
-
-    #     #Add maximum possible irrigation area as constraint
-    #     b_ub.extend([max_irrig_area])
-
-    #     #Activate all fields to constrain by maximum possible irrigation area
-    #     A_ub.append([1 for x, val in enumerate(c)])
-
-    #     res = lp(c, A_ub=A_ub, b_ub=b_ub, bounds=bounds, options={"disp": False})
-
-    #     # water_saved = lambda ent, area, irrig_ML_per_Ha: (ent/area) - ( (irrig_ML_per_Ha / (ent/area)) * (ent/area))
-
-    #     for i, v in enumerate(res.x):
-    #         field_map[i]['area'] = v
-        
-    #     return field_map, res
-
-    # #End determineFieldCombinations()
-
-    def determineFieldCombinations(self, Field, expected_rainfall_mm):
+    def determineFieldCombinations(self, Field, expected_rainfall_mm, additional_costs=0, additional_income=0):
         
         """
         For a given crop, determine the optimum crop area and type, and with which water source.
@@ -249,8 +155,7 @@ class FarmManager(Component):
         """
 
         Irrigation = Field.Irrigation
-        infra_cost_per_Ha = (Irrigation.maintenance_rate * Irrigation.cost_per_Ha) if Irrigation.cost_per_Ha != 0.0 else Irrigation.maintenance_rate * Irrigation.replacement_cost_per_Ha
-        infra_cost_per_Ha = infra_cost_per_Ha + Irrigation.cost_per_Ha
+        infra_cost_per_Ha = Irrigation.calcOperationalCostPerHa()
 
         optimum_field = []
 
@@ -265,8 +170,12 @@ class FarmManager(Component):
 
             RAW_mm = Field.Soil.calcRAW(fraction=Crop.depletion_fraction) #Per cubic metre
             predicted_crop_yield_per_Ha = self.calcPotentialCropYield(RAW_mm, expected_rainfall_mm, Crop.et_coef, Crop.wue_coef)
-            gross_margin_per_Ha = (Crop.price_per_yield*predicted_crop_yield_per_Ha)
-            irrigation_water_ML_per_Ha = Crop.water_use_ML_per_Ha / Irrigation.irrigation_efficiency            
+
+            gross_margin_per_Ha = Crop.calcTotalCropGrossMarginsPerHa(predicted_crop_yield_per_Ha, Crop.price_per_yield)
+
+            #Estimated irrigation water use
+            # est_irrigation_water_ML_per_Ha = Crop.water_use_ML_per_Ha
+            est_irrigation_water_ML_per_Ha = self.estIrrigationWaterUse(Crop.water_use_ML_per_Ha, Irrigation.irrigation_efficiency)
 
             c = []
             A_ub = []
@@ -281,22 +190,21 @@ class FarmManager(Component):
                     optimum[Crop.name][water_source_name] = {}
 
                 flow_rate_Lps = Field.calcFlowRate(Field.pump_operation_hours, Field.pump_operation_days, Crop=Crop)
-                pumping_cost_per_ML = self.Farm.water_sources[water_source_name].calcPumpingCostsPerML(flow_rate_Lps=flow_rate_Lps)
-                pumping_cost_per_Ha = pumping_cost_per_ML * irrigation_water_ML_per_Ha
+                pumping_cost_per_Ha = self.Farm.water_sources[water_source_name].calcGrossPumpingCostsPerHa(flow_rate_Lps, est_irrigation_water_ML_per_Ha)
 
                 water_entitlement = water_source.entitlement
-                possible_irrigation_area = (water_entitlement/irrigation_water_ML_per_Ha)
+                possible_irrigation_area = (water_entitlement/est_irrigation_water_ML_per_Ha)
                 water_value_per_ML = water_source.water_value_per_ML
-                water_cost_per_ML = water_source.cost_per_ML
-                water_cost_per_Ha = water_cost_per_ML * irrigation_water_ML_per_Ha
+                
+                water_cost_per_Ha = water_source.calcWaterCostsPerHa(est_irrigation_water_ML_per_Ha)
 
                 #Include value of saved water. 
                 #Need to do this for each water source, as price of water depends on source
                 available_water_per_Ha = water_entitlement/Field.area
-                saved_water_value_per_Ha = (available_water_per_Ha - ((irrigation_water_ML_per_Ha / available_water_per_Ha) * available_water_per_Ha) ) * water_value_per_ML
+                saved_water_value_per_Ha = (available_water_per_Ha - ((est_irrigation_water_ML_per_Ha / available_water_per_Ha) * available_water_per_Ha) ) * water_value_per_ML
 
-                total_costs = (infra_cost_per_Ha+pumping_cost_per_Ha+water_cost_per_Ha+Crop.variable_cost_per_Ha)
-                total_margin = (gross_margin_per_Ha + saved_water_value_per_Ha)
+                total_costs = (infra_cost_per_Ha+pumping_cost_per_Ha+water_cost_per_Ha+Crop.variable_cost_per_Ha) + additional_costs
+                total_margin = (gross_margin_per_Ha + saved_water_value_per_Ha) + additional_income
 
                 c.extend([total_costs - total_margin])
 
@@ -339,11 +247,11 @@ class FarmManager(Component):
             total_area = 0
             for (i, water_source) in enumerate(self.Farm.water_sources):
                 optimum[Crop.name][water_source].update({'area': res.x[i], 
-                                                 'water_applied': res.x[i]*irrigation_water_ML_per_Ha, 
+                                                 'water_applied': res.x[i]*est_irrigation_water_ML_per_Ha, 
                                                  'total_crop_yield': (predicted_crop_yield_per_Ha*res.x[i]), 
-                                                 'WUI': (predicted_crop_yield_per_Ha*res.x[i])/(res.x[i]*irrigation_water_ML_per_Ha),
-                                                 'water_saved': water_saved(self.Farm.water_sources[water_source].entitlement, res.x[i], irrigation_water_ML_per_Ha),
-                                                 'saved_water_value': water_saved(self.Farm.water_sources[water_source].entitlement, res.x[i], irrigation_water_ML_per_Ha) * self.Farm.water_sources[water_source].water_value_per_ML,
+                                                 'WUI': (predicted_crop_yield_per_Ha*res.x[i])/(res.x[i]*est_irrigation_water_ML_per_Ha),
+                                                 'water_saved': water_saved(self.Farm.water_sources[water_source].entitlement, res.x[i], est_irrigation_water_ML_per_Ha),
+                                                 'saved_water_value': water_saved(self.Farm.water_sources[water_source].entitlement, res.x[i], est_irrigation_water_ML_per_Ha) * self.Farm.water_sources[water_source].water_value_per_ML,
                                                  'crop_margin_per_Ha': predicted_crop_yield_per_Ha * Crop.price_per_yield if res.x[i] > 0 else 0.0
                                                  })
                 total_water_use = total_water_use + optimum[Crop.name][water_source]['water_applied']
@@ -358,9 +266,10 @@ class FarmManager(Component):
                 optimum[Crop.name]['fields'] = []
                 field_name = '{fn}-{cn}-{a}'.format(fn=Field.name, cn=Crop.name, a=total_area)
 
+                #mark the crop as planted
+                Crop.planted = True
                 optimum[Crop.name]['fields'].append(FarmField(name=field_name, irrigation=Irrigation, crop=Crop, soil=Field.Soil, area=total_area))
 
-                
             #End if
 
             #Add percentage water use information
@@ -414,11 +323,11 @@ class FarmManager(Component):
             water_to_send = 0.0
         else:
 
-            water_application = net_irrigation_depth
+            water_application = 0.0 - Field.c_swd
 
-            while (Field.c_swd + water_application) < 0.0:
-                water_application = water_application + net_irrigation_depth
-            #End while
+            # while (Field.c_swd + water_application) < 0.0:
+            #     water_application = water_application + net_irrigation_depth
+            # #End while
 
             #Add again to get it over 0.0 (?)
             #water_application = water_application + net_irrigation_depth
@@ -567,18 +476,18 @@ class FarmManager(Component):
         infra_cost_per_Ha = (Irrigation.maintenance_rate * Irrigation.cost_per_Ha) if Irrigation.cost_per_Ha != 0.0 else Irrigation.maintenance_rate * Irrigation.replacement_cost_per_Ha
         infra_cost_per_Ha += Irrigation.cost_per_Ha
 
-        irrigation_water_ML_per_Ha = Crop.water_use_ML_per_Ha / Irrigation.irrigation_efficiency
+        est_irrigation_water_ML_per_Ha = Crop.water_use_ML_per_Ha / Irrigation.irrigation_efficiency
 
         flow_rate_Lps = Field.calcFlowRate(Field.pump_operation_hours, Field.pump_operation_days, Crop=Crop)
         pumping_cost_per_ML = self.Farm.water_sources[water_source_name].calcPumpingCostsPerML(flow_rate_Lps=flow_rate_Lps)
-        pumping_cost_per_Ha = pumping_cost_per_ML * irrigation_water_ML_per_Ha
+        pumping_cost_per_Ha = pumping_cost_per_ML * est_irrigation_water_ML_per_Ha
 
         pass
 
         water_source = self.Farm.water_sources[water_source_name]
 
         water_cost_per_ML = water_source.cost_per_ML
-        water_cost_per_Ha = water_cost_per_ML * irrigation_water_ML_per_Ha
+        water_cost_per_Ha = water_cost_per_ML * est_irrigation_water_ML_per_Ha
 
 
 
