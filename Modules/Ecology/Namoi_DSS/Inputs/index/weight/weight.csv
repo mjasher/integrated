@@ -1,0 +1,9 @@
+Species,Timing,Duration,Dry
+BBMS,0,0.9,0.1
+BBRR,0.5,0.5,0
+LGMS,0.1,0.6,0.3
+LGRR,0.8,0.2,0
+RRGMS,0.2,0.5,0.3
+RRGRR,0.3,0.7,0
+WCMS,0.5,0.25,0.25
+WCRR,0.5,0.5,0

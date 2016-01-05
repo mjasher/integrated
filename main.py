@@ -15,6 +15,5 @@ This is the "Master" script that calls all other modules and handles their inter
 """
 
 if __name__ == "__main__":
-
 	pass
 #End if

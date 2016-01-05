@@ -18,4 +18,5 @@ deep_drainage = 10
 storage_coef = 0.5
 ET_f = 1.1
 
+#Test flow calculation
 print WaterRouter.calcFlow(prev_storage, inflow, irrig_out, evap, local_inflow, base_flow, deep_drainage, storage_coef, ET_f)
