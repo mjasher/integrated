@@ -1,3 +1,4 @@
+from __future__ import division
 import WaterSources
 
 class GroundwaterSource(WaterSources.WaterSources):
@@ -8,7 +9,19 @@ class GroundwaterSource(WaterSources.WaterSources):
 	"""
 	
 	def __init__(self, name, water_level):
-		pass
+
+		"""
+		:param water_level: depth below surface
+		"""
+
+		self.name = name
+		self.water_level = water_level
 	#End init()
+
+	def extractWater(self, water_amount_ML):
+
+
+        
+    #End extractWater()
 
 #End GroundwaterSource()
