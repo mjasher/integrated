@@ -1,4 +1,4 @@
-Species,Default,Favour_duration,Favour_dry,Favour_timing
+Attribute,Default,Favour_duration,Favour_dry,Favour_timing
 Timing,0.2,0.05,0.1,0.5
 Duration,0.5,0.9,0.4,0.3
 Dry,0.3,0.05,0.5,0.2
