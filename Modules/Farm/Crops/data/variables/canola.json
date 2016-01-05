@@ -1,0 +1,64 @@
+{
+	"yield_per_Ha": {
+		"min": 1.0,
+		"max": 2.75,
+		"best_guess": 1.5,
+		"UoM": "t/Ha",
+		"_comment": "as given in Jarrod Lukeys 2014, emailed by Rabi"
+	},
+	"price_per_yield": {
+		"min": 150,
+		"max": 350,
+		"best_guess": 300,
+		"UoM": "$/t",
+		"_comment": "http://www.australianoilseeds.com/__data/assets/pdf_file/0014/2705/Chapter_5_-_Canola_in_Rotations.pdf"
+	},
+	"variable_cost_per_Ha": {
+		"min": 175.0,
+		"max": 300.0,
+		"best_guess": 221.0,
+		"UoM": "$/Ha",
+		"_comment": "http://www.australianoilseeds.com/__data/assets/pdf_file/0014/2705/Chapter_5_-_Canola_in_Rotations.pdf"
+	},
+	"water_use_ML_per_Ha": {
+		"min": 5,
+		"max": 7,
+		"best_guess": 6.0,
+		"UoM": "ML/Ha",
+		"_comment": "Given in Goulburn Broken CMA water savings calculator"
+	},
+	"root_depth_m": {
+		"min": 0.4,
+		"max": 1.0,
+		"best_guess": 0.55,
+		"UoM": "metres",
+		"_comment": "http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use"
+	},
+	"depletion_fraction": {
+		"min": 0.3,
+		"max": 0.8,
+		"best_guess": 0.4,
+		"_comment": ""
+	},
+	"et_coef": {
+		"min": 90,
+		"max": 120,
+		"best_guess": 110,
+		"_comment": "Average Crop Evapotranspiration coefficient for French-Schultz"
+	},
+	"wue_coef": {
+		"min": 10,
+		"max": 25,
+		"best_guess": 15,
+		"_comment": "Crop WUE coefficient for French-Schultz (mm)"
+	},
+	"planting_info": {
+		"initial": ["06-01", 0.2],
+        "development": ["07-01", 0.4],
+        "mid-season": ["08-01", 0.5],
+        "mid-season_2": ["09-01", 0.7],
+        "late": ["10-01", 0.8],
+        "harvest": ["11-31", 0.6]
+	},
+	"_comment": "http://www.depi.vic.gov.au/__data/assets/pdf_file/0004/188950/pride-user-manual.pdf"
+}

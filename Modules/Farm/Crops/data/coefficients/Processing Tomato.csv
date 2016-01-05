@@ -1,0 +1,6 @@
+Stage, Month-Day, Coefficient
+initial, 09-01, 0.5
+development, 07-01, 0.7
+mid-season, 08-01, 1.1
+late, 10-01, 0.95
+harvest, 11-30, 0.6

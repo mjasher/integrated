@@ -1,0 +1,62 @@
+{
+	"yield_per_Ha": {
+		"min": 15,
+		"max": 75,
+		"best_guess": 25.4,
+		"UoM": "t/Ha",
+		"_comment": "DUMMY VALUES"
+	},
+	"price_per_yield": {
+		"min": 150,
+		"max": 350,
+		"best_guess": 250,
+		"UoM": "$/t",
+		"_comment": "Dummy values"
+	},
+	"variable_cost_per_Ha": {
+		"min": 8000,
+		"max": 11000,
+		"best_guess": 10000,
+		"UoM": "$/Ha",
+		"_comment": "https://www.daf.qld.gov.au/plants/fruit-and-vegetables/vegetables/tomatoes/harvesting-and-marketing-tomatoes"
+	},
+	"water_use_ML_per_Ha": {
+		"min": 5,
+		"max": 8,
+		"best_guess": 6.0,
+		"UoM": "ML/Ha",
+		"_comment": "Given in Goulburn Broken CMA water savings calculator"
+	},
+	"root_depth_m": {
+		"min": 0.5,
+		"max": 1.5,
+		"best_guess": 1.0,
+		"UoM": "metres",
+		"_comment": "http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use"
+	},
+	"depletion_fraction": {
+		"min": 0.3,
+		"max": 0.8,
+		"best_guess": 0.4,
+		"_comment": ""
+	},
+	"et_coef": {
+		"min": 90,
+		"max": 120,
+		"best_guess": 90,
+		"_comment": "Average Crop Evapotranspiration coefficient for French-Schultz"
+	},
+	"wue_coef": {
+		"min": 15,
+		"max": 25,
+		"best_guess": 20,
+		"_comment": "Crop WUE coefficient for French-Schultz (mm)"
+	},
+	"planting_info": {
+		"initial": ["09-01", 0.5],
+		"development": ["10-01", 0.7],
+		"mid-season": ["11-01", 1.1],
+		"late": ["12-01", 0.95],
+		"harvest": ["01-31", 0.6]
+	}	
+}

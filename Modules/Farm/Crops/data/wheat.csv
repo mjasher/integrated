@@ -1,5 +1,0 @@
-Variable, Best Guess, Min, Max
-yield_per_Ha, 0.7, 3, 2
-price_per_yield, 150, 320, 220
-variable_cost_per_Ha, 1000.0, 500, 3000
-water_use_ML_per_Ha, 5.0, 4.0, 7.0

@@ -1,0 +1,9 @@
+WARNING: DATA IN THIS FOLDER ARE DUMMY VALUES INTENDED FOR DEVELOPMENT PURPOSES ONLY
+
+http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/vegetable-growing
+
+et_coef is in mm
+wue_coef for French-Schultz is in kg/mm
+
+Annual Pasture re-establishment cost
+Hansen, D., Irrigation Supply system modernisation enables farm irrigation upgrades, Victoria Dept. of Economic Development, Jobs, Transport and Resources

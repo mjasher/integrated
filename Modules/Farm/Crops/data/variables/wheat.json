@@ -1,0 +1,63 @@
+{
+	"yield_per_Ha": {
+		"min": 150,
+		"max": 480,
+		"best_guess": 400,
+		"UoM": "t/Ha",
+		"_comment": "http://www.australianoilseeds.com/__data/assets/pdf_file/0014/2705/Chapter_5_-_Canola_in_Rotations.pdf"
+	},
+	"price_per_yield": {
+		"min": 150,
+		"max": 480,
+		"best_guess": 400,
+		"UoM": "$/t",
+		"_comment": "Dummy values"
+	},
+	"variable_cost_per_Ha": {
+		"min": 150,
+		"max": 400,
+		"best_guess": 168,
+		"UoM": "$/Ha",
+		"_comment": "http://www.australianoilseeds.com/__data/assets/pdf_file/0014/2705/Chapter_5_-_Canola_in_Rotations.pdf"
+	},
+	"water_use_ML_per_Ha": {
+		"min": 2,
+		"max": 5,
+		"best_guess": 3.0,
+		"UoM": "ML/Ha",
+		"_comment": "Given in Goulburn Broken CMA water savings calculator"
+	},
+	"root_depth_m": {
+		"min": 2,
+		"max": 5,
+		"best_guess": 0.3,
+		"UoM": "metres",
+		"_comment": ""
+	},
+	"depletion_fraction": {
+		"min": 0.3,
+		"max": 0.8,
+		"best_guess": 0.4,
+		"_comment": ""
+	},
+	"et_coef": {
+		"min": 90,
+		"max": 120,
+		"best_guess": 110,
+		"_comment": "Average Crop Evapotranspiration coefficient for French-Schultz"
+	},
+	"wue_coef": {
+		"min": 15,
+		"max": 25,
+		"best_guess": 20,
+		"_comment": "Crop WUE coefficient for French-Schultz (mm)"
+	},
+	"planting_info": {
+		"initial": ["06-01", 0.2],
+		"development": ["07-01", 0.4],
+		"mid-season": ["08-01", 0.5],
+		"mid-season_2": ["09-01", 0.7],
+		"late": ["10-01", 0.8],
+		"harvest": ["11-31", 0.6]
+	}
+}

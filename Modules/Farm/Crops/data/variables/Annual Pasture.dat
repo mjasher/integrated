@@ -1,0 +1,10 @@
+Variable, Best Guess, Min, Max
+yield_per_Ha, 
+price_per_yield, 
+variable_cost_per_Ha, 
+water_use_ML_per_Ha, 
+root_depth_m, 
+depletion_fraction, 
+et_coef, 
+wue_coef, 
+re_establishment_cost, 350, 250, 450
