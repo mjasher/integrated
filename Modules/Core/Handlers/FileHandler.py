@@ -104,7 +104,7 @@ class FileHandler(object):
 				imported[parent_dir] = {}
 
 			imported[parent_dir][fname] = pd.read_csv(f, **kwargs)
-			imported[fname] = pd.read_csv(f, **kwargs)
+			#imported[fname] = pd.read_csv(f, **kwargs)
 
 			# try:
 			# 	imported[fname] = pd.read_csv(f, skiprows=0, skipinitialspace=True, **kwargs)
