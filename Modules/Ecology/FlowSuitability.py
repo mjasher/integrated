@@ -13,7 +13,7 @@ class FlowSuitability(object):
         
         return flood_events_df
     
-    def FloodIndexes(self, flood_events_df, coordinates):
+    def floodIndexes(self, flood_events_df, coordinates):
         """
         Calculate index for each flood attribute based on index curve (defined in WaterSuitability.py)
         input: coordinates is a dict of duration, timing, dry coordinates
@@ -33,7 +33,7 @@ class FlowSuitability(object):
         return flood_events_df
     
     
-    def EventIndexWeightedAvg(self,flood_events_df, weights):
+    def eventIndexWeightedAvg(self,flood_events_df, weights):
         """
         Calculate flood index summary based on weighted average for each event
         Output attributes:
@@ -42,7 +42,7 @@ class FlowSuitability(object):
         flood_events_df['flood_index_weightavg']= flood_events_df['duration_index']*weights['duration']+flood_events_df['timing_index']*weights['timing']+flood_events_df['dry_index']*weights['dry']
         return flood_events_df
         
-    def EventIndexMin(self,flood_events_df):
+    def eventIndexMin(self,flood_events_df):
         """
         Calculate flood index summary based on min rule
         Output attributes:
@@ -53,7 +53,7 @@ class FlowSuitability(object):
         return flood_events_df   
         
         
-    def FlowIndex(self, flow_df, flood_events_df, aggregate_option):
+    def flowIndex(self, flow_df, flood_events_df, aggregate_option):
         """
         Calculate daily flow index based on event index
         Output attributes:
@@ -69,3 +69,5 @@ class FlowSuitability(object):
         #flood_events_df['flood_index_sum']
         
         return flow_index
+
+    #End flowIndex
