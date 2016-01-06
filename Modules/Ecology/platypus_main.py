@@ -30,9 +30,9 @@ for i, year in enumerate(years_with_sufficient_data):
 	year_data = flow_data[flow_data.index.year == year]
 	drowning_benchmarks = Platypus.calcFlowBenchmark(year_data, flow_col, season_start, burrow_window, season_end, level_buffer)
 
-	benchmarks[str(year)] = drowning_benchmarks
+	benchmarks[year] = drowning_benchmarks
 
-	benchmarks[str(year)]['habitat_risk'] = Platypus.calcHabitatRisk(year_data, flow_col, risk_threshold)
+	benchmarks[year]['habitat_risk'] = Platypus.calcHabitatRisk(year_data, flow_col, risk_threshold)
 #End for
 
 print benchmarks

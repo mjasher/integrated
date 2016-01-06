@@ -16,6 +16,7 @@ class PlatypusFlow(FlowSuitability):
 	def calcFlowBenchmark(self, yearly_flow_data, flow_col, season_start, burrow_window, season_end, level_buffer):
 
 		"""
+		Given specs:
 		1.	For each daily flow time series (at each gauge location), identify season windows
 		2.	Within each season window, identify beginning season window
 		3.	Within each beginning season window, identify max flow level (ML/day). 
