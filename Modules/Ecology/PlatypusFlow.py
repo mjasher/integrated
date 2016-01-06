@@ -23,12 +23,14 @@ class PlatypusFlow(FlowSuitability):
 		5.	Scan the rest of the flow sequence within the season window and calculate the number of days (or proportion of days) the flow is above the 'benchmark'. This is the output. 
 
 
-		:param flow_data: Pandas dataframe of daily flow data for the given year
+		:param yearly_flow_data: Pandas dataframe of daily flow data for the given year in ML/Day
 		:param flow_col: Name of flow data column
 		:param start_season: Day of year that breeding/burrow season starts
 		:param burrow_window: Number of days to base benchmark on
 		:param season_end: Day of year that correspond to end of season
 		:param level_buffer: The :math:`x` metres to add to max flow
+
+		:returns: Dict, e.g. {'num_days_above_benchmark': 101, 'proportion_of_season': 0.6733, 'benchmark': 47.52}
 
 		"""
 
@@ -52,12 +54,21 @@ class PlatypusFlow(FlowSuitability):
 
 		post_burrow = yearly_flow_data[(year_index > burrow_window_end) & (year_index <= dt_end)]
 
-		num_days_above_benchmark = post_burrow[post_burrow[flow_col] > flow_benchmark][flow_col].count()
+		num_days_above_benchmark = post_burrow[post_burrow[flow_col] >= flow_benchmark][flow_col].count()
 		proportion = num_days_above_benchmark / (season_end - season_start)
 
-		return {'num_days_above_benchmark': num_days_above_benchmark, 'proportion_of_season': proportion}
+		return {'num_days_above_benchmark': num_days_above_benchmark, 'proportion_of_season': proportion, 'benchmark': flow_benchmark}
 
-		
 	#End calcFlowBenchmark()
+
+	def calcHabitatRisk(self, yearly_flow_data, flow_col, flow_threshold):
+
+		"""
+		Calculate the number of days flow level was below a certain threshold
+		"""
+
+		return yearly_flow_data[yearly_flow_data[flow_col] < flow_threshold][flow_col].count()
+	#End calcHabitatRisk()
+
 	
 #End Platypus

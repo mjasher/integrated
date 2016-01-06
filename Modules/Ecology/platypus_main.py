@@ -12,6 +12,7 @@ season_start = 100
 burrow_window = 45
 season_end = 250
 level_buffer = 1
+risk_threshold = 5
 
 flow_col = "Flow"
 
@@ -23,13 +24,17 @@ yearly_data = flow_data.groupby(flow_data.index.year)
 data_points_per_year = yearly_data.count()
 years_with_sufficient_data = data_points_per_year[data_points_per_year["Flow"] > season_end].index.tolist()
 
+benchmarks = {}
 for i, year in enumerate(years_with_sufficient_data):
 
 	year_data = flow_data[flow_data.index.year == year]
 	drowning_benchmarks = Platypus.calcFlowBenchmark(year_data, flow_col, season_start, burrow_window, season_end, level_buffer)
 
-	print year
-	print drowning_benchmarks
+	benchmarks[str(year)] = drowning_benchmarks
+
+	benchmarks[str(year)]['habitat_risk'] = Platypus.calcHabitatRisk(year_data, flow_col, risk_threshold)
 #End for
+
+print benchmarks
 
 
