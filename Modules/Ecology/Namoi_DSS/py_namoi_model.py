@@ -9,6 +9,9 @@ from scipy.interpolate import interp1d
 from integrated.Modules.Core.Handlers.FileHandler import FileHandler
 
 """
+
+Initial attempt at converting R script into Python. This should not be used in production
+
 NOTE: Paths are relative to this script unless otherwise stated/indicated
 """
 
