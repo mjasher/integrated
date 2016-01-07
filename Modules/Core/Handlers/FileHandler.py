@@ -129,10 +129,10 @@ class FileHandler(object):
 					temp = temp[temp.index <= pd.to_datetime(end)]
 
 				if start is not None:
-					imported[fname] = imported[fname][imported[fname].index >= pd.to_datetime(start)]
+					imported[fname] = temp[temp.index >= pd.to_datetime(start)]
 
 				if end is not None:
-					imported[fname] = imported[fname][imported[fname].index <= pd.to_datetime(end)]
+					imported[fname] = temp[temp.index <= pd.to_datetime(end)]
 
 		#End for
 
