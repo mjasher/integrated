@@ -8,8 +8,7 @@ import datetime
 class PlatypusFlow(FlowSuitability):
 
 	def __init__(self):
-		#Call parent constructor
-		FlowSuitability.__init__(self)
+		pass
 
 	#End init()
 
@@ -58,11 +57,16 @@ class PlatypusFlow(FlowSuitability):
 		num_days_above_benchmark = post_burrow[post_burrow[flow_col] >= flow_benchmark][flow_col].count()
 		proportion = num_days_above_benchmark / (season_end - season_start)
 
-		return {'num_days_above_benchmark': num_days_above_benchmark, 'proportion_of_season': proportion, 'benchmark': flow_benchmark}
+		benchmark_df = pd.DataFrame(index=[year])
+		benchmark_df['num_days_above_benchmark'] = num_days_above_benchmark
+		benchmark_df['proportion_of_season'] = proportion
+		benchmark_df['flow_benchmark'] = flow_benchmark
+
+		return benchmark_df
 
 	#End calcFlowBenchmark()
 
-	def calcHabitatRisk(self, yearly_flow_data, flow_col, flow_threshold):
+	def calcLowFlowRisk(self, yearly_flow_data, flow_col, flow_threshold):
 
 		"""
 		Calculate the number of days flow level was below a certain threshold

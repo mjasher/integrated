@@ -1,5 +1,6 @@
 from integrated.Modules.Core.Handlers.FileHandler import FileHandler
 from integrated.Modules.Ecology.PlatypusFlow import PlatypusFlow
+import pandas as pd
 
 #import flow dev data
 FileHandle = FileHandler()
@@ -24,15 +25,17 @@ yearly_data = flow_data.groupby(flow_data.index.year)
 data_points_per_year = yearly_data.count()
 years_with_sufficient_data = data_points_per_year[data_points_per_year["Flow"] > season_end].index.tolist()
 
-benchmarks = {}
+benchmarks = pd.DataFrame()
 for i, year in enumerate(years_with_sufficient_data):
 
 	year_data = flow_data[flow_data.index.year == year]
 	drowning_benchmarks = Platypus.calcFlowBenchmark(year_data, flow_col, season_start, burrow_window, season_end, level_buffer)
 
-	benchmarks[year] = drowning_benchmarks
+	drowning_benchmarks.loc[drowning_benchmarks.index == year, 'low_flow_risk'] = Platypus.calcLowFlowRisk(year_data, flow_col, risk_threshold)
 
-	benchmarks[year]['habitat_risk'] = Platypus.calcHabitatRisk(year_data, flow_col, risk_threshold)
+	#Add to benchmark dataframe
+	benchmarks = benchmarks.append(drowning_benchmarks)
+	
 #End for
 
 print benchmarks
