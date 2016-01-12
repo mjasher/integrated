@@ -23,7 +23,7 @@ yearly_data = flow_data.groupby(flow_data.index.year)
 
 #Each year has to have enough data for calculations to be made
 data_points_per_year = yearly_data.count()
-years_with_sufficient_data = data_points_per_year[data_points_per_year["Flow"] > season_end].index.tolist()
+years_with_sufficient_data = data_points_per_year[data_points_per_year[flow_col] > season_end].index.tolist()
 
 benchmarks = pd.DataFrame()
 for i, year in enumerate(years_with_sufficient_data):

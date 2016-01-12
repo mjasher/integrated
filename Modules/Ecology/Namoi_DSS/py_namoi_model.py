@@ -100,7 +100,12 @@ def eventseq(flow_df, threshold=4000, max_separation=5, min_duration=1):
 	# high_flows.plot()
 	# plt.show()
 
-	high_flow_events = high_flows[ (high_flows.datetime.diff() <= np.timedelta64(max_separation, "D")) & (high_flows.datetime.diff() >= np.timedelta64(min_duration, "D"))].copy()
+	high_flow_events = high_flows[ \
+						(high_flows['datetime'].diff() <= pd.Timedelta(days=max_separation)) \
+						& (high_flows.datetime.diff() >= pd.Timedelta(days=min_duration)) \
+						].copy()
+
+	# print high_flow_events
 
 	#Return empty dataframe if no events found
 	if len(high_flow_events.index) == 0:
@@ -126,7 +131,7 @@ def eventseq(flow_df, threshold=4000, max_separation=5, min_duration=1):
 	events['end'] = ends[ends == True].index
 	events['duration'] = events['end'] - events['start']
 	events['dry_period'] = events['start'] - events['end'].shift(1)
-	events['timing'] = events['start'].map(lambda x: x.to_datetime().month) 
+	events['timing'] = events['start'].map(lambda x: x.to_datetime().month)
 
 	return events
 
@@ -135,8 +140,15 @@ def eventseq(flow_df, threshold=4000, max_separation=5, min_duration=1):
 
 def ctfEvents(df, ctf=4000, gap=5, min_duration=1, **kwargs):
 
-	print eventseq(df)
+	# print eventseq(df)
 	print "----------------------"
+
+	# flowevent <- eventseq(x, thresh = ctf, mingap = gap, mindur=minduration)
+	# floweventinfo <- eventinfo(x, flowevent, FUN=mean)
+	# annualevent <- aggregate(Value ~ Yearmid, data=floweventinfo, FUN=length)
+	# eventyear <- as.POSIXlt(as.Date(as.character(annualevent[,1]), format="%Y"))$year+1900
+	# annualeventzoo <- zoo(annualevent[,2],eventyear)
+	# return(annualeventzoo)
 	
 #End ctfEvents()
 
@@ -147,6 +159,12 @@ def ctfEvents(df, ctf=4000, gap=5, min_duration=1, **kwargs):
 # print ceaseflow(df)
 
 weighted = lambda d, gweight: d[1]*gweight + d[2]*(1-gweight)
+
+def getAssetParam(asset_table, gauge, col):
+
+	return asset_table[asset_table["Gauge"] == int(gauge)][col].iloc[0]
+
+
 
 def envIndex(asset_table, asset_id, scenario, scen_data, ecospecies, **kwargs):
 
@@ -166,13 +184,23 @@ def envIndex(asset_table, asset_id, scenario, scen_data, ecospecies, **kwargs):
 	# print asset_table["Gauge"] == gauge #["CTF_low"]
 
 	#get first row out of matching rows
-	ctf = asset_table[asset_table["Gauge"] == int(gauge)]["CTF_low"].iloc[0]
-	ctf_low_days = ctfDays(surfaceflow, ctf=ctf)
-
+	low_ctf = getAssetParam(asset_table, gauge, "CTF_low")
+	ctf_low_days = ctfDays(surfaceflow, ctf=low_ctf)
 	ctf_low_events = ctfEvents(surfaceflow)
-	# ctf.low.days <- ctf.days(surfaceflow,ctf=asset.table[assetid,4])
-
 	
+	mid_ctf = getAssetParam(asset_table, gauge, "CTF_mid")
+	ctf_mid_days = ctfDays(surfaceflow, ctf=mid_ctf)
+	ctf_mid_events = ctfEvents(surfaceflow)
+
+	high_ctf = getAssetParam(asset_table, gauge, "CTF_high")
+	ctf_high_days = ctfDays(surfaceflow, ctf=high_ctf)
+	ctf_high_events = ctfEvents(surfaceflow)
+
+	#(flow_df, threshold=4000, max_separation=5, min_duration=1)
+	flowevent = eventseq(surfaceflow, \
+		threshold=getAssetParam(asset_table, gauge, 'Event_threshold'), \
+		max_separation=getAssetParam(asset_table, gauge, 'Event_gap'), \
+		min_duration=getAssetParam(asset_table, gauge, 'Event_dur') )
 
 	
 #End envIndex()
