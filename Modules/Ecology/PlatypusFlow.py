@@ -12,7 +12,34 @@ class PlatypusFlow(FlowSuitability):
 
 	#End init()
 
-	def calcFlowBenchmark(self, yearly_flow_data, flow_col, season_start, burrow_window, season_end, level_buffer):
+## component1: calculate low flow index for food and movement
+	def calcLowFlowIndex(self, yearly_flow_data, flow_col, summer_low_thd, winter_low_thd,summer_index_thd, winter_index_thd):
+
+		"""
+		calculate low flow index
+		"""
+
+		above_summer_low =  yearly_flow_data[yearly_flow_data[flow_col] >= summer_low_thd & yearly_flow_data.index.month >= 12 & yearly_flow_data.index.month <= 5][flow_col].count()
+
+		above_winter_low =  yearly_flow_data[yearly_flow_data[flow_col] >= winter_low_thd & yearly_flow_data.index.month >= 6 & yearly_flow_data.index.month <= 11][flow_col].count()
+
+		if above_summer_low >=summer_index_thd & above_winter_low >= winter_index_thd:
+			lowflow_index = 1
+		else:
+			lowflow_index = 0
+
+		return lowflow_index
+
+	#End calcHabitatIndex()
+ 
+ ## component2: calculate summer and autumn freshes for food
+ 
+ 
+ ## component3: calcualte autumn freshes for junenile dispersal
+ 
+ 
+ ## component4: calcualte the index for burrow flooding
+ 	def calcFlowBenchmark(self, yearly_flow_data, flow_col, season_start, burrow_window, season_end, level_buffer):
 
 		"""
 		Given specs:
@@ -66,14 +93,7 @@ class PlatypusFlow(FlowSuitability):
 
 	#End calcFlowBenchmark()
 
-	def calcLowFlowRisk(self, yearly_flow_data, flow_col, flow_threshold):
 
-		"""
-		Calculate the number of days flow level was below a certain threshold
-		"""
-
-		return yearly_flow_data[yearly_flow_data[flow_col] < flow_threshold][flow_col].count()
-	#End calcHabitatRisk()
 
 	
 #End Platypus
