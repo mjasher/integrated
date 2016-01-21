@@ -24,13 +24,11 @@ class FlowSuitability(WaterSuitability):
 
     #End init()
 
-    def rollingCounter(self,  ):
+    def rollingCounter(self, val):
 
         """
         Function to apply when counting sequential event days
         """
-								
-        print(val)
 
         val = pd.Timedelta(val)
 

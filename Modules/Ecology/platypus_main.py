@@ -5,7 +5,7 @@ os.chdir('C:\\UserData\\fub\\work09\\MDB')
 from integrated.Modules.Core.Handlers.FileHandler import FileHandler
 from integrated.Modules.Ecology.PlatypusFlow import PlatypusFlow
 import pandas as pd
-import datetime
+#import datetime
 
 #import flow dev data
 FileHandle = FileHandler()
@@ -18,7 +18,7 @@ flow_col = "Flow"
 eflow_req_path = "Integrated/Modules/Ecology/Inputs/Ecology/param_default/Env_flow_obj.csv"
 eflow_req = FileHandle.loadCSV(eflow_req_path)
 
-climate_cond = 'dry'
+climate_cond = 'dry' ## TODO after toy: need to link up to scenario data and identify climate condition: dry, average or wet
 summerlow = eflow_req[eflow_req['climate'] == climate_cond]['summer_low'].iloc[0]
 winterlow = eflow_req[eflow_req['climate'] == climate_cond]['winter_low'].iloc[0]
 summerlowday = 150
@@ -36,14 +36,14 @@ level_buffer = 1
 
 Platypus = PlatypusFlow()
 
-yearly_data = flow_data.groupby(flow_data.index.year)
+yearly_data = flow_data.groupby(flow_data.index.year) ## TODO before toy: need to group by "ecology year": 1Dec-31May, 1Jun-30Nov
 
 #Each year has to have full year data for calculations to be made
 data_points_per_year = yearly_data.count()
 years_with_sufficient_data = data_points_per_year[data_points_per_year[flow_col] >= 365].index.tolist()
 
 
-###For testing
+###For testing only
 
 #year = years_with_sufficient_data[125]
 #year_data = flow_data[flow_data.index.year == year]
@@ -51,14 +51,19 @@ years_with_sufficient_data = data_points_per_year[data_points_per_year[flow_col]
 #summer_low_thd=summerlow
 #winter_low_thd=winterlow
 
+## end testing only
+
+
 summer_index_thd=150
 winter_index_thd=150
 
-## for testing: extract exmaple data between 2013-6-1 to 2014-5-31
+## for testing only: extract exmaple data between 2013-6-1 to 2014-5-31
 
 #start = flow_data.index.searchsorted(datetime.datetime(2013,6,1))
 #end = flow_data.index.searchsorted(datetime.datetime(2014,6,1))
 #yearly_flow_data = flow_data.ix[start:end]
+
+## end testing only
 
 burrow_startmonth = 7
 burrow_endmonth = 8
@@ -73,6 +78,8 @@ for i, year in enumerate(years_with_sufficient_data):
 	year_data = flow_data[flow_data.index.year == year]
 
 	lowflow_index = Platypus.calcLowFlowIndex(year_data, flow_col, summerlow,winterlow,summerlowday,winterlowday)
+
+## TODO after toy: two more indexes
 		
 	#food_index = 
 		
@@ -93,4 +100,6 @@ for i, year in enumerate(years_with_sufficient_data):
 
 print platypusIndexes
 
+
+## TODO after toy: aggregation
 

@@ -85,24 +85,15 @@ class PlatypusFlow(FlowSuitability):
 		max_flow = burrow_flow[flow_col].max()
 		burrow_benchmark = max_flow + entrance_buffer
 		
-		#		
-#		dt_start = datetime.date(year, 1, 1) + datetime.timedelta(days=season_start)
-#		dt_start = pd.to_datetime(dt_start)
-#
-#		dt_end = datetime.date(year, 1, 1) + datetime.timedelta(days=season_end)
-#		dt_end = pd.to_datetime(dt_end)
-#
-#		burrow_window_end = datetime.date(year, 1, 1) + datetime.timedelta(days=(season_start+burrow_window))
-#		burrow_window_end = pd.to_datetime(burrow_window_end)
 		
 		breeding_start = pd.to_datetime(datetime.date(year, breeding_startmonth, 1))
 		breeding_end = pd.to_datetime(datetime.date(year+1, breeding_endmonth+1, 1)) - timedelta(days=1)
 		breeding_flow = yearly_flow_data[(yearly_flow_data.index >= breeding_start) & (yearly_flow_data.index <= breeding_end)]
 		
-		max_flood_duration = self.floodEvents(breeding_flow, threshold=burrow_benchmark, min_separation=0, min_duration=1)['duration'].max()
+#		max_flood_duration = self.floodEvents(breeding_flow, threshold=burrow_benchmark, min_separation=0, min_duration=1)['duration'].max()
 
 ## for test run, comment it when running script	
-#		max_flood_duration = PlatypusFlow().floodEvents(breeding_flow, threshold=burrow_benchmark, min_separation=0, min_duration=1)['duration'].max()
+		max_flood_duration = PlatypusFlow().floodEvents(breeding_flow, threshold=burrow_benchmark, min_separation=0, min_duration=1)['duration'].max()
 		
 		if max_flood_duration == 2:
 			burrow_index = 1
