@@ -193,7 +193,7 @@ class FlowSuitability(WaterSuitability):
 
     #End flowSummary()
     
-    def generateEnvIndex(self, asset_id, scen_data, salinity=10000, **kwargs):
+    def generateEnvIndex(self, asset_id, scen_data, salinity=10000, ctf_col = 'ctf_low', **kwargs):
 
         """
         Generate environmental indexes for the given list of species
@@ -211,7 +211,7 @@ class FlowSuitability(WaterSuitability):
         gauge = str(asset_table["Gauge"][asset_id])
 
         surfaceflow = scen_data[gauge]["Flow"]
-        baseflow = scen_data[gauge]["Baseflow"]
+#        baseflow = scen_data[gauge]["Baseflow"]
 
         #Get GW level data with datetime
         gw_data = scen_data["gwlevel"][["A{a}".format(a=asset_id+1)]].dropna()
@@ -224,18 +224,20 @@ class FlowSuitability(WaterSuitability):
             #Use default value
             salinity_data = salinity
 
-        gw_mean = self.flowSummary(gw_data, "mean")
-        baseflow_median = self.flowSummary(gw_data, "median")
-        num_days_flow_ceased = self.ceaseDays(surfaceflow)
-        total_flow = self.flowSummary(surfaceflow, "sum")
+        ## provide summary of flow and groundwater statistics.
+#        gw_mean = self.flowSummary(gw_data, "mean")
+#        baseflow_median = self.flowSummary(gw_data, "median")
+#        num_days_flow_ceased = self.ceaseDays(surfaceflow)
+#        total_flow = self.flowSummary(surfaceflow, "sum")
 
-        min_gap = self.getAssetParam(asset_table, gauge, 'Event_gap')
         min_size = self.getAssetParam(asset_table, gauge, 'Event_dur')
+        min_gap = self.getAssetParam(asset_table, gauge, 'Event_gap')
+        ctf = self.getAssetParam(asset_table, gauge, ctf_col)
 
         flow_events = self.floodEvents(surfaceflow, \
-            threshold=self.getAssetParam(asset_table, gauge, 'Event_threshold'), \
-            min_separation=min_gap, \
-            min_duration=min_size )
+            threshold=ctf, \
+            min_duration=min_size, \
+            min_separation=min_gap )
 
         event_info = self.eventInfo(flow_events)
         weights = self.weights

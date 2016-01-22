@@ -1,27 +1,31 @@
 #flow_dev.py
 
-from FlowSuitability import FlowSuitability
+import os
+os.chdir('C:\\UserData\\fub\\work09\\MDB')
+from integrated.Modules.Ecology.FlowSuitability import FlowSuitability
 
 from integrated.Modules.Core.Handlers.FileHandler import FileHandler
 
 FileHandle = FileHandler()
 
 #Paths to files
-dev_data_path = "Namoi_DSS/Inputs"
-scenarios = [dev_data_path+"/Hist"]
+dev_data_path = "Integrated/Modules/Ecology/Inputs"
 
-# Read in data
-# read in all breakpoint files from 1900 til end of file
+# Read in flow data
+scenarios = [dev_data_path+"/Hydrology/sce1", dev_data_path+"/Hydrology/sce2"]
+
 date_range = ["1900-01-01", None]
-indexes = FileHandle.importFiles(dev_data_path+"/index", ext=".csv", walk=False)
+
+# Read in index data
+indexes = FileHandle.importFiles(dev_data_path+"/Ecology/index", ext=".csv", walk=False)
 indexes = indexes["index"] #Remove parent folder listing from Dict, as this is unneeded
 
 # read in asset table
 #This could be set as class attribute as it is used as a global in the R script
-asset_table = FileHandle.loadCSV(dev_data_path+"/ctf_dss.csv")
+asset_table = FileHandle.loadCSV(dev_data_path+"/Ecology/Water_suitability_param.csv")
 
 # read in weights
-weights = FileHandle.loadCSV(dev_data_path+"/index/weight/weight.csv")
+weights = indexes["weights"]
 
 #change headers to lowercase to make it consistent with other csvs
 weights.columns = [x.lower() for x in weights.columns]
@@ -31,7 +35,7 @@ weights.columns = [x.lower() for x in weights.columns]
 gweight = 0.2
 
 # For DSS, can use RRGMS only as a minimum.
-specieslist = ["RRGMS", "RRGRR", "BBMS", "BBRR", "LGMS", "LGRR", "WCMS", "WCRR"]
+specieslist = ["RRGMS", "RRGRR"]
 
 FlowIndexer = FlowSuitability(asset_table, specieslist, indexes, weights)
 
@@ -42,7 +46,7 @@ for scenario_num in xrange(0, len(scenarios)):
 
 	scen = scenarios[scenario_num]
 
-	scenario_data = FileHandle.importFiles(scen, index_col="Date", parse_dates=True, date_range=date_range)
+	scenario_data = FileHandle.importFiles(scen, index_col="Date", parse_dates=True, date_range=date_range) #read in all gauges within each scenarios
 
 	#For each asset, generate flow indexes for each species
 	for j in xrange(0, len(asset_table.index)):
