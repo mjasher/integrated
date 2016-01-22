@@ -81,42 +81,55 @@ class FlowSuitability(WaterSuitability):
         #and the flow time is >= min_duration, count as event
         events = events[events.Flow >= threshold]
 
-        # events.loc[:, 'dry_period'] = events['datetime'].diff()
-        events['dry_period'] = events['datetime'].diff()
+        if len(events) == 0:
+            flow_events = pd.DataFrame()
+            flow_events['start'] = np.nan
+            flow_events['end'] = np.nan
+            flow_events['duration'] = np.timedelta64(0, 'D')
+            flow_events['dry_period'] = np.timedelta64(0, 'D')
+            flow_events['timing'] = np.timedelta64(0, 'D')
 
-        #Static variable for local function
-        self.rolling_count = 1
-        self.min_sep = min_separation
+        else:
 
-        events.loc[:, 'counter'] = events['dry_period'].apply(self.rollingCounter)
-        
-        #Select all the rows that have a duration of 1, and the next row is also a duration of 1
-        #These will be the start of an event
-        events.loc[:, 'starts'] = events['counter'].diff() <= 0
-        events.loc[:, 'ends'] = events['counter'].diff(-1) > -1
+            # events.loc[:, 'dry_period'] = events['datetime'].diff()
+            events['dry_period'] = events['datetime'].diff()
 
-        self.grouper_id = 1
+            #Static variable for local function
+            self.rolling_count = 1
+            self.min_sep = min_separation
 
-        events.loc[:, 'group'] = events[['starts', 'ends']].apply(lambda x: self.grouper(*x), axis=1)
+            events.loc[:, 'counter'] = events['dry_period'].apply(self.rollingCounter)
+            
+            #Select all the rows that have a duration of 1, and the next row is also a duration of 1
+            #These will be the start of an event
+            events.loc[:, 'starts'] = events['counter'].diff() <= 0
+            events.loc[:, 'ends'] = events['counter'].diff(-1) > -1
 
-        #Remove groups below the min duration rule
-        group = events.groupby('group')['Flow'].count() < min_duration
+            self.grouper_id = 1
 
-        #Remove the groups found to be below the min duration rule
-        events = events[~events["group"].isin(group[group == True].index)]
+            events.loc[:, 'group'] = events[['starts', 'ends']].apply(lambda x: self.grouper(*x), axis=1)
 
-        events['duration'] = events[events['ends'] == True]['counter']
+            #Remove groups below the min duration rule
+            group = events.groupby('group')['Flow'].count() < min_duration
 
-        group = events.groupby(['group'], sort=False)
+            #Remove the groups found to be below the min duration rule
+            events = events[~events["group"].isin(group[group == True].index)]
 
-        temp = group['dry_period'].max()
+            events['duration'] = events[events['ends'] == True]['counter']
 
-        flow_events = pd.DataFrame()
-        flow_events['start'] = group['datetime'].min()
-        flow_events['end'] = group['datetime'].max()
-        flow_events['duration'] = group['duration'].max()
-        flow_events['dry_period'] = temp.astype('timedelta64[ns]').apply(lambda x: int(x / np.timedelta64(1, 'D'))) #Convert to integer of days
-        flow_events['timing'] = flow_events['start'].map(lambda x: x.to_datetime().month) 
+            group = events.groupby(['group'], sort=False)
+
+            temp = group['dry_period'].max()
+
+            #Replace NaNs with a timedelta of 0 (i.e. no dry period)
+            temp[temp.isnull()] = np.timedelta64(0, 'D')
+
+            flow_events = pd.DataFrame()
+            flow_events['start'] = group['datetime'].min()
+            flow_events['end'] = group['datetime'].max()
+            flow_events['duration'] = group['duration'].max()
+            flow_events['dry_period'] = temp.astype('timedelta64[ns]').apply(lambda x: int(x / np.timedelta64(1, 'D'))) #Convert to integer of days
+            flow_events['timing'] = flow_events['start'].map(lambda x: x.to_datetime().month)
 
         return flow_events
 

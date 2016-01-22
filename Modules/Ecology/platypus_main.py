@@ -1,21 +1,22 @@
 ## the first line to run for platypus model
-import os
-os.chdir('C:\\UserData\\fub\\work09\\MDB')
+# import os
+# os.chdir('C:\\UserData\\fub\\work09\\MDB')
 
 from integrated.Modules.Core.Handlers.FileHandler import FileHandler
 from integrated.Modules.Ecology.PlatypusFlow import PlatypusFlow
 import pandas as pd
-#import datetime
 
 #import flow dev data
 FileHandle = FileHandler()
 
-flow_data_path = "Integrated/Modules/Ecology/Inputs/Hydrology/flow202.csv"
+# flow_data_path = "Integrated/Modules/Ecology/Inputs/Hydrology/flow202.csv"
+flow_data_path = "Inputs/Hydrology/flow202.csv"
 flow_data = FileHandle.loadCSV(flow_data_path, index_col="Date", parse_dates=True, dayfirst=True)
 flow_col = "Flow"
 
 #import environmental flow requirement data
-eflow_req_path = "Integrated/Modules/Ecology/Inputs/Ecology/param_default/Env_flow_obj.csv"
+# eflow_req_path = "Integrated/Modules/Ecology/Inputs/Ecology/param_default/Env_flow_obj.csv"
+eflow_req_path = "Inputs/Ecology/param_default/Env_flow_obj.csv"
 eflow_req = FileHandle.loadCSV(eflow_req_path)
 
 climate_cond = 'dry' ## TODO after toy: need to link up to scenario data and identify climate condition: dry, average or wet
@@ -24,7 +25,6 @@ winterlow = eflow_req[eflow_req['climate'] == climate_cond]['winter_low'].iloc[0
 summerlowday = 150
 winterlowday = 150
 level_buffer = 1
-
 
 
 #Season and season window in days of year
@@ -43,6 +43,65 @@ data_points_per_year = yearly_data.count()
 years_with_sufficient_data = data_points_per_year[data_points_per_year[flow_col] >= 365].index.tolist()
 
 
+# Example hydrological year
+# Could read these in from a collection of CSVs?
+# Looks like 
+#		day, month
+#start    1, 6
+#end     31, 5
+hydro_years = pd.DataFrame({
+	'month': [6, 5],
+	'day': [1, 31]
+}, index=['start', 'end'])
+
+print hydro_years
+
+burrow_startmonth = 7
+burrow_endmonth = 8
+entrance_buffer = 10
+breeding_startmonth = 9
+breeding_endmonth = 2
+
+years_in_data = data_points_per_year.index.tolist()
+
+import datetime
+for year in years_in_data:
+
+	start = (hydro_years.loc['start', 'month'], hydro_years.loc['start', 'day'])
+	end = (hydro_years.loc['end', 'month'], hydro_years.loc['end', 'day'])
+
+	start = flow_data.index.searchsorted(datetime.datetime(year, start[0], start[1]))
+	end = flow_data.index.searchsorted(datetime.datetime(year+1, end[0], end[1]))
+
+	year_data = flow_data.ix[start:end]
+
+	#Calculate indexes if there is enough data for the hydrological year
+	if len(year_data) >= 365:
+
+		## TODO after toy: two more indexes
+		
+	#food_index = 
+		
+	#dispersal_index = 
+
+		lowflow_index = Platypus.calcLowFlowIndex(year_data, flow_col, summerlow, winterlow, summerlowday, winterlowday)
+
+		burrow_index = Platypus.calcBurrowIndex(year_data, flow_col, burrow_startmonth, burrow_endmonth, entrance_buffer, breeding_startmonth, breeding_endmonth)
+
+		platypus_index = pd.DataFrame(index=[year])
+		platypus_index['lowflow_index'] = lowflow_index
+	#	platypus_index['food_index'] = food_index
+	#	platypus_index['dispersal_index'] = dispersal_index
+		platypus_index['burrow_index'] = burrow_index
+
+		#Add to benchmark dataframe
+		platypusIndexes = platypus_index.append(platypus_index)
+
+	#End if
+
+#End for
+
+
 ###For testing only
 
 #year = years_with_sufficient_data[125]
@@ -54,52 +113,54 @@ years_with_sufficient_data = data_points_per_year[data_points_per_year[flow_col]
 ## end testing only
 
 
-summer_index_thd=150
-winter_index_thd=150
+# summer_index_thd=150
+# winter_index_thd=150
 
-## for testing only: extract exmaple data between 2013-6-1 to 2014-5-31
+# ## for testing only: extract exmaple data between 2013-6-1 to 2014-5-31
+# import datetime
+# start = flow_data.index.searchsorted(datetime.datetime(2013,6,1))
+# end = flow_data.index.searchsorted(datetime.datetime(2014,6,1))
+# # yearly_flow_data = flow_data.ix[start:end]
+# flow_data = flow_data.ix[start:end]
+# years_with_sufficient_data = [2013, 2014]
 
-#start = flow_data.index.searchsorted(datetime.datetime(2013,6,1))
-#end = flow_data.index.searchsorted(datetime.datetime(2014,6,1))
-#yearly_flow_data = flow_data.ix[start:end]
+# ## end testing only
 
-## end testing only
-
-burrow_startmonth = 7
-burrow_endmonth = 8
-entrance_buffer = 10
-breeding_startmonth = 9
-breeding_endmonth = 2
+# burrow_startmonth = 7
+# burrow_endmonth = 8
+# entrance_buffer = 10
+# breeding_startmonth = 9
+# breeding_endmonth = 2
 
 
-platypusIndexes = pd.DataFrame()
-for i, year in enumerate(years_with_sufficient_data):
+# platypusIndexes = pd.DataFrame()
+# for i, year in enumerate(years_with_sufficient_data):
 
-	year_data = flow_data[flow_data.index.year == year]
+# 	year_data = flow_data[flow_data.index.year == year]
 
-	lowflow_index = Platypus.calcLowFlowIndex(year_data, flow_col, summerlow,winterlow,summerlowday,winterlowday)
+# 	lowflow_index = Platypus.calcLowFlowIndex(year_data, flow_col, summerlow,winterlow,summerlowday,winterlowday)
 
-## TODO after toy: two more indexes
+# ## TODO after toy: two more indexes
 		
-	#food_index = 
+# 	#food_index = 
 		
-	#dispersal_index = 
+# 	#dispersal_index = 
 		
-	burrow_index = Platypus.calcBurrowIndex(year_data, flow_col, burrow_startmonth, burrow_endmonth, entrance_buffer, breeding_startmonth, breeding_endmonth)
+# 	burrow_index = Platypus.calcBurrowIndex(year_data, flow_col, burrow_startmonth, burrow_endmonth, entrance_buffer, breeding_startmonth, breeding_endmonth)
 	
-	platypus_index = pd.DataFrame(index=[year])
-	platypus_index['lowflow_index'] = lowflow_index
-#	platypus_index['food_index'] = food_index
-#	platypus_index['dispersal_index'] = dispersal_index
-	platypus_index['burrow_index'] = burrow_index
+# 	platypus_index = pd.DataFrame(index=[year])
+# 	platypus_index['lowflow_index'] = lowflow_index
+# #	platypus_index['food_index'] = food_index
+# #	platypus_index['dispersal_index'] = dispersal_index
+# 	platypus_index['burrow_index'] = burrow_index
 
-	#Add to benchmark dataframe
-	platypusIndexes = platypus_index.append(platypus_index)
+# 	#Add to benchmark dataframe
+# 	platypusIndexes = platypus_index.append(platypus_index)
 	
-#End for
+# #End for
 
-print platypusIndexes
+# print platypusIndexes
 
 
-## TODO after toy: aggregation
+# ## TODO after toy: aggregation
 
