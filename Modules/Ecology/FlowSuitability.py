@@ -19,10 +19,36 @@ class FlowSuitability(WaterSuitability):
         self.indexes = indexes
         self.weights = weights
 
-        #Load in indexes for species
-        # for i, species in enumerate(species_list):
+        #Attribute to store default index columns
+        self.default_index_cols = None
 
     #End init()
+
+    def generateDefaultIndexCols(self):
+        indexes = self.indexes
+        self.default_index_cols = {}
+
+        #Remember, python is pass-by-reference
+        #So these update the original object
+        defaults = self.default_index_cols
+
+        for i, species in enumerate(self.species_list):
+
+            if species not in defaults:
+                defaults[species] = {}
+            #End if
+            
+            defaults[species]['timing'] = indexes["{s}_timing".format(s=species)].columns[0]
+            defaults[species]['duration'] = indexes["{s}_duration".format(s=species)].columns[0]
+            defaults[species]['dry_period'] = indexes["{s}_dry".format(s=species)].columns[0]
+            defaults[species]['gwlevel'] = indexes["{s}_gwlevel".format(s=species)].columns[0]
+            defaults[species]['salinity'] = indexes["{s}_salinity".format(s=species)].columns[0]
+
+        #End for
+
+        # assert len(self.species_list) == len(self.default_index_cols)
+
+    #End generateDefaultIndexCols()
 
     def rollingCounter(self, val):
 
@@ -206,7 +232,7 @@ class FlowSuitability(WaterSuitability):
 
     #End flowSummary()
     
-    def generateEnvIndex(self, asset_id, scen_data, salinity=10000, ctf_col = 'ctf_low', **kwargs):
+    def generateEnvIndex(self, asset_id, scen_data, salinity=10000, ctf_col='ctf_low', species_cols=None, **kwargs):
 
         """
         Generate environmental indexes for the given list of species
@@ -224,7 +250,7 @@ class FlowSuitability(WaterSuitability):
         gauge = str(asset_table["Gauge"][asset_id])
 
         surfaceflow = scen_data[gauge]["Flow"]
-#        baseflow = scen_data[gauge]["Baseflow"]
+        #baseflow = scen_data[gauge]["Baseflow"]
 
         #Get GW level data with datetime
         gw_data = scen_data["gwlevel"][["A{a}".format(a=asset_id+1)]].dropna()
@@ -238,10 +264,10 @@ class FlowSuitability(WaterSuitability):
             salinity_data = salinity
 
         ## provide summary of flow and groundwater statistics.
-#        gw_mean = self.flowSummary(gw_data, "mean")
-#        baseflow_median = self.flowSummary(gw_data, "median")
-#        num_days_flow_ceased = self.ceaseDays(surfaceflow)
-#        total_flow = self.flowSummary(surfaceflow, "sum")
+        # gw_mean = self.flowSummary(gw_data, "mean")
+        # baseflow_median = self.flowSummary(gw_data, "median")
+        # num_days_flow_ceased = self.ceaseDays(surfaceflow)
+        # total_flow = self.flowSummary(surfaceflow, "sum")
 
         min_size = self.getAssetParam(asset_table, gauge, 'Event_dur')
         min_gap = self.getAssetParam(asset_table, gauge, 'Event_gap')
@@ -258,16 +284,34 @@ class FlowSuitability(WaterSuitability):
         #Generate indices for each species
         results = {}
 
+        #Generate default column selection if no columns passed
+        #Extracts the first column for each species indices
+        if (species_cols is None):
+
+            if self.default_index_cols is None:
+                self.generateDefaultIndexCols()
+            #End if
+
+            species_cols = self.default_index_cols
+
+        #End if
+
         for i, species in enumerate(ecospecies):
 
             #Create Dict entry for species
             results[species] = {}
 
-            timing_coords = self.selectCoordinates(self.indexes["{s}_timing".format(s=species)], cols=["Month", "Index"])
-            duration_coords = self.selectCoordinates(self.indexes["{s}_duration".format(s=species)], cols=["Days", "Index"])
-            dry_coords = self.selectCoordinates(self.indexes["{s}_dry".format(s=species)], cols=["Days", "Index"])
-            gw_level_coords = self.selectCoordinates(self.indexes["{s}_gwlevel".format(s=species)], cols=["Level_m", "Index"])
-            salinity_coords = self.selectCoordinates(self.indexes["{s}_salinity".format(s=species)], cols=["ppm", "Index"])
+            #TODO
+            #Run the below for each column within each coordinate file/dataframe if columns are not specified
+            #rather than the specific columns hardcoded
+
+            species_index_col = species_cols[species]
+
+            timing_coords = self.selectCoordinates(self.indexes["{s}_timing".format(s=species)], cols=species_index_col['timing'])
+            duration_coords = self.selectCoordinates(self.indexes["{s}_duration".format(s=species)], cols=species_index_col['duration'])
+            dry_coords = self.selectCoordinates(self.indexes["{s}_dry".format(s=species)], cols=species_index_col['dry_period'])
+            gw_level_coords = self.selectCoordinates(self.indexes["{s}_gwlevel".format(s=species)], cols=species_index_col['gwlevel'])
+            salinity_coords = self.selectCoordinates(self.indexes["{s}_salinity".format(s=species)], cols=species_index_col['salinity'])
 
             coords = {
                 "timing": timing_coords,
@@ -308,6 +352,14 @@ class FlowSuitability(WaterSuitability):
         return results
 
     #End generateEnvIndex()
+
+    def generateSpeciesIndex(self, index_input, gauge, data, coord_cols):
+        coords = self.selectCoordinates(self.indexes["{s}_timing".format(s=species)], cols=coord_cols)
+        
+        
+        
+        salinity_coords = self.selectCoordinates(self.indexes["{s}_salinity".format(s=species)], cols=["ppm", "Index"])
+    #End generateSpeciesIndex()
 
     def eventInfo(self, flood_event):
         

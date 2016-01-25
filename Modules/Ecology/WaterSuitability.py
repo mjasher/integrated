@@ -28,20 +28,23 @@ class WaterSuitability(object):
         return asset_table[asset_table["Gauge"] == int(gauge)][col].iloc[0]
     #End getAssetParam()
 
+
     def selectCoordinates(self, index_input, cols):
         """
         Select a set of xy coordinates (index_curve is a data imported from csv file, coded in core) for generating curve.
         To be used for uncertainty analysis through selecting different curves
 
-        :param index_input: Pandas Dataframe of possible xy coordinates.
+        :param index_input: Pandas Dataframe of possible x and y coordinates, where x is the index.
         :param cols: List of column names for x and y coordinates
 
         :returns: Two column Pandas Dataframe of x and y
 
         """
 
-        #Create 2 column dataframe of x and desired column
-        temp_df = pd.DataFrame(dict(x=index_input[cols[0]], y=index_input[cols[1]]))
+        #TODO
+        #Create n column dataframe of x and desired column(s)
+
+        temp_df = pd.DataFrame(dict(x=index_input.index, y=index_input[cols]))
         temp_df = temp_df.dropna()
         
         return temp_df
@@ -66,10 +69,11 @@ class WaterSuitability(object):
     def selectWeightForSpecies(self, weights, species_name, weight_name=None):
 
         if weight_name is not None:
-            df = weights[weights['species'] == species_name][weight_name]
+            df = weights.loc[weights.index == species_name, weight_name]
         else:
-            #Return all weights
-            df = weights[weights['species'] == species_name]
+            #Return all weights if none specified
+            df = weights.loc[weights.index == species_name]
+            
         #End if
 
         return df
