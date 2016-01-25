@@ -36,12 +36,12 @@ level_buffer = 1
 
 Platypus = PlatypusFlow()
 
+#Get all the years in flow data
 yearly_data = flow_data.groupby(flow_data.index.year) ## TODO before toy: need to group by "ecology year": 1Dec-31May, 1Jun-30Nov
+years_in_data = yearly_data.count()
+years_in_data = years_in_data.index.tolist()
 
-#Each year has to have full year data for calculations to be made
-data_points_per_year = yearly_data.count()
-years_with_sufficient_data = data_points_per_year[data_points_per_year[flow_col] >= 365].index.tolist()
-
+# print years_in_data
 
 # Example hydrological year
 # Could read these in from a collection of CSVs?
@@ -61,10 +61,6 @@ burrow_endmonth = 8
 entrance_buffer = 10
 breeding_startmonth = 9
 breeding_endmonth = 2
-
-years_in_data = data_points_per_year.index.tolist()
-
-print years_in_data
 
 import datetime
 platypusIndexes = pd.DataFrame()
