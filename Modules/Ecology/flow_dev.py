@@ -82,11 +82,13 @@ FlowIndexer.generateDefaultIndexCols()
 #This is unused at the moment
 # weighted = lambda d, gweight: d[1]*gweight + d[2]*(1-gweight)
 
-for scenario_num in xrange(0, len(scenarios)):
+for scenario_dir in xrange(0, len(scenarios)):
 
-	scen = scenarios[scenario_num]
+	scen = scenarios[scenario_dir]
 
-	scenario_data = FileHandle.importFiles(scen, index_col="Date", parse_dates=True, date_range=date_range) #read in all gauges within each scenarios
+	scen_name = scen.split('/')[-1]
+
+	scenario_data = FileHandle.importFiles(scen, index_col="Date", parse_dates=True, date_range=date_range, dayfirst=True) #read in all gauges within each scenarios
 
 	#For each asset, generate flow indexes for each species
 	for j in xrange(0, len(asset_table.index)):
@@ -96,15 +98,23 @@ for scenario_num in xrange(0, len(scenarios)):
 		#For development purposes only. Display index results for each species
 		print "Asset {id}".format(id=j+1)
 		for species in specieslist:
+
+			save_folder = "./Outputs/{s}/asset_{asset}/{sp}".format(s=scen_name, asset=j+1, sp=species)
+
+			species_index = flow_indexes[species]
+
 			print species
 			print "---- Groundwater ----"
-			print flow_indexes[species]['gw']
+			FileHandle.writeCSV(species_index['gw'], save_folder, "gw.csv")
+			# print species_index['gw']
 			print "---------------------"
 			print "---- Surface Water ----"
-			print flow_indexes[species]['sw']
+			FileHandle.writeCSV(species_index['sw'], save_folder, "sw.csv")
+			# print species_index['sw']
 			print "---------------------"
 			print "---- Water Index ----"
-			print flow_indexes[species]['water_index']
+			FileHandle.writeCSV(species_index['water_index'], save_folder, "water_index.csv")
+			# print species_index['water_index']
 			print "---------------------"
 		#End for
 
