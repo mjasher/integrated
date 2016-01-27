@@ -1,7 +1,7 @@
 #flow_dev.py
 
-# import os
-# os.chdir('C:\\UserData\\fub\\work09\\MDB')
+#import os
+#os.chdir('C:\\UserData\\fub\\work09\\MDB')
 from integrated.Modules.Ecology.FlowSuitability import FlowSuitability
 
 from integrated.Modules.Core.Handlers.FileHandler import FileHandler
@@ -9,8 +9,8 @@ from integrated.Modules.Core.Handlers.FileHandler import FileHandler
 FileHandle = FileHandler()
 
 #Paths to files
-# dev_data_path = "Integrated/Modules/Ecology/Inputs"
-dev_data_path = "Inputs"
+dev_data_path = "Integrated/Modules/Ecology/Inputs"
+#dev_data_path = "Inputs"
 
 # Read in flow data
 scenarios = [dev_data_path+"/Hydrology/sce1", dev_data_path+"/Hydrology/sce2"]
