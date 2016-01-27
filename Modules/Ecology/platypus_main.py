@@ -1,6 +1,6 @@
 ## the first line to run for platypus model
-# import os
-# os.chdir('C:\\UserData\\fub\\work09\\MDB')
+import os
+os.chdir('C:\\UserData\\fub\\work09\\MDB')
 
 from integrated.Modules.Core.Handlers.FileHandler import FileHandler
 from integrated.Modules.Ecology.PlatypusFlow import PlatypusFlow
@@ -9,21 +9,21 @@ import pandas as pd
 #import flow dev data
 FileHandle = FileHandler()
 
-# flow_data_path = "Integrated/Modules/Ecology/Inputs/Hydrology/flow202.csv"
-flow_data_path = "Inputs/Hydrology/sce1/406202.csv"
+flow_data_path = "Integrated/Modules/Ecology/Inputs/Hydrology/sce1/406202.csv"
+#flow_data_path = "Inputs/Hydrology/sce1/406202.csv"
 flow_data = FileHandle.loadCSV(flow_data_path, index_col="Date", parse_dates=True, dayfirst=True)
 flow_col = "Flow"
 
 #import environmental flow requirement data
-# eflow_req_path = "Integrated/Modules/Ecology/Inputs/Ecology/param_default/Env_flow_obj.csv"
-eflow_req_path = "Inputs/Ecology/Env_flow_obj.csv"
+eflow_req_path = "Integrated/Modules/Ecology/Inputs/Ecology/Env_flow_obj.csv"
+#eflow_req_path = "Inputs/Ecology/Env_flow_obj.csv"
 eflow_req = FileHandle.loadCSV(eflow_req_path)
 
-climate_cond = 'dry' ## TODO after toy: need to link up to scenario data and identify climate condition: dry, average or wet
+climate_cond = 'average' ## TODO after toy: need to link up to scenario data and identify climate condition: dry, average or wet
 summerlow = eflow_req[eflow_req['climate'] == climate_cond]['summer_low'].iloc[0]
 winterlow = eflow_req[eflow_req['climate'] == climate_cond]['winter_low'].iloc[0]
-summerlowday = 150
-winterlowday = 150
+summerlowday = 170
+winterlowday = 170
 level_buffer = 1
 
 
@@ -54,7 +54,7 @@ hydro_years = pd.DataFrame({
 	'day': [1, 31]
 }, index=['start', 'end'])
 
-print hydro_years
+#print hydro_years
 
 burrow_startmonth = 7
 burrow_endmonth = 8
@@ -98,7 +98,7 @@ for year in years_in_data:
 
 #End for
 
-print platypusIndexes
+print platypusIndexes.describe()
 
 
 ###For testing only
