@@ -58,7 +58,7 @@ class FlowSuitability(WaterSuitability):
 
         val = pd.Timedelta(val)
 
-        if val == pd.Timedelta(days=1) or val <= pd.Timedelta(days=self.min_sep):
+        if (val == pd.Timedelta(days=1)) or (val <= pd.Timedelta(days=self.min_sep)):
             self.rolling_count += 1
         else:
             self.rolling_count = 1
@@ -69,14 +69,21 @@ class FlowSuitability(WaterSuitability):
     #Group events together by id then remove events that do not fit the min duration rule
     def grouper(self, start, end):
 
-        if start == True:
-            return self.grouper_id
-        
-        if end == True:
+        if (start == True) and (end == True):
             self.grouper_id += 1
-            return self.grouper_id - 1
-        else:
             return self.grouper_id
+
+        if start == True:
+            self.grouper_id += 1
+            return self.grouper_id
+
+        return self.grouper_id
+        
+        # if end == True:
+        #     #self.grouper_id += 1
+        #      #- 1
+        # else:
+        #     return self.grouper_id
     #End grouper
 
         
@@ -135,11 +142,14 @@ class FlowSuitability(WaterSuitability):
 
             events.loc[:, 'group'] = events[['starts', 'ends']].apply(lambda x: self.grouper(*x), axis=1)
 
-            #Remove groups below the min duration rule
+            #Group events below the min duration rule
             group = events.groupby('group')['Flow'].count() < min_duration
 
             #Remove the groups found to be below the min duration rule
             events = events[~events["group"].isin(group[group == True].index)]
+
+            #Mark very last entry 'end' as true
+            events.ix[-1, 'ends'] = True
 
             events['duration'] = events[events['ends'] == True]['counter']
 
@@ -153,9 +163,17 @@ class FlowSuitability(WaterSuitability):
             flow_events = pd.DataFrame()
             flow_events['start'] = group['datetime'].min()
             flow_events['end'] = group['datetime'].max()
-            flow_events['duration'] = group['duration'].max()
+
+            #Convert to Pandas datetime
+            flow_events['start'] = pd.to_datetime(flow_events['start'])
+            flow_events['end'] = pd.to_datetime(flow_events['end'])
+
+            #Calculate difference between end and start in days
+            flow_events['duration'] = ((flow_events['end'] - flow_events['start']) / np.timedelta64(1, 'D')) + 1
+
             flow_events['dry_period'] = temp.astype('timedelta64[ns]').apply(lambda x: int(x / np.timedelta64(1, 'D'))) #Convert to integer of days
             flow_events['timing'] = flow_events['start'].map(lambda x: x.to_datetime().month)
+        #End if
 
         return flow_events
 
@@ -355,8 +373,6 @@ class FlowSuitability(WaterSuitability):
 
     def generateSpeciesIndex(self, index_input, gauge, data, coord_cols):
         coords = self.selectCoordinates(self.indexes["{s}_timing".format(s=species)], cols=coord_cols)
-        
-        
         
         salinity_coords = self.selectCoordinates(self.indexes["{s}_salinity".format(s=species)], cols=["ppm", "Index"])
     #End generateSpeciesIndex()
