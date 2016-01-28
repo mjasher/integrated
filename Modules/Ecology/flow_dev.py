@@ -1,7 +1,7 @@
 #flow_dev.py
 
-# import os
-# os.chdir('C:\\UserData\\fub\\work09\\MDB')
+#import os
+#os.chdir('C:\\UserData\\fub\\work09\\MDB')
 from integrated.Modules.Ecology.FlowSuitability import FlowSuitability
 
 from integrated.Modules.Core.Handlers.FileHandler import FileHandler
@@ -9,8 +9,8 @@ from integrated.Modules.Core.Handlers.FileHandler import FileHandler
 FileHandle = FileHandler()
 
 #Paths to files
-# dev_data_path = "Integrated/Modules/Ecology/Inputs"
-dev_data_path = "Inputs"
+dev_data_path = "Integrated/Modules/Ecology/Inputs"
+#dev_data_path = "Inputs"
 
 # Read in flow data
 scenarios = [dev_data_path+"/Hydrology/sce1", dev_data_path+"/Hydrology/sce2"]
@@ -34,7 +34,7 @@ weights.columns = [x.lower() for x in weights.columns]
 
 # Set up additional parameters:
 # Set up weight for groundwater index
-gweight = 0.2
+gw_weight = 0.2
 
 # For DSS, can use RRGMS only as a minimum.
 specieslist = ["RRGMS", "RRGRR"]
@@ -63,21 +63,21 @@ FlowIndexer.generateDefaultIndexCols()
 # 	}
 # }
 
-# species_cols = {
-# 	'RRGMS': {
-# 		'timing': 'MFAT2', 
-# 		'duration': 'MFAT2', 
-# 		'dry_period': 'MFAT2', 
-# 		'gwlevel': 'Index', 
-# 		'salinity': 'Index'
-# }, 'RRGRR': {
-# 		'timing': 'MFAT2', 
-# 		'duration': 'MFAT2', 
-# 		'dry_period': 'Index', 
-# 		'gwlevel': 'Index', 
-# 		'salinity': 'Index'
-# 	}
-# }
+species_cols = {
+ 	'RRGMS': {
+ 		'timing': 'MFATwoodland', 
+ 		'duration': 'MFATwoodland', 
+ 		'dry_period': 'Roberts', 
+ 		'gwlevel': 'Index', 
+ 		'salinity': 'Index'
+ }, 'RRGRR': {
+ 		'timing': 'Roberts', 
+ 		'duration': 'Roberts', 
+ 		'dry_period': 'Index', 
+ 		'gwlevel': 'Index', 
+ 		'salinity': 'Index'
+ 	}
+}
 
 #This is unused at the moment
 # weighted = lambda d, gweight: d[1]*gweight + d[2]*(1-gweight)
@@ -93,13 +93,13 @@ for scenario_dir in xrange(0, len(scenarios)):
 	#For each asset, generate flow indexes for each species
 	for j in xrange(0, len(asset_table.index)):
 
-		flow_indexes = FlowIndexer.generateEnvIndex(asset_id=j, scen_data=scenario_data, ecospecies=specieslist, species_cols=FlowIndexer.default_index_cols) #, gswfun=weighted
+		flow_indexes = FlowIndexer.generateEnvIndex(asset_id=j, scen_data=scenario_data, ecospecies=specieslist, species_cols=species_cols) #species_cols=FlowIndexer.default_index_cols, gswfun=weighted
 
 		#For development purposes only. Display index results for each species
 		print "Asset {id}".format(id=j+1)
 		for species in specieslist:
 
-			save_folder = "./Outputs/{s}/asset_{asset}/{sp}".format(s=scen_name, asset=j+1, sp=species)
+			save_folder = "./Integrated/Modules/Ecology/Outputs/{s}/asset_{asset}/{sp}".format(s=scen_name, asset=j+1, sp=species)
 
 			species_index = flow_indexes[species]
 
