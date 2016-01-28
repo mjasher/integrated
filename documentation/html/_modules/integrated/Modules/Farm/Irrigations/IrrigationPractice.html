@@ -55,11 +55,12 @@
           <div class="body">
             
   <h1>Source code for integrated.Modules.Farm.Irrigations.IrrigationPractice</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">integrated.Modules.Core.IntegratedModelComponent</span> <span class="kn">import</span> <span class="n">Component</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">integrated.Modules.Farm.Farms.FarmComponent</span> <span class="kn">import</span> <span class="n">FarmComponent</span>
 <span class="kn">from</span> <span class="nn">integrated.Modules.Core.GeneralFunctions</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 
-<div class="viewcode-block" id="IrrigationPractice"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Irrigations.html#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice">[docs]</a><span class="k">class</span> <span class="nc">IrrigationPractice</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+<div class="viewcode-block" id="IrrigationPractice"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Irrigations.html#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice">[docs]</a><span class="k">class</span> <span class="nc">IrrigationPractice</span><span class="p">(</span><span class="n">FarmComponent</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents an irrigation practice/technology.</span>
@@ -67,7 +68,7 @@
 <span class="sd">    Methods defined in this parent class should be considered stubs, to be redefined by child Classes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">irrigation_efficiency</span><span class="p">,</span> <span class="n">cost_per_Ha</span><span class="p">,</span> <span class="n">replacement_cost_per_Ha</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation_rate</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lifespan</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">max_irrigation_area_Ha</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">maintenance_rate</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span> <span class="c">#discount_rate=0.07</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">irrigation_efficiency</span><span class="p">,</span> <span class="n">cost_per_Ha</span><span class="p">,</span> <span class="n">replacement_cost_per_Ha</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation_rate</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lifespan</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">max_irrigation_area_Ha</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">maintenance_rate</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">implemented</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span> <span class="c">#discount_rate=0.07</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
 
@@ -77,8 +78,8 @@
         <span class="c">#Cost of replacing the irrigation system after lifespan.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">replacement_cost_per_Ha</span> <span class="o">=</span> <span class="n">cost_per_Ha</span> <span class="k">if</span> <span class="n">replacement_cost_per_Ha</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">replacement_cost_per_Ha</span>
 
-        <span class="c">#Implementation cost for Flood is always 0 as it is already implemented</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span> <span class="o">=</span> <span class="n">cost_per_Ha</span> <span class="c">#if name is not &#39;Flood&#39; else 0.0</span>
+        <span class="c">#Implementation (capital) cost for Flood should always be set to 0 as it is already implemented</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span> <span class="o">=</span> <span class="n">cost_per_Ha</span>
         
         <span class="c">#max irrigation area default value (782 Ha) from Powell &amp; Scott (2011), Representative farm model, p 25</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_irrigation_area_Ha</span> <span class="o">=</span> <span class="n">max_irrigation_area_Ha</span> <span class="k">if</span> <span class="n">max_irrigation_area_Ha</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="mf">782.0</span>
@@ -86,13 +87,9 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">maintenance_rate</span> <span class="o">=</span> <span class="n">maintenance_rate</span>
 
-        <span class="c">#self.irrigation_area = 0.0 if irrigation_area is None else irrigation_area</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flow_ML_day</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;flow_ML_day&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 
-        <span class="c">#Set default params</span>
-        <span class="c"># self.default_params = {}</span>
-        <span class="c"># for key, value in self.__dict__.iteritems():</span>
-        <span class="c">#     self.default_params[key] = copy.deepcopy(value)</span>
-        <span class="c"># #End For</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">implemented</span> <span class="o">=</span> <span class="n">implemented</span>
 
         <span class="c">#Set all other kwargs as class attributes</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -261,7 +258,20 @@
 
     <span class="c">#End calcIrrigationArea()</span>
 </div>
-<div class="viewcode-block" id="IrrigationPractice.calcCapitalCost"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Irrigations.html#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcCapitalCost">[docs]</a>    <span class="k">def</span> <span class="nf">calcCapitalCost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area_Ha</span><span class="p">):</span>
+<div class="viewcode-block" id="IrrigationPractice.calcOperationalCostPerHa"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Irrigations.html#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcOperationalCostPerHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcOperationalCostPerHa</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the operational cost of this irrigation system</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">op_cost_per_Ha</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maintenance_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span><span class="p">)</span> \
+                            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span> <span class="o">!=</span> <span class="mf">0.0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">maintenance_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">replacement_cost_per_Ha</span>
+
+        <span class="n">op_cost_per_Ha</span> <span class="o">=</span> <span class="n">op_cost_per_Ha</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span>
+
+        <span class="k">return</span> <span class="n">op_cost_per_Ha</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcCapitalCost"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Irrigations.html#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcCapitalCost">[docs]</a>    <span class="k">def</span> <span class="nf">calcCapitalCost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area_Ha</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the implementation cost of this irrigation practice</span>
@@ -271,7 +281,10 @@
 <span class="sd">        :return type: numeric</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">irrigation_area_Ha</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">implemented</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">irrigation_area_Ha</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span>
 
     <span class="c">#End calcCapitalCost()</span>
 </div>
@@ -301,6 +314,19 @@
 
         <span class="k">return</span> <span class="mi">0</span>
     <span class="c">#End calcOngoingCost()</span>
+</div>
+<div class="viewcode-block" id="IrrigationPractice.calcTotalCostsPerHa"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Irrigations.html#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcTotalCostsPerHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalCostsPerHa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_costs</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">implemented</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">implementation_cost</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">maintenance_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maintenance_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">replacement_cost_per_Ha</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">implementation_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_Ha</span>
+            <span class="n">maintenance_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maintenance_rate</span> <span class="o">*</span> <span class="n">implementation_cost</span>
+
+        <span class="k">return</span> <span class="n">implementation_cost</span> <span class="o">+</span> <span class="n">maintenance_cost</span> <span class="o">+</span> <span class="n">other_costs</span>
+        
+    <span class="c">#End calcTotalCostsPerHa()</span>
 </div>
 <div class="viewcode-block" id="IrrigationPractice.calcAnnualCapitalCost"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Irrigations.html#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcAnnualCapitalCost">[docs]</a>    <span class="k">def</span> <span class="nf">calcAnnualCapitalCost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area_Ha</span><span class="p">,</span> <span class="n">discount_rate</span><span class="p">):</span>
 
@@ -360,7 +386,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

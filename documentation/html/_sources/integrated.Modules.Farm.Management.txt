@@ -20,6 +20,22 @@ integrated.Modules.Farm.Management.Plastic module
     :undoc-members:
     :show-inheritance:
 
+integrated.Modules.Farm.Management.dp_dev module
+------------------------------------------------
+
+.. automodule:: integrated.Modules.Farm.Management.dp_dev
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+integrated.Modules.Farm.Management.dp_dev_2 module
+--------------------------------------------------
+
+.. automodule:: integrated.Modules.Farm.Management.dp_dev_2
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

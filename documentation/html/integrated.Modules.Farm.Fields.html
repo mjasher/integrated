@@ -74,9 +74,9 @@
 <span id="integrated-modules-farm-fields-field-module"></span><h2>integrated.Modules.Farm.Fields.Field module<a class="headerlink" href="#module-integrated.Modules.Farm.Fields.Field" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.Fields.Field.FarmField">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.Fields.Field.</tt><tt class="descname">FarmField</tt><big>(</big><em>name=None</em>, <em>irrigation=None</em>, <em>crop=None</em>, <em>soil=None</em>, <em>area=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.Fields.Field.</tt><tt class="descname">FarmField</tt><big>(</big><em>name=None</em>, <em>storage=None</em>, <em>irrigation=None</em>, <em>crop=None</em>, <em>soil=None</em>, <em>area=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component" title="integrated.Modules.Core.IntegratedModelComponent.Component"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Core.IntegratedModelComponent.Component</span></tt></a></p>
-<p>Container to associate an irrigation with a crop type</p>
+<p>Container to associate an irrigation with a crop, irrigation and storage type</p>
 <dl class="method">
 <dt id="integrated.Modules.Farm.Fields.Field.FarmField.status">
 <tt class="descname">status</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.status" title="Permalink to this definition">¶</a></dt>
@@ -160,12 +160,14 @@ SWD_i = Rainfall + Irrigation - Crop Water Use</p>
 <dl class="method">
 <dt id="integrated.Modules.Farm.Fields.Field.FarmField.calcNetIrrigationDepth">
 <tt class="descname">calcNetIrrigationDepth</tt><big>(</big><em>crop_root_depth_m</em>, <em>crop_depletion_fraction</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.calcNetIrrigationDepth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.calcNetIrrigationDepth" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Calculate net irrigation depth in mm</p>
+</dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.Farm.Fields.Field.FarmField.calcFlowRate">
-<tt class="descname">calcFlowRate</tt><big>(</big><em>duration</em>, <em>operational_days</em>, <em>Crop</em>, <em>irrig_efficiency=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.calcFlowRate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.calcFlowRate" title="Permalink to this definition">¶</a></dt>
+<dt id="integrated.Modules.Farm.Fields.Field.FarmField.calcFlowRate_old">
+<tt class="descname">calcFlowRate_old</tt><big>(</big><em>duration</em>, <em>operational_days</em>, <em>Crop</em>, <em>irrig_efficiency=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.calcFlowRate_old"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.calcFlowRate_old" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate flow requirements for this field, factoring in crop water requirements</p>
+<p>See <a class="reference external" href="http://irrigation.wsu.edu/Content/Calculators/Center-Pivot/System-Pumping-Requirements.php">this calculator</a> as an example</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -183,6 +185,10 @@ SWD_i = Rainfall + Irrigation - Crop Water Use</p>
 </tr>
 </tbody>
 </table>
+<p>From Gallons
+.. :math:</p>
+<blockquote>
+<div>Q = (((27154 * Net_{app}) * A) / (60 * (Hrs * Days))) / E</div></blockquote>
 <p>where
 * <span class="math">\(Q\)</span> is total flow rate 
 * <span class="math">\(Net_{app}\)</span> is the required application amount per week
@@ -190,6 +196,55 @@ SWD_i = Rainfall + Irrigation - Crop Water Use</p>
 * <span class="math">\(Hrs\)</span> is the total hours available for pump operation per day
 * <span class="math">\(Days\)</span> is the number of days the pump will be operated over
 * <span class="math">\(E\)</span> is the efficiency of the irrigation system</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Farm.Fields.Field.FarmField.calcFlowRate">
+<tt class="descname">calcFlowRate</tt><big>(</big><em>irrigation_flow_capacity=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.calcFlowRate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.calcFlowRate" title="Permalink to this definition">¶</a></dt>
+<dd><p>where:
+* <span class="math">\(Q\)</span> is Flow in Litres per second
+* <span class="math">\(F\)</span> is flow rate in ML per day
+* 1000000 converts <span class="math">\(F\)</span> from ML to Litres
+* 24 is the hours per day
+* First 60 is the minutes per hour
+* Second 60 is the seconds per minute</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Flow in Litres per Second</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Farm.Fields.Field.FarmField.calcFlowDurationInDays">
+<tt class="descname">calcFlowDurationInDays</tt><big>(</big><em>water_to_apply_ML</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.calcFlowDurationInDays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.calcFlowDurationInDays" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Farm.Fields.Field.FarmField.flowPerIrrigation">
+<tt class="descname">flowPerIrrigation</tt><big>(</big><em>nid</em>, <em>area</em>, <em>irrigation_efficiency</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.flowPerIrrigation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.flowPerIrrigation" title="Permalink to this definition">¶</a></dt>
+<dd><p>From <a class="reference external" href="http://www.dpi.nsw.gov.au/__data/assets/pdf_file/0006/176694/surface-irrigation-notes.pdf">This 2002 DPI document</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>nid</strong> &#8211; Net Irrigation Depth</li>
+<li><strong>area</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Farm.Fields.Field.FarmField.irrigationArea">
+<tt class="descname">irrigationArea</tt><big>(</big><em>flow</em>, <em>irrigation_efficiency</em>, <em>nid</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.irrigationArea"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.irrigationArea" title="Permalink to this definition">¶</a></dt>
+<dd><p>From <a class="reference external" href="http://www.dpi.nsw.gov.au/__data/assets/pdf_file/0006/176694/surface-irrigation-notes.pdf">This DPI document</a></p>
 </dd></dl>
 
 </dd></dl>
@@ -344,7 +399,7 @@ In winter, all the rainfall is assumed to be effective.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

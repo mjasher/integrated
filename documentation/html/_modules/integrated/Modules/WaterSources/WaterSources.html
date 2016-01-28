@@ -55,24 +55,29 @@
           <div class="body">
             
   <h1>Source code for integrated.Modules.WaterSources.WaterSources</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">integrated.Modules.Core.IntegratedModelComponent</span> <span class="kn">import</span> <span class="n">Component</span>
+<span class="kn">from</span> <span class="nn">integrated.Modules.Farm.Farms.FarmComponent</span> <span class="kn">import</span> <span class="n">FarmComponent</span>
 
-<div class="viewcode-block" id="WaterSources"><a class="viewcode-back" href="../../../../integrated.Modules.WaterSources.html#integrated.Modules.WaterSources.WaterSources.WaterSources">[docs]</a><span class="k">class</span> <span class="nc">WaterSources</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+<div class="viewcode-block" id="WaterSources"><a class="viewcode-back" href="../../../../integrated.Modules.WaterSources.html#integrated.Modules.WaterSources.WaterSources.WaterSources">[docs]</a><span class="k">class</span> <span class="nc">WaterSources</span><span class="p">(</span><span class="n">FarmComponent</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a source of water</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">water_level</span><span class="p">,</span> <span class="n">entitlement</span><span class="p">,</span> <span class="n">water_value_per_ML</span><span class="p">,</span> <span class="n">cost_per_ML</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
-        <span class="c"># if &#39;water_source&#39; not in kwargs:</span>
-        <span class="c">#     raise KeyError(&#39;Required dict water_source not found&#39;)</span>
-        <span class="c"># else:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param name: Name of water source </span>
+<span class="sd">        :param water_level: Current water level</span>
+<span class="sd">        :param entitlement: Amount of water entitled from this water source</span>
+<span class="sd">        :param water_value_per_ML: Market value of the water</span>
+<span class="sd">        :param cost_per_ML: Cost of ordering the water</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c">#     if type(kwargs[&#39;water_source&#39;]) is not dict:</span>
-        <span class="c">#         raise TypeError(&#39;water_source is supposed to be a dictionary&#39;)</span>
-
-        <span class="c"># #End if</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">water_level</span> <span class="o">=</span> <span class="n">water_level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entitlement</span> <span class="o">=</span> <span class="n">entitlement</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">water_value_per_ML</span> <span class="o">=</span> <span class="n">water_value_per_ML</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_ML</span> <span class="o">=</span> <span class="n">cost_per_ML</span>
 
         <span class="c">#Set all kwargs as class attributes</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -83,7 +88,8 @@
 
 <div class="viewcode-block" id="WaterSources.calcGrossWaterAvailable"><a class="viewcode-back" href="../../../../integrated.Modules.WaterSources.html#integrated.Modules.WaterSources.WaterSources.WaterSources.calcGrossWaterAvailable">[docs]</a>    <span class="k">def</span> <span class="nf">calcGrossWaterAvailable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">water_source</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="c">#return sum(self.water_source.values())</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">entitlement</span>
 
     <span class="c">#End calcGrossWaterAvailable()</span>
 </div>
@@ -91,34 +97,69 @@
         <span class="k">pass</span>
     <span class="c">#End extractWater()</span>
 </div>
-<div class="viewcode-block" id="WaterSources.calcPumpingCostsPerML"><a class="viewcode-back" href="../../../../integrated.Modules.WaterSources.html#integrated.Modules.WaterSources.WaterSources.WaterSources.calcPumpingCostsPerML">[docs]</a>    <span class="k">def</span> <span class="nf">calcPumpingCostsPerML</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow_rate_Lps</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">pump_efficiency</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">derating</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fuel_per_Kw</span><span class="o">=</span><span class="mf">0.25</span><span class="p">):</span>
+<div class="viewcode-block" id="WaterSources.calcPumpingCostsPerML"><a class="viewcode-back" href="../../../../integrated.Modules.WaterSources.html#integrated.Modules.WaterSources.WaterSources.WaterSources.calcPumpingCostsPerML">[docs]</a>    <span class="k">def</span> <span class="nf">calcPumpingCostsPerML</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow_rate_Lps</span><span class="p">,</span> <span class="n">head_pressure</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pump_efficiency</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">derating</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fuel_per_Kw</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">fuel_price_per_Litre</span><span class="o">=</span><span class="mf">1.25</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param flow_rate_Lps: required flow rate in Litres per second over the irrigation duration</span>
-<span class="sd">        :param duration: Irrigation duration in hours, defaults to 24 hours</span>
+<span class="sd">        :param head_pressure: Total head pressure in metres. Uses water level of water source if not given</span>
 <span class="sd">        :param pump_efficiency: Efficiency of pump. Defaults to 0.7 (70%)</span>
 <span class="sd">        :param derating: Accounts for efficiency losses between the energy required at the pump shaft and the total energy required. Defaults to 1</span>
-<span class="sd">        :param fuel_per_Kw: Amount of fuel required for a Kilowatt hour. Defaults to 0.25L for diesel.</span>
+<span class="sd">        :param fuel_per_Kw: Amount of fuel (in litres) required for a Kilowatt hour. Defaults to 0.25L for diesel.</span>
 
 <span class="sd">        See </span>
 <span class="sd">          * `Robinson, D. W., 2002 &lt;http://www.clw.csiro.au/publications/technical2002/tr20-02.pdf&gt;`_</span>
 <span class="sd">          * `Vic. Dept. Agriculture, 2006 &lt;http://agriculture.vic.gov.au/agriculture/farm-management/soil-and-water/irrigation/border-check-irrigation-design&gt;`_</span>
+<span class="sd">          * `Velloti &amp; Kalogernis, 2013 &lt;http://irrigation.org.au/wp-content/uploads/2013/06/Gennaro-Velloti-and-Kosi-Kalogernis-presentation.pdf&gt;`_</span>
 
+<span class="sd">        .. :math:</span>
+<span class="sd">            P(Kw) = (H * Q) / (102 * Ep)</span>
 
+<span class="sd">        where:</span>
+<span class="sd">        * :math:`H` is head pressure in metres (m)</span>
+<span class="sd">        * :math:`Q` is Flow in Litres per Second</span>
+<span class="sd">        * :math:`Ep` is Pump efficiency (defaults to 0.7)</span>
+<span class="sd">        * :math:`102` is a constant, as given in Velloti &amp; Kalogernis (2013)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="k">if</span> <span class="n">head_pressure</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">head_pressure</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">water_level</span>
+
         <span class="n">constant</span> <span class="o">=</span> <span class="mi">102</span>
-        <span class="n">energy_required</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">water_level</span> <span class="o">*</span> <span class="n">flow_rate_Lps</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="n">constant</span> <span class="o">*</span> <span class="n">pump_efficiency</span><span class="p">)</span> <span class="o">*</span> <span class="n">derating</span><span class="p">)</span>
+        <span class="n">energy_required_Kw</span> <span class="o">=</span> <span class="p">(</span><span class="n">head_pressure</span> <span class="o">*</span> <span class="n">flow_rate_Lps</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="n">constant</span> <span class="o">*</span> <span class="n">pump_efficiency</span><span class="p">)</span> <span class="o">*</span> <span class="n">derating</span><span class="p">)</span>
 
-        <span class="n">fuel_required_per_Hour</span> <span class="o">=</span> <span class="n">energy_required</span> <span class="o">*</span> <span class="n">fuel_per_Kw</span>
+        <span class="n">fuel_required_per_Hour</span> <span class="o">=</span> <span class="n">energy_required_Kw</span> <span class="o">*</span> <span class="n">fuel_per_Kw</span>
 
-        <span class="n">hours_per_ML</span> <span class="o">=</span> <span class="mi">24</span> <span class="o">/</span> <span class="n">flow_rate_Lps</span>
+        <span class="n">hours_per_ML</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1000000</span> <span class="o">/</span> <span class="n">flow_rate_Lps</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span> <span class="o">/</span> <span class="mi">60</span> <span class="c">#(duration * 60) * </span>
 
-        <span class="n">cost_per_ML</span> <span class="o">=</span> <span class="n">fuel_required_per_Hour</span> <span class="o">*</span> <span class="n">hours_per_ML</span>
+        <span class="n">cost_per_ML</span> <span class="o">=</span> <span class="p">(</span><span class="n">fuel_price_per_Litre</span> <span class="o">*</span> <span class="n">fuel_required_per_Hour</span><span class="p">)</span> <span class="o">*</span> <span class="n">hours_per_ML</span>
+
+        <span class="c"># print &quot;---- Pumping Cost Calculation ----&quot;</span>
+        <span class="c"># print &quot;Water Level: {wl}&quot;.format(wl=self.water_level)</span>
+        <span class="c"># print &quot;Given flow rate: {f}&quot;.format(f=flow_rate_Lps)</span>
+        <span class="c"># print &quot;Energy Kw: {kw}&quot;.format(kw=energy_required_Kw)</span>
+        <span class="c"># print &quot;Fuel / Hour: {f}&quot;.format(f=fuel_required_per_Hour)</span>
+        <span class="c"># print &quot;Hours / ML: {f}&quot;.format(f=hours_per_ML)</span>
+        <span class="c"># print &quot;Cost per ML: {f}&quot;.format(f=cost_per_ML)</span>
+        <span class="c"># print &quot;==================================&quot;</span>
 
         <span class="k">return</span> <span class="n">cost_per_ML</span>
 
     <span class="c">#End calcPumpingCostsPerML()</span>
+</div>
+<div class="viewcode-block" id="WaterSources.calcGrossPumpingCostsPerHa"><a class="viewcode-back" href="../../../../integrated.Modules.WaterSources.html#integrated.Modules.WaterSources.WaterSources.WaterSources.calcGrossPumpingCostsPerHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcGrossPumpingCostsPerHa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow_rate_Lps</span><span class="p">,</span> <span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">,</span> <span class="n">pump_efficiency</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">derating</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fuel_per_Kw</span><span class="o">=</span><span class="mf">0.25</span><span class="p">):</span>
+        <span class="n">pumping_cost_per_Ha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcPumpingCostsPerML</span><span class="p">(</span><span class="n">flow_rate_Lps</span><span class="p">,</span> <span class="n">pump_efficiency</span><span class="p">,</span> <span class="n">derating</span><span class="p">,</span> <span class="n">fuel_per_Kw</span><span class="p">)</span> <span class="o">*</span> <span class="n">est_irrigation_water_ML_per_Ha</span>
+
+        <span class="k">return</span> <span class="n">pumping_cost_per_Ha</span>
+    <span class="c">#End calcGrossPumpingCosts()</span>
+</div>
+<div class="viewcode-block" id="WaterSources.calcWaterCostsPerHa"><a class="viewcode-back" href="../../../../integrated.Modules.WaterSources.html#integrated.Modules.WaterSources.WaterSources.WaterSources.calcWaterCostsPerHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcWaterCostsPerHa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">water_amount_ML_per_Ha</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_ML</span> <span class="o">*</span> <span class="n">water_amount_ML_per_Ha</span>
+    <span class="c">#End calcWaterCostsPerHa()</span>
+</div>
+<div class="viewcode-block" id="WaterSources.calcTotalCostsPerHa"><a class="viewcode-back" href="../../../../integrated.Modules.WaterSources.html#integrated.Modules.WaterSources.WaterSources.WaterSources.calcTotalCostsPerHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalCostsPerHa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">water_amount_ML_per_Ha</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_per_ML</span> <span class="o">*</span> <span class="n">water_amount_ML_per_Ha</span>
+    <span class="c">#End calcTotalCostsPerHa()</span>
+
         
 
 <span class="c">#End WaterSources</span></div></div>
@@ -161,7 +202,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

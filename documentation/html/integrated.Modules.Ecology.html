@@ -78,7 +78,7 @@
 The model does not involve groundwater.</p>
 <dl class="method">
 <dt id="integrated.Modules.Ecology.FLOWS.FLOWS.FlowsCategory">
-<tt class="descname">FlowsCategory</tt><big>(</big><em>flow</em>, <em>thresholds</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FLOWS.html#FLOWS.FlowsCategory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FLOWS.FLOWS.FlowsCategory" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">FlowsCategory</tt><big>(</big><em>flow</em>, <em>flows_thresholds</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FLOWS.html#FLOWS.FlowsCategory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FLOWS.FLOWS.FlowsCategory" title="Permalink to this definition">¶</a></dt>
 <dd><p>convert flow daily time series into FLOWS category:
 summer cease to flow, summer low flow, summer fresh
 winter low flow, winter high flow, winter bankfull flow, winter overbank flow
@@ -111,47 +111,184 @@ Output: Percentage of days/events matches flows requirement (Year, cease_to_flow
 <span id="integrated-modules-ecology-flowsuitability-module"></span><h2>integrated.Modules.Ecology.FlowSuitability module<a class="headerlink" href="#module-integrated.Modules.Ecology.FlowSuitability" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Ecology.FlowSuitability.</tt><tt class="descname">FlowSuitability</tt><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Ecology.FlowSuitability.</tt><tt class="descname">FlowSuitability</tt><big>(</big><em>asset_table</em>, <em>species_list</em>, <em>indexes</em>, <em>weights</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability" title="integrated.Modules.Ecology.WaterSuitability.WaterSuitability"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Ecology.WaterSuitability.WaterSuitability</span></tt></a></p>
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.generateDefaultIndexCols">
+<tt class="descname">generateDefaultIndexCols</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.generateDefaultIndexCols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.generateDefaultIndexCols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.rollingCounter">
+<tt class="descname">rollingCounter</tt><big>(</big><em>val</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.rollingCounter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.rollingCounter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to apply when counting sequential event days</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.grouper">
+<tt class="descname">grouper</tt><big>(</big><em>start</em>, <em>end</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.grouper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.grouper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.floodEvents">
-<tt class="descname">floodEvents</tt><big>(</big><em>flow</em>, <em>threshold</em>, <em>min_separation</em>, <em>min_duration</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.floodEvents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.floodEvents" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a list of flood events based on daily flow, like hydromad eventseq
-Output attributes:
-event id, start date, end date, duration, month of start date, interflood dry period</p>
+<tt class="descname">floodEvents</tt><big>(</big><em>flow_df</em>, <em>threshold=4000</em>, <em>min_duration=3</em>, <em>min_separation=2</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.floodEvents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.floodEvents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine flow events based on daily flow, like R hydromad eventseq()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>flow_df</strong> &#8211; Pandas dataframe of daily flow in ML/Day</li>
+<li><strong>threshold</strong> &#8211; Flood event threshold; flow must be higher than this to be classified as a flooding event.</li>
+<li><strong>min_duration</strong> &#8211; Minimum number of days that defines a flooding event</li>
+<li><strong>min_separation</strong> &#8211; Minimum number of days separating events. If fewer, assume it is a fluctuation in the current event.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Pandas DataFrame of flood events
+start: event start date
+end: event end date
+duration: Duration of event
+dry_period: Preceeding dry period
+timing: 1-12, representing month of event start (1 = Jan, 12 = December)</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.FloodIndexes">
-<tt class="descname">FloodIndexes</tt><big>(</big><em>flood_events</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.FloodIndexes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.FloodIndexes" title="Permalink to this definition">¶</a></dt>
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.floodIndexes">
+<tt class="descname">floodIndexes</tt><big>(</big><em>flood_events_df</em>, <em>coordinates</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.floodIndexes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.floodIndexes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate index for each flood attribute based on index curve (defined in WaterSuitability.py)
+input: coordinates is a dict of duration, timing, dry coordinates
 Output attributes:
-event id, start date, end date, duration index, timing index, interflood dry period index</p>
+event id, start date, end date, duration, startmonth (month when the event start), dry (interflood dry period),duration index, timing index, interflood dry period index</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.EventIndexWeightedAvg">
-<tt class="descname">EventIndexWeightedAvg</tt><big>(</big><em>flood_indexes</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.EventIndexWeightedAvg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.EventIndexWeightedAvg" title="Permalink to this definition">¶</a></dt>
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.gwIndexes">
+<tt class="descname">gwIndexes</tt><big>(</big><em>data</em>, <em>coordinates</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.gwIndexes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.gwIndexes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate index for groundwater and add to the given primary DataFrame</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; Pandas DataFrame of groundwater level observations</li>
+<li><strong>coordinates</strong> &#8211; DataFrame of x, y coords</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.calcIndex">
+<tt class="descname">calcIndex</tt><big>(</big><em>data</em>, <em>coords</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.calcIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.calcIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.flowSummary">
+<tt class="descname">flowSummary</tt><big>(</big><em>df</em>, <em>func_name</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.flowSummary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.flowSummary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate summary statistics (defined by function).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>df</strong> &#8211; Pandas dataframe, must have datetime index</li>
+<li><strong>func_name</strong> &#8211; statistical attribute as found in Python pandas: min, max, median, etc.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.generateEnvIndex">
+<tt class="descname">generateEnvIndex</tt><big>(</big><em>asset_id</em>, <em>scen_data</em>, <em>salinity=10000</em>, <em>ctf_col='ctf_low'</em>, <em>species_cols=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.generateEnvIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.generateEnvIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate environmental indexes for the given list of species</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>asset_id</strong> &#8211; Column position in dataframe, zero-based index</li>
+<li><strong>scen_data</strong> &#8211; scenario data in a Pandas dataframe</li>
+<li><strong>ecospecies</strong> &#8211; name of species</li>
+<li><strong>salinity</strong> &#8211; Default salinity value to use if no data found. Assumes 10,000ppm</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.generateSpeciesIndex">
+<tt class="descname">generateSpeciesIndex</tt><big>(</big><em>index_input</em>, <em>gauge</em>, <em>data</em>, <em>coord_cols</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.generateSpeciesIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.generateSpeciesIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.eventInfo">
+<tt class="descname">eventInfo</tt><big>(</big><em>flood_event</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.eventInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.eventInfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.calcSWSuitabilityIndex">
+<tt class="descname">calcSWSuitabilityIndex</tt><big>(</big><em>df</em>, <em>weights</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.calcSWSuitabilityIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.calcSWSuitabilityIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.eventIndexWeightedAvg">
+<tt class="descname">eventIndexWeightedAvg</tt><big>(</big><em>flood_events_df</em>, <em>weights</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.eventIndexWeightedAvg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.eventIndexWeightedAvg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate flood index summary based on weighted average for each event
 Output attributes:
 event id, start date, end date, summary flood index</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.EventIndexMin">
-<tt class="descname">EventIndexMin</tt><big>(</big><em>flood_indexes</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.EventIndexMin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.EventIndexMin" title="Permalink to this definition">¶</a></dt>
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.eventIndexMin">
+<tt class="descname">eventIndexMin</tt><big>(</big><em>flood_events_df</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.eventIndexMin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.eventIndexMin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate flood index summary based on min rule
 Output attributes:
 event id, start date, end date, summary flood index</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.FlowIndex">
-<tt class="descname">FlowIndex</tt><big>(</big><em>event_index</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.FlowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.FlowIndex" title="Permalink to this definition">¶</a></dt>
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.flowIndex">
+<tt class="descname">flowIndex</tt><big>(</big><em>flow_df</em>, <em>flood_events_df</em>, <em>aggregate_option</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.flowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.flowIndex" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate daily flow index based on event index
 Output attributes:
 Date, flow_index</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Pandas Dataframe of flow indexes</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.ceaseDays">
+<tt class="descname">ceaseDays</tt><big>(</big><em>df</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.ceaseDays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.ceaseDays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine the number of days flow stopped</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.ctfDays">
+<tt class="descname">ctfDays</tt><big>(</big><em>df</em>, <em>ctf=4000</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.ctfDays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.ctfDays" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.FlowSuitability.FlowSuitability.ctfEvents">
+<tt class="descname">ctfEvents</tt><big>(</big><em>df</em>, <em>ctf=4000</em>, <em>min_separation=5</em>, <em>min_duration=1</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/FlowSuitability.html#FlowSuitability.ctfEvents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.ctfEvents" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -160,13 +297,93 @@ Date, flow_index</p>
 <span id="integrated-modules-ecology-gwsuitabiilty-module"></span><h2>integrated.Modules.Ecology.GwSuitabiilty module<a class="headerlink" href="#module-integrated.Modules.Ecology.GwSuitabiilty" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Ecology.GwSuitabiilty.GwSuitability">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Ecology.GwSuitabiilty.</tt><tt class="descname">GwSuitability</tt><a class="reference internal" href="_modules/integrated/Modules/Ecology/GwSuitabiilty.html#GwSuitability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.GwSuitabiilty.GwSuitability" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Ecology.GwSuitabiilty.</tt><tt class="descname">GwSuitability</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/GwSuitabiilty.html#GwSuitability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.GwSuitabiilty.GwSuitability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability" title="integrated.Modules.Ecology.WaterSuitability.WaterSuitability"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Ecology.WaterSuitability.WaterSuitability</span></tt></a></p>
+<dl class="method">
 <dt id="integrated.Modules.Ecology.GwSuitabiilty.GwSuitability.GwIndex">
 <tt class="descname">GwIndex</tt><big>(</big><em>gw_depth_index</em>, <em>salinity_index</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/GwSuitabiilty.html#GwSuitability.GwIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.GwSuitabiilty.GwSuitability.GwIndex" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate daily groundwater index based on groundwater depth and salinity index
 Output attributes:
 Date, gw_index</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-integrated.Modules.Ecology.PlatypusFlow">
+<span id="integrated-modules-ecology-platypusflow-module"></span><h2>integrated.Modules.Ecology.PlatypusFlow module<a class="headerlink" href="#module-integrated.Modules.Ecology.PlatypusFlow" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="integrated.Modules.Ecology.PlatypusFlow.PlatypusFlow">
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Ecology.PlatypusFlow.</tt><tt class="descname">PlatypusFlow</tt><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow.html#PlatypusFlow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow.PlatypusFlow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability" title="integrated.Modules.Ecology.FlowSuitability.FlowSuitability"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Ecology.FlowSuitability.FlowSuitability</span></tt></a></p>
+<dl class="method">
+<dt id="integrated.Modules.Ecology.PlatypusFlow.PlatypusFlow.calcLowFlowIndex">
+<tt class="descname">calcLowFlowIndex</tt><big>(</big><em>yearly_flow_data</em>, <em>flow_col</em>, <em>summer_low_thd</em>, <em>winter_low_thd</em>, <em>summer_index_thd</em>, <em>winter_index_thd</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow.html#PlatypusFlow.calcLowFlowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow.PlatypusFlow.calcLowFlowIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate low flow index:
+1.      Identify climate condition of the input scenario (dry, average or wet) (TO DO, FOR TOY MODEL JUST USE AS AN INPUT)
+2.      Extract summer and winter low flow thresholds based on climate condition, as per table below:</p>
+<blockquote>
+<div><blockquote>
+<div>Summer_low      Winter_low</div></blockquote>
+<p>Month   Dec-May Jun-Nov
+Dry climate     &gt;= 10 ML/day    &gt;=50 ML/day
+Average climate &gt;= 20 ML/day    &gt;= 100 ML/day
+Wet climate     &gt;= 50 ML/day    &gt;= 200 ML/day
+Minimum days     150 days       150 days</p>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>For each year calculate the number of days between 1st Dec and 31st May that flow is &gt;= summer low flow threshold, and the number of days between 1st Jun and 30st Nov that flow is &gt;= winter low flow threshold.</li>
+<li>For each year, if the minimum days for summer AND winter low flows are met, then low flow index for platypus = 1, else, index = 0.</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>yearly_flow_data</strong> &#8211; Pandas dataframe of daily flow data for the given year in ML/Day</li>
+<li><strong>flow_col</strong> &#8211; Name of flow data column</li>
+<li><strong>summer_low_thd</strong> &#8211; flow threshold (in ML/day) above which summer low flow requirememnt is  satisfied</li>
+<li><strong>winter_low_thd</strong> &#8211; flow threshold (in ML/day) above which winter low flow requirement is satisfied</li>
+<li><strong>summer_index_thd</strong> &#8211; a threshold (in days) above which the number of days summer low are satisfied</li>
+<li><strong>winter_index_thd</strong> &#8211; a threshold (in days) above which the number of days summer low are satisfied</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">lowflow index with a value of 0 or 1.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.PlatypusFlow.PlatypusFlow.calcBurrowIndex">
+<tt class="descname">calcBurrowIndex</tt><big>(</big><em>yearly_flow_data</em>, <em>flow_col</em>, <em>burrow_startmonth</em>, <em>burrow_endmonth</em>, <em>entrance_buffer</em>, <em>breeding_startmonth</em>, <em>breeding_endmonth</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow.html#PlatypusFlow.calcBurrowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow.PlatypusFlow.calcBurrowIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given specs:
+1. Within each burrowing season window (1 July-31 Aug), identify max flow level (ML/day).       
+2. Calculate the platypus flow benchmark for this season: benchmark = max flow (ML/day) + burrow buffer (x ML/day). x ranges from 0 to a certain positive number to account for platypus barrow a little above the max flow.
+3. Following each burrowing season, scan the breeding season (1st Sep-28th Feb), events are identified if flow reaches above the benchmark. 
+4. The longest event is used to calculate burrow flood index. If the duration of the duration is below or equal 1 days, the index is 1 (indicating the event is fine for platypus); if the duration is between 2-3 days, the index is 0.5, indicating a lower preference due to risk of drowning; if duration is 4 days or above, the index value is zero indicating the worst outcome for platypus due to flooding of the burrows.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>yearly_flow_data</strong> &#8211; Pandas dataframe of daily flow data for the given year in ML/Day</li>
+<li><strong>flow_col</strong> &#8211; Name of flow data column</li>
+<li><strong>burrow_startmonth</strong> &#8211; the starting month of platypus burrowing period</li>
+<li><strong>burrow_endmonth</strong> &#8211; the end month of platypus burrowing period,</li>
+<li><strong>entrance_buffer</strong> &#8211; some buffer (ML/day) to add to max flow, allowing burrow entrance to be slightly higher than the max flow level</li>
+<li><strong>breeding_startmonth</strong> &#8211; the starting month of platypus breeding period</li>
+<li><strong>breeding_endmonth</strong> &#8211; the ending month of platypus breeding period</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">burrow index with a value of 0 or 1</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -181,40 +398,163 @@ Date, gw_index</p>
 <p>Model water suitability index for vegetation based on flow and groundwater. 
 The index was identified based on expert knowledge in vegetation water requirements</p>
 <dl class="method">
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.getAssetParam">
+<tt class="descname">getAssetParam</tt><big>(</big><em>asset_table</em>, <em>gauge</em>, <em>col</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.getAssetParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.getAssetParam" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectCoordinates">
-<tt class="descname">selectCoordinates</tt><big>(</big><em>curve_option</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.selectCoordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectCoordinates" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select a set of xy coordinates (imported from csv file) for generating curve.
+<tt class="descname">selectCoordinates</tt><big>(</big><em>index_input</em>, <em>cols</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.selectCoordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectCoordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a set of xy coordinates (index_curve is a data imported from csv file, coded in core) for generating curve.
 To be used for uncertainty analysis through selecting different curves</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>index_input</strong> &#8211; Pandas Dataframe of possible x and y coordinates, where x is the index.</li>
+<li><strong>cols</strong> &#8211; List of column names for x and y coordinates</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Two column Pandas Dataframe of x and y</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectWeights">
-<tt class="descname">selectWeights</tt><big>(</big><em>weight_option</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.selectWeights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectWeights" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">selectWeights</tt><big>(</big><em>weight_input</em>, <em>weight_option</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.selectWeights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectWeights" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select a set of weight (imported from csv file) for aggregating indexes.
-To be used for uncertainty analysis through selecting different weights</p>
+To be used for uncertainty analysis through selecting different weights
+outputs: duration_weights, timing_weights, dry_weights</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectWeightForSpecies">
+<tt class="descname">selectWeightForSpecies</tt><big>(</big><em>weights</em>, <em>species_name</em>, <em>weight_name=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.selectWeightForSpecies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectWeightForSpecies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.modifyCoordinates">
-<tt class="descname">modifyCoordinates</tt><big>(</big><em>coordinates</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.modifyCoordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.modifyCoordinates" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">modifyCoordinates</tt><big>(</big><em>coordinates</em>, <em>adjust</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.modifyCoordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.modifyCoordinates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adjust the predefined xy coordinates e.g. +_ 10%
 To be used for uncertainty analysis through allowing the predefined xy coordinates to move around</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.makeIndexCurve">
-<tt class="descname">makeIndexCurve</tt><big>(</big><em>coordinates</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.makeIndexCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.makeIndexCurve" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create an index curve based on xy coordinates. 
-The two ends of the curve extend flat (i.e. the same as the first/last y value)</p>
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.waterIndexWeightedAvg">
+<tt class="descname">waterIndexWeightedAvg</tt><big>(</big><em>flow_index</em>, <em>groundwater_index</em>, <em>groundwater_weight</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.waterIndexWeightedAvg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.waterIndexWeightedAvg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate daily water index summary based on weighted average of daily flow index and groundwater index</p>
+<p>Output attributes:
+Date, water_index</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.WaterIndexWeightedAvg">
-<tt class="descname">WaterIndexWeightedAvg</tt><big>(</big><em>flow_index</em>, <em>groundwater_index</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.WaterIndexWeightedAvg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.WaterIndexWeightedAvg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate daily water index summary based on weighted average of daily flow index and groundwater index
-Output attributes:
-Date, water_index</p>
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.calcWaterSuitabilityIndex">
+<tt class="descname">calcWaterSuitabilityIndex</tt><big>(</big><em>gw_data</em>, <em>sw_data</em>, <em>gw_weight</em>, <em>sw_weight</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.calcWaterSuitabilityIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.calcWaterSuitabilityIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p><span class="math">\(I = w_{g}G + w_{s}S\)</span></p>
+<p>where \
+* <span class="math">\(I\)</span> denotes the water suitability index
+* <span class="math">\(G\)</span> is the groundwater suitability index
+* <span class="math">\(S\)</span> is the surface water suitability index
+* <span class="math">\(w_{g}\)</span> weight for groundwater index
+* <span class="math">\(w_{s}\)</span> weight for surface water index</p>
+<p>Here groundwater data is daily data and surface water data reflects grouped flooding events. \
+Because of this, the surface water index is NaN for datetime with no observations. \
+To account for this, we fill these NAs with the weighted GW index as SW Index is 0 in those circumstances</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>gw_index</strong> &#8211; groundwater index</li>
+<li><strong>sw_index</strong> &#8211; surface water index</li>
+<li><strong>gw_weight</strong> &#8211; groundwater index weight</li>
+<li><strong>sw_weight</strong> &#8211; surface water index weight</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">water suitability index</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Pandas Series</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.calcGWSuitabilityIndex">
+<tt class="descname">calcGWSuitabilityIndex</tt><big>(</big><em>gw_index</em>, <em>S_index</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.calcGWSuitabilityIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.calcGWSuitabilityIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p><span class="math">\(G = L(d) * E(S)\)</span></p>
+<p>where \
+* <span class="math">\(G\)</span> is groundwater suitability index
+* <span class="math">\(L\)</span> is a function of groundwater depth which produces an index
+* <span class="math">\(d\)</span> is groundwater depth
+* <span class="math">\(E\)</span> is a function of salinity which produces a salinity index
+* <span class="math">\(S\)</span> is salinity</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">groundwater suitability index</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numeric (?)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.calcSWSuitabilityIndex">
+<tt class="descname">calcSWSuitabilityIndex</tt><big>(</big><em>fd</em>, <em>ft</em>, <em>dp</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.calcSWSuitabilityIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.calcSWSuitabilityIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Currently a stub. Implementing child classes should (re)define this method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fd</strong> &#8211; Dict of flood duration parameters</li>
+<li><strong>ft</strong> &#8211; Dict of flood timing parameters</li>
+<li><strong>dp</strong> &#8211; Dict of flood dry period parameters</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>All dicts should consist of the weight and index for a given species</p>
+<p><span class="math">\(S = w_{d}D(f_{d}) + w_{t}T(f_{t}) + w_{f}F(f_{dp})\)</span></p>
+<p>where \
+* <span class="math">\(S\)</span> is surface water suitability index
+* <span class="math">\(w_{d}\)</span> weight for flood duration
+* <span class="math">\(D\)</span> is a function of flood duration which produces a flood duration index
+* <span class="math">\(f_{d}\)</span> flood duration
+* <span class="math">\(w_{t}\)</span> weight for flood timing
+* <span class="math">\(T\)</span> is a function of flood timing which produces a flood timing index
+* <span class="math">\(f_{t}\)</span> flood timing
+* <span class="math">\(w_{f}\)</span> weight for inter-flood dry period
+* <span class="math">\(F\)</span> is a function of inter-flood dry period which produces a dry period index
+* <span class="math">\(f_{dp}\)</span> inter-flood dry period</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">surface water suitability index</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">time series (?)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.WaterSuitability.WaterSuitability.calcSalinityIndex">
+<tt class="descname">calcSalinityIndex</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Ecology/WaterSuitability.html#WaterSuitability.calcSalinityIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.calcSalinityIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -309,6 +649,12 @@ salinity</p>
 </dd></dl>
 
 </div>
+<div class="section" id="integrated-modules-ecology-flow-dev-module">
+<h2>integrated.Modules.Ecology.flow_dev module<a class="headerlink" href="#integrated-modules-ecology-flow-dev-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="integrated-modules-ecology-platypus-main-module">
+<h2>integrated.Modules.Ecology.platypus_main module<a class="headerlink" href="#integrated-modules-ecology-platypus-main-module" title="Permalink to this headline">¶</a></h2>
+</div>
 <div class="section" id="module-integrated.Modules.Ecology">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-integrated.Modules.Ecology" title="Permalink to this headline">¶</a></h2>
 <p>Ecology</p>
@@ -328,8 +674,11 @@ salinity</p>
 <li><a class="reference internal" href="#module-integrated.Modules.Ecology.FLOWS">integrated.Modules.Ecology.FLOWS module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Ecology.FlowSuitability">integrated.Modules.Ecology.FlowSuitability module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Ecology.GwSuitabiilty">integrated.Modules.Ecology.GwSuitabiilty module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Ecology.PlatypusFlow">integrated.Modules.Ecology.PlatypusFlow module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Ecology.WaterSuitability">integrated.Modules.Ecology.WaterSuitability module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Ecology.baihua_example">integrated.Modules.Ecology.baihua_example module</a></li>
+<li><a class="reference internal" href="#integrated-modules-ecology-flow-dev-module">integrated.Modules.Ecology.flow_dev module</a></li>
+<li><a class="reference internal" href="#integrated-modules-ecology-platypus-main-module">integrated.Modules.Ecology.platypus_main module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Ecology">Module contents</a></li>
 </ul>
 </li>
@@ -381,7 +730,7 @@ salinity</p>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

@@ -74,8 +74,8 @@
 <span id="integrated-modules-farm-irrigations-irrigationpractice-module"></span><h2>integrated.Modules.Farm.Irrigations.IrrigationPractice module<a class="headerlink" href="#module-integrated.Modules.Farm.Irrigations.IrrigationPractice" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.Irrigations.IrrigationPractice.</tt><tt class="descname">IrrigationPractice</tt><big>(</big><em>name</em>, <em>irrigation_efficiency</em>, <em>cost_per_Ha</em>, <em>replacement_cost_per_Ha=None</em>, <em>irrigation_rate=None</em>, <em>lifespan=None</em>, <em>max_irrigation_area_Ha=None</em>, <em>maintenance_rate=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component" title="integrated.Modules.Core.IntegratedModelComponent.Component"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Core.IntegratedModelComponent.Component</span></tt></a></p>
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.Irrigations.IrrigationPractice.</tt><tt class="descname">IrrigationPractice</tt><big>(</big><em>name</em>, <em>irrigation_efficiency</em>, <em>cost_per_Ha</em>, <em>replacement_cost_per_Ha=None</em>, <em>irrigation_rate=None</em>, <em>lifespan=None</em>, <em>max_irrigation_area_Ha=None</em>, <em>maintenance_rate=None</em>, <em>implemented=False</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmComponent.FarmComponent" title="integrated.Modules.Farm.Farms.FarmComponent.FarmComponent"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Farm.Farms.FarmComponent.FarmComponent</span></tt></a></p>
 <p>Represents an irrigation practice/technology.</p>
 <p>Methods defined in this parent class should be considered stubs, to be redefined by child Classes.</p>
 <dl class="method">
@@ -229,8 +229,14 @@ Rogers et al. (1997)</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcOperationalCostPerHa">
+<tt class="descname">calcOperationalCostPerHa</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcOperationalCostPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcOperationalCostPerHa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the operational cost of this irrigation system</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcCapitalCost">
-<tt class="descname">calcCapitalCost</tt><big>(</big><em>irrigation_area_Ha</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcCapitalCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcCapitalCost" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">calcCapitalCost</tt><big>(</big><em>irrigation_area_Ha=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcCapitalCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcCapitalCost" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the implementation cost of this irrigation practice</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -273,6 +279,11 @@ Replacement cost is assumed to be equal to the initial cost per Hectare.</p>
 <dd>See Powell &amp; Scott 2011 (p 42) for overhead costs</dd>
 </dl>
 </dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcTotalCostsPerHa">
+<tt class="descname">calcTotalCostsPerHa</tt><big>(</big><em>other_costs=0</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Irrigations/IrrigationPractice.html#IrrigationPractice.calcTotalCostsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcTotalCostsPerHa" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Irrigations.IrrigationPractice.IrrigationPractice.calcAnnualCapitalCost">
@@ -369,7 +380,7 @@ Replacement cost is assumed to be equal to the initial cost per Hectare.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

@@ -94,8 +94,8 @@
 <span id="integrated-modules-watersources-watersources-module"></span><h2>integrated.Modules.WaterSources.WaterSources module<a class="headerlink" href="#module-integrated.Modules.WaterSources.WaterSources" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.WaterSources.WaterSources.WaterSources">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.WaterSources.WaterSources.</tt><tt class="descname">WaterSources</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/WaterSources/WaterSources.html#WaterSources"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.WaterSources.WaterSources.WaterSources" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component" title="integrated.Modules.Core.IntegratedModelComponent.Component"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Core.IntegratedModelComponent.Component</span></tt></a></p>
+<em class="property">class </em><tt class="descclassname">integrated.Modules.WaterSources.WaterSources.</tt><tt class="descname">WaterSources</tt><big>(</big><em>name</em>, <em>water_level</em>, <em>entitlement</em>, <em>water_value_per_ML</em>, <em>cost_per_ML</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/WaterSources/WaterSources.html#WaterSources"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.WaterSources.WaterSources.WaterSources" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmComponent.FarmComponent" title="integrated.Modules.Farm.Farms.FarmComponent.FarmComponent"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Farm.Farms.FarmComponent.FarmComponent</span></tt></a></p>
 <p>Represents a source of water</p>
 <dl class="method">
 <dt id="integrated.Modules.WaterSources.WaterSources.WaterSources.calcGrossWaterAvailable">
@@ -109,17 +109,17 @@
 
 <dl class="method">
 <dt id="integrated.Modules.WaterSources.WaterSources.WaterSources.calcPumpingCostsPerML">
-<tt class="descname">calcPumpingCostsPerML</tt><big>(</big><em>flow_rate_Lps</em>, <em>duration=24</em>, <em>pump_efficiency=0.7</em>, <em>derating=1</em>, <em>fuel_per_Kw=0.25</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/WaterSources/WaterSources.html#WaterSources.calcPumpingCostsPerML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.WaterSources.WaterSources.WaterSources.calcPumpingCostsPerML" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">calcPumpingCostsPerML</tt><big>(</big><em>flow_rate_Lps</em>, <em>head_pressure=None</em>, <em>pump_efficiency=0.7</em>, <em>derating=1</em>, <em>fuel_per_Kw=0.25</em>, <em>fuel_price_per_Litre=1.25</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/WaterSources/WaterSources.html#WaterSources.calcPumpingCostsPerML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.WaterSources.WaterSources.WaterSources.calcPumpingCostsPerML" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>flow_rate_Lps</strong> &#8211; required flow rate in Litres per second over the irrigation duration</li>
-<li><strong>duration</strong> &#8211; Irrigation duration in hours, defaults to 24 hours</li>
+<li><strong>head_pressure</strong> &#8211; Total head pressure in metres. Uses water level of water source if not given</li>
 <li><strong>pump_efficiency</strong> &#8211; Efficiency of pump. Defaults to 0.7 (70%)</li>
 <li><strong>derating</strong> &#8211; Accounts for efficiency losses between the energy required at the pump shaft and the total energy required. Defaults to 1</li>
-<li><strong>fuel_per_Kw</strong> &#8211; Amount of fuel required for a Kilowatt hour. Defaults to 0.25L for diesel.</li>
+<li><strong>fuel_per_Kw</strong> &#8211; Amount of fuel (in litres) required for a Kilowatt hour. Defaults to 0.25L for diesel.</li>
 </ul>
 </td>
 </tr>
@@ -130,10 +130,31 @@
 <dd><ul class="first last simple">
 <li><a class="reference external" href="http://www.clw.csiro.au/publications/technical2002/tr20-02.pdf">Robinson, D. W., 2002</a></li>
 <li><a class="reference external" href="http://agriculture.vic.gov.au/agriculture/farm-management/soil-and-water/irrigation/border-check-irrigation-design">Vic. Dept. Agriculture, 2006</a></li>
+<li><a class="reference external" href="http://irrigation.org.au/wp-content/uploads/2013/06/Gennaro-Velloti-and-Kosi-Kalogernis-presentation.pdf">Velloti &amp; Kalogernis, 2013</a></li>
 </ul>
 </dd>
 </dl>
+<p>where:
+* <span class="math">\(H\)</span> is head pressure in metres (m)
+* <span class="math">\(Q\)</span> is Flow in Litres per Second
+* <span class="math">\(Ep\)</span> is Pump efficiency (defaults to 0.7)
+* <span class="math">\(102\)</span> is a constant, as given in Velloti &amp; Kalogernis (2013)</p>
 </dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.WaterSources.WaterSources.WaterSources.calcGrossPumpingCostsPerHa">
+<tt class="descname">calcGrossPumpingCostsPerHa</tt><big>(</big><em>flow_rate_Lps</em>, <em>est_irrigation_water_ML_per_Ha</em>, <em>pump_efficiency=0.7</em>, <em>derating=1</em>, <em>fuel_per_Kw=0.25</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/WaterSources/WaterSources.html#WaterSources.calcGrossPumpingCostsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.WaterSources.WaterSources.WaterSources.calcGrossPumpingCostsPerHa" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.WaterSources.WaterSources.WaterSources.calcWaterCostsPerHa">
+<tt class="descname">calcWaterCostsPerHa</tt><big>(</big><em>water_amount_ML_per_Ha</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/WaterSources/WaterSources.html#WaterSources.calcWaterCostsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.WaterSources.WaterSources.WaterSources.calcWaterCostsPerHa" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.WaterSources.WaterSources.WaterSources.calcTotalCostsPerHa">
+<tt class="descname">calcTotalCostsPerHa</tt><big>(</big><em>water_amount_ML_per_Ha</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/WaterSources/WaterSources.html#WaterSources.calcTotalCostsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.WaterSources.WaterSources.WaterSources.calcTotalCostsPerHa" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -208,7 +229,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

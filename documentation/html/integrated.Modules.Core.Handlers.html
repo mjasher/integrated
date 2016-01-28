@@ -156,7 +156,7 @@ TODO: Separate data source (filepaths and column names)</div></blockquote>
 <dt id="integrated.Modules.Core.Handlers.FileHandler.FileHandler.importFiles">
 <tt class="descname">importFiles</tt><big>(</big><em>folder</em>, <em>ext='.csv'</em>, <em>walk=False</em>, <em>date_range=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler.importFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler.importFiles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import files found within a given folder into Pandas DataFrame</p>
-<p>WARNING: Files with matching names will override each other</p>
+<p>WARNING: Matching folder and file combinations will overwrite each other.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -202,8 +202,15 @@ It is defined here so that inheriting Classes may modify as appropriate while ke
 </dd></dl>
 
 <dl class="method">
+<dt id="integrated.Modules.Core.Handlers.FileHandler.FileHandler.setupDir">
+<tt class="descname">setupDir</tt><big>(</big><em>folder_path</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler.setupDir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler.setupDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>WARNING: ONLY SET UP FOR WINDOWS SYSTEMS
+WILL NOT CHECK FOR ERRORS ON UNIX-LIKE SYSTEMS</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="integrated.Modules.Core.Handlers.FileHandler.FileHandler.writeCSV">
-<tt class="descname">writeCSV</tt><big>(</big><em>df</em>, <em>filepath=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler.writeCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler.writeCSV" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">writeCSV</tt><big>(</big><em>df</em>, <em>filepath</em>, <em>filename</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Core/Handlers/FileHandler.html#FileHandler.writeCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Core.Handlers.FileHandler.FileHandler.writeCSV" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write out a DataFrame to CSV</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -295,7 +302,7 @@ It is defined here so that inheriting Classes may modify as appropriate while ke
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

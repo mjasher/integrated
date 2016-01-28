@@ -56,8 +56,9 @@
             
   <h1>Source code for integrated.Modules.Farm.WaterStorages.WaterStore</h1><div class="highlight"><pre>
 <span class="c">#WaterStorage.py</span>
+<span class="kn">from</span> <span class="nn">integrated.Modules.Farm.Farms.FarmComponent</span> <span class="kn">import</span> <span class="n">FarmComponent</span>
 
-<div class="viewcode-block" id="WaterStore"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.WaterStorages.html#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore">[docs]</a><span class="k">class</span> <span class="nc">WaterStore</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="WaterStore"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.WaterStorages.html#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore">[docs]</a><span class="k">class</span> <span class="nc">WaterStore</span><span class="p">(</span><span class="n">FarmComponent</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Defines a water store</span>
@@ -69,7 +70,7 @@
 <span class="sd">        name: name of Water Storage Practice</span>
 <span class="sd">        storage_capacity_ML: Storage capacity in ML</span>
 <span class="sd">        storage_cost_per_ML: Cost of storage per ML</span>
-<span class="sd">        cost_capital: How much it costs to change to this storage type</span>
+<span class="sd">        cost_capital: How much it costs to change to this storage type (total implementation cost)</span>
 <span class="sd">        maintenance_rate: cost of maintenance for this storage type</span>
 <span class="sd">        pump_cost_dollar_per_ML: how much it costs to pump water = $35</span>
 <span class="sd">        discount_rate: Rate at which future returns have to be decreased by to be comparable with present value; 7 percent</span>
@@ -78,12 +79,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;Farm Dam&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_years</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;num_years&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">storage_capacity_ML</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;storage_capacity_ML&#39;</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stored_water_vol_ML</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;water_vol_ML&#39;</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">storage_cost_per_ML</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;storage_cost_per_ML&#39;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cost_capital</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;cost_capital&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">maintenance_rate</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;maintenance_rate&#39;</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">capture_pump_cost_ratio</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;capture_pump_cost_ratio&#39;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pump_cost_dollar_per_ML</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;pump_cost_dollar_per_ML&#39;</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">discount_rate</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;discount_rate&#39;</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">implemented</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;implemented&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">WaterSources</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;WaterSources&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ClimateVariables</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;ClimateVariables&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
@@ -97,9 +100,11 @@
         <span class="c">#End For</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">default_waterstores</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">WaterSources</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">default_waterstores</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="c">#End for</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">WaterSources</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">WaterSources</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">default_waterstores</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="c">#End for</span>
+        <span class="c">#End if</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">default_climatevariables</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ClimateVariables</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
@@ -217,6 +222,15 @@
         <span class="k">return</span> <span class="n">maintenance_cost</span>
     <span class="c">#End calcMaintenanceCosts()</span>
 </div>
+<div class="viewcode-block" id="WaterStore.calcTotalCostsPerHa"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.WaterStorages.html#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcTotalCostsPerHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalCostsPerHa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">farm_area</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">implemented</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calcMaintenanceCosts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">storage_capacity_ML</span><span class="p">)</span> <span class="o">/</span> <span class="n">farm_area</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calcMaintenanceCosts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">storage_capacity_ML</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTotalCapitalCosts</span><span class="p">()</span> <span class="p">)</span> <span class="o">/</span> <span class="n">farm_area</span>
+        <span class="c">#End if</span>
+    <span class="c">#End calcTotalCostsPerHa()</span>
+</div>
 <div class="viewcode-block" id="WaterStore.calcOngoingCosts"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.WaterStorages.html#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcOngoingCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcOngoingCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="c">#Stub, to be defined in child classes</span>
@@ -270,7 +284,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

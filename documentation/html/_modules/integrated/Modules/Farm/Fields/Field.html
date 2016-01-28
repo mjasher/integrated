@@ -61,11 +61,20 @@
 <div class="viewcode-block" id="FarmField"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Field.FarmField">[docs]</a><span class="k">class</span> <span class="nc">FarmField</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Container to associate an irrigation with a crop type</span>
+<span class="sd">    Container to associate an irrigation with a crop, irrigation and storage type</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">soil</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">storage</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">soil</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="c">#self.name = &quot;{i}-{c}&quot;.format(i=irrigation.name, c=crop.name)</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param name: Human readable name of this field</span>
+<span class="sd">        :param storage: The storage that this field relies on</span>
+<span class="sd">        :param irrigation: The irrigation installed for this field</span>
+<span class="sd">        :param crop: The crop planted in this field</span>
+<span class="sd">        :param soil: Predominant soil type of this field</span>
+<span class="sd">        :param area: Field area</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;{i}-{s}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">irrigation</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">soil</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -73,6 +82,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="c">#End if</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">Storage</span> <span class="o">=</span> <span class="n">storage</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Irrigation</span> <span class="o">=</span> <span class="n">irrigation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Crop</span> <span class="o">=</span> <span class="n">crop</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span> <span class="o">=</span> <span class="n">soil</span>
@@ -89,8 +99,8 @@
             <span class="c">#End if</span>
         <span class="c">#End if</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">pump_operation_hours</span> <span class="o">=</span> <span class="mi">24</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pump_operation_days</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pump_operation_hours</span> <span class="o">=</span> <span class="mi">72</span><span class="o">*</span><span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pump_operation_days</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="mi">2</span>
         
     <span class="c">#End init()</span>
 
@@ -142,7 +152,7 @@
     <span class="c">#End applyCropLoss()</span>
 
 </div>
-<div class="viewcode-block" id="FarmField.harvest"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Field.FarmField.harvest">[docs]</a>    <span class="k">def</span> <span class="nf">harvest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FarmField.harvest"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Field.FarmField.harvest">[docs]</a>    <span class="k">def</span> <span class="nf">harvest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get crop harvest.</span>
@@ -192,8 +202,6 @@
         <span class="c">#Divide by 100 to convert Total ML into mm/Ha</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">+</span> <span class="p">(</span> <span class="p">(</span> <span class="p">(</span><span class="n">gross_water_applied</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="p">)</span> <span class="o">-</span> <span class="p">((</span><span class="n">timestep_ETc</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="p">)</span> <span class="p">)</span>
 
-        <span class="c">#self.c_swd = (self.c_swd - timestep_ETc) + ((gross_water_applied / self.area) * 100.0) #multiplied by 100 to convert to millimetres</span>
-
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
 
             <span class="n">seepage</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -225,16 +233,22 @@
 </div>
 <div class="viewcode-block" id="FarmField.calcNetIrrigationDepth"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Field.FarmField.calcNetIrrigationDepth">[docs]</a>    <span class="k">def</span> <span class="nf">calcNetIrrigationDepth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_root_depth_m</span><span class="p">,</span> <span class="n">crop_depletion_fraction</span><span class="p">):</span>
 
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate net irrigation depth in mm</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">RAW_mm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">calcRAW</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="n">crop_depletion_fraction</span><span class="p">)</span>
         <span class="n">net_irrigation_depth</span> <span class="o">=</span> <span class="n">crop_root_depth_m</span> <span class="o">*</span> <span class="n">RAW_mm</span>
 
         <span class="k">return</span> <span class="n">net_irrigation_depth</span>
     <span class="c">#End calcNetIrrigationDepth()</span>
 </div>
-<div class="viewcode-block" id="FarmField.calcFlowRate"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Field.FarmField.calcFlowRate">[docs]</a>    <span class="k">def</span> <span class="nf">calcFlowRate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">operational_days</span><span class="p">,</span> <span class="n">Crop</span><span class="p">,</span> <span class="n">irrig_efficiency</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="FarmField.calcFlowRate_old"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Field.FarmField.calcFlowRate_old">[docs]</a>    <span class="k">def</span> <span class="nf">calcFlowRate_old</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">operational_days</span><span class="p">,</span> <span class="n">Crop</span><span class="p">,</span> <span class="n">irrig_efficiency</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate flow requirements for this field, factoring in crop water requirements</span>
+
+<span class="sd">        See `this calculator &lt;http://irrigation.wsu.edu/Content/Calculators/Center-Pivot/System-Pumping-Requirements.php&gt;`_ as an example</span>
 
 <span class="sd">        :param duration: Number of hours available for pump operation per day.</span>
 <span class="sd">        :param operational_days: Number of days the pump will be operated over</span>
@@ -243,8 +257,13 @@
 
 <span class="sd">        :returns: required flow rate in Litres per second</span>
 
+<span class="sd">        From Gallons</span>
 <span class="sd">        .. :math:</span>
 <span class="sd">            Q = (((27154 * Net_{app}) * A) / (60 * (Hrs * Days))) / E</span>
+
+
+<span class="sd">        .. :math:</span>
+<span class="sd">            Q = ((NID / 100)A / (D*T)) * 1000000 / 60 / 60</span>
 
 <span class="sd">        where</span>
 <span class="sd">        * :math:`Q` is total flow rate </span>
@@ -259,10 +278,76 @@
             <span class="n">irrig_efficiency</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Irrigation</span><span class="o">.</span><span class="n">irrigation_efficiency</span>
 
         <span class="n">nid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcNetIrrigationDepth</span><span class="p">(</span><span class="n">Crop</span><span class="o">.</span><span class="n">root_depth_m</span><span class="p">,</span> <span class="n">Crop</span><span class="o">.</span><span class="n">depletion_fraction</span><span class="p">)</span>
-        <span class="n">total_flow_rate</span> <span class="o">=</span> <span class="p">(((</span><span class="mi">27154</span> <span class="o">*</span> <span class="n">nid</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="p">(</span><span class="n">duration</span> <span class="o">*</span> <span class="n">operational_days</span><span class="p">)))</span> <span class="o">/</span> <span class="n">irrig_efficiency</span>
+
+        <span class="c">#total_flow_rate = (((27154 * nid) * self.area) / (60 * (duration * operational_days))) / irrig_efficiency</span>
+        <span class="c"># total_flow_rate = ((nid * self.area) / (duration * operational_days)) / irrig_efficiency</span>
+        <span class="n">ML_to_apply</span> <span class="o">=</span> <span class="p">((</span><span class="n">nid</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+        <span class="n">ML_per_hour</span> <span class="o">=</span> <span class="n">ML_to_apply</span> <span class="o">/</span> <span class="p">(</span><span class="n">duration</span> <span class="o">*</span> <span class="n">operational_days</span><span class="p">)</span> <span class="c">#ML per Hour</span>
+
+        <span class="n">total_flow_rate</span> <span class="o">=</span> <span class="p">(((</span><span class="n">ML_per_hour</span> <span class="o">*</span> <span class="mi">1000000</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span> <span class="o">/</span> <span class="n">irrig_efficiency</span>
+
+        <span class="c">#Convert from Gallons to Lps</span>
+        <span class="c"># total_flow_rate = total_flow_rate / 0.0630902</span>
 
         <span class="k">return</span> <span class="n">total_flow_rate</span>
     <span class="c">#End calcFlowRate()</span>
+</div>
+<div class="viewcode-block" id="FarmField.calcFlowRate"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Field.FarmField.calcFlowRate">[docs]</a>    <span class="k">def</span> <span class="nf">calcFlowRate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_flow_capacity</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        .. :math:</span>
+<span class="sd">            Q = (F * 1000000) / 24 / 60 / 60</span>
+
+<span class="sd">        where:</span>
+<span class="sd">        * :math:`Q` is Flow in Litres per second</span>
+<span class="sd">        * :math:`F` is flow rate in ML per day</span>
+<span class="sd">        * 1000000 converts :math:`F` from ML to Litres</span>
+<span class="sd">        * 24 is the hours per day</span>
+<span class="sd">        * First 60 is the minutes per hour</span>
+<span class="sd">        * Second 60 is the seconds per minute</span>
+
+<span class="sd">        :returns: Flow in Litres per Second</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">irrigation_flow_capacity</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">flow_cap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Irrigation</span><span class="o">.</span><span class="n">flow_ML_day</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">flow_cap</span> <span class="o">=</span> <span class="n">irrigation_flow_capacity</span>
+        <span class="c">#End if</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">flow_cap</span> <span class="o">*</span> <span class="mi">1000000</span><span class="p">)</span> <span class="o">/</span> <span class="mi">24</span> <span class="o">/</span> <span class="mi">60</span> <span class="o">/</span> <span class="mi">60</span>
+
+    <span class="c">#End calcFlowRate()</span>
+</div>
+<div class="viewcode-block" id="FarmField.calcFlowDurationInDays"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Field.FarmField.calcFlowDurationInDays">[docs]</a>    <span class="k">def</span> <span class="nf">calcFlowDurationInDays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">water_to_apply_ML</span><span class="p">):</span>
+
+        <span class="n">seconds_to_apply</span> <span class="o">=</span> <span class="p">(</span><span class="n">water_to_apply_ML</span><span class="o">*</span><span class="mi">1000000</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcFlowRate</span><span class="p">()</span>
+        <span class="n">mins_to_apply</span> <span class="o">=</span> <span class="n">seconds_to_apply</span> <span class="o">/</span> <span class="mi">60</span> 
+        <span class="n">hours_to_apply</span> <span class="o">=</span> <span class="n">mins_to_apply</span> <span class="o">/</span> <span class="mi">60</span>
+        <span class="n">days_to_apply</span> <span class="o">=</span> <span class="n">mins_to_apply</span> <span class="o">/</span> <span class="mi">24</span>
+
+        <span class="k">return</span> <span class="n">days_to_apply</span>
+    <span class="c">#End calcFlowDuration()</span>
+        
+</div>
+<div class="viewcode-block" id="FarmField.flowPerIrrigation"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Field.FarmField.flowPerIrrigation">[docs]</a>    <span class="k">def</span> <span class="nf">flowPerIrrigation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="n">irrigation_efficiency</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        From `This 2002 DPI document &lt;http://www.dpi.nsw.gov.au/__data/assets/pdf_file/0006/176694/surface-irrigation-notes.pdf&gt;`_</span>
+
+<span class="sd">        :param nid: Net Irrigation Depth</span>
+<span class="sd">        :param area: </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">nid</span> <span class="o">*</span> <span class="n">area</span><span class="p">)</span> <span class="o">/</span> <span class="n">irrigation_efficiency</span>
+</div>
+<div class="viewcode-block" id="FarmField.irrigationArea"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Field.FarmField.irrigationArea">[docs]</a>    <span class="k">def</span> <span class="nf">irrigationArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow</span><span class="p">,</span> <span class="n">irrigation_efficiency</span><span class="p">,</span> <span class="n">nid</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        From `This DPI document &lt;http://www.dpi.nsw.gov.au/__data/assets/pdf_file/0006/176694/surface-irrigation-notes.pdf&gt;`_</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">flow</span> <span class="o">*</span> <span class="n">irrigation_efficiency</span><span class="p">)</span> <span class="o">/</span> <span class="n">nid</span>
 
 <span class="c">#End FarmField()</span></div></div>
 </pre></div>
@@ -304,7 +389,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

@@ -73,12 +73,13 @@
 <li class="toctree-l1"><a class="reference internal" href="integrated.Modules.Farm.Crops.html">integrated.Modules.Farm.Crops package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#module-integrated.Modules.Farm.Crops.CropInfo">integrated.Modules.Farm.Crops.CropInfo module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#module-integrated.Modules.Farm.Crops.crop_data_import_dev">integrated.Modules.Farm.Crops.crop_data_import_dev module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#integrated-modules-farm-crops-crop-data-import-dev-module">integrated.Modules.Farm.Crops.crop_data_import_dev module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Crops.html#module-integrated.Modules.Farm.Crops">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="integrated.Modules.Farm.Farms.html">integrated.Modules.Farm.Farms package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms.FarmComponent">integrated.Modules.Farm.Farms.FarmComponent module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms.FarmInfo">integrated.Modules.Farm.Farms.FarmInfo module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms.cyclic_list">integrated.Modules.Farm.Farms.cyclic_list module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Farms.html#module-integrated.Modules.Farm.Farms.field_crop_water_combinations">integrated.Modules.Farm.Farms.field_crop_water_combinations module</a></li>
@@ -106,7 +107,9 @@
 <li class="toctree-l1"><a class="reference internal" href="integrated.Modules.Farm.Management.html">integrated.Modules.Farm.Management package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Management.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Management.html#module-integrated.Modules.Farm.Management.Manager">integrated.Modules.Farm.Management.Manager module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Management.html#module-integrated.Modules.Farm.Management.Plastic">integrated.Modules.Farm.Management.Plastic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Management.html#integrated-modules-farm-management-plastic-module">integrated.Modules.Farm.Management.Plastic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Management.html#module-integrated.Modules.Farm.Management.dp_dev">integrated.Modules.Farm.Management.dp_dev module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Management.html#module-integrated.Modules.Farm.Management.dp_dev_2">integrated.Modules.Farm.Management.dp_dev_2 module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="integrated.Modules.Farm.Management.html#module-integrated.Modules.Farm.Management">Module contents</a></li>
 </ul>
 </li>
@@ -128,63 +131,14 @@
 <div class="section" id="module-integrated.Modules.Farm.SWD_main">
 <span id="integrated-modules-farm-swd-main-module"></span><h2>integrated.Modules.Farm.SWD_main module<a class="headerlink" href="#module-integrated.Modules.Farm.SWD_main" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-integrated.Modules.Farm.farmer_decision_example">
-<span id="integrated-modules-farm-farmer-decision-example-module"></span><h2>integrated.Modules.Farm.farmer_decision_example module<a class="headerlink" href="#module-integrated.Modules.Farm.farmer_decision_example" title="Permalink to this headline">¶</a></h2>
-<p>Example for determining irrigated area that maximises profits</p>
-<p>Function to be optimised takes the form of negated sum of profits multiplied by area.
-This is then constrained by:</p>
-<blockquote>
-<div><p>Available water resources</p>
-<p>Available land</p>
-</div></blockquote>
-<p>Profits are negated as the solver attempts to minimize</p>
-<p><span class="math">\(f(x) = P_{1}*x_{1} + P_{2}*x_{2} + P_{3}*x_{3}  ... + P_{n}*x_{n}\)</span>, where <span class="math">\(P\)</span> is negated profits</p>
-<p><span class="math">\(x_{1} + x_{2} + x_{3} ... + x_{n} = A\)</span>, where <span class="math">\(A\)</span> is total available area</p>
-<p><span class="math">\(W_{1}*x_{1} + W_{2}*x_{2} + W_{3}*x_{3}  ... + W_{n}*x_{n} \leqslant AW\)</span>, where <span class="math">\(AW\)</span> is Available Water, <span class="math">\(W\)</span> is required water per Ha for each enterprise</p>
-<p><span class="math">\(0 \leq x_{1,2,3 ... n} \leq A\)</span></p>
-<p>Each <span class="math">\(x\)</span> therefore represents a combination of soil, crop, irrigation, water source, and soil characteristics</p>
-<p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre>tomato_cost = Tomato.variable_cost_per_Ha + flood_infra_cost + (pumping_cost*Tomato.water_use_ML_per_Ha)
-wheat_cost = Wheat.variable_cost_per_Ha + flood_infra_cost + (pumping_cost*Wheat.water_use_ML_per_Ha)
-canola_cost = Canola.variable_cost_per_Ha + flood_infra_cost + (pumping_cost*Canola.water_use_ML_per_Ha)
-
-tomato_profit = Tomato.price_per_yield * Tomato.yield_per_Ha
-wheat_profit = Wheat.price_per_yield * Wheat.yield_per_Ha
-canola_profit = Canola.price_per_yield * Canola.yield_per_Ha
-
-#Negated profit of each crop type
-c = [(wheat_cost-wheat_profit), (canola_cost-canola_profit), (tomato_cost-tomato_profit)] #variables to minimize
-
-#Constrain by total area
-A_eq = [[1, 1, 1]] #1*x[1] + 1*x[2] + 1*x[3] ... + 1*x[n] = Total Area
-b_eq = [area]
-
-#Costs per Ha of producing the negated profit
-A_ub = [
-        [Wheat.water_use_ML_per_Ha, Canola.water_use_ML_per_Ha, Tomato.water_use_ML_per_Ha],
-]
-
-#Constraints to producing negated profit 
-b_ub = [
-        water_entitlement
-]
-
-bounds = [(0, area), (0, area), (0, area)]
-
-res = lp(c, A_eq=A_eq, b_eq=b_eq, A_ub=A_ub, b_ub=b_ub, bounds=bounds, options={&quot;disp&quot;: True})
-
-Optimization terminated successfully.
-         Current function value: -3791700.000000
-         Iterations: 2
-  status: 0
-   slack: array([ 200.,  300.,  300.,    0.])
- success: True
-     fun: -3791700.0
-       x: array([   0.,    0.,  300.])
- message: &#39;Optimization terminated successfully.&#39;
-     nit: 2
-</pre></div>
+<div class="section" id="module-integrated.Modules.Farm.dp_dev_final">
+<span id="integrated-modules-farm-dp-dev-final-module"></span><h2>integrated.Modules.Farm.dp_dev_final module<a class="headerlink" href="#module-integrated.Modules.Farm.dp_dev_final" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-integrated.Modules.Farm.farm_dev_main">
+<span id="integrated-modules-farm-farm-dev-main-module"></span><h2>integrated.Modules.Farm.farm_dev_main module<a class="headerlink" href="#module-integrated.Modules.Farm.farm_dev_main" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="integrated-modules-farm-farmer-decision-example-module">
+<h2>integrated.Modules.Farm.farmer_decision_example module<a class="headerlink" href="#integrated-modules-farm-farmer-decision-example-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-integrated.Modules.Farm.main_dev">
 <span id="integrated-modules-farm-main-dev-module"></span><h2>integrated.Modules.Farm.main_dev module<a class="headerlink" href="#module-integrated.Modules.Farm.main_dev" title="Permalink to this headline">¶</a></h2>
@@ -192,15 +146,8 @@ Optimization terminated successfully.
 <div class="section" id="module-integrated.Modules.Farm.setup">
 <span id="integrated-modules-farm-setup-module"></span><h2>integrated.Modules.Farm.setup module<a class="headerlink" href="#module-integrated.Modules.Farm.setup" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-integrated.Modules.Farm.setup_dev">
-<span id="integrated-modules-farm-setup-dev-module"></span><h2>integrated.Modules.Farm.setup_dev module<a class="headerlink" href="#module-integrated.Modules.Farm.setup_dev" title="Permalink to this headline">¶</a></h2>
-<p>Defines parameters to use for the Farm Model.</p>
-<p>Running this file by itself will not work.</p>
-<p>This is intended to be imported by a top-level script/package.</p>
-<dl class="docutils">
-<dt>TODO: Split out non-farm model related stuff</dt>
-<dd>Import settings from CSV or JSON?</dd>
-</dl>
+<div class="section" id="integrated-modules-farm-setup-dev-module">
+<h2>integrated.Modules.Farm.setup_dev module<a class="headerlink" href="#integrated-modules-farm-setup-dev-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-integrated.Modules.Farm">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-integrated.Modules.Farm" title="Permalink to this headline">¶</a></h2>
@@ -219,10 +166,12 @@ Optimization terminated successfully.
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.SWD_main">integrated.Modules.Farm.SWD_main module</a></li>
-<li><a class="reference internal" href="#module-integrated.Modules.Farm.farmer_decision_example">integrated.Modules.Farm.farmer_decision_example module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Farm.dp_dev_final">integrated.Modules.Farm.dp_dev_final module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Farm.farm_dev_main">integrated.Modules.Farm.farm_dev_main module</a></li>
+<li><a class="reference internal" href="#integrated-modules-farm-farmer-decision-example-module">integrated.Modules.Farm.farmer_decision_example module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.main_dev">integrated.Modules.Farm.main_dev module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.setup">integrated.Modules.Farm.setup module</a></li>
-<li><a class="reference internal" href="#module-integrated.Modules.Farm.setup_dev">integrated.Modules.Farm.setup_dev module</a></li>
+<li><a class="reference internal" href="#integrated-modules-farm-setup-dev-module">integrated.Modules.Farm.setup_dev module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm">Module contents</a></li>
 </ul>
 </li>
@@ -274,7 +223,7 @@ Optimization terminated successfully.
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

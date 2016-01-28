@@ -55,19 +55,20 @@
           <div class="body">
             
   <h1>Source code for integrated.Modules.Farm.Farms.FarmInfo</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 
-<span class="kn">from</span> <span class="nn">integrated.Modules.Core.IntegratedModelComponent</span> <span class="kn">import</span> <span class="n">Component</span>
+<span class="kn">from</span> <span class="nn">integrated.Modules.Farm.Farms.FarmComponent</span> <span class="kn">import</span> <span class="n">FarmComponent</span>
 
-<div class="viewcode-block" id="FarmInfo"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo">[docs]</a><span class="k">class</span> <span class="nc">FarmInfo</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+<div class="viewcode-block" id="FarmInfo"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo">[docs]</a><span class="k">class</span> <span class="nc">FarmInfo</span><span class="p">(</span><span class="n">FarmComponent</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">storages</span><span class="p">,</span> <span class="n">irrigations</span><span class="p">,</span> <span class="n">crops</span><span class="p">,</span> <span class="n">water_sources</span><span class="p">,</span> <span class="n">max_irrigation_area_Ha</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">discount_rate</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span> <span class="c">#discount_rate=0.07</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        storages     : Dict of storage objects</span>
-<span class="sd">        crops        : Dict of Crop objects</span>
-<span class="sd">        irrigations  : Dict of irrigation objects</span>
+<span class="sd">        storages     : Dict of storage objects representing storages that is available for use</span>
+<span class="sd">        crops        : Dict of Crop objects representing crops that could be produced by the farm</span>
+<span class="sd">        irrigations  : Dict of irrigation objects that could be adopted</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">storages</span> <span class="o">=</span> <span class="n">storages</span>
@@ -177,6 +178,16 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="p">[</span><span class="n">irrigation_name</span><span class="p">]</span><span class="o">.</span><span class="n">irrigation_efficiency</span>
     <span class="c">#End getIrrigationEfficiency()</span>
+</div>
+<div class="viewcode-block" id="FarmInfo.getStorageInUse"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.getStorageInUse">[docs]</a>    <span class="k">def</span> <span class="nf">getStorageInUse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">storage_name</span><span class="p">,</span> <span class="n">Storage</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">Storage</span><span class="o">.</span><span class="n">implemented</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="c">#End if</span>
+        <span class="c">#End for</span>
+
+        <span class="k">return</span> <span class="n">storage_name</span><span class="p">,</span> <span class="n">Storage</span>
+    <span class="c">#End getStorageInUse()</span>
 </div>
 <div class="viewcode-block" id="FarmInfo.getFarmArea"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.getFarmArea">[docs]</a>    <span class="k">def</span> <span class="nf">getFarmArea</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -566,7 +577,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

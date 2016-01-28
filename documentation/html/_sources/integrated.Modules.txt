@@ -10,6 +10,7 @@ Subpackages
     integrated.Modules.Core
     integrated.Modules.Ecology
     integrated.Modules.Farm
+    integrated.Modules.Hydrology
     integrated.Modules.Recreation
     integrated.Modules.WaterSources
 

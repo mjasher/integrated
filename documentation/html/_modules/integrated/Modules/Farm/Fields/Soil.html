@@ -55,6 +55,7 @@
           <div class="body">
             
   <h1>Source code for integrated.Modules.Farm.Fields.Soil</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">from</span> <span class="nn">integrated.Modules.Core.IntegratedModelComponent</span> <span class="kn">import</span> <span class="n">Component</span>
 
 <div class="viewcode-block" id="SoilType"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Fields.html#integrated.Modules.Farm.Fields.Soil.SoilType">[docs]</a><span class="k">class</span> <span class="nc">SoilType</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
@@ -88,7 +89,7 @@
 			<span class="n">current_TAW_mm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_TAW_mm</span>
 
 		<span class="k">if</span> <span class="n">fraction</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-			<span class="n">fraction</span> <span class="o">=</span> <span class="mf">0.5</span>
+			<span class="n">fraction</span> <span class="o">=</span> <span class="mf">0.4</span>
 
 		<span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">current_TAW_mm</span><span class="p">)</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">fraction</span><span class="p">)</span>
 		
@@ -135,7 +136,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

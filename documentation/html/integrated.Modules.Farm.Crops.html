@@ -74,7 +74,7 @@
 <span id="integrated-modules-farm-crops-cropinfo-module"></span><h2>integrated.Modules.Farm.Crops.CropInfo module<a class="headerlink" href="#module-integrated.Modules.Farm.Crops.CropInfo" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.Crops.CropInfo.CropInfo">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.Crops.CropInfo.</tt><tt class="descname">CropInfo</tt><big>(</big><em>crop_name</em>, <em>price_per_yield</em>, <em>variable_cost_per_Ha</em>, <em>yield_per_Ha=None</em>, <em>gross_margin_per_Ha=None</em>, <em>water_use_ML_per_Ha=None</em>, <em>required_water_ML_per_Ha=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.Crops.CropInfo.</tt><tt class="descname">CropInfo</tt><big>(</big><em>crop_name</em>, <em>price_per_yield</em>, <em>variable_cost_per_Ha</em>, <em>yield_per_Ha=None</em>, <em>gross_margin_per_Ha=None</em>, <em>water_use_ML_per_Ha=None</em>, <em>required_water_ML_per_Ha=None</em>, <em>depletion_fraction=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component" title="integrated.Modules.Core.IntegratedModelComponent.Component"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Core.IntegratedModelComponent.Component</span></tt></a></p>
 <p>Crop Object that represents a crop type</p>
 <dl class="method">
@@ -113,14 +113,19 @@ TODO: Not sure if this method will be used</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="integrated.Modules.Farm.Crops.CropInfo.CropInfo.harvest">
+<tt class="descname">harvest</tt><big>(</big><em>timestep</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.harvest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.harvest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMarginsPerHa">
-<tt class="descname">calcTotalCropGrossMarginsPerHa</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.calcTotalCropGrossMarginsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMarginsPerHa" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate total income from crop per Hectare, taking into account variable costs</p>
+<tt class="descname">calcTotalCropGrossMarginsPerHa</tt><big>(</big><em>yield_per_Ha=None</em>, <em>price_per_yield=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.calcTotalCropGrossMarginsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMarginsPerHa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate gross income from crop per Hectare</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">total gross margins per Hectare based on assumed yield per Ha, price per Yield, and variable costs per Hectare</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">total gross margins per Hectare based on the assumed or given crop yield and crop price</td>
 </tr>
 </tbody>
 </table>
@@ -128,14 +133,14 @@ TODO: Not sure if this method will be used</p>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcGrossMarginsPerHa">
-<tt class="descname">calcGrossMarginsPerHa</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.calcGrossMarginsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcGrossMarginsPerHa" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate Gross Margins per Hectare ($/Ha)
-:returns: Dollar value per Hectare</p>
+<tt class="descname">calcGrossMarginsPerHa</tt><big>(</big><em>yield_per_Ha=None</em>, <em>price_per_yield=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.calcGrossMarginsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcGrossMarginsPerHa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate $/ML/Ha 
+:returns: Dollar value per MegaLitre, per Hectare</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMargin">
-<tt class="descname">calcTotalCropGrossMargin</tt><big>(</big><em>land_used_Ha</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.calcTotalCropGrossMargin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMargin" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">calcTotalCropGrossMargin</tt><big>(</big><em>land_used_Ha</em>, <em>yield_per_Ha</em>, <em>price_per_yield</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.calcTotalCropGrossMargin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMargin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate gross income from crop for a given irrigated area, taking into account variable costs
 :param land_used_Ha: Amount of land dedicated to this crop type</p>
 </dd></dl>
@@ -143,8 +148,8 @@ TODO: Not sure if this method will be used</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-integrated.Modules.Farm.Crops.crop_data_import_dev">
-<span id="integrated-modules-farm-crops-crop-data-import-dev-module"></span><h2>integrated.Modules.Farm.Crops.crop_data_import_dev module<a class="headerlink" href="#module-integrated.Modules.Farm.Crops.crop_data_import_dev" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="integrated-modules-farm-crops-crop-data-import-dev-module">
+<h2>integrated.Modules.Farm.Crops.crop_data_import_dev module<a class="headerlink" href="#integrated-modules-farm-crops-crop-data-import-dev-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-integrated.Modules.Farm.Crops">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-integrated.Modules.Farm.Crops" title="Permalink to this headline">¶</a></h2>
@@ -162,7 +167,7 @@ TODO: Not sure if this method will be used</p>
 <li><a class="reference internal" href="#">integrated.Modules.Farm.Crops package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.Crops.CropInfo">integrated.Modules.Farm.Crops.CropInfo module</a></li>
-<li><a class="reference internal" href="#module-integrated.Modules.Farm.Crops.crop_data_import_dev">integrated.Modules.Farm.Crops.crop_data_import_dev module</a></li>
+<li><a class="reference internal" href="#integrated-modules-farm-crops-crop-data-import-dev-module">integrated.Modules.Farm.Crops.crop_data_import_dev module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.Crops">Module contents</a></li>
 </ul>
 </li>
@@ -215,7 +220,7 @@ TODO: Not sure if this method will be used</p>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

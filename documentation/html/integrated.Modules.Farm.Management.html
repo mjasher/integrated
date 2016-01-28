@@ -74,14 +74,58 @@
 <span id="integrated-modules-farm-management-manager-module"></span><h2>integrated.Modules.Farm.Management.Manager module<a class="headerlink" href="#module-integrated.Modules.Farm.Management.Manager" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.Management.Manager.FarmManager">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.Management.Manager.</tt><tt class="descname">FarmManager</tt><big>(</big><em>Farm</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Manager.html#FarmManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Manager.FarmManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.Management.Manager.</tt><tt class="descname">FarmManager</tt><big>(</big><em>Farm</em>, <em>water_sources</em>, <em>storages</em>, <em>irrigations</em>, <em>crops</em>, <em>livestocks=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Manager.html#FarmManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Manager.FarmManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component" title="integrated.Modules.Core.IntegratedModelComponent.Component"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Core.IntegratedModelComponent.Component</span></tt></a></p>
 <p>Farm Manager</p>
 <dl class="method">
+<dt id="integrated.Modules.Farm.Management.Manager.FarmManager.estIrrigationWaterUse">
+<tt class="descname">estIrrigationWaterUse</tt><big>(</big><em>crop_water_use_ML</em>, <em>irrigation_efficiency</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Manager.html#FarmManager.estIrrigationWaterUse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Manager.FarmManager.estIrrigationWaterUse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate amount of irrigation water to send out.</p>
+<p>WARNING:
+This is assuming that the given crop water use does not factor in irrigation efficiency.
+However, it seems figures given in the literature already include water losses and precipitation.
+e.g. if a crop is said to need 6ML/Ha/Season, it is with the given irrigation system + &#8220;usual&#8221; rainfall</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>crop_water_use_ML</strong> &#8211; How much water the crop is said to require</li>
+<li><strong>irrigation_efficiency</strong> &#8211; A percentage indicating how much water actually gets to the field</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Farm.Management.Manager.FarmManager.dp_dev_fieldcombos">
+<tt class="descname">dp_dev_fieldcombos</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Manager.html#FarmManager.dp_dev_fieldcombos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Manager.FarmManager.dp_dev_fieldcombos" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>Field</strong> &#8211; Farm Field object</li>
+<li><strong>costs_per_Ha</strong> &#8211; List or Dict of functions or values that calculates each cost (?)</li>
+<li><strong>gross_margin_per_Ha</strong> &#8211; List or Dict of functions or values that relate to calculating the gross margin</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Plastic and Static Farm Managers have separate run() method that dictate the behaviour
+e.g. Plastic runs the DP method every season; whilst static only runs it once a rotation</p>
+<p>For each current field, decide what to do...</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="integrated.Modules.Farm.Management.Manager.FarmManager.determineFieldCombinations">
-<tt class="descname">determineFieldCombinations</tt><big>(</big><em>Field</em>, <em>expected_rainfall_mm</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Manager.html#FarmManager.determineFieldCombinations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Manager.FarmManager.determineFieldCombinations" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">determineFieldCombinations</tt><big>(</big><em>Field</em>, <em>expected_rainfall_mm</em>, <em>additional_costs=0</em>, <em>additional_income=0</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Manager.html#FarmManager.determineFieldCombinations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Manager.FarmManager.determineFieldCombinations" title="Permalink to this definition">¶</a></dt>
 <dd><p>For a given crop, determine the optimum crop area and type, and with which water source.
-Could possibly use this with Dynamic Programming</p>
+Does this in a &#8220;greedy&#8221; manner (as in Greedy Algorithm; makes myopic decisions)
+Could possibly replace this with Dynamic Programming</p>
 <div class="math">
 \[\begin{split}-Crop Profit &amp;= (Cost_{infrastructure} + Cost_{variable} + Cost_{sw pumping} - GrossMarginPerHa)*x_{1} \\
 &amp;+ (Cost_{infrastructure} + Cost_{variable} + Cost_{gw pumping} - GrossMarginPerHa)*x_{2}\end{split}\]</div>
@@ -277,92 +321,32 @@ Return harvest amount as DataFrame</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.Farm.Management.Manager.FarmManager.calcPotentialCropYield_mod">
-<tt class="descname">calcPotentialCropYield_mod</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Manager.html#FarmManager.calcPotentialCropYield_mod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Manager.FarmManager.calcPotentialCropYield_mod" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://www.regional.org.au/au/asa/2008/concurrent/assessing-yield-potential/5827_oliverym.htm">http://www.regional.org.au/au/asa/2008/concurrent/assessing-yield-potential/5827_oliverym.htm</a></p>
+<dt id="integrated.Modules.Farm.Management.Manager.FarmManager.calcFieldCosts">
+<tt class="descname">calcFieldCosts</tt><big>(</big><em>Field</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Manager.html#FarmManager.calcFieldCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Manager.FarmManager.calcFieldCosts" title="Permalink to this definition">¶</a></dt>
+<dd><p>IN PROGRESS...</p>
 </dd></dl>
 
-</dd></dl>
-
-</div>
-<div class="section" id="module-integrated.Modules.Farm.Management.Plastic">
-<span id="integrated-modules-farm-management-plastic-module"></span><h2>integrated.Modules.Farm.Management.Plastic module<a class="headerlink" href="#module-integrated.Modules.Farm.Management.Plastic" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="integrated.Modules.Farm.Management.Plastic.PlasticManager">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.Management.Plastic.</tt><tt class="descname">PlasticManager</tt><big>(</big><em>Farm</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Plastic.html#PlasticManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Plastic.PlasticManager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Farm.Management.Manager.FarmManager" title="integrated.Modules.Farm.Management.Manager.FarmManager"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Farm.Management.Manager.FarmManager</span></tt></a></p>
-<p>Plastic Farm Manager - Highly opportunistic management style</p>
 <dl class="method">
-<dt id="integrated.Modules.Farm.Management.Plastic.PlasticManager.determineFieldCombinations">
-<tt class="descname">determineFieldCombinations</tt><big>(</big><em>Field</em>, <em>expected_rainfall_mm</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Plastic.html#PlasticManager.determineFieldCombinations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Plastic.PlasticManager.determineFieldCombinations" title="Permalink to this definition">¶</a></dt>
-<dd><p>For a given crop, determine the optimum crop area and type, and with which water source.
-Could possibly use this with Dynamic Programming</p>
-<div class="math">
-\[\begin{split}-Crop Profit &amp;= (Cost_{infrastructure} + Cost_{variable} + Cost_{sw pumping} - GrossMarginPerHa)*x_{1} \\
-&amp;+ (Cost_{infrastructure} + Cost_{variable} + Cost_{gw pumping} - GrossMarginPerHa)*x_{2}\end{split}\]</div>
-<p>where</p>
-<div class="math">
-\[\begin{split}&amp; x_{1} + x_{2} \leqslant Total Field Area \\
-&amp; x_{1} + x_{2} \leqslant (Ent_{sw} / Irrigation_{water}) + (Ent_{gw} / Irrigation_{water}) \\
-&amp; 0 \leqslant x_{1,2} \leqslant min((Ent_{sw} / Irrigation_{water}) + (Ent_{gw} / Irrigation_{water}), Total Field Area)\end{split}\]</div>
-<p>wherein</p>
-<ul class="simple">
-<li><span class="math">\(Ent_{sw, gw}\)</span> represents Surface/groundwater entitlements</li>
-<li><span class="math">\(Irrigation_{water}\)</span> = Water to send out for crop in ML/Ha, determined as <span class="math">\(Crop Water Requirement / Irrigation Efficiency\)</span></li>
-</ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>Field</strong> &#8211; Field object</li>
-<li><strong>expected_rainfall_mm</strong> &#8211; Expected Growing Season Rainfall in mm</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dict of area(s) irrigated by a water source and the amount of water applied, and the estimated profit</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Example return:</p>
-<div class="highlight-python"><div class="highlight"><pre>&quot;Pipe and Riser-Loam&quot;: {
-    &quot;Wheat&quot;: {
-        &quot;percent_surface_water&quot;: 0.58497734911588484, 
-        &quot;total_profit&quot;: 80258.945387079832, 
-        &quot;surface_water&quot;: {
-            &quot;costs_per_Ha&quot;: 512.7354076765841, 
-            &quot;saved_water_value&quot;: 5391.8918918918916, 
-            &quot;area&quot;: 10.0075, 
-            &quot;crop_margin_per_Ha&quot;: 2774.4, 
-            &quot;water_applied&quot;: 40.570945945945951, 
-            &quot;water_saved&quot;: 35.945945945945944, 
-            &quot;total_crop_yield&quot;: 57.843350000000001, 
-            &quot;gross_margin_per_Ha&quot;: 3667.416891891892, 
-            &quot;WUI&quot;: 1.4257333333333331,
-            &quot;fields&quot;: [&lt;class &#39;integrated.Modules.Farm.Farms.Management.FarmField&#39;&gt;]
-        }, 
-        &quot;groundwater&quot;: {
-            &quot;costs_per_Ha&quot;: 485.787871905519, 
-            &quot;saved_water_value&quot;: 53918.918918918913, 
-            &quot;area&quot;: 7.0999999999999996, 
-            &quot;crop_margin_per_Ha&quot;: 2774.4, 
-            &quot;water_applied&quot;: 28.783783783783786, 
-            &quot;water_saved&quot;: 35.945945945945944, 
-            &quot;total_crop_yield&quot;: 41.037999999999997, 
-            &quot;gross_margin_per_Ha&quot;: 7343.318918918918, 
-            &quot;WUI&quot;: 1.4257333333333331,
-            &quot;fields&quot;: [&lt;class &#39;integrated.Modules.Farm.Farms.Management.FarmField&#39;&gt;]
-        }, 
-        &quot;percent_groundwater&quot;: 0.41502265088411511
-    }
-}
-</pre></div>
+<dt id="integrated.Modules.Farm.Management.Manager.FarmManager.generateLPConstraints">
+<tt class="descname">generateLPConstraints</tt><big>(</big><em>c_coefs</em>, <em>num_set</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Manager.html#FarmManager.generateLPConstraints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Manager.FarmManager.generateLPConstraints" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-</dd></dl>
+<div class="section" id="integrated-modules-farm-management-plastic-module">
+<h2>integrated.Modules.Farm.Management.Plastic module<a class="headerlink" href="#integrated-modules-farm-management-plastic-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-integrated.Modules.Farm.Management.dp_dev">
+<span id="integrated-modules-farm-management-dp-dev-module"></span><h2>integrated.Modules.Farm.Management.dp_dev module<a class="headerlink" href="#module-integrated.Modules.Farm.Management.dp_dev" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="integrated.Modules.Farm.Management.dp_dev.calcOptimal">
+<tt class="descclassname">integrated.Modules.Farm.Management.dp_dev.</tt><tt class="descname">calcOptimal</tt><big>(</big><em>storage</em>, <em>irrigation</em>, <em>crop</em>, <em>water_licence_total</em>, <em>duration=10</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/dp_dev.html#calcOptimal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.dp_dev.calcOptimal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-</dd></dl>
-
+</div>
+<div class="section" id="module-integrated.Modules.Farm.Management.dp_dev_2">
+<span id="integrated-modules-farm-management-dp-dev-2-module"></span><h2>integrated.Modules.Farm.Management.dp_dev_2 module<a class="headerlink" href="#module-integrated.Modules.Farm.Management.dp_dev_2" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-integrated.Modules.Farm.Management">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-integrated.Modules.Farm.Management" title="Permalink to this headline">¶</a></h2>
@@ -380,7 +364,9 @@ Could possibly use this with Dynamic Programming</p>
 <li><a class="reference internal" href="#">integrated.Modules.Farm.Management package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.Management.Manager">integrated.Modules.Farm.Management.Manager module</a></li>
-<li><a class="reference internal" href="#module-integrated.Modules.Farm.Management.Plastic">integrated.Modules.Farm.Management.Plastic module</a></li>
+<li><a class="reference internal" href="#integrated-modules-farm-management-plastic-module">integrated.Modules.Farm.Management.Plastic module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Farm.Management.dp_dev">integrated.Modules.Farm.Management.dp_dev module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Farm.Management.dp_dev_2">integrated.Modules.Farm.Management.dp_dev_2 module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.Management">Module contents</a></li>
 </ul>
 </li>
@@ -433,7 +419,7 @@ Could possibly use this with Dynamic Programming</p>
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

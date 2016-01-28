@@ -66,6 +66,20 @@
         <span class="k">pass</span>
     <span class="c">#End __init__()</span>
 
+<div class="viewcode-block" id="Component.setAttribute"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component.setAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">setAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">default_val</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set Class attribute with a value, or a default if value is None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default_val</span><span class="p">)</span>
+    <span class="c">#End setAttribute</span>
+</div>
+<div class="viewcode-block" id="Component.getCopy"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component.getCopy">[docs]</a>    <span class="k">def</span> <span class="nf">getCopy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">copy</span>
+        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="c">#End getCopy()</span>
+
+</div>
 <div class="viewcode-block" id="Component.setMethod"><a class="viewcode-back" href="../../../../integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component.setMethod">[docs]</a>    <span class="k">def</span> <span class="nf">setMethod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -186,8 +200,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">component</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;component&#39;</span><span class="p">]</span>
-        <span class="n">comp_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;comp_name&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s">&#39;comp_name&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="k">else</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">attr_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;attr_name&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">comp_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;comp_name&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s">&#39;comp_name&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="k">else</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">comp_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+        <span class="c">#End try</span>
+
+        <span class="n">attr_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;attr_name&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s">&#39;attr_name&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="k">else</span> <span class="bp">None</span>
 
         <span class="c">#Get farm component collection (storages, crops, irrigations, etc.)</span>
         <span class="n">comp</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span>
@@ -197,14 +217,17 @@
             <span class="n">comp</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">comp</span><span class="p">[</span><span class="n">comp_name</span><span class="p">],</span> <span class="n">subcomponent</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">comp</span> <span class="o">=</span> <span class="n">comp</span><span class="p">[</span><span class="n">comp_name</span><span class="p">]</span>
+        <span class="c">#End if</span>
 
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">comp</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
 
-        <span class="c">#set parameter for given farm component</span>
-        <span class="k">return</span> <span class="n">val</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">comp</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">None</span>
+
+            <span class="c">#return parameter for given farm component</span>
+            <span class="k">return</span> <span class="n">val</span>
 
     <span class="c">#End getParam()</span>
 </div>
@@ -276,7 +299,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2015-12-16.
+      Last updated on 2016-01-28.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
