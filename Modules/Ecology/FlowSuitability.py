@@ -69,7 +69,12 @@ class FlowSuitability(WaterSuitability):
     #Group events together by id then remove events that do not fit the min duration rule
     def grouper(self, start, end):
 
+        if (start == True) and (end == True):
+            self.grouper_id += 1
+            return self.grouper_id
+
         if start == True:
+            self.grouper_id += 1
             return self.grouper_id
         
         if end == True:
@@ -133,13 +138,17 @@ class FlowSuitability(WaterSuitability):
 
             self.grouper_id = 1
 
-            events.loc[:, 'group'] = events[['starts', 'ends']].apply(lambda x: self.grouper(*x), axis=1)
+#            events.loc[:, 'group'] = events[['starts', 'ends']].apply(lambda x: self.grouper(*x), axis=1)
+            for i, row in events.iterrows():
+                events.loc[i, 'group'] = self.grouper(row['starts'], row['ends'])
+            
 
             #Remove groups below the min duration rule
             group = events.groupby('group')['Flow'].count() < min_duration
 
             #Remove the groups found to be below the min duration rule
             events = events[~events["group"].isin(group[group == True].index)]
+            
 
             events['duration'] = events[events['ends'] == True]['counter']
 
