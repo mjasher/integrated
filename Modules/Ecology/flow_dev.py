@@ -96,7 +96,7 @@ for scenario_dir in xrange(0, len(scenarios)):
 		flow_indexes = FlowIndexer.generateEnvIndex(asset_id=j, scen_data=scenario_data, ecospecies=specieslist, species_cols=species_cols) #species_cols=FlowIndexer.default_index_cols, gswfun=weighted
 
 		#For development purposes only. Display index results for each species
-		print "Asset {id}".format(id=j+1)
+		print scen_name, "Asset {id}".format(id=j+1)
 		for species in specieslist:
 
 			save_folder = "./Integrated/Modules/Ecology/Outputs/{s}/asset_{asset}/{sp}".format(s=scen_name, asset=j+1, sp=species)
