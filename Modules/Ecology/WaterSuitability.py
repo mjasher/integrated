@@ -115,15 +115,20 @@ class WaterSuitability(object):
         """
         :math:`I = w_{g}G + w_{s}S`
 
-        where \\\\
+        where 
+
         * :math:`I` denotes the water suitability index
+
         * :math:`G` is the groundwater suitability index
+
         * :math:`S` is the surface water suitability index
+
         * :math:`w_{g}` weight for groundwater index
+
         * :math:`w_{s}` weight for surface water index
 
-        Here groundwater data is daily data and surface water data reflects grouped flooding events. \\\\
-        Because of this, the surface water index is NaN for datetime with no observations. \\\\
+        Here groundwater data is daily data and surface water data reflects grouped flooding events. \\\
+        Because of this, the surface water index is NaN for datetime with no observations. \\\
         To account for this, we fill these NAs with the weighted GW index as SW Index is 0 in those circumstances
 
         :param gw_index: groundwater index
@@ -170,11 +175,15 @@ class WaterSuitability(object):
 
         :math:`G = L(d) * E(S)`
 
-        where \\\\
+        where
         * :math:`G` is groundwater suitability index
+
         * :math:`L` is a function of groundwater depth which produces an index
+
         * :math:`d` is groundwater depth
+
         * :math:`E` is a function of salinity which produces a salinity index
+
         * :math:`S` is salinity
 
         :returns: groundwater suitability index
@@ -191,25 +200,35 @@ class WaterSuitability(object):
 
         Currently a stub. Implementing child classes should (re)define this method
 
-        :param fd: Dict of flood duration parameters
-        :param ft: Dict of flood timing parameters
-        :param dp: Dict of flood dry period parameters
-
         All dicts should consist of the weight and index for a given species
 
         :math:`S = w_{d}D(f_{d}) + w_{t}T(f_{t}) + w_{f}F(f_{dp})`
 
-        where \\\\
+        where
+
         * :math:`S` is surface water suitability index
+
         * :math:`w_{d}` weight for flood duration
+
         * :math:`D` is a function of flood duration which produces a flood duration index
+
         * :math:`f_{d}` flood duration
+
         * :math:`w_{t}` weight for flood timing
+
         * :math:`T` is a function of flood timing which produces a flood timing index
+
         * :math:`f_{t}` flood timing
+
         * :math:`w_{f}` weight for inter-flood dry period
+
         * :math:`F` is a function of inter-flood dry period which produces a dry period index
+
         * :math:`f_{dp}` inter-flood dry period
+
+        :param fd: Dict of flood duration parameters
+        :param ft: Dict of flood timing parameters
+        :param dp: Dict of flood dry period parameters
 
         :returns: surface water suitability index
         :return type: time series (?)
