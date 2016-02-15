@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../readme.html" />
     <link rel="up" title="Module code" href="../../../../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -33,9 +33,9 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,15 +44,15 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for integrated.Modules.Core.Handlers.FileHandler</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -72,7 +72,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-    <span class="c">#End init()</span>
+    <span class="c1">#End init()</span>
 
 <div class="viewcode-block" id="FileHandler.getFolders"><a class="viewcode-back" href="../../../../../integrated.Modules.Core.Handlers.html#integrated.Modules.Core.Handlers.FileHandler.FileHandler.getFolders">[docs]</a>    <span class="k">def</span> <span class="nf">getFolders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -84,18 +84,18 @@
         <span class="n">folder_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
 
-            <span class="n">f</span> <span class="o">=</span> <span class="n">folder</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="n">f</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">folder</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">f</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
                 <span class="n">folder_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-            <span class="c">#End if</span>
-        <span class="c">#End for</span>
+            <span class="c1">#End if</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">folder_list</span>
+        <span class="k">return</span> <span class="n">folder_list</span></div>
 
-    <span class="c">#End getFolders()</span>
+    <span class="c1">#End getFolders()</span>
 
-</div>
-<div class="viewcode-block" id="FileHandler.getFileList"><a class="viewcode-back" href="../../../../../integrated.Modules.Core.Handlers.html#integrated.Modules.Core.Handlers.FileHandler.FileHandler.getFileList">[docs]</a>    <span class="k">def</span> <span class="nf">getFileList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s">&quot;.csv&quot;</span><span class="p">,</span> <span class="n">walk</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FileHandler.getFileList"><a class="viewcode-back" href="../../../../../integrated.Modules.Core.Handlers.html#integrated.Modules.Core.Handlers.FileHandler.FileHandler.getFileList">[docs]</a>    <span class="k">def</span> <span class="nf">getFileList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s2">&quot;.csv&quot;</span><span class="p">,</span> <span class="n">walk</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of files with the matching extension in the given folder.</span>
@@ -114,23 +114,23 @@
                 <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">ext</span><span class="p">):</span>
                         <span class="n">file_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
-                    <span class="c">#End if</span>
-                <span class="c">#End for</span>
-            <span class="c">#End for</span>
+                    <span class="c1">#End if</span>
+                <span class="c1">#End for</span>
+            <span class="c1">#End for</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">ext</span><span class="p">):</span>
 
-                    <span class="n">f</span> <span class="o">=</span> <span class="n">folder</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="n">f</span>
+                    <span class="n">f</span> <span class="o">=</span> <span class="n">folder</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">f</span>
                     <span class="n">file_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-                <span class="c">#End if</span>
-            <span class="c">#End for</span>
+                <span class="c1">#End if</span>
+            <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">file_list</span>
+        <span class="k">return</span> <span class="n">file_list</span></div>
 
-    <span class="c">#End getFileList()</span>
-</div>
-<div class="viewcode-block" id="FileHandler.importFiles"><a class="viewcode-back" href="../../../../../integrated.Modules.Core.Handlers.html#integrated.Modules.Core.Handlers.FileHandler.FileHandler.importFiles">[docs]</a>    <span class="k">def</span> <span class="nf">importFiles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s">&quot;.csv&quot;</span><span class="p">,</span> <span class="n">walk</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">date_range</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="c1">#End getFileList()</span>
+
+<div class="viewcode-block" id="FileHandler.importFiles"><a class="viewcode-back" href="../../../../../integrated.Modules.Core.Handlers.html#integrated.Modules.Core.Handlers.FileHandler.FileHandler.importFiles">[docs]</a>    <span class="k">def</span> <span class="nf">importFiles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s2">&quot;.csv&quot;</span><span class="p">,</span> <span class="n">walk</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">date_range</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Import files found within a given folder into Pandas DataFrame</span>
@@ -151,10 +151,10 @@
         <span class="n">files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFileList</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">ext</span><span class="p">,</span> <span class="n">walk</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-            <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c">#Get filename without extension</span>
-            <span class="n">path</span><span class="p">,</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="c">#Get filename by itself</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#Get filename without extension</span>
+            <span class="n">path</span><span class="p">,</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="c1">#Get filename by itself</span>
 
-            <span class="c">#Get parent directory of file</span>
+            <span class="c1">#Get parent directory of file</span>
             <span class="n">parent_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">parent_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">imported</span><span class="p">:</span>
@@ -180,12 +180,12 @@
                 <span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="n">imported</span><span class="p">[</span><span class="n">fname</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="n">temp</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">end</span><span class="p">)]</span>
 
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">imported</span>
+        <span class="k">return</span> <span class="n">imported</span></div>
 
-    <span class="c">#End importFile()</span>
-</div>
+    <span class="c1">#End importFile()</span>
+
 <div class="viewcode-block" id="FileHandler.loadCSV"><a class="viewcode-back" href="../../../../../integrated.Modules.Core.Handlers.html#integrated.Modules.Core.Handlers.FileHandler.FileHandler.loadCSV">[docs]</a>    <span class="k">def</span> <span class="nf">loadCSV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -201,10 +201,10 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
         
-    <span class="c">#End loadData()</span>
-</div>
+    <span class="c1">#End loadData()</span>
+
 <div class="viewcode-block" id="FileHandler.setupDir"><a class="viewcode-back" href="../../../../../integrated.Modules.Core.Handlers.html#integrated.Modules.Core.Handlers.FileHandler.FileHandler.setupDir">[docs]</a>    <span class="k">def</span> <span class="nf">setupDir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder_path</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -212,8 +212,8 @@
 <span class="sd">        WILL NOT CHECK FOR ERRORS ON UNIX-LIKE SYSTEMS</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">folder_path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&quot;/&quot;</span><span class="p">:</span>
-            <span class="n">output_path</span> <span class="o">=</span> <span class="n">folder_path</span><span class="o">+</span><span class="s">&quot;/&quot;</span>
+        <span class="k">if</span> <span class="n">folder_path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+            <span class="n">output_path</span> <span class="o">=</span> <span class="n">folder_path</span><span class="o">+</span><span class="s2">&quot;/&quot;</span>
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">output_path</span><span class="p">))</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
 
@@ -222,12 +222,12 @@
             <span class="k">except</span> <span class="ne">WindowsError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">print</span> <span class="n">e</span>
                 <span class="k">pass</span>
-            <span class="c">#End try catch</span>
-        <span class="c">#End if</span>
+            <span class="c1">#End try catch</span>
+        <span class="c1">#End if</span>
 
-        <span class="k">return</span> <span class="n">output_path</span>
-    <span class="c">#End setupDir</span>
-</div>
+        <span class="k">return</span> <span class="n">output_path</span></div>
+    <span class="c1">#End setupDir</span>
+
 <div class="viewcode-block" id="FileHandler.writeCSV"><a class="viewcode-back" href="../../../../../integrated.Modules.Core.Handlers.html#integrated.Modules.Core.Handlers.FileHandler.FileHandler.writeCSV">[docs]</a>    <span class="k">def</span> <span class="nf">writeCSV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -239,19 +239,19 @@
 <span class="sd">        :returns: CSV string (if no filepath provided) or true | false depending on success</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c">#Check if path exists and create if not</span>
+        <span class="c1">#Check if path exists and create if not</span>
         <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setupDir</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="c">#End writeCSV()</span></div></div>
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+    <span class="c1">#End writeCSV()</span>
 </pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../../../search.html" method="get">
       <input type="text" name="q" />
@@ -268,7 +268,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -277,14 +277,14 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-01-28.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Last updated on 2016-02-16.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

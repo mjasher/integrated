@@ -23,8 +23,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="readme.html" />
     <link rel="up" title="integrated.Modules.Farm package" href="integrated.Modules.Farm.html" />
     <link rel="next" title="integrated.Modules.Farm.Farms package" href="integrated.Modules.Farm.Farms.html" />
     <link rel="prev" title="integrated.Modules.Farm package" href="integrated.Modules.Farm.html" />
@@ -35,9 +35,9 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -52,18 +52,18 @@
         <li class="right" >
           <a href="integrated.Modules.Farm.html" title="integrated.Modules.Farm package"
              accesskey="P">previous</a> |</li>
-        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
-          <li><a href="integrated.html" >integrated package</a> &raquo;</li>
-          <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
-          <li><a href="integrated.Modules.Farm.html" accesskey="U">integrated.Modules.Farm package</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >integrated</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="integrated.html" >integrated package</a> &raquo;</li>
+          <li class="nav-item nav-item-3"><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
+          <li class="nav-item nav-item-4"><a href="integrated.Modules.Farm.html" accesskey="U">integrated.Modules.Farm package</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="integrated-modules-farm-crops-package">
 <h1>integrated.Modules.Farm.Crops package<a class="headerlink" href="#integrated-modules-farm-crops-package" title="Permalink to this headline">¶</a></h1>
@@ -74,12 +74,12 @@
 <span id="integrated-modules-farm-crops-cropinfo-module"></span><h2>integrated.Modules.Farm.Crops.CropInfo module<a class="headerlink" href="#module-integrated.Modules.Farm.Crops.CropInfo" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.Crops.CropInfo.CropInfo">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.Crops.CropInfo.</tt><tt class="descname">CropInfo</tt><big>(</big><em>crop_name</em>, <em>price_per_yield</em>, <em>variable_cost_per_Ha</em>, <em>yield_per_Ha=None</em>, <em>gross_margin_per_Ha=None</em>, <em>water_use_ML_per_Ha=None</em>, <em>required_water_ML_per_Ha=None</em>, <em>depletion_fraction=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component" title="integrated.Modules.Core.IntegratedModelComponent.Component"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Core.IntegratedModelComponent.Component</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">integrated.Modules.Farm.Crops.CropInfo.</code><code class="descname">CropInfo</code><span class="sig-paren">(</span><em>crop_name</em>, <em>price_per_yield</em>, <em>variable_cost_per_Ha</em>, <em>yield_per_Ha=None</em>, <em>gross_margin_per_Ha=None</em>, <em>water_use_ML_per_Ha=None</em>, <em>required_water_ML_per_Ha=None</em>, <em>depletion_fraction=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component" title="integrated.Modules.Core.IntegratedModelComponent.Component"><code class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Core.IntegratedModelComponent.Component</span></code></a></p>
 <p>Crop Object that represents a crop type</p>
 <dl class="method">
 <dt id="integrated.Modules.Farm.Crops.CropInfo.CropInfo.updateWaterNeedsSatisfied">
-<tt class="descname">updateWaterNeedsSatisfied</tt><big>(</big><em>water_use_ML</em>, <em>area_Ha</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.updateWaterNeedsSatisfied"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.updateWaterNeedsSatisfied" title="Permalink to this definition">¶</a></dt>
+<code class="descname">updateWaterNeedsSatisfied</code><span class="sig-paren">(</span><em>water_use_ML</em>, <em>area_Ha</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.updateWaterNeedsSatisfied"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.updateWaterNeedsSatisfied" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update water needs for this crop</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -97,7 +97,7 @@
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Crops.CropInfo.CropInfo.getCurrentStageCoef">
-<tt class="descname">getCurrentStageCoef</tt><big>(</big><em>timestep</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.getCurrentStageCoef"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.getCurrentStageCoef" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getCurrentStageCoef</code><span class="sig-paren">(</span><em>timestep</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.getCurrentStageCoef"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.getCurrentStageCoef" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get crop coefficient for current stage of crop development as indicated by the timestep
 TODO: Not sure if this method will be used</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -114,18 +114,26 @@ TODO: Not sure if this method will be used</p>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Crops.CropInfo.CropInfo.harvest">
-<tt class="descname">harvest</tt><big>(</big><em>timestep</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.harvest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.harvest" title="Permalink to this definition">¶</a></dt>
+<code class="descname">harvest</code><span class="sig-paren">(</span><em>timestep</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.harvest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.harvest" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMarginsPerHa">
-<tt class="descname">calcTotalCropGrossMarginsPerHa</tt><big>(</big><em>yield_per_Ha=None</em>, <em>price_per_yield=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.calcTotalCropGrossMarginsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMarginsPerHa" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcTotalCropGrossMarginsPerHa</code><span class="sig-paren">(</span><em>yield_per_Ha=None</em>, <em>price_per_yield=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.calcTotalCropGrossMarginsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMarginsPerHa" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate gross income from crop per Hectare</p>
+<p><span class="math">\(Crop Yield * Crop Price\)</span></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">total gross margins per Hectare based on the assumed or given crop yield and crop price</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>yield_per_Ha</strong> &#8211; Estimated or assumed crop yield per Ha. Defaults to assumed value.</li>
+<li><strong>price_per_yield</strong> &#8211; Estimated or assumed crop price per unit (Tons/Bales/etc). Defaults to assumed value.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">total gross margins per Hectare based on the assumed or given crop yield and crop price</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -133,14 +141,14 @@ TODO: Not sure if this method will be used</p>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcGrossMarginsPerHa">
-<tt class="descname">calcGrossMarginsPerHa</tt><big>(</big><em>yield_per_Ha=None</em>, <em>price_per_yield=None</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.calcGrossMarginsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcGrossMarginsPerHa" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcGrossMarginsPerHa</code><span class="sig-paren">(</span><em>yield_per_Ha=None</em>, <em>price_per_yield=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.calcGrossMarginsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcGrossMarginsPerHa" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate $/ML/Ha 
 :returns: Dollar value per MegaLitre, per Hectare</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMargin">
-<tt class="descname">calcTotalCropGrossMargin</tt><big>(</big><em>land_used_Ha</em>, <em>yield_per_Ha</em>, <em>price_per_yield</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.calcTotalCropGrossMargin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMargin" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcTotalCropGrossMargin</code><span class="sig-paren">(</span><em>land_used_Ha</em>, <em>yield_per_Ha</em>, <em>price_per_yield</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Crops/CropInfo.html#CropInfo.calcTotalCropGrossMargin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMargin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate gross income from crop for a given irrigated area, taking into account variable costs
 :param land_used_Ha: Amount of land dedicated to this crop type</p>
 </dd></dl>
@@ -148,8 +156,8 @@ TODO: Not sure if this method will be used</p>
 </dd></dl>
 
 </div>
-<div class="section" id="integrated-modules-farm-crops-crop-data-import-dev-module">
-<h2>integrated.Modules.Farm.Crops.crop_data_import_dev module<a class="headerlink" href="#integrated-modules-farm-crops-crop-data-import-dev-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-integrated.Modules.Farm.Crops.crop_data_import_dev">
+<span id="integrated-modules-farm-crops-crop-data-import-dev-module"></span><h2>integrated.Modules.Farm.Crops.crop_data_import_dev module<a class="headerlink" href="#module-integrated.Modules.Farm.Crops.crop_data_import_dev" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-integrated.Modules.Farm.Crops">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-integrated.Modules.Farm.Crops" title="Permalink to this headline">¶</a></h2>
@@ -160,14 +168,14 @@ TODO: Not sure if this method will be used</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="readme.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">integrated.Modules.Farm.Crops package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.Crops.CropInfo">integrated.Modules.Farm.Crops.CropInfo module</a></li>
-<li><a class="reference internal" href="#integrated-modules-farm-crops-crop-data-import-dev-module">integrated.Modules.Farm.Crops.crop_data_import_dev module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Farm.Crops.crop_data_import_dev">integrated.Modules.Farm.Crops.crop_data_import_dev module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Farm.Crops">Module contents</a></li>
 </ul>
 </li>
@@ -179,7 +187,7 @@ TODO: Not sure if this method will be used</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="integrated.Modules.Farm.Farms.html"
                         title="next chapter">integrated.Modules.Farm.Farms package</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -196,7 +204,7 @@ TODO: Not sure if this method will be used</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -211,17 +219,17 @@ TODO: Not sure if this method will be used</p>
         <li class="right" >
           <a href="integrated.Modules.Farm.html" title="integrated.Modules.Farm package"
              >previous</a> |</li>
-        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
-          <li><a href="integrated.html" >integrated package</a> &raquo;</li>
-          <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
-          <li><a href="integrated.Modules.Farm.html" >integrated.Modules.Farm package</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >integrated</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="integrated.html" >integrated package</a> &raquo;</li>
+          <li class="nav-item nav-item-3"><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
+          <li class="nav-item nav-item-4"><a href="integrated.Modules.Farm.html" >integrated.Modules.Farm package</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-01-28.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Last updated on 2016-02-16.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

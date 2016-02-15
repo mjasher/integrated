@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../readme.html" />
     <link rel="up" title="Module code" href="../../../../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -33,9 +33,9 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,15 +44,15 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for integrated.Modules.Farm.Crops.CropInfo</h1><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
@@ -94,29 +94,29 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">crop_name</span>
 
-        <span class="c">#self.yield_per_Ha = yield_per_Ha if yield_per_Ha is not None else 0.0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s">&#39;yield_per_Ha&#39;</span><span class="p">,</span> <span class="n">yield_per_Ha</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s">&#39;water_use_ML_per_Ha&#39;</span><span class="p">,</span> <span class="n">water_use_ML_per_Ha</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s">&#39;required_water_ML_per_Ha&#39;</span><span class="p">,</span> <span class="n">required_water_ML_per_Ha</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s">&#39;depletion_fraction&#39;</span><span class="p">,</span> <span class="n">depletion_fraction</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+        <span class="c1">#self.yield_per_Ha = yield_per_Ha if yield_per_Ha is not None else 0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s1">&#39;yield_per_Ha&#39;</span><span class="p">,</span> <span class="n">yield_per_Ha</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s1">&#39;water_use_ML_per_Ha&#39;</span><span class="p">,</span> <span class="n">water_use_ML_per_Ha</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s1">&#39;required_water_ML_per_Ha&#39;</span><span class="p">,</span> <span class="n">required_water_ML_per_Ha</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s1">&#39;depletion_fraction&#39;</span><span class="p">,</span> <span class="n">depletion_fraction</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">price_per_yield</span> <span class="o">=</span> <span class="n">price_per_yield</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">variable_cost_per_Ha</span> <span class="o">=</span> <span class="n">variable_cost_per_Ha</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">water_need_satisfied</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">planted</span> <span class="o">=</span> <span class="bp">False</span>
 
-        <span class="c">#Set all other kwargs as class attributes</span>
+        <span class="c1">#Set all other kwargs as class attributes</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-        <span class="c">#End For</span>
+        <span class="c1">#End For</span>
 
-        <span class="c">#Set default params</span>
-        <span class="c"># self.default_params = {}</span>
-        <span class="c"># for key, value in self.__dict__.iteritems():</span>
-        <span class="c">#     self.default_params[key] = copy.deepcopy(value)</span>
-        <span class="c"># #End For</span>
+        <span class="c1">#Set default params</span>
+        <span class="c1"># self.default_params = {}</span>
+        <span class="c1"># for key, value in self.__dict__.iteritems():</span>
+        <span class="c1">#     self.default_params[key] = copy.deepcopy(value)</span>
+        <span class="c1"># #End For</span>
 
-    <span class="c">#End init()</span>
+    <span class="c1">#End init()</span>
 
 <div class="viewcode-block" id="CropInfo.updateWaterNeedsSatisfied"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Crops.html#integrated.Modules.Farm.Crops.CropInfo.CropInfo.updateWaterNeedsSatisfied">[docs]</a>    <span class="k">def</span> <span class="nf">updateWaterNeedsSatisfied</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">water_use_ML</span><span class="p">,</span> <span class="n">area_Ha</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -129,11 +129,11 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">water_need_satisfied</span> <span class="o">=</span> <span class="p">(</span><span class="n">water_use_ML</span> <span class="o">/</span> <span class="n">area_Ha</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">required_water_ML_per_Ha</span>
         <span class="k">except</span> <span class="ne">ZeroDivisionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">water_need_satisfied</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="c">#End try</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">water_need_satisfied</span> <span class="o">=</span> <span class="mi">1</span></div>
+        <span class="c1">#End try</span>
 
-    <span class="c">#End updateWaterNeedsSatisfied()</span>
-</div>
+    <span class="c1">#End updateWaterNeedsSatisfied()</span>
+
 <div class="viewcode-block" id="CropInfo.getCurrentStageCoef"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Crops.html#integrated.Modules.Farm.Crops.CropInfo.CropInfo.getCurrentStageCoef">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentStageCoef</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestep</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -148,45 +148,51 @@
 
         <span class="n">temp_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">planting_info</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-        <span class="c">#Prepend year to each crop coefficient entry</span>
-        <span class="n">temp_df</span><span class="p">[</span><span class="s">&#39;temp_dt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;{y}-&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">year</span><span class="p">)</span><span class="o">+</span><span class="n">temp_df</span><span class="p">[</span><span class="s">&#39;Month-Day&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="c1">#Prepend year to each crop coefficient entry</span>
+        <span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;temp_dt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;{y}-&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">year</span><span class="p">)</span><span class="o">+</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;Month-Day&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 
-        <span class="n">coef</span> <span class="o">=</span> <span class="n">temp_df</span><span class="p">[(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s">&#39;temp_dt&#39;</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">timestep</span><span class="p">)][</span><span class="s">&#39;Coefficient&#39;</span><span class="p">]</span>
+        <span class="n">coef</span> <span class="o">=</span> <span class="n">temp_df</span><span class="p">[(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;temp_dt&#39;</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">timestep</span><span class="p">)][</span><span class="s1">&#39;Coefficient&#39;</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">coef</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="mf">0.0</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c">#Return the coefficient for the given timestep</span>
-            <span class="k">return</span> <span class="n">temp_df</span><span class="p">[(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s">&#39;temp_dt&#39;</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">timestep</span><span class="p">)][</span><span class="s">&#39;Coefficient&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="c">#End if</span>
+            <span class="c1">#Return the coefficient for the given timestep</span>
+            <span class="k">return</span> <span class="n">temp_df</span><span class="p">[(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;temp_dt&#39;</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">timestep</span><span class="p">)][</span><span class="s1">&#39;Coefficient&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+        <span class="c1">#End if</span>
         
-    <span class="c">#End getCurrentStageCoef()</span>
-</div>
+    <span class="c1">#End getCurrentStageCoef()</span>
+
 <div class="viewcode-block" id="CropInfo.harvest"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Crops.html#integrated.Modules.Farm.Crops.CropInfo.CropInfo.harvest">[docs]</a>    <span class="k">def</span> <span class="nf">harvest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestep</span><span class="p">):</span>
         <span class="n">temp_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">planting_info</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
         <span class="n">year</span> <span class="o">=</span> <span class="n">timestep</span><span class="o">.</span><span class="n">year</span>
 
-        <span class="c">#Prepend year to each crop coefficient entry</span>
-        <span class="n">temp_df</span><span class="p">[</span><span class="s">&#39;temp_dt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;{y}-&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">year</span><span class="p">)</span><span class="o">+</span><span class="n">temp_df</span><span class="p">[</span><span class="s">&#39;Month-Day&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="c1">#Prepend year to each crop coefficient entry</span>
+        <span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;temp_dt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;{y}-&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">year</span><span class="p">)</span><span class="o">+</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;Month-Day&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 
-        <span class="c"># harvest_time = &quot;{y}-&quot;.format(y=year)+temp_df[&quot;harvest&quot;:][&quot;Month-Day&quot;].astype(str)</span>
-        
-        <span class="n">harvest_time</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s">&#39;temp_dt&#39;</span><span class="p">][</span><span class="s">&#39;harvest&#39;</span><span class="p">])</span>
+        <span class="c1"># harvest_time = &quot;{y}-&quot;.format(y=year)+temp_df[&quot;harvest&quot;:][&quot;Month-Day&quot;].astype(str)</span>
+        <span class="n">harvest_time</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;temp_dt&#39;</span><span class="p">][</span><span class="s1">&#39;harvest&#39;</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="n">timestep</span> <span class="o">&gt;=</span> <span class="n">harvest_time</span><span class="o">.</span><span class="n">date</span><span class="p">():</span>
-            <span class="c"># print harvest_time.date()</span>
-            <span class="c"># print timestep</span>
-            <span class="k">return</span> <span class="bp">True</span>
-        <span class="c">#End if</span>
-    <span class="c">#End harvest</span>
-</div>
+            <span class="c1"># print harvest_time.date()</span>
+            <span class="c1"># print timestep</span>
+            <span class="k">return</span> <span class="bp">True</span></div>
+        <span class="c1">#End if</span>
+    <span class="c1">#End harvest</span>
+
 <div class="viewcode-block" id="CropInfo.calcTotalCropGrossMarginsPerHa"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Crops.html#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMarginsPerHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalCropGrossMarginsPerHa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yield_per_Ha</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">price_per_yield</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate gross income from crop per Hectare</span>
 
+<span class="sd">        :math:`Crop Yield * Crop Price`</span>
+
+<span class="sd">        :param yield_per_Ha: Estimated or assumed crop yield per Ha. Defaults to assumed value.</span>
+<span class="sd">        :param price_per_yield: Estimated or assumed crop price per unit (Tons/Bales/etc). Defaults to assumed value.</span>
+
 <span class="sd">        :returns: total gross margins per Hectare based on the assumed or given crop yield and crop price</span>
+
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">yield_per_Ha</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -197,10 +203,10 @@
 
         <span class="n">gross_margin_per_Ha</span> <span class="o">=</span> <span class="n">yield_per_Ha</span> <span class="o">*</span> <span class="n">price_per_yield</span>
 
-        <span class="k">return</span> <span class="n">gross_margin_per_Ha</span>
+        <span class="k">return</span> <span class="n">gross_margin_per_Ha</span></div>
 
-    <span class="c">#End calcTotalCropGrossMarginsPerHa()</span>
-</div>
+    <span class="c1">#End calcTotalCropGrossMarginsPerHa()</span>
+
 <div class="viewcode-block" id="CropInfo.calcGrossMarginsPerHa"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Crops.html#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcGrossMarginsPerHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcGrossMarginsPerHa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yield_per_Ha</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">price_per_yield</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -214,10 +220,10 @@
         <span class="k">if</span> <span class="n">price_per_yield</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">price_per_yield</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">price_per_yield</span>
 
-        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calcTotalCropGrossMarginsPerHa</span><span class="p">(</span><span class="n">yield_per_Ha</span><span class="p">,</span> <span class="n">price_per_yield</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">water_use_ML_per_Ha</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calcTotalCropGrossMarginsPerHa</span><span class="p">(</span><span class="n">yield_per_Ha</span><span class="p">,</span> <span class="n">price_per_yield</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">water_use_ML_per_Ha</span><span class="p">)</span></div>
 
-    <span class="c">#End calcGrossMarginsML()</span>
-</div>
+    <span class="c1">#End calcGrossMarginsML()</span>
+
 <div class="viewcode-block" id="CropInfo.calcTotalCropGrossMargin"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Crops.html#integrated.Modules.Farm.Crops.CropInfo.CropInfo.calcTotalCropGrossMargin">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalCropGrossMargin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">land_used_Ha</span><span class="p">,</span> <span class="n">yield_per_Ha</span><span class="p">,</span> <span class="n">price_per_yield</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -233,19 +239,19 @@
 
         <span class="n">total_crop_gross_margin</span> <span class="o">=</span> <span class="n">land_used_Ha</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTotalCropGrossMarginsPerHa</span><span class="p">(</span><span class="n">yield_per_Ha</span><span class="p">,</span> <span class="n">price_per_yield</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">total_crop_gross_margin</span>
+        <span class="k">return</span> <span class="n">total_crop_gross_margin</span></div></div>
 
-    <span class="c">#End calcTotalFarmGrossMargin()</span>
+    <span class="c1">#End calcTotalFarmGrossMargin()</span>
 
-<span class="c">#End class</span></div></div>
+<span class="c1">#End class</span>
 </pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../../../search.html" method="get">
       <input type="text" name="q" />
@@ -262,7 +268,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -271,14 +277,14 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-01-28.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Last updated on 2016-02-16.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

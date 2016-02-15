@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../readme.html" />
     <link rel="up" title="Module code" href="../../../../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -33,9 +33,9 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,15 +44,15 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for integrated.Modules.Farm.Farms.FarmInfo</h1><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
@@ -63,7 +63,7 @@
 
 <div class="viewcode-block" id="FarmInfo"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo">[docs]</a><span class="k">class</span> <span class="nc">FarmInfo</span><span class="p">(</span><span class="n">FarmComponent</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">storages</span><span class="p">,</span> <span class="n">irrigations</span><span class="p">,</span> <span class="n">crops</span><span class="p">,</span> <span class="n">water_sources</span><span class="p">,</span> <span class="n">max_irrigation_area_Ha</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">discount_rate</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span> <span class="c">#discount_rate=0.07</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">storages</span><span class="p">,</span> <span class="n">irrigations</span><span class="p">,</span> <span class="n">crops</span><span class="p">,</span> <span class="n">water_sources</span><span class="p">,</span> <span class="n">max_irrigation_area_Ha</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">discount_rate</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span> <span class="c1">#discount_rate=0.07</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        storages     : Dict of storage objects representing storages that is available for use</span>
@@ -84,28 +84,28 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">net_profit</span> <span class="o">=</span> <span class="mi">0</span>
 
-        <span class="c">#Set all other kwargs as class attributes</span>
+        <span class="c1">#Set all other kwargs as class attributes</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-        <span class="c">#End For</span>
+        <span class="c1">#End For</span>
 
-    <span class="c">#End init()</span>
+    <span class="c1">#End init()</span>
 
 <div class="viewcode-block" id="FarmInfo.resetParams"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.resetParams">[docs]</a>    <span class="k">def</span> <span class="nf">resetParams</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="c">#Reset parameters for each store</span>
+        <span class="c1">#Reset parameters for each store</span>
         <span class="k">for</span> <span class="n">store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="p">[</span><span class="n">store</span><span class="p">]</span><span class="o">.</span><span class="n">resetParams</span><span class="p">()</span>
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
         <span class="k">for</span> <span class="n">irrig</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="p">[</span><span class="n">irrig</span><span class="p">]</span><span class="o">.</span><span class="n">resetParams</span><span class="p">()</span>
 
         <span class="k">for</span> <span class="n">crop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">crops</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">crops</span><span class="p">[</span><span class="n">crop</span><span class="p">]</span><span class="o">.</span><span class="n">resetParams</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">crops</span><span class="p">[</span><span class="n">crop</span><span class="p">]</span><span class="o">.</span><span class="n">resetParams</span><span class="p">()</span></div>
 
-    <span class="c">#End resetParams()</span>
-</div>
+    <span class="c1">#End resetParams()</span>
+
 <div class="viewcode-block" id="FarmInfo.calcValueAtX"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcValueAtX">[docs]</a>    <span class="k">def</span> <span class="nf">calcValueAtX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">set_param_set</span><span class="p">,</span> <span class="n">comp_param_set</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -117,34 +117,34 @@
 <span class="sd">        :returns: Farm result when variable is set to &#39;x&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">setting_method</span> <span class="o">=</span> <span class="n">set_param_set</span><span class="p">[</span><span class="s">&#39;method_name&#39;</span><span class="p">]</span>
-        <span class="n">comp_method</span> <span class="o">=</span> <span class="n">comp_param_set</span><span class="p">[</span><span class="s">&#39;method_name&#39;</span><span class="p">]</span>
-        <span class="n">set_params</span> <span class="o">=</span> <span class="n">set_param_set</span><span class="p">[</span><span class="s">&#39;params&#39;</span><span class="p">]</span>
-        <span class="n">comp_params</span> <span class="o">=</span> <span class="n">comp_param_set</span><span class="p">[</span><span class="s">&#39;params&#39;</span><span class="p">]</span>
+        <span class="n">setting_method</span> <span class="o">=</span> <span class="n">set_param_set</span><span class="p">[</span><span class="s1">&#39;method_name&#39;</span><span class="p">]</span>
+        <span class="n">comp_method</span> <span class="o">=</span> <span class="n">comp_param_set</span><span class="p">[</span><span class="s1">&#39;method_name&#39;</span><span class="p">]</span>
+        <span class="n">set_params</span> <span class="o">=</span> <span class="n">set_param_set</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">]</span>
+        <span class="n">comp_params</span> <span class="o">=</span> <span class="n">comp_param_set</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">]</span>
 
-        <span class="n">set_params</span><span class="p">[</span><span class="s">&#39;amount&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="n">set_params</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="c">#Set x value</span>
+            <span class="c1">#Set x value</span>
             <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">setting_method</span><span class="p">)(</span><span class="o">**</span><span class="n">set_params</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;Could not set value&quot;</span>
-            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">&quot;NaN&quot;</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s2">&quot;Could not set value&quot;</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;NaN&quot;</span><span class="p">)</span>
 
-        <span class="c">#calculate y-axis value at root_x (brentq sets root_x value)</span>
+        <span class="c1">#calculate y-axis value at root_x (brentq sets root_x value)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comp_method</span><span class="p">)(</span><span class="o">**</span><span class="n">comp_params</span><span class="p">)</span>
 
-        <span class="c">#Reset values back to default</span>
+        <span class="c1">#Reset values back to default</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resetParams</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">y</span>
-    <span class="c">#End calcValueAtX()</span>
-</div>
+        <span class="k">return</span> <span class="n">y</span></div>
+    <span class="c1">#End calcValueAtX()</span>
+
 <div class="viewcode-block" id="FarmInfo.updateDiscountRate"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.updateDiscountRate">[docs]</a>    <span class="k">def</span> <span class="nf">updateDiscountRate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c">#Hacky I know: Update discount rate in case it has changed</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">discount_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">discount_rate</span>
-    <span class="c">#End if</span>
-</div>
+        <span class="c1">#Hacky I know: Update discount rate in case it has changed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">discount_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">discount_rate</span></div>
+    <span class="c1">#End if</span>
+
 <div class="viewcode-block" id="FarmInfo.setIrrigationEfficiency"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.setIrrigationEfficiency">[docs]</a>    <span class="k">def</span> <span class="nf">setIrrigationEfficiency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -162,12 +162,12 @@
 
         <span class="k">if</span> <span class="n">amount</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="p">[</span><span class="n">irrigation_name</span><span class="p">]</span><span class="o">.</span><span class="n">irrigation_efficiency</span> <span class="o">=</span> <span class="n">amount</span>
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
-        <span class="k">return</span> <span class="n">original_value</span>
+        <span class="k">return</span> <span class="n">original_value</span></div>
 
-    <span class="c">#End setIrrigationEfficiency()</span>
-</div>
+    <span class="c1">#End setIrrigationEfficiency()</span>
+
 <div class="viewcode-block" id="FarmInfo.getIrrigationEfficiency"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.getIrrigationEfficiency">[docs]</a>    <span class="k">def</span> <span class="nf">getIrrigationEfficiency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -176,28 +176,28 @@
 
         <span class="n">irrigation_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">irrigation_name</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">irrigation_name</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="p">[</span><span class="n">irrigation_name</span><span class="p">]</span><span class="o">.</span><span class="n">irrigation_efficiency</span>
-    <span class="c">#End getIrrigationEfficiency()</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="p">[</span><span class="n">irrigation_name</span><span class="p">]</span><span class="o">.</span><span class="n">irrigation_efficiency</span></div>
+    <span class="c1">#End getIrrigationEfficiency()</span>
+
 <div class="viewcode-block" id="FarmInfo.getStorageInUse"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.getStorageInUse">[docs]</a>    <span class="k">def</span> <span class="nf">getStorageInUse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">storage_name</span><span class="p">,</span> <span class="n">Storage</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">Storage</span><span class="o">.</span><span class="n">implemented</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
                 <span class="k">break</span>
-            <span class="c">#End if</span>
-        <span class="c">#End for</span>
+            <span class="c1">#End if</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">storage_name</span><span class="p">,</span> <span class="n">Storage</span>
-    <span class="c">#End getStorageInUse()</span>
-</div>
+        <span class="k">return</span> <span class="n">storage_name</span><span class="p">,</span> <span class="n">Storage</span></div>
+    <span class="c1">#End getStorageInUse()</span>
+
 <div class="viewcode-block" id="FarmInfo.getFarmArea"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.getFarmArea">[docs]</a>    <span class="k">def</span> <span class="nf">getFarmArea</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
             <span class="n">total</span> <span class="o">=</span> <span class="n">total</span> <span class="o">+</span> <span class="n">f</span><span class="o">.</span><span class="n">area</span>
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">total</span>
-    <span class="c">#End getFarmArea()</span>
-</div>
+        <span class="k">return</span> <span class="n">total</span></div>
+    <span class="c1">#End getFarmArea()</span>
+
 <div class="viewcode-block" id="FarmInfo.calcNetWaterAvailable"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcNetWaterAvailable">[docs]</a>    <span class="k">def</span> <span class="nf">calcNetWaterAvailable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -207,12 +207,12 @@
         <span class="n">water</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="p">:</span>
             <span class="n">water</span> <span class="o">=</span> <span class="n">water</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="p">[</span><span class="n">store</span><span class="p">]</span><span class="o">.</span><span class="n">calcNetWaterAvailable</span><span class="p">()</span>
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">water</span>
+        <span class="k">return</span> <span class="n">water</span></div>
 
-    <span class="c">#End calcNetWaterAvailable()</span>
-</div>
+    <span class="c1">#End calcNetWaterAvailable()</span>
+
 <div class="viewcode-block" id="FarmInfo.getNetWaterInWaterStore"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.getNetWaterInWaterStore">[docs]</a>    <span class="k">def</span> <span class="nf">getNetWaterInWaterStore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_name</span><span class="p">):</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -220,22 +220,22 @@
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
 
-        <span class="k">return</span> <span class="n">water</span>
+        <span class="k">return</span> <span class="n">water</span></div>
 
-    <span class="c">#End getWaterInWaterStore()</span>
+    <span class="c1">#End getWaterInWaterStore()</span>
 
-</div>
+
 <div class="viewcode-block" id="FarmInfo.calcNetStorageCost"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcNetStorageCost">[docs]</a>    <span class="k">def</span> <span class="nf">calcNetStorageCost</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="n">storage_cost</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="p">:</span>
             <span class="n">storage_cost</span> <span class="o">=</span> <span class="n">storage_cost</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="p">[</span><span class="n">store</span><span class="p">]</span><span class="o">.</span><span class="n">calcAnnualCosts</span><span class="p">()</span>
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">storage_cost</span>
+        <span class="k">return</span> <span class="n">storage_cost</span></div>
 
-    <span class="c">#End calcNetStorageCost()</span>
-</div>
+    <span class="c1">#End calcNetStorageCost()</span>
+
 <div class="viewcode-block" id="FarmInfo.calcReqWaterApplicationMLperHa"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcReqWaterApplicationMLperHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcReqWaterApplicationMLperHa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_name</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -250,12 +250,12 @@
         <span class="k">for</span> <span class="n">irrigation_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="p">:</span>
 
             <span class="n">water_applied</span><span class="p">[</span><span class="n">irrigation_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="p">[</span><span class="n">irrigation_name</span><span class="p">]</span><span class="o">.</span><span class="n">calcWaterAppliedMLperHa</span><span class="p">(</span><span class="n">target_crop</span><span class="o">.</span><span class="n">water_use_ML_per_Ha</span><span class="p">)</span>
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">water_applied</span>
+        <span class="k">return</span> <span class="n">water_applied</span></div>
 
-    <span class="c">#End calcReqWaterApplicationMLperHa()</span>
-</div>
+    <span class="c1">#End calcReqWaterApplicationMLperHa()</span>
+
 <div class="viewcode-block" id="FarmInfo.calcFarmIrrigationArea"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcFarmIrrigationArea">[docs]</a>    <span class="k">def</span> <span class="nf">calcFarmIrrigationArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">water_applied_ML_per_Ha</span><span class="p">,</span> <span class="n">available_water_ML</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -266,12 +266,12 @@
 
         <span class="k">if</span><span class="p">(</span><span class="n">irrigation_area</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_irrigation_area_Ha</span><span class="p">):</span>
             <span class="n">irrigation_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_irrigation_area_Ha</span>
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
-        <span class="k">return</span> <span class="n">irrigation_area</span>
+        <span class="k">return</span> <span class="n">irrigation_area</span></div>
 
-    <span class="c">#End calcFarmIrrigationArea()</span>
-</div>
+    <span class="c1">#End calcFarmIrrigationArea()</span>
+
 <div class="viewcode-block" id="FarmInfo.calcIrrigationAreas"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcIrrigationAreas">[docs]</a>    <span class="k">def</span> <span class="nf">calcIrrigationAreas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">net_available_water</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -279,22 +279,22 @@
 <span class="sd">        If amount of water is not specified, uses all available water</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c">#self.calcNetWaterAvailable()</span>
+        <span class="c1">#self.calcNetWaterAvailable()</span>
         <span class="k">if</span> <span class="n">net_available_water</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">net_available_water</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcNetWaterAvailable</span><span class="p">()</span>
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
         <span class="n">irrigation_area</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">crop_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">irrigation_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
 
             <span class="n">water_applied</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcReqWaterApplicationMLperHa</span><span class="p">(</span><span class="n">crop_name</span><span class="o">=</span><span class="n">crop_name</span><span class="p">)</span>
 
-            <span class="c">#irrigation_area[crop_name] = {}</span>
+            <span class="c1">#irrigation_area[crop_name] = {}</span>
             <span class="n">irrigation_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcFarmIrrigationArea</span><span class="p">(</span><span class="n">water_applied</span><span class="p">[</span><span class="n">irrigation_name</span><span class="p">],</span> <span class="n">net_available_water</span><span class="p">)</span>
 
             <span class="k">return</span> <span class="n">irrigation_area</span>
 
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
         <span class="k">for</span> <span class="n">crop_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">crops</span><span class="p">:</span>
 
@@ -304,28 +304,28 @@
 
             <span class="k">for</span> <span class="n">irrigation_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="p">:</span>
                 <span class="n">irrigation_area</span><span class="p">[</span><span class="n">crop_name</span><span class="p">][</span><span class="n">irrigation_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcFarmIrrigationArea</span><span class="p">(</span><span class="n">water_applied</span><span class="p">[</span><span class="n">irrigation_name</span><span class="p">],</span> <span class="n">net_available_water</span><span class="p">)</span>
-            <span class="c">#End for</span>
+            <span class="c1">#End for</span>
 
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">irrigation_area</span>
+        <span class="k">return</span> <span class="n">irrigation_area</span></div>
 
-    <span class="c">#End calcWaterStoreIrrigationArea()</span>
-</div>
+    <span class="c1">#End calcWaterStoreIrrigationArea()</span>
+
 <div class="viewcode-block" id="FarmInfo.calcIrrigationCapitalCosts"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcIrrigationCapitalCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcIrrigationCapitalCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">updateDiscountRate</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="p">[</span><span class="n">irrigation_name</span><span class="p">]</span><span class="o">.</span><span class="n">calcAnnualCapitalCost</span><span class="p">(</span><span class="n">irrigation_area</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">discount_rate</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="p">[</span><span class="n">irrigation_name</span><span class="p">]</span><span class="o">.</span><span class="n">calcAnnualCapitalCost</span><span class="p">(</span><span class="n">irrigation_area</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">discount_rate</span><span class="p">)</span></div>
 
-    <span class="c">#End calcIrrigationCapitalCosts()</span>
-</div>
+    <span class="c1">#End calcIrrigationCapitalCosts()</span>
+
 <div class="viewcode-block" id="FarmInfo.calcFarmOverheadCost"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcFarmOverheadCost">[docs]</a>    <span class="k">def</span> <span class="nf">calcFarmOverheadCost</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-        <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
 
-    <span class="c">#End calcFarmOverheadCost()</span>
-</div>
+    <span class="c1">#End calcFarmOverheadCost()</span>
+
 <div class="viewcode-block" id="FarmInfo.calcTotalFarmGrossMarginPerHa"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalFarmGrossMarginPerHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalFarmGrossMarginPerHa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">land_use_Ha</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -335,12 +335,12 @@
         <span class="n">gross_value_per_yield</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">crop_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">crops</span><span class="p">:</span>
             <span class="n">gross_value_per_yield</span> <span class="o">=</span> <span class="n">gross_value_per_yield</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">crops</span><span class="p">[</span><span class="n">crop_name</span><span class="p">]</span><span class="o">.</span><span class="n">calcTotalCropGrossMargin</span><span class="p">(</span><span class="n">land_use_Ha</span><span class="p">)</span>
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="p">(</span><span class="n">gross_value_per_yield</span> <span class="o">/</span> <span class="n">land_use_Ha</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">gross_value_per_yield</span> <span class="o">/</span> <span class="n">land_use_Ha</span><span class="p">)</span></div>
 
-    <span class="c">#End calcTotalFarmGrossMarginPerHa</span>
-</div>
+    <span class="c1">#End calcTotalFarmGrossMarginPerHa</span>
+
 <div class="viewcode-block" id="FarmInfo.calcTotalFarmGrossMargins"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalFarmGrossMargins">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalFarmGrossMargins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">land_use_Ha</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -350,13 +350,13 @@
         <span class="n">gross_value</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">crop_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">crops</span><span class="p">:</span>
             <span class="n">gross_value</span> <span class="o">=</span> <span class="n">gross_value</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">crops</span><span class="p">[</span><span class="n">crop_name</span><span class="p">]</span><span class="o">.</span><span class="n">calcTotalCropGrossMargin</span><span class="p">(</span><span class="n">land_use_Ha</span><span class="p">)</span>
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">gross_value</span>
+        <span class="k">return</span> <span class="n">gross_value</span></div>
 
-    <span class="c">#End calcTotalFarmGrossMargins()</span>
-</div>
-<div class="viewcode-block" id="FarmInfo.calcNetFarmIncome"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcNetFarmIncome">[docs]</a>    <span class="k">def</span> <span class="nf">calcNetFarmIncome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">crop_name</span><span class="o">=</span><span class="s">&#39;Cotton&#39;</span><span class="p">):</span>
+    <span class="c1">#End calcTotalFarmGrossMargins()</span>
+
+<div class="viewcode-block" id="FarmInfo.calcNetFarmIncome"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcNetFarmIncome">[docs]</a>    <span class="k">def</span> <span class="nf">calcNetFarmIncome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">crop_name</span><span class="o">=</span><span class="s1">&#39;Cotton&#39;</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate net income by calculating total gross margin then subtract capital costs</span>
@@ -364,19 +364,19 @@
 
         <span class="k">if</span> <span class="n">irrigation_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">irrigation_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="c">#raise ValueError(&#39;Name of irrigation system to calculate income from was not given&#39;)</span>
-        <span class="c">#End if</span>
+            <span class="c1">#raise ValueError(&#39;Name of irrigation system to calculate income from was not given&#39;)</span>
+        <span class="c1">#End if</span>
 
         <span class="k">if</span><span class="p">(</span><span class="n">irrigation_area</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">):</span>
             <span class="n">irrigation_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcIrrigationAreas</span><span class="p">(</span><span class="n">crop_name</span><span class="p">)</span>
             <span class="n">irrigation_area</span> <span class="o">=</span> <span class="n">irrigation_area</span><span class="p">[</span><span class="n">crop_name</span><span class="p">][</span><span class="n">irrigation_name</span><span class="p">]</span>
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTotalFarmGrossMargins</span><span class="p">(</span><span class="n">irrigation_area</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTotalCapitalCosts</span><span class="p">(</span><span class="n">irrigation_name</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTotalFarmGrossMargins</span><span class="p">(</span><span class="n">irrigation_area</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTotalCapitalCosts</span><span class="p">(</span><span class="n">irrigation_name</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="p">)</span></div>
 
-    <span class="c">#End calcNetFarmIncome()</span>
-</div>
-<div class="viewcode-block" id="FarmInfo.calcAnnualizedNetIncome"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcAnnualizedNetIncome">[docs]</a>    <span class="k">def</span> <span class="nf">calcAnnualizedNetIncome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">crop_name</span><span class="o">=</span><span class="s">&#39;Cotton&#39;</span><span class="p">):</span>
+    <span class="c1">#End calcNetFarmIncome()</span>
+
+<div class="viewcode-block" id="FarmInfo.calcAnnualizedNetIncome"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcAnnualizedNetIncome">[docs]</a>    <span class="k">def</span> <span class="nf">calcAnnualizedNetIncome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">crop_name</span><span class="o">=</span><span class="s1">&#39;Cotton&#39;</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate Annualised Net Income</span>
@@ -386,19 +386,19 @@
 
         <span class="k">if</span> <span class="n">irrigation_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">irrigation_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="c">#raise ValueError(&#39;Name of irrigation system to calculate income from was not given&#39;)</span>
-        <span class="c">#End if</span>
+            <span class="c1">#raise ValueError(&#39;Name of irrigation system to calculate income from was not given&#39;)</span>
+        <span class="c1">#End if</span>
 
         <span class="k">if</span><span class="p">(</span><span class="n">irrigation_area</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">):</span>
             <span class="n">irrigation_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcIrrigationAreas</span><span class="p">(</span><span class="n">crop_name</span><span class="p">)</span>
             <span class="n">irrigation_area</span> <span class="o">=</span> <span class="n">irrigation_area</span><span class="p">[</span><span class="n">crop_name</span><span class="p">][</span><span class="n">irrigation_name</span><span class="p">]</span>
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
         <span class="n">store_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">irrigation_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 
-        <span class="n">store_life</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParam</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="s">&#39;storages&#39;</span><span class="p">,</span> <span class="n">comp_name</span><span class="o">=</span><span class="n">store_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="o">=</span><span class="s">&#39;num_years&#39;</span><span class="p">)</span>
-        <span class="n">irrig_life</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParam</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="s">&#39;irrigations&#39;</span><span class="p">,</span> <span class="n">comp_name</span><span class="o">=</span><span class="n">irrigation_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="o">=</span><span class="s">&#39;lifespan&#39;</span><span class="p">)</span>
+        <span class="n">store_life</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParam</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="s1">&#39;storages&#39;</span><span class="p">,</span> <span class="n">comp_name</span><span class="o">=</span><span class="n">store_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="o">=</span><span class="s1">&#39;num_years&#39;</span><span class="p">)</span>
+        <span class="n">irrig_life</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParam</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="s1">&#39;irrigations&#39;</span><span class="p">,</span> <span class="n">comp_name</span><span class="o">=</span><span class="n">irrigation_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="o">=</span><span class="s1">&#39;lifespan&#39;</span><span class="p">)</span>
 
         <span class="n">max_life</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">store_life</span><span class="p">,</span> <span class="n">irrig_life</span><span class="p">)</span>
         <span class="n">min_life</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">store_life</span><span class="p">,</span> <span class="n">irrig_life</span><span class="p">)</span>
@@ -407,17 +407,17 @@
 
         <span class="n">implementation_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcAnnualizedCosts</span><span class="p">(</span><span class="n">store_name</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="p">)</span>
 
-        <span class="c">#Hacky I know: Update discount rate in case it has changed</span>
+        <span class="c1">#Hacky I know: Update discount rate in case it has changed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateDiscountRate</span><span class="p">()</span>
 
-        <span class="c">#From original code</span>
-        <span class="c">#annual.cash.flow * ((1 + discount.rate)^(-nyears) - 1)/(-discount.rate)</span>
+        <span class="c1">#From original code</span>
+        <span class="c1">#annual.cash.flow * ((1 + discount.rate)^(-nyears) - 1)/(-discount.rate)</span>
         <span class="n">annualized_income</span> <span class="o">=</span> <span class="p">(</span><span class="n">gross_income</span> <span class="o">-</span> <span class="n">implementation_cost</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">discount_rate</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">max_life</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">discount_rate</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">annualized_income</span>
+        <span class="k">return</span> <span class="n">annualized_income</span></div>
 
-    <span class="c">#End calcAnnualIncome()</span>
-</div>
+    <span class="c1">#End calcAnnualIncome()</span>
+
 <div class="viewcode-block" id="FarmInfo.calcAnnualizedCosts"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcAnnualizedCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcAnnualizedCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_name</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="p">,</span> <span class="n">irrig_area</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -426,62 +426,62 @@
 
         <span class="kn">import</span> <span class="nn">Common.GeneralFunctions</span> <span class="kn">as</span> <span class="nn">GeneralFunctions</span>
 
-        <span class="c">#Annualise gross income using the greatest lifespan</span>
+        <span class="c1">#Annualise gross income using the greatest lifespan</span>
 
-        <span class="n">store_life</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParam</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="s">&#39;storages&#39;</span><span class="p">,</span> <span class="n">comp_name</span><span class="o">=</span><span class="n">store_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="o">=</span><span class="s">&#39;num_years&#39;</span><span class="p">)</span>
-        <span class="n">irrig_life</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParam</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="s">&#39;irrigations&#39;</span><span class="p">,</span> <span class="n">comp_name</span><span class="o">=</span><span class="n">irrigation_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="o">=</span><span class="s">&#39;lifespan&#39;</span><span class="p">)</span>
+        <span class="n">store_life</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParam</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="s1">&#39;storages&#39;</span><span class="p">,</span> <span class="n">comp_name</span><span class="o">=</span><span class="n">store_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="o">=</span><span class="s1">&#39;num_years&#39;</span><span class="p">)</span>
+        <span class="n">irrig_life</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParam</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="s1">&#39;irrigations&#39;</span><span class="p">,</span> <span class="n">comp_name</span><span class="o">=</span><span class="n">irrigation_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="o">=</span><span class="s1">&#39;lifespan&#39;</span><span class="p">)</span>
 
         <span class="n">max_life</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">store_life</span><span class="p">,</span> <span class="n">irrig_life</span><span class="p">)</span>
         <span class="n">min_life</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">store_life</span><span class="p">,</span> <span class="n">irrig_life</span><span class="p">)</span>
 
-        <span class="c">#Hacky I know: Update discount rate in case it has changed</span>
+        <span class="c1">#Hacky I know: Update discount rate in case it has changed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateDiscountRate</span><span class="p">()</span>
 
-        <span class="c">#get non-annualised cost of replacing irrigation</span>
+        <span class="c1">#get non-annualised cost of replacing irrigation</span>
         <span class="n">irrig_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="p">[</span><span class="n">irrigation_name</span><span class="p">]</span><span class="o">.</span><span class="n">calcReplacementCost</span><span class="p">(</span><span class="n">irrig_area</span><span class="p">)</span>
 
-        <span class="c">#non-annualised cost of storage</span>
+        <span class="c1">#non-annualised cost of storage</span>
         <span class="n">store_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="p">[</span><span class="n">store_name</span><span class="p">]</span><span class="o">.</span><span class="n">calcTotalCapitalCosts</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">min_life</span> <span class="o">==</span> <span class="n">irrig_life</span><span class="p">:</span>
-            <span class="c">#proportion of non-annualised cost of irrigation</span>
+            <span class="c1">#proportion of non-annualised cost of irrigation</span>
             <span class="n">part_cost</span> <span class="o">=</span> <span class="n">irrig_cost</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">max_life</span> <span class="o">/</span> <span class="n">min_life</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c">#proportion of non-annualised cost of storage</span>
+            <span class="c1">#proportion of non-annualised cost of storage</span>
             <span class="n">part_cost</span> <span class="o">=</span> <span class="n">store_cost</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">max_life</span> <span class="o">/</span> <span class="n">min_life</span><span class="p">)</span>
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
         <span class="n">implementation_cost</span> <span class="o">=</span> <span class="n">store_cost</span> <span class="o">+</span> <span class="n">irrig_cost</span> <span class="o">+</span> <span class="n">part_cost</span>
         <span class="n">implementation_cost</span> <span class="o">=</span> <span class="n">GeneralFunctions</span><span class="o">.</span><span class="n">calcCapitalCostPerYear</span><span class="p">(</span><span class="n">implementation_cost</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">discount_rate</span><span class="p">,</span> <span class="n">max_life</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="p">[</span><span class="n">store_name</span><span class="p">]</span><span class="o">.</span><span class="n">calcOngoingCosts</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">implementation_cost</span>
+        <span class="k">return</span> <span class="n">implementation_cost</span></div>
 
-    <span class="c">#End calcAnnyalizedCosts()</span>
-</div>
+    <span class="c1">#End calcAnnyalizedCosts()</span>
+
 <div class="viewcode-block" id="FarmInfo.calcTotalCapitalCosts"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalCapitalCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalCapitalCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate total capital costs of farm</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calcNetStorageCost</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcIrrigationCapitalCosts</span><span class="p">(</span><span class="n">irrigation_area</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calcNetStorageCost</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcIrrigationCapitalCosts</span><span class="p">(</span><span class="n">irrigation_area</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="p">))</span></div>
 
-    <span class="c">#End calcTotalCapitalCosts()</span>
-</div>
-<div class="viewcode-block" id="FarmInfo.calcTotalCropYield"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalCropYield">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalCropYield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_name</span><span class="o">=</span><span class="s">&#39;Cotton&#39;</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="c1">#End calcTotalCapitalCosts()</span>
+
+<div class="viewcode-block" id="FarmInfo.calcTotalCropYield"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalCropYield">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalCropYield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_name</span><span class="o">=</span><span class="s1">&#39;Cotton&#39;</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
         <span class="k">if</span> <span class="n">irrigation_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">irrigation_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
         <span class="k">if</span> <span class="n">irrigation_area</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">irrigation_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcIrrigationAreas</span><span class="p">(</span><span class="n">crop_name</span><span class="o">=</span><span class="n">crop_name</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="o">=</span><span class="n">irrigation_name</span><span class="p">)</span>
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">crops</span><span class="p">[</span><span class="n">crop_name</span><span class="p">]</span><span class="o">.</span><span class="n">yield_per_Ha</span> <span class="o">*</span> <span class="n">irrigation_area</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">crops</span><span class="p">[</span><span class="n">crop_name</span><span class="p">]</span><span class="o">.</span><span class="n">yield_per_Ha</span> <span class="o">*</span> <span class="n">irrigation_area</span></div>
 
-</div>
-<div class="viewcode-block" id="FarmInfo.calcGPWUI"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcGPWUI">[docs]</a>    <span class="k">def</span> <span class="nf">calcGPWUI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_name</span><span class="o">=</span><span class="s">&#39;Cotton&#39;</span><span class="p">,</span> <span class="n">crop_yield</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FarmInfo.calcGPWUI"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcGPWUI">[docs]</a>    <span class="k">def</span> <span class="nf">calcGPWUI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_name</span><span class="o">=</span><span class="s1">&#39;Cotton&#39;</span><span class="p">,</span> <span class="n">crop_yield</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate Gross Production Water Use Index</span>
@@ -490,21 +490,21 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">irrigation</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="c">#Use first irrigation system if not specified</span>
+            <span class="c1">#Use first irrigation system if not specified</span>
             <span class="n">irrigation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irrigations</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
         <span class="k">if</span> <span class="n">crop_yield</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">crop_yield</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTotalCropYield</span><span class="p">(</span><span class="n">crop_name</span><span class="o">=</span><span class="n">crop_name</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="o">=</span><span class="n">irrigation</span><span class="p">)</span>
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
         <span class="n">total_water</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTotalWaterInput</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">crop_yield</span> <span class="o">/</span> <span class="n">total_water</span>
+        <span class="k">return</span> <span class="n">crop_yield</span> <span class="o">/</span> <span class="n">total_water</span></div>
 
-    <span class="c">#End</span>
-</div>
-<div class="viewcode-block" id="FarmInfo.calcIWUI"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcIWUI">[docs]</a>    <span class="k">def</span> <span class="nf">calcIWUI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_name</span><span class="o">=</span><span class="s">&#39;Cotton&#39;</span><span class="p">,</span> <span class="n">crop_yield</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation_water</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="c1">#End</span>
+
+<div class="viewcode-block" id="FarmInfo.calcIWUI"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcIWUI">[docs]</a>    <span class="k">def</span> <span class="nf">calcIWUI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_name</span><span class="o">=</span><span class="s1">&#39;Cotton&#39;</span><span class="p">,</span> <span class="n">crop_yield</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">irrigation_water</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate Irrigation Water Use Index</span>
 <span class="sd">        IWUI = yield / water used for irrigation</span>
@@ -513,39 +513,39 @@
 
         <span class="k">if</span> <span class="n">crop_yield</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">crop_yield</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTotalCropYield</span><span class="p">(</span><span class="n">crop_name</span><span class="o">=</span><span class="n">crop_name</span><span class="p">)</span>
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
         <span class="k">if</span> <span class="n">irrigation_water</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">irrigation_water</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcNetWaterAvailable</span><span class="p">()</span>
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
-        <span class="k">return</span> <span class="n">crop_yield</span> <span class="o">/</span> <span class="n">irrigation_water</span>
-    <span class="c">#End calcIWUI</span>
-</div>
+        <span class="k">return</span> <span class="n">crop_yield</span> <span class="o">/</span> <span class="n">irrigation_water</span></div>
+    <span class="c1">#End calcIWUI</span>
+
 <div class="viewcode-block" id="FarmInfo.calcTotalWaterInput"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcTotalWaterInput">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalWaterInput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="n">water</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">store</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="p">:</span>
             <span class="n">water</span> <span class="o">=</span> <span class="n">water</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">storages</span><span class="p">[</span><span class="n">store</span><span class="p">]</span><span class="o">.</span><span class="n">WaterSources</span><span class="o">.</span><span class="n">calcGrossWaterAvailable</span><span class="p">()</span>
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">water</span>
-    <span class="c">#End calcTotalWaterInput()</span>
-</div>
+        <span class="k">return</span> <span class="n">water</span></div>
+    <span class="c1">#End calcTotalWaterInput()</span>
+
 <div class="viewcode-block" id="FarmInfo.applyCropLosses"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.applyCropLosses">[docs]</a>    <span class="k">def</span> <span class="nf">applyCropLosses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">applyCropLoss</span><span class="p">()</span>
-        <span class="c">#End for</span>
-    <span class="c">#End applyCropLosses</span></div></div>
+            <span class="n">f</span><span class="o">.</span><span class="n">applyCropLoss</span><span class="p">()</span></div></div>
+        <span class="c1">#End for</span>
+    <span class="c1">#End applyCropLosses</span>
 </pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../../../search.html" method="get">
       <input type="text" name="q" />
@@ -562,7 +562,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -571,14 +571,14 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-01-28.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Last updated on 2016-02-16.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

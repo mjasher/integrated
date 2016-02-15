@@ -23,10 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Integrated Framework 0.1 documentation" href="index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="readme.html" />
     <link rel="up" title="integrated.Modules.Farm package" href="integrated.Modules.Farm.html" />
-    <link rel="next" title="integrated.Modules.Hydrology package" href="integrated.Modules.Hydrology.html" />
+    <link rel="next" title="integrated.Modules.Groundwater package" href="integrated.Modules.Groundwater.html" />
     <link rel="prev" title="integrated.Modules.Farm.Management package" href="integrated.Modules.Farm.Management.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -35,9 +35,9 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -47,23 +47,23 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="integrated.Modules.Hydrology.html" title="integrated.Modules.Hydrology package"
+          <a href="integrated.Modules.Groundwater.html" title="integrated.Modules.Groundwater package"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="integrated.Modules.Farm.Management.html" title="integrated.Modules.Farm.Management package"
              accesskey="P">previous</a> |</li>
-        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
-          <li><a href="integrated.html" >integrated package</a> &raquo;</li>
-          <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
-          <li><a href="integrated.Modules.Farm.html" accesskey="U">integrated.Modules.Farm package</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >integrated</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="integrated.html" >integrated package</a> &raquo;</li>
+          <li class="nav-item nav-item-3"><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
+          <li class="nav-item nav-item-4"><a href="integrated.Modules.Farm.html" accesskey="U">integrated.Modules.Farm package</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="integrated-modules-farm-waterstorages-package">
 <h1>integrated.Modules.Farm.WaterStorages package<a class="headerlink" href="#integrated-modules-farm-waterstorages-package" title="Permalink to this headline">¶</a></h1>
@@ -74,42 +74,42 @@
 <span id="integrated-modules-farm-waterstorages-asrstorage-module"></span><h2>integrated.Modules.Farm.WaterStorages.ASRStorage module<a class="headerlink" href="#module-integrated.Modules.Farm.WaterStorages.ASRStorage" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.WaterStorages.ASRStorage.</tt><tt class="descname">ASRStorage</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage" title="integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">integrated.Modules.Farm.WaterStorages.ASRStorage.</code><code class="descname">ASRStorage</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage" title="integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage"><code class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage</span></code></a></p>
 <p>Defines MAR with injection, a type of Basin storage</p>
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcDesignCosts">
-<tt class="descname">calcDesignCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcDesignCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcDesignCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcDesignCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcDesignCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcDesignCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcCapturePumpCostPerML">
-<tt class="descname">calcCapturePumpCostPerML</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcCapturePumpCostPerML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcCapturePumpCostPerML" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcCapturePumpCostPerML</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcCapturePumpCostPerML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcCapturePumpCostPerML" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcCapitalCostTreatment">
-<tt class="descname">calcCapitalCostTreatment</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcCapitalCostTreatment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcCapitalCostTreatment" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcCapitalCostTreatment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcCapitalCostTreatment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcCapitalCostTreatment" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcSurfacePumpCost">
-<tt class="descname">calcSurfacePumpCost</tt><big>(</big><em>total_surface_water</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcSurfacePumpCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcSurfacePumpCost" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcSurfacePumpCost</code><span class="sig-paren">(</span><em>total_surface_water</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcSurfacePumpCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcSurfacePumpCost" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcOngoingCosts">
-<tt class="descname">calcOngoingCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcOngoingCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcOngoingCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcOngoingCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcOngoingCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcOngoingCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcTotalCapitalCosts">
-<tt class="descname">calcTotalCapitalCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcTotalCapitalCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcTotalCapitalCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcTotalCapitalCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcTotalCapitalCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcTotalCapitalCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcAnnualCosts">
-<tt class="descname">calcAnnualCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcAnnualCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcAnnualCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcAnnualCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/ASRStorage.html#ASRStorage.calcAnnualCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.ASRStorage.ASRStorage.calcAnnualCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -119,53 +119,53 @@
 <span id="integrated-modules-farm-waterstorages-basinstorage-module"></span><h2>integrated.Modules.Farm.WaterStorages.BasinStorage module<a class="headerlink" href="#module-integrated.Modules.Farm.WaterStorages.BasinStorage" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.WaterStorages.BasinStorage.</tt><tt class="descname">BasinStorage</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore" title="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">integrated.Modules.Farm.WaterStorages.BasinStorage.</code><code class="descname">BasinStorage</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore" title="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore"><code class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore</span></code></a></p>
 <p>Defines Basin infiltration storage</p>
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcNetWaterAvailable">
-<tt class="descname">calcNetWaterAvailable</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcNetWaterAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcNetWaterAvailable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcNetWaterAvailable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcNetWaterAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcNetWaterAvailable" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.updatePumpVolML">
-<tt class="descname">updatePumpVolML</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.updatePumpVolML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.updatePumpVolML" title="Permalink to this definition">¶</a></dt>
+<code class="descname">updatePumpVolML</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.updatePumpVolML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.updatePumpVolML" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update pump vol per ML after MAR loss rate or MAR capacity has been updated</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcTemporaryStorageCosts">
-<tt class="descname">calcTemporaryStorageCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcTemporaryStorageCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcTemporaryStorageCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcTemporaryStorageCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcTemporaryStorageCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcTemporaryStorageCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcStorageCapitalCostPerML">
-<tt class="descname">calcStorageCapitalCostPerML</tt><big>(</big><em>capital_cost_per_ML_at_02_per_day=None</em>, <em>modifier=0.2</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcStorageCapitalCostPerML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcStorageCapitalCostPerML" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcStorageCapitalCostPerML</code><span class="sig-paren">(</span><em>capital_cost_per_ML_at_02_per_day=None</em>, <em>modifier=0.2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcStorageCapitalCostPerML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcStorageCapitalCostPerML" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcStorageCapitalCosts">
-<tt class="descname">calcStorageCapitalCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcStorageCapitalCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcStorageCapitalCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcStorageCapitalCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcStorageCapitalCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcStorageCapitalCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcTotalCapitalCosts">
-<tt class="descname">calcTotalCapitalCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcTotalCapitalCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcTotalCapitalCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcTotalCapitalCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcTotalCapitalCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcTotalCapitalCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcDesignCosts">
-<tt class="descname">calcDesignCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcDesignCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcDesignCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcDesignCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcDesignCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcDesignCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcOngoingCosts">
-<tt class="descname">calcOngoingCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcOngoingCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcOngoingCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcOngoingCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcOngoingCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcOngoingCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcAnnualCosts">
-<tt class="descname">calcAnnualCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcAnnualCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcAnnualCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcAnnualCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/BasinStorage.html#BasinStorage.calcAnnualCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.BasinStorage.BasinStorage.calcAnnualCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -175,39 +175,39 @@
 <span id="integrated-modules-farm-waterstorages-farmdam-module"></span><h2>integrated.Modules.Farm.WaterStorages.FarmDam module<a class="headerlink" href="#module-integrated.Modules.Farm.WaterStorages.FarmDam" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.WaterStorages.FarmDam.</tt><tt class="descname">FarmDam</tt><big>(</big><em>include_farm_dam_capital_costs=True</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore" title="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">integrated.Modules.Farm.WaterStorages.FarmDam.</code><code class="descname">FarmDam</code><span class="sig-paren">(</span><em>include_farm_dam_capital_costs=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore" title="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore"><code class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore</span></code></a></p>
 <p>Defines a farm dam</p>
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcNetWaterAvailable">
-<tt class="descname">calcNetWaterAvailable</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam.calcNetWaterAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcNetWaterAvailable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcNetWaterAvailable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam.calcNetWaterAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcNetWaterAvailable" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcTotalCapitalCosts">
-<tt class="descname">calcTotalCapitalCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam.calcTotalCapitalCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcTotalCapitalCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcTotalCapitalCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam.calcTotalCapitalCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcTotalCapitalCosts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate total cost of this storage solution</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcTotalCapitalCostsPerHa">
-<tt class="descname">calcTotalCapitalCostsPerHa</tt><big>(</big><em>area</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam.calcTotalCapitalCostsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcTotalCapitalCostsPerHa" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcTotalCapitalCostsPerHa</code><span class="sig-paren">(</span><em>area</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam.calcTotalCapitalCostsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcTotalCapitalCostsPerHa" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcCapturePumpCostPerML">
-<tt class="descname">calcCapturePumpCostPerML</tt><big>(</big><em>stored_water_ML</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam.calcCapturePumpCostPerML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcCapturePumpCostPerML" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcCapturePumpCostPerML</code><span class="sig-paren">(</span><em>stored_water_ML</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam.calcCapturePumpCostPerML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcCapturePumpCostPerML" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcOngoingCosts">
-<tt class="descname">calcOngoingCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam.calcOngoingCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcOngoingCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcOngoingCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam.calcOngoingCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcOngoingCosts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate ongoing costs of this storage practice, for a given year</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcAnnualCosts">
-<tt class="descname">calcAnnualCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam.calcAnnualCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcAnnualCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcAnnualCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/FarmDam.html#FarmDam.calcAnnualCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcAnnualCosts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the annual cost of the given storage solution
 #total_surface_water: 200ML flood water harvest, 25 percent of recent statutory limits</p>
 </dd></dl>
@@ -219,80 +219,80 @@
 <span id="integrated-modules-farm-waterstorages-waterstore-module"></span><h2>integrated.Modules.Farm.WaterStorages.WaterStore module<a class="headerlink" href="#module-integrated.Modules.Farm.WaterStorages.WaterStore" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore">
-<em class="property">class </em><tt class="descclassname">integrated.Modules.Farm.WaterStorages.WaterStore.</tt><tt class="descname">WaterStore</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmComponent.FarmComponent" title="integrated.Modules.Farm.Farms.FarmComponent.FarmComponent"><tt class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Farm.Farms.FarmComponent.FarmComponent</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">integrated.Modules.Farm.WaterStorages.WaterStore.</code><code class="descname">WaterStore</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmComponent.FarmComponent" title="integrated.Modules.Farm.Farms.FarmComponent.FarmComponent"><code class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Farm.Farms.FarmComponent.FarmComponent</span></code></a></p>
 <p>Defines a water store</p>
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.resetParams">
-<tt class="descname">resetParams</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.resetParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.resetParams" title="Permalink to this definition">¶</a></dt>
+<code class="descname">resetParams</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.resetParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.resetParams" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.loadParams">
-<tt class="descname">loadParams</tt><big>(</big><em>new_params</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.loadParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.loadParams" title="Permalink to this definition">¶</a></dt>
+<code class="descname">loadParams</code><span class="sig-paren">(</span><em>new_params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.loadParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.loadParams" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcNetWaterAvailable">
-<tt class="descname">calcNetWaterAvailable</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcNetWaterAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcNetWaterAvailable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcNetWaterAvailable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcNetWaterAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcNetWaterAvailable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stub. Define separately for each water store</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcCapturePumpCost">
-<tt class="descname">calcCapturePumpCost</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcCapturePumpCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcCapturePumpCost" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcCapturePumpCost</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcCapturePumpCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcCapturePumpCost" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcSurfacePumpCost">
-<tt class="descname">calcSurfacePumpCost</tt><big>(</big><em>total_surface_water</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcSurfacePumpCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcSurfacePumpCost" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcSurfacePumpCost</code><span class="sig-paren">(</span><em>total_surface_water</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcSurfacePumpCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcSurfacePumpCost" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate how much it would cost to harvest water</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcStorageCosts">
-<tt class="descname">calcStorageCosts</tt><big>(</big><em>water_to_store_ML</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcStorageCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcStorageCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcStorageCosts</code><span class="sig-paren">(</span><em>water_to_store_ML</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcStorageCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcStorageCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcPumpCost">
-<tt class="descname">calcPumpCost</tt><big>(</big><em>water_volume_ML</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcPumpCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcPumpCost" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcPumpCost</code><span class="sig-paren">(</span><em>water_volume_ML</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcPumpCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcPumpCost" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate cost of pumping ML of water</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcStorageCapitalCostPerML">
-<tt class="descname">calcStorageCapitalCostPerML</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcStorageCapitalCostPerML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcStorageCapitalCostPerML" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcStorageCapitalCostPerML</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcStorageCapitalCostPerML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcStorageCapitalCostPerML" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcTotalCapitalCosts">
-<tt class="descname">calcTotalCapitalCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcTotalCapitalCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcTotalCapitalCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcTotalCapitalCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcTotalCapitalCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcTotalCapitalCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcDesignCosts">
-<tt class="descname">calcDesignCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcDesignCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcDesignCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcDesignCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcDesignCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcDesignCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcMaintenanceCosts">
-<tt class="descname">calcMaintenanceCosts</tt><big>(</big><em>stored_water</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcMaintenanceCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcMaintenanceCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcMaintenanceCosts</code><span class="sig-paren">(</span><em>stored_water</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcMaintenanceCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcMaintenanceCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcTotalCostsPerHa">
-<tt class="descname">calcTotalCostsPerHa</tt><big>(</big><em>farm_area</em><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcTotalCostsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcTotalCostsPerHa" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcTotalCostsPerHa</code><span class="sig-paren">(</span><em>farm_area</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcTotalCostsPerHa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcTotalCostsPerHa" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcOngoingCosts">
-<tt class="descname">calcOngoingCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcOngoingCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcOngoingCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcOngoingCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcOngoingCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcOngoingCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcAnnualCosts">
-<tt class="descname">calcAnnualCosts</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcAnnualCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcAnnualCosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calcAnnualCosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/WaterStorages/WaterStore.html#WaterStore.calcAnnualCosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.WaterStorages.WaterStore.WaterStore.calcAnnualCosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -307,7 +307,7 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="readme.html">Table Of Contents</a></h3>
   <ul>
@@ -326,9 +326,9 @@
   <p class="topless"><a href="integrated.Modules.Farm.Management.html"
                         title="previous chapter">integrated.Modules.Farm.Management package</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="integrated.Modules.Hydrology.html"
-                        title="next chapter">integrated.Modules.Hydrology package</a></p>
-<div id="searchbox" style="display: none">
+  <p class="topless"><a href="integrated.Modules.Groundwater.html"
+                        title="next chapter">integrated.Modules.Groundwater package</a></p>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -345,7 +345,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -355,22 +355,22 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="integrated.Modules.Hydrology.html" title="integrated.Modules.Hydrology package"
+          <a href="integrated.Modules.Groundwater.html" title="integrated.Modules.Groundwater package"
              >next</a> |</li>
         <li class="right" >
           <a href="integrated.Modules.Farm.Management.html" title="integrated.Modules.Farm.Management package"
              >previous</a> |</li>
-        <li><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >&lt;no title&gt;</a> &raquo;</li>
-          <li><a href="integrated.html" >integrated package</a> &raquo;</li>
-          <li><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
-          <li><a href="integrated.Modules.Farm.html" >integrated.Modules.Farm package</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >integrated</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="integrated.html" >integrated package</a> &raquo;</li>
+          <li class="nav-item nav-item-3"><a href="integrated.Modules.html" >integrated.Modules package</a> &raquo;</li>
+          <li class="nav-item nav-item-4"><a href="integrated.Modules.Farm.html" >integrated.Modules.Farm package</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-01-28.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Last updated on 2016-02-16.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

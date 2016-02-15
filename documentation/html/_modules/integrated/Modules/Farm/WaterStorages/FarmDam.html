@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../readme.html" />
     <link rel="up" title="Module code" href="../../../../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -33,9 +33,9 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,22 +44,22 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for integrated.Modules.Farm.WaterStorages.FarmDam</h1><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">from</span> <span class="nn">WaterStore</span> <span class="kn">import</span> <span class="n">WaterStore</span>
 
-<span class="c">#from WaterStorages.WaterStore import WaterStore</span>
-<span class="c">#from Common.GeneralFunctions import *</span>
+<span class="c1">#from WaterStorages.WaterStore import WaterStore</span>
+<span class="c1">#from Common.GeneralFunctions import *</span>
 <span class="kn">from</span> <span class="nn">integrated.Modules.Core.GeneralFunctions</span> <span class="kn">import</span> <span class="o">*</span>
 
 
@@ -72,53 +72,53 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_farm_dam_capital_costs</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">include_farm_dam_capital_costs</span> <span class="o">=</span> <span class="n">include_farm_dam_capital_costs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pump_vol_ML</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;pump_vol_ML&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pump_vol_ML</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;pump_vol_ML&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
         <span class="n">WaterStore</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-        <span class="c">#self.calcNetWaterAvailable()</span>
+        <span class="c1">#self.calcNetWaterAvailable()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">annual_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcAnnualCosts</span><span class="p">()</span>
 
-    <span class="c">#End init()</span>
+    <span class="c1">#End init()</span>
 
 <div class="viewcode-block" id="FarmDam.calcNetWaterAvailable"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.WaterStorages.html#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcNetWaterAvailable">[docs]</a>    <span class="k">def</span> <span class="nf">calcNetWaterAvailable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="n">available_water</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">WaterSources</span><span class="o">.</span><span class="n">calcGrossWaterAvailable</span><span class="p">()</span>
-        <span class="c">#self.net_water_available = available_water - (available_water * self.ClimateVariables.surface_evap_rate)</span>
+        <span class="c1">#self.net_water_available = available_water - (available_water * self.ClimateVariables.surface_evap_rate)</span>
 
-        <span class="k">return</span> <span class="p">(</span><span class="n">available_water</span> <span class="o">-</span> <span class="p">(</span><span class="n">available_water</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ClimateVariables</span><span class="o">.</span><span class="n">surface_evap_rate</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">available_water</span> <span class="o">-</span> <span class="p">(</span><span class="n">available_water</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ClimateVariables</span><span class="o">.</span><span class="n">surface_evap_rate</span><span class="p">))</span></div>
 
-    <span class="c">#End calcNetWaterAvailable()</span>
-</div>
+    <span class="c1">#End calcNetWaterAvailable()</span>
+
 <div class="viewcode-block" id="FarmDam.calcTotalCapitalCosts"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.WaterStorages.html#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcTotalCapitalCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalCapitalCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate total cost of this storage solution</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c">#In original code, it would set include_farm_dam_capital_costs to 0</span>
-        <span class="c">#and multiply surface_storage_cost by include_farm_dam_capital_costs</span>
-        <span class="c">#i.e. (storage_cost_per_ML * total_surface_water) * include_farm_dam_capital_costs</span>
-        <span class="c">#   = (storage_cost_per_ML * total_surface_water) * 0</span>
+        <span class="c1">#In original code, it would set include_farm_dam_capital_costs to 0</span>
+        <span class="c1">#and multiply surface_storage_cost by include_farm_dam_capital_costs</span>
+        <span class="c1">#i.e. (storage_cost_per_ML * total_surface_water) * include_farm_dam_capital_costs</span>
+        <span class="c1">#   = (storage_cost_per_ML * total_surface_water) * 0</span>
 
-        <span class="c"># total_surface_water = self.WaterSources.water_source[&#39;flood_harvest&#39;]</span>
+        <span class="c1"># total_surface_water = self.WaterSources.water_source[&#39;flood_harvest&#39;]</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_farm_dam_capital_costs</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
-            <span class="c">#return self.storage_cost_per_ML * total_surface_water</span>
+            <span class="c1">#return self.storage_cost_per_ML * total_surface_water</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">storage_cost_per_ML</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">storage_capacity_ML</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">0</span>
-        <span class="c">#End if</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+        <span class="c1">#End if</span>
 
-    <span class="c">#End calcStorageCapitalCosts()</span>
-</div>
+    <span class="c1">#End calcStorageCapitalCosts()</span>
+
 <div class="viewcode-block" id="FarmDam.calcTotalCapitalCostsPerHa"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.WaterStorages.html#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcTotalCapitalCostsPerHa">[docs]</a>    <span class="k">def</span> <span class="nf">calcTotalCapitalCostsPerHa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">area</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTotalCapitalCosts</span><span class="p">()</span> <span class="o">/</span> <span class="n">area</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcTotalCapitalCosts</span><span class="p">()</span> <span class="o">/</span> <span class="n">area</span></div>
+
 <div class="viewcode-block" id="FarmDam.calcCapturePumpCostPerML"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.WaterStorages.html#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcCapturePumpCostPerML">[docs]</a>    <span class="k">def</span> <span class="nf">calcCapturePumpCostPerML</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stored_water_ML</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pump_cost_dollar_per_ML</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">capture_pump_cost_ratio</span>
-    <span class="c">#End calcCapturePumpCostPerML</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pump_cost_dollar_per_ML</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">capture_pump_cost_ratio</span></div>
+    <span class="c1">#End calcCapturePumpCostPerML</span>
+
 <div class="viewcode-block" id="FarmDam.calcOngoingCosts"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.WaterStorages.html#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcOngoingCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcOngoingCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -126,18 +126,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">pump_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcPumpCost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_vol_ML</span><span class="p">)</span>
-        <span class="n">stored_water_ML</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stored_water_vol_ML</span> <span class="c">#self.WaterSources.water_source[&#39;flood_harvest&#39;]</span>
+        <span class="n">stored_water_ML</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stored_water_vol_ML</span> <span class="c1">#self.WaterSources.water_source[&#39;flood_harvest&#39;]</span>
         <span class="n">surface_pump_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcSurfacePumpCost</span><span class="p">(</span><span class="n">stored_water_ML</span><span class="p">)</span>
         <span class="n">maintenance_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcMaintenanceCosts</span><span class="p">(</span><span class="n">stored_water_ML</span><span class="p">)</span>
 
-        <span class="c">#print pump_cost, surface_pump_cost, maintenance_cost</span>
+        <span class="c1">#print pump_cost, surface_pump_cost, maintenance_cost</span>
 
         <span class="n">ongoing_cost</span> <span class="o">=</span> <span class="n">pump_cost</span> <span class="o">+</span> <span class="n">maintenance_cost</span> <span class="o">+</span> <span class="n">surface_pump_cost</span>
 
-        <span class="k">return</span> <span class="n">ongoing_cost</span>
+        <span class="k">return</span> <span class="n">ongoing_cost</span></div>
 
-    <span class="c">#End calcCapitalCosts()</span>
-</div>
+    <span class="c1">#End calcCapitalCosts()</span>
+
 <div class="viewcode-block" id="FarmDam.calcAnnualCosts"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.WaterStorages.html#integrated.Modules.Farm.WaterStorages.FarmDam.FarmDam.calcAnnualCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcAnnualCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -152,19 +152,19 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">annual_cost</span> <span class="o">=</span> <span class="n">cost</span>
 
-        <span class="k">return</span> <span class="n">cost</span>
+        <span class="k">return</span> <span class="n">cost</span></div></div>
 
-    <span class="c">#End calcCosts()</span>
+    <span class="c1">#End calcCosts()</span>
 
-<span class="c">#End SurfaceStorage</span></div></div>
+<span class="c1">#End SurfaceStorage</span>
 </pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../../../search.html" method="get">
       <input type="text" name="q" />
@@ -181,7 +181,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -190,14 +190,14 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-01-28.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Last updated on 2016-02-16.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

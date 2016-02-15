@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../readme.html" />
     <link rel="up" title="Module code" href="../../../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -33,9 +33,9 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,18 +44,18 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for integrated.Modules.Ecology.FlowSuitability</h1><div class="highlight"><pre>
-<span class="c"># FlowSuitability.py</span>
+<span class="c1"># FlowSuitability.py</span>
 
 <span class="kn">from</span> <span class="nn">WaterSuitability</span> <span class="kn">import</span> <span class="n">WaterSuitability</span>
 
@@ -76,37 +76,37 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">indexes</span> <span class="o">=</span> <span class="n">indexes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span>
 
-        <span class="c">#Attribute to store default index columns</span>
+        <span class="c1">#Attribute to store default index columns</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">default_index_cols</span> <span class="o">=</span> <span class="bp">None</span>
 
-    <span class="c">#End init()</span>
+    <span class="c1">#End init()</span>
 
 <div class="viewcode-block" id="FlowSuitability.generateDefaultIndexCols"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.generateDefaultIndexCols">[docs]</a>    <span class="k">def</span> <span class="nf">generateDefaultIndexCols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">indexes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indexes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">default_index_cols</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="c">#Remember, python is pass-by-reference</span>
-        <span class="c">#So these update the original object</span>
+        <span class="c1">#Remember, python is pass-by-reference</span>
+        <span class="c1">#So these update the original object</span>
         <span class="n">defaults</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_index_cols</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">species</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">species_list</span><span class="p">):</span>
 
             <span class="k">if</span> <span class="n">species</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">defaults</span><span class="p">:</span>
                 <span class="n">defaults</span><span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="c">#End if</span>
+            <span class="c1">#End if</span>
             
-            <span class="n">defaults</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s">&#39;timing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexes</span><span class="p">[</span><span class="s">&quot;{s}_timing&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">defaults</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexes</span><span class="p">[</span><span class="s">&quot;{s}_duration&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">defaults</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s">&#39;dry_period&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexes</span><span class="p">[</span><span class="s">&quot;{s}_dry&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">defaults</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s">&#39;gwlevel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexes</span><span class="p">[</span><span class="s">&quot;{s}_gwlevel&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">defaults</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s">&#39;salinity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexes</span><span class="p">[</span><span class="s">&quot;{s}_salinity&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">defaults</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s1">&#39;timing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;{s}_timing&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">defaults</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;{s}_duration&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">defaults</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s1">&#39;dry_period&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;{s}_dry&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">defaults</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s1">&#39;gwlevel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;{s}_gwlevel&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">defaults</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s1">&#39;salinity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;{s}_salinity&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="c"># assert len(self.species_list) == len(self.default_index_cols)</span>
+        <span class="c1"># assert len(self.species_list) == len(self.default_index_cols)</span>
 
-    <span class="c">#End generateDefaultIndexCols()</span>
-</div>
+    <span class="c1">#End generateDefaultIndexCols()</span>
+
 <div class="viewcode-block" id="FlowSuitability.rollingCounter"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.rollingCounter">[docs]</a>    <span class="k">def</span> <span class="nf">rollingCounter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -115,28 +115,35 @@
 
         <span class="n">val</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="n">val</span> <span class="o">&lt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_sep</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="o">==</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">val</span> <span class="o">&lt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_sep</span><span class="p">)):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rolling_count</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rolling_count</span> <span class="o">=</span> <span class="mi">1</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rolling_count</span>
-    <span class="c">#End rollingCounter()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rolling_count</span></div>
+    <span class="c1">#End rollingCounter()</span>
 
-    <span class="c">#Group events together by id then remove events that do not fit the min duration rule</span></div>
+    <span class="c1">#Group events together by id then remove events that do not fit the min duration rule</span>
 <div class="viewcode-block" id="FlowSuitability.grouper"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.grouper">[docs]</a>    <span class="k">def</span> <span class="nf">grouper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
 
-        <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">grouper_id</span>
-        
-        <span class="k">if</span> <span class="n">end</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">start</span> <span class="o">==</span> <span class="bp">True</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">end</span> <span class="o">==</span> <span class="bp">True</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">grouper_id</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">grouper_id</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">grouper_id</span>
-    <span class="c">#End grouper</span>
 
-        </div>
+        <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grouper_id</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">grouper_id</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">grouper_id</span></div>
+        
+        <span class="c1"># if end == True:</span>
+        <span class="c1">#     #self.grouper_id += 1</span>
+        <span class="c1">#      #- 1</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#     return self.grouper_id</span>
+    <span class="c1">#End grouper</span>
+
+        
 <div class="viewcode-block" id="FlowSuitability.floodEvents"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.floodEvents">[docs]</a>    <span class="k">def</span> <span class="nf">floodEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow_df</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="n">min_duration</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">min_separation</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
         
         <span class="sd">&quot;&quot;&quot;</span>
@@ -156,68 +163,79 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">events</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">flow_df</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">flow_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-        <span class="c"># col = temp_df.columns[0]</span>
+        <span class="c1"># col = temp_df.columns[0]</span>
 
-        <span class="n">events</span><span class="p">[</span><span class="s">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">events</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">index</span>
 
-        <span class="c">#If value is above threshold and the time distance between flow observation is &gt;= min_separation, </span>
-        <span class="c">#and the flow time is &gt;= min_duration, count as event</span>
+        <span class="c1">#If value is above threshold and the time distance between flow observation is &gt;= min_separation, </span>
+        <span class="c1">#and the flow time is &gt;= min_duration, count as event</span>
         <span class="n">events</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="n">events</span><span class="o">.</span><span class="n">Flow</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">events</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">flow_events</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-            <span class="n">flow_events</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-            <span class="n">flow_events</span><span class="p">[</span><span class="s">&#39;end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-            <span class="n">flow_events</span><span class="p">[</span><span class="s">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">)</span>
-            <span class="n">flow_events</span><span class="p">[</span><span class="s">&#39;dry_period&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">)</span>
-            <span class="n">flow_events</span><span class="p">[</span><span class="s">&#39;timing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">)</span>
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)</span>
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;dry_period&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)</span>
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;timing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
 
-            <span class="c"># events.loc[:, &#39;dry_period&#39;] = events[&#39;datetime&#39;].diff()</span>
-            <span class="n">events</span><span class="p">[</span><span class="s">&#39;dry_period&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="s">&#39;datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+            <span class="c1"># events.loc[:, &#39;dry_period&#39;] = events[&#39;datetime&#39;].diff()</span>
+            <span class="n">events</span><span class="p">[</span><span class="s1">&#39;dry_period&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
 
-            <span class="c">#Static variable for local function</span>
+            <span class="c1">#Static variable for local function</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rolling_count</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">min_sep</span> <span class="o">=</span> <span class="n">min_separation</span>
 
-            <span class="n">events</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s">&#39;counter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="s">&#39;dry_period&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rollingCounter</span><span class="p">)</span>
+            <span class="n">events</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;counter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="s1">&#39;dry_period&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rollingCounter</span><span class="p">)</span>
             
-            <span class="c">#Select all the rows that have a duration of 1, and the next row is also a duration of 1</span>
-            <span class="c">#These will be the start of an event</span>
-            <span class="n">events</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s">&#39;starts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="s">&#39;counter&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">0</span>
-            <span class="n">events</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s">&#39;ends&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="s">&#39;counter&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="c1">#Select all the rows that have a duration of 1, and the next row is also a duration of 1</span>
+            <span class="c1">#These will be the start of an event</span>
+            <span class="n">events</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;starts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="s1">&#39;counter&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+            <span class="n">events</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;ends&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="s1">&#39;counter&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">grouper_id</span> <span class="o">=</span> <span class="mi">1</span>
 
-            <span class="n">events</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="p">[[</span><span class="s">&#39;starts&#39;</span><span class="p">,</span> <span class="s">&#39;ends&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">grouper</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">events</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="p">[[</span><span class="s1">&#39;starts&#39;</span><span class="p">,</span> <span class="s1">&#39;ends&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">grouper</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-            <span class="c">#Remove groups below the min duration rule</span>
-            <span class="n">group</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">&#39;group&#39;</span><span class="p">)[</span><span class="s">&#39;Flow&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">min_duration</span>
+            <span class="c1">#Group events below the min duration rule</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)[</span><span class="s1">&#39;Flow&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">min_duration</span>
 
-            <span class="c">#Remove the groups found to be below the min duration rule</span>
-            <span class="n">events</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="o">~</span><span class="n">events</span><span class="p">[</span><span class="s">&quot;group&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="n">group</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span>
+            <span class="c1">#Remove the groups found to be below the min duration rule</span>
+            <span class="n">events</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="o">~</span><span class="n">events</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="n">group</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span>
 
-            <span class="n">events</span><span class="p">[</span><span class="s">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="n">events</span><span class="p">[</span><span class="s">&#39;ends&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">True</span><span class="p">][</span><span class="s">&#39;counter&#39;</span><span class="p">]</span>
+            <span class="c1">#Mark very last entry &#39;end&#39; as true</span>
+            <span class="n">events</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;ends&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
 
-            <span class="n">group</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">&#39;group&#39;</span><span class="p">],</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="n">events</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="n">events</span><span class="p">[</span><span class="s1">&#39;ends&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">True</span><span class="p">][</span><span class="s1">&#39;counter&#39;</span><span class="p">]</span>
 
-            <span class="n">temp</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s">&#39;dry_period&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;group&#39;</span><span class="p">],</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
-            <span class="c">#Replace NaNs with a timedelta of 0 (i.e. no dry period)</span>
-            <span class="n">temp</span><span class="p">[</span><span class="n">temp</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">)</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;dry_period&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+            <span class="c1">#Replace NaNs with a timedelta of 0 (i.e. no dry period)</span>
+            <span class="n">temp</span><span class="p">[</span><span class="n">temp</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)</span>
 
             <span class="n">flow_events</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-            <span class="n">flow_events</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s">&#39;datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-            <span class="n">flow_events</span><span class="p">[</span><span class="s">&#39;end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s">&#39;datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-            <span class="n">flow_events</span><span class="p">[</span><span class="s">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s">&#39;duration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-            <span class="n">flow_events</span><span class="p">[</span><span class="s">&#39;dry_period&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;timedelta64[ns]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">)))</span> <span class="c">#Convert to integer of days</span>
-            <span class="n">flow_events</span><span class="p">[</span><span class="s">&#39;timing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow_events</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">()</span><span class="o">.</span><span class="n">month</span><span class="p">)</span>
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">flow_events</span>
+            <span class="c1">#Convert to Pandas datetime</span>
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">])</span>
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">])</span>
 
-    <span class="c">#End floodEvents()</span>
-    </div>
+            <span class="c1">#Calculate difference between end and start in days</span>
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;dry_period&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;timedelta64[ns]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)))</span> <span class="c1">#Convert to integer of days</span>
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;timing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">()</span><span class="o">.</span><span class="n">month</span><span class="p">)</span>
+        <span class="c1">#End if</span>
+
+        <span class="k">return</span> <span class="n">flow_events</span></div>
+
+    <span class="c1">#End floodEvents()</span>
+    
 <div class="viewcode-block" id="FlowSuitability.floodIndexes"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.floodIndexes">[docs]</a>    <span class="k">def</span> <span class="nf">floodIndexes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flood_events_df</span><span class="p">,</span> <span class="n">coordinates</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate index for each flood attribute based on index curve (defined in WaterSuitability.py)</span>
@@ -226,21 +244,21 @@
 <span class="sd">        event id, start date, end date, duration, startmonth (month when the event start), dry (interflood dry period),duration index, timing index, interflood dry period index</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c"># df = pd.DataFrame()</span>
+        <span class="c1"># df = pd.DataFrame()</span>
         <span class="k">for</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">coords</span> <span class="ow">in</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
 
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">flood_events_df</span><span class="p">[</span><span class="s">&#39;flood_{a}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">attribute</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcIndex</span><span class="p">(</span><span class="n">flood_events_df</span><span class="p">[</span><span class="n">attribute</span><span class="p">],</span> <span class="n">coords</span><span class="p">)</span>
+                <span class="n">flood_events_df</span><span class="p">[</span><span class="s1">&#39;flood_{a}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">attribute</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcIndex</span><span class="p">(</span><span class="n">flood_events_df</span><span class="p">[</span><span class="n">attribute</span><span class="p">],</span> <span class="n">coords</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                <span class="c">#Missing attribute in flood events</span>
+                <span class="c1">#Missing attribute in flood events</span>
                 <span class="k">pass</span>
             
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">flood_events_df</span>
+        <span class="k">return</span> <span class="n">flood_events_df</span></div>
         
-    <span class="c">#End floodIndexes()</span>
-</div>
+    <span class="c1">#End floodIndexes()</span>
+
 <div class="viewcode-block" id="FlowSuitability.gwIndexes"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.gwIndexes">[docs]</a>    <span class="k">def</span> <span class="nf">gwIndexes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">coordinates</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -250,28 +268,28 @@
 <span class="sd">        :param coordinates: DataFrame of x, y coords</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcIndex</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">coordinates</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcIndex</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">coordinates</span><span class="p">)</span></div>
 
-    <span class="c">#End gwIndexes</span>
+    <span class="c1">#End gwIndexes</span>
 
-</div>
+
 <div class="viewcode-block" id="FlowSuitability.calcIndex"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.calcIndex">[docs]</a>    <span class="k">def</span> <span class="nf">calcIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
 
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">coords</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">coords</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">coords</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">coords</span><span class="o">.</span><span class="n">y</span><span class="p">)</span></div>
 
-        <span class="c"># try:</span>
-        <span class="c">#     x = np.interp(data, coords.x, coords.y)</span>
-        <span class="c">#     return x</span>
-        <span class="c"># except TypeError:</span>
-        <span class="c">#     print data</span>
-        <span class="c">#     print coords.x</span>
-        <span class="c">#     print coords.y</span>
-        <span class="c">#     print &quot;Error occured here!&quot;</span>
-        <span class="c">#     import sys</span>
-        <span class="c">#     sys.exit()</span>
+        <span class="c1"># try:</span>
+        <span class="c1">#     x = np.interp(data, coords.x, coords.y)</span>
+        <span class="c1">#     return x</span>
+        <span class="c1"># except TypeError:</span>
+        <span class="c1">#     print data</span>
+        <span class="c1">#     print coords.x</span>
+        <span class="c1">#     print coords.y</span>
+        <span class="c1">#     print &quot;Error occured here!&quot;</span>
+        <span class="c1">#     import sys</span>
+        <span class="c1">#     sys.exit()</span>
 
-    <span class="c">#End calcIndex()</span>
-</div>
+    <span class="c1">#End calcIndex()</span>
+
 <div class="viewcode-block" id="FlowSuitability.flowSummary"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.flowSummary">[docs]</a>    <span class="k">def</span> <span class="nf">flowSummary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">func_name</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -285,11 +303,11 @@
         <span class="n">grouping</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
         
         <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">grouping</span><span class="p">,</span> <span class="n">func_name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">func</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">()</span></div>
 
-    <span class="c">#End flowSummary()</span>
-    </div>
-<div class="viewcode-block" id="FlowSuitability.generateEnvIndex"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.generateEnvIndex">[docs]</a>    <span class="k">def</span> <span class="nf">generateEnvIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">,</span> <span class="n">scen_data</span><span class="p">,</span> <span class="n">salinity</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">ctf_col</span><span class="o">=</span><span class="s">&#39;ctf_low&#39;</span><span class="p">,</span> <span class="n">species_cols</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="c1">#End flowSummary()</span>
+    
+<div class="viewcode-block" id="FlowSuitability.generateEnvIndex"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.generateEnvIndex">[docs]</a>    <span class="k">def</span> <span class="nf">generateEnvIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">,</span> <span class="n">scen_data</span><span class="p">,</span> <span class="n">salinity</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">ctf_col</span><span class="o">=</span><span class="s1">&#39;ctf_low&#39;</span><span class="p">,</span> <span class="n">species_cols</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate environmental indexes for the given list of species</span>
@@ -304,30 +322,30 @@
 
         <span class="n">asset_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">asset_table</span>
 
-        <span class="n">gauge</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">asset_table</span><span class="p">[</span><span class="s">&quot;Gauge&quot;</span><span class="p">][</span><span class="n">asset_id</span><span class="p">])</span>
+        <span class="n">gauge</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">asset_table</span><span class="p">[</span><span class="s2">&quot;Gauge&quot;</span><span class="p">][</span><span class="n">asset_id</span><span class="p">])</span>
 
-        <span class="n">surfaceflow</span> <span class="o">=</span> <span class="n">scen_data</span><span class="p">[</span><span class="n">gauge</span><span class="p">][</span><span class="s">&quot;Flow&quot;</span><span class="p">]</span>
-        <span class="c">#baseflow = scen_data[gauge][&quot;Baseflow&quot;]</span>
+        <span class="n">surfaceflow</span> <span class="o">=</span> <span class="n">scen_data</span><span class="p">[</span><span class="n">gauge</span><span class="p">][</span><span class="s2">&quot;Flow&quot;</span><span class="p">]</span>
+        <span class="c1">#baseflow = scen_data[gauge][&quot;Baseflow&quot;]</span>
 
-        <span class="c">#Get GW level data with datetime</span>
-        <span class="n">gw_data</span> <span class="o">=</span> <span class="n">scen_data</span><span class="p">[</span><span class="s">&quot;gwlevel&quot;</span><span class="p">][[</span><span class="s">&quot;A{a}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">asset_id</span><span class="o">+</span><span class="mi">1</span><span class="p">)]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+        <span class="c1">#Get GW level data with datetime</span>
+        <span class="n">gw_data</span> <span class="o">=</span> <span class="n">scen_data</span><span class="p">[</span><span class="s2">&quot;gwlevel&quot;</span><span class="p">][[</span><span class="s2">&quot;A{a}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">asset_id</span><span class="o">+</span><span class="mi">1</span><span class="p">)]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="c">#TODO: Refactor this to reflect format of data files</span>
-            <span class="c">#If using data, number of observations has to equal GW data</span>
-            <span class="n">salinity_data</span> <span class="o">=</span> <span class="n">scen_data</span><span class="p">[</span><span class="s">&quot;salinity&quot;</span><span class="p">]</span>
+            <span class="c1">#TODO: Refactor this to reflect format of data files</span>
+            <span class="c1">#If using data, number of observations has to equal GW data</span>
+            <span class="n">salinity_data</span> <span class="o">=</span> <span class="n">scen_data</span><span class="p">[</span><span class="s2">&quot;salinity&quot;</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="c">#Use default value</span>
+            <span class="c1">#Use default value</span>
             <span class="n">salinity_data</span> <span class="o">=</span> <span class="n">salinity</span>
 
-        <span class="c">## provide summary of flow and groundwater statistics.</span>
-        <span class="c"># gw_mean = self.flowSummary(gw_data, &quot;mean&quot;)</span>
-        <span class="c"># baseflow_median = self.flowSummary(gw_data, &quot;median&quot;)</span>
-        <span class="c"># num_days_flow_ceased = self.ceaseDays(surfaceflow)</span>
-        <span class="c"># total_flow = self.flowSummary(surfaceflow, &quot;sum&quot;)</span>
+        <span class="c1">## provide summary of flow and groundwater statistics.</span>
+        <span class="c1"># gw_mean = self.flowSummary(gw_data, &quot;mean&quot;)</span>
+        <span class="c1"># baseflow_median = self.flowSummary(gw_data, &quot;median&quot;)</span>
+        <span class="c1"># num_days_flow_ceased = self.ceaseDays(surfaceflow)</span>
+        <span class="c1"># total_flow = self.flowSummary(surfaceflow, &quot;sum&quot;)</span>
 
-        <span class="n">min_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAssetParam</span><span class="p">(</span><span class="n">asset_table</span><span class="p">,</span> <span class="n">gauge</span><span class="p">,</span> <span class="s">&#39;Event_dur&#39;</span><span class="p">)</span>
-        <span class="n">min_gap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAssetParam</span><span class="p">(</span><span class="n">asset_table</span><span class="p">,</span> <span class="n">gauge</span><span class="p">,</span> <span class="s">&#39;Event_gap&#39;</span><span class="p">)</span>
+        <span class="n">min_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAssetParam</span><span class="p">(</span><span class="n">asset_table</span><span class="p">,</span> <span class="n">gauge</span><span class="p">,</span> <span class="s1">&#39;Event_dur&#39;</span><span class="p">)</span>
+        <span class="n">min_gap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAssetParam</span><span class="p">(</span><span class="n">asset_table</span><span class="p">,</span> <span class="n">gauge</span><span class="p">,</span> <span class="s1">&#39;Event_gap&#39;</span><span class="p">)</span>
         <span class="n">ctf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAssetParam</span><span class="p">(</span><span class="n">asset_table</span><span class="p">,</span> <span class="n">gauge</span><span class="p">,</span> <span class="n">ctf_col</span><span class="p">)</span>
 
         <span class="n">flow_events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">floodEvents</span><span class="p">(</span><span class="n">surfaceflow</span><span class="p">,</span> \
@@ -338,42 +356,42 @@
         <span class="n">event_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eventInfo</span><span class="p">(</span><span class="n">flow_events</span><span class="p">)</span>
         <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span>
 
-        <span class="c">#Generate indices for each species</span>
+        <span class="c1">#Generate indices for each species</span>
         <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="c">#Generate default column selection if no columns passed</span>
-        <span class="c">#Extracts the first column for each species indices</span>
+        <span class="c1">#Generate default column selection if no columns passed</span>
+        <span class="c1">#Extracts the first column for each species indices</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">species_cols</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">):</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_index_cols</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">generateDefaultIndexCols</span><span class="p">()</span>
-            <span class="c">#End if</span>
+            <span class="c1">#End if</span>
 
             <span class="n">species_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_index_cols</span>
 
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">species</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ecospecies</span><span class="p">):</span>
 
-            <span class="c">#Create Dict entry for species</span>
+            <span class="c1">#Create Dict entry for species</span>
             <span class="n">results</span><span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
-            <span class="c">#TODO</span>
-            <span class="c">#Run the below for each column within each coordinate file/dataframe if columns are not specified</span>
-            <span class="c">#rather than the specific columns hardcoded</span>
+            <span class="c1">#TODO</span>
+            <span class="c1">#Run the below for each column within each coordinate file/dataframe if columns are not specified</span>
+            <span class="c1">#rather than the specific columns hardcoded</span>
 
             <span class="n">species_index_col</span> <span class="o">=</span> <span class="n">species_cols</span><span class="p">[</span><span class="n">species</span><span class="p">]</span>
 
-            <span class="n">timing_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s">&quot;{s}_timing&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="n">species_index_col</span><span class="p">[</span><span class="s">&#39;timing&#39;</span><span class="p">])</span>
-            <span class="n">duration_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s">&quot;{s}_duration&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="n">species_index_col</span><span class="p">[</span><span class="s">&#39;duration&#39;</span><span class="p">])</span>
-            <span class="n">dry_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s">&quot;{s}_dry&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="n">species_index_col</span><span class="p">[</span><span class="s">&#39;dry_period&#39;</span><span class="p">])</span>
-            <span class="n">gw_level_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s">&quot;{s}_gwlevel&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="n">species_index_col</span><span class="p">[</span><span class="s">&#39;gwlevel&#39;</span><span class="p">])</span>
-            <span class="n">salinity_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s">&quot;{s}_salinity&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="n">species_index_col</span><span class="p">[</span><span class="s">&#39;salinity&#39;</span><span class="p">])</span>
+            <span class="n">timing_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;{s}_timing&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="n">species_index_col</span><span class="p">[</span><span class="s1">&#39;timing&#39;</span><span class="p">])</span>
+            <span class="n">duration_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;{s}_duration&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="n">species_index_col</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">])</span>
+            <span class="n">dry_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;{s}_dry&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="n">species_index_col</span><span class="p">[</span><span class="s1">&#39;dry_period&#39;</span><span class="p">])</span>
+            <span class="n">gw_level_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;{s}_gwlevel&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="n">species_index_col</span><span class="p">[</span><span class="s1">&#39;gwlevel&#39;</span><span class="p">])</span>
+            <span class="n">salinity_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;{s}_salinity&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="n">species_index_col</span><span class="p">[</span><span class="s1">&#39;salinity&#39;</span><span class="p">])</span>
 
             <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s">&quot;timing&quot;</span><span class="p">:</span> <span class="n">timing_coords</span><span class="p">,</span>
-                <span class="s">&quot;duration&quot;</span><span class="p">:</span> <span class="n">duration_coords</span><span class="p">,</span>
-                <span class="s">&quot;dry_period&quot;</span><span class="p">:</span> <span class="n">dry_coords</span><span class="p">,</span>
+                <span class="s2">&quot;timing&quot;</span><span class="p">:</span> <span class="n">timing_coords</span><span class="p">,</span>
+                <span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="n">duration_coords</span><span class="p">,</span>
+                <span class="s2">&quot;dry_period&quot;</span><span class="p">:</span> <span class="n">dry_coords</span><span class="p">,</span>
             <span class="p">}</span>
 
             <span class="n">flow_events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">floodIndexes</span><span class="p">(</span><span class="n">flow_events</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
@@ -381,69 +399,67 @@
 
             <span class="n">temp_gw_data</span> <span class="o">=</span> <span class="n">gw_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-            <span class="n">temp_gw_data</span><span class="p">[</span><span class="s">&#39;gw_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gwIndexes</span><span class="p">(</span><span class="n">temp_gw_data</span><span class="p">,</span> <span class="n">gw_level_coords</span><span class="p">)</span>
+            <span class="n">temp_gw_data</span><span class="p">[</span><span class="s1">&#39;gw_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gwIndexes</span><span class="p">(</span><span class="n">temp_gw_data</span><span class="p">,</span> <span class="n">gw_level_coords</span><span class="p">)</span>
 
-            <span class="c">#Assume 10,000 ppm, could be replaced with daily data</span>
-            <span class="n">temp_gw_data</span><span class="p">[</span><span class="s">&#39;salinity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_gw_data</span><span class="p">[</span><span class="s">&#39;gw_index&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">salinity_data</span>
+            <span class="c1">#Assume 10,000 ppm, could be replaced with daily data</span>
+            <span class="n">temp_gw_data</span><span class="p">[</span><span class="s1">&#39;salinity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_gw_data</span><span class="p">[</span><span class="s1">&#39;gw_index&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">salinity_data</span>
 
-            <span class="n">temp_gw_data</span><span class="p">[</span><span class="s">&#39;salinity_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcIndex</span><span class="p">(</span><span class="n">temp_gw_data</span><span class="p">[</span><span class="s">&#39;salinity&#39;</span><span class="p">],</span> <span class="n">salinity_coords</span><span class="p">)</span>
+            <span class="n">temp_gw_data</span><span class="p">[</span><span class="s1">&#39;salinity_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcIndex</span><span class="p">(</span><span class="n">temp_gw_data</span><span class="p">[</span><span class="s1">&#39;salinity&#39;</span><span class="p">],</span> <span class="n">salinity_coords</span><span class="p">)</span>
 
-            <span class="c"># weight_for_species = self.weights.loc[species]</span>
-            <span class="n">flow_events</span><span class="p">[</span><span class="s">&#39;sw_suitability_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcSWSuitabilityIndex</span><span class="p">(</span><span class="n">flow_events</span><span class="p">,</span> <span class="n">species_weights</span><span class="p">)</span>
+            <span class="c1"># weight_for_species = self.weights.loc[species]</span>
+            <span class="n">flow_events</span><span class="p">[</span><span class="s1">&#39;sw_suitability_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcSWSuitabilityIndex</span><span class="p">(</span><span class="n">flow_events</span><span class="p">,</span> <span class="n">species_weights</span><span class="p">)</span>
 
-            <span class="n">temp_gw_data</span><span class="p">[</span><span class="s">&#39;gw_suitability_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcGWSuitabilityIndex</span><span class="p">(</span><span class="n">temp_gw_data</span><span class="p">[</span><span class="s">&#39;gw_index&#39;</span><span class="p">],</span> <span class="n">temp_gw_data</span><span class="p">[</span><span class="s">&#39;salinity_index&#39;</span><span class="p">])</span>
+            <span class="n">temp_gw_data</span><span class="p">[</span><span class="s1">&#39;gw_suitability_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcGWSuitabilityIndex</span><span class="p">(</span><span class="n">temp_gw_data</span><span class="p">[</span><span class="s1">&#39;gw_index&#39;</span><span class="p">],</span> <span class="n">temp_gw_data</span><span class="p">[</span><span class="s1">&#39;salinity_index&#39;</span><span class="p">])</span>
 
-            <span class="c">#Adds SW suitability and Water suitability indexes to GW dataframe</span>
+            <span class="c1">#Adds SW suitability and Water suitability indexes to GW dataframe</span>
             <span class="n">temp_gw_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcWaterSuitabilityIndex</span><span class="p">(</span><span class="n">temp_gw_data</span><span class="p">,</span> <span class="n">flow_events</span><span class="p">,</span> <span class="n">gw_weight</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sw_weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-            <span class="c"># print flow_events[[&#39;start&#39;, &#39;end&#39;, &#39;sw_suitability_index&#39;]].head()</span>
-            <span class="c"># print flow_events.head()</span>
-            <span class="c"># print temp_gw_data.head(25)</span>
+            <span class="c1"># print flow_events[[&#39;start&#39;, &#39;end&#39;, &#39;sw_suitability_index&#39;]].head()</span>
+            <span class="c1"># print flow_events.head()</span>
+            <span class="c1"># print temp_gw_data.head(25)</span>
             
-            <span class="n">results</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s">&#39;sw&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow_events</span>
-            <span class="n">results</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s">&#39;gw&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_gw_data</span>
-            <span class="n">results</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s">&#39;water_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_gw_data</span><span class="p">[</span><span class="s">&#39;water_suitability_index&#39;</span><span class="p">]</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s1">&#39;sw&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow_events</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s1">&#39;gw&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_gw_data</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">species</span><span class="p">][</span><span class="s1">&#39;water_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_gw_data</span><span class="p">[</span><span class="s1">&#39;water_suitability_index&#39;</span><span class="p">]</span>
 
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">results</span>
+        <span class="k">return</span> <span class="n">results</span></div>
 
-    <span class="c">#End generateEnvIndex()</span>
-</div>
+    <span class="c1">#End generateEnvIndex()</span>
+
 <div class="viewcode-block" id="FlowSuitability.generateSpeciesIndex"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.generateSpeciesIndex">[docs]</a>    <span class="k">def</span> <span class="nf">generateSpeciesIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index_input</span><span class="p">,</span> <span class="n">gauge</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">coord_cols</span><span class="p">):</span>
-        <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s">&quot;{s}_timing&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="n">coord_cols</span><span class="p">)</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;{s}_timing&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="n">coord_cols</span><span class="p">)</span>
         
-        
-        
-        <span class="n">salinity_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s">&quot;{s}_salinity&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;ppm&quot;</span><span class="p">,</span> <span class="s">&quot;Index&quot;</span><span class="p">])</span>
-    <span class="c">#End generateSpeciesIndex()</span>
-</div>
+        <span class="n">salinity_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexes</span><span class="p">[</span><span class="s2">&quot;{s}_salinity&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">species</span><span class="p">)],</span> <span class="n">cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ppm&quot;</span><span class="p">,</span> <span class="s2">&quot;Index&quot;</span><span class="p">])</span></div>
+    <span class="c1">#End generateSpeciesIndex()</span>
+
 <div class="viewcode-block" id="FlowSuitability.eventInfo"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.eventInfo">[docs]</a>    <span class="k">def</span> <span class="nf">eventInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flood_event</span><span class="p">):</span>
         
-        <span class="n">timing</span> <span class="o">=</span> <span class="n">flood_event</span><span class="p">[</span><span class="s">&#39;timing&#39;</span><span class="p">]</span>
-        <span class="n">duration</span> <span class="o">=</span> <span class="n">flood_event</span><span class="p">[</span><span class="s">&#39;duration&#39;</span><span class="p">]</span>
-        <span class="n">dry_period</span> <span class="o">=</span> <span class="n">flood_event</span><span class="p">[</span><span class="s">&#39;dry_period&#39;</span><span class="p">]</span>
+        <span class="n">timing</span> <span class="o">=</span> <span class="n">flood_event</span><span class="p">[</span><span class="s1">&#39;timing&#39;</span><span class="p">]</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">flood_event</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span>
+        <span class="n">dry_period</span> <span class="o">=</span> <span class="n">flood_event</span><span class="p">[</span><span class="s1">&#39;dry_period&#39;</span><span class="p">]</span>
 
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">timing</span><span class="o">=</span><span class="n">timing</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">,</span> <span class="n">dry_period</span><span class="o">=</span><span class="n">dry_period</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">timing</span><span class="o">=</span><span class="n">timing</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">,</span> <span class="n">dry_period</span><span class="o">=</span><span class="n">dry_period</span><span class="p">))</span></div>
 
-    <span class="c">#End eventInfo()</span>
-</div>
+    <span class="c1">#End eventInfo()</span>
+
 <div class="viewcode-block" id="FlowSuitability.calcSWSuitabilityIndex"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.calcSWSuitabilityIndex">[docs]</a>    <span class="k">def</span> <span class="nf">calcSWSuitabilityIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
 
-        <span class="n">w_d</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="s">&#39;duration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">w_t</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="s">&#39;timing&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">w_f</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="s">&#39;dry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">w_d</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">w_t</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="s1">&#39;timing&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">w_f</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="s1">&#39;dry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-        <span class="n">duration</span> <span class="o">=</span> <span class="p">(</span><span class="n">w_d</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s">&#39;flood_duration&#39;</span><span class="p">])</span>
-        <span class="n">timing</span> <span class="o">=</span> <span class="p">(</span><span class="n">w_t</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s">&#39;flood_timing&#39;</span><span class="p">])</span>
-        <span class="n">dry</span> <span class="o">=</span> <span class="p">(</span><span class="n">w_f</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s">&#39;flood_dry_period&#39;</span><span class="p">])</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="p">(</span><span class="n">w_d</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;flood_duration&#39;</span><span class="p">])</span>
+        <span class="n">timing</span> <span class="o">=</span> <span class="p">(</span><span class="n">w_t</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;flood_timing&#39;</span><span class="p">])</span>
+        <span class="n">dry</span> <span class="o">=</span> <span class="p">(</span><span class="n">w_f</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;flood_dry_period&#39;</span><span class="p">])</span>
 
-        <span class="c"># df = pd.DataFrame(dict(duration=duration, timing=timing, dry=dry) )</span>
+        <span class="c1"># df = pd.DataFrame(dict(duration=duration, timing=timing, dry=dry) )</span>
 
-        <span class="k">return</span> <span class="n">duration</span><span class="o">+</span><span class="n">timing</span><span class="o">+</span><span class="n">dry</span>
+        <span class="k">return</span> <span class="n">duration</span><span class="o">+</span><span class="n">timing</span><span class="o">+</span><span class="n">dry</span></div>
 
-    <span class="c">#End calcSWSuitabilityIndex()</span>
-    </div>
+    <span class="c1">#End calcSWSuitabilityIndex()</span>
+    
 <div class="viewcode-block" id="FlowSuitability.eventIndexWeightedAvg"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.eventIndexWeightedAvg">[docs]</a>    <span class="k">def</span> <span class="nf">eventIndexWeightedAvg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flood_events_df</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate flood index summary based on weighted average for each event</span>
@@ -451,26 +467,26 @@
 <span class="sd">        event id, start date, end date, summary flood index</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">flood_events_df</span><span class="p">[</span><span class="s">&#39;flood_index_weightavg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flood_events_df</span><span class="p">[</span><span class="s">&#39;duration_index&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">weights</span><span class="p">[</span><span class="s">&#39;duration&#39;</span><span class="p">]</span> <span class="o">+</span> \
-                                                  <span class="n">flood_events_df</span><span class="p">[</span><span class="s">&#39;timing_index&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">weights</span><span class="p">[</span><span class="s">&#39;timing&#39;</span><span class="p">]</span> <span class="o">+</span> \
-                                                  <span class="n">flood_events_df</span><span class="p">[</span><span class="s">&#39;dry_index&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">weights</span><span class="p">[</span><span class="s">&#39;dry&#39;</span><span class="p">]</span>
+        <span class="n">flood_events_df</span><span class="p">[</span><span class="s1">&#39;flood_index_weightavg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flood_events_df</span><span class="p">[</span><span class="s1">&#39;duration_index&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">weights</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">+</span> \
+                                                  <span class="n">flood_events_df</span><span class="p">[</span><span class="s1">&#39;timing_index&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">weights</span><span class="p">[</span><span class="s1">&#39;timing&#39;</span><span class="p">]</span> <span class="o">+</span> \
+                                                  <span class="n">flood_events_df</span><span class="p">[</span><span class="s1">&#39;dry_index&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">weights</span><span class="p">[</span><span class="s1">&#39;dry&#39;</span><span class="p">]</span>
 
-        <span class="k">return</span> <span class="n">flood_events_df</span>
+        <span class="k">return</span> <span class="n">flood_events_df</span></div>
 
-    <span class="c">#End eventIndexWeightedAvg()</span>
-        </div>
+    <span class="c1">#End eventIndexWeightedAvg()</span>
+        
 <div class="viewcode-block" id="FlowSuitability.eventIndexMin"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.eventIndexMin">[docs]</a>    <span class="k">def</span> <span class="nf">eventIndexMin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flood_events_df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate flood index summary based on min rule</span>
 <span class="sd">        Output attributes:</span>
 <span class="sd">        event id, start date, end date, summary flood index</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">flood_events_df</span><span class="p">[</span><span class="s">&#39;flood_index_min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flood_indexes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">&quot;duration_index&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s">&quot;timing_index&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s">&quot;dry_index&quot;</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">flood_events_df</span><span class="p">[</span><span class="s1">&#39;flood_index_min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flood_indexes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;duration_index&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;timing_index&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;dry_index&quot;</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         
-        <span class="k">return</span> <span class="n">flood_events_df</span>
-    <span class="c">#End eventIndexMin()</span>
+        <span class="k">return</span> <span class="n">flood_events_df</span></div>
+    <span class="c1">#End eventIndexMin()</span>
 
-        </div>
+        
 <div class="viewcode-block" id="FlowSuitability.flowIndex"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.flowIndex">[docs]</a>    <span class="k">def</span> <span class="nf">flowIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow_df</span><span class="p">,</span> <span class="n">flood_events_df</span><span class="p">,</span> <span class="n">aggregate_option</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate daily flow index based on event index</span>
@@ -480,14 +496,14 @@
 <span class="sd">        :returns: Pandas Dataframe of flow indexes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">flow_index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">flow_index</span><span class="o">=</span><span class="n">flow_df</span><span class="p">[</span><span class="s">&quot;Flow&quot;</span><span class="p">]),</span> <span class="n">index</span><span class="o">=</span><span class="n">flow_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">flow_index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">flow_index</span><span class="o">=</span><span class="n">flow_df</span><span class="p">[</span><span class="s2">&quot;Flow&quot;</span><span class="p">]),</span> <span class="n">index</span><span class="o">=</span><span class="n">flow_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
         
-        <span class="n">flow_index</span><span class="p">[</span><span class="s">&quot;flow_index&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flood_events_df</span><span class="p">[(</span><span class="n">flow_index</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">flood_events_df</span><span class="p">[</span><span class="s">&quot;start_date&quot;</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">flow_index</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="n">flood_events_df</span><span class="p">[</span><span class="s">&quot;end_date&quot;</span><span class="p">])][</span><span class="n">aggregate_option</span><span class="p">]</span>
+        <span class="n">flow_index</span><span class="p">[</span><span class="s2">&quot;flow_index&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flood_events_df</span><span class="p">[(</span><span class="n">flow_index</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">flood_events_df</span><span class="p">[</span><span class="s2">&quot;start_date&quot;</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">flow_index</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="n">flood_events_df</span><span class="p">[</span><span class="s2">&quot;end_date&quot;</span><span class="p">])][</span><span class="n">aggregate_option</span><span class="p">]</span>
         
-        <span class="k">return</span> <span class="n">flow_index</span>
+        <span class="k">return</span> <span class="n">flow_index</span></div>
 
-    <span class="c">#End flowIndex</span>
-</div>
+    <span class="c1">#End flowIndex</span>
+
 <div class="viewcode-block" id="FlowSuitability.ceaseDays"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.ceaseDays">[docs]</a>    <span class="k">def</span> <span class="nf">ceaseDays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -498,76 +514,78 @@
 
         <span class="n">grouping</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">grouping</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">ceaseflow</span><span class="p">)</span>
-    <span class="c">#End ceaseDays()</span>
-</div>
+        <span class="k">return</span> <span class="n">grouping</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">ceaseflow</span><span class="p">)</span></div>
+    <span class="c1">#End ceaseDays()</span>
+
 <div class="viewcode-block" id="FlowSuitability.ctfDays"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.ctfDays">[docs]</a>    <span class="k">def</span> <span class="nf">ctfDays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">ctf</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
-        <span class="n">flooddays</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">ctf</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">dropna</span><span class="p">()[</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">ctf</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="c">#[x &gt; ctf].count()</span>
+        <span class="n">flooddays</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">ctf</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">dropna</span><span class="p">()[</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">ctf</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="c1">#[x &gt; ctf].count()</span>
 
-        <span class="c">#Original R code:</span>
-        <span class="c">#summaryby &lt;- as.POSIXlt(time(x))$year + 1900</span>
-        <span class="c">#Gets number of years since 1900, then adds 1900 years</span>
+        <span class="c1">#Original R code:</span>
+        <span class="c1">#summaryby &lt;- as.POSIXlt(time(x))$year + 1900</span>
+        <span class="c1">#Gets number of years since 1900, then adds 1900 years</span>
         <span class="n">grouping</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">grouping</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">flooddays</span><span class="p">,</span> <span class="n">ctf</span><span class="o">=</span><span class="n">ctf</span><span class="p">)</span>
-    <span class="c">#End ctfDays</span>
-</div>
+        <span class="k">return</span> <span class="n">grouping</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">flooddays</span><span class="p">,</span> <span class="n">ctf</span><span class="o">=</span><span class="n">ctf</span><span class="p">)</span></div>
+    <span class="c1">#End ctfDays</span>
+
 <div class="viewcode-block" id="FlowSuitability.ctfEvents"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FlowSuitability.FlowSuitability.ctfEvents">[docs]</a>    <span class="k">def</span> <span class="nf">ctfEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">ctf</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="n">min_separation</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">min_duration</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="n">flow_events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">floodEvents</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">ctf</span><span class="p">,</span> <span class="n">min_duration</span><span class="o">=</span><span class="n">min_duration</span><span class="p">,</span> <span class="n">min_separation</span><span class="o">=</span><span class="n">min_separation</span><span class="p">)</span>
 
-        <span class="c"># print flow_events</span>
-        <span class="c"># print &quot;-=-=-=-=-=-=-=-&quot;</span>
+        <span class="c1"># print flow_events</span>
+        <span class="c1"># print &quot;-=-=-=-=-=-=-=-&quot;</span>
 
-        <span class="k">return</span> <span class="n">flow_events</span>
+        <span class="k">return</span> <span class="n">flow_events</span></div></div>
         
-    <span class="c">#End ctfEvents()</span>
+    <span class="c1">#End ctfEvents()</span>
 
 
 
-    <span class="c">#get first row out of matching rows</span>
-    <span class="c"># low_ctf = self.getAssetParam(asset_table, gauge, &quot;CTF_low&quot;)</span>
+    <span class="c1">#get first row out of matching rows</span>
+    <span class="c1"># low_ctf = self.getAssetParam(asset_table, gauge, &quot;CTF_low&quot;)</span>
 
-    <span class="c"># ctf_low_days = self.ctfDays(surfaceflow, \</span>
-    <span class="c">#     threshold=low_ctf, \</span>
-    <span class="c">#     min_separation=min_gap, \</span>
-    <span class="c">#     min_duration=min_size)</span>
+    <span class="c1"># ctf_low_days = self.ctfDays(surfaceflow, \</span>
+    <span class="c1">#     threshold=low_ctf, \</span>
+    <span class="c1">#     min_separation=min_gap, \</span>
+    <span class="c1">#     min_duration=min_size)</span>
 
-    <span class="c"># ctf_low_events = self.ctfEvents(surfaceflow, \</span>
-    <span class="c">#     threshold=low_ctf, \</span>
-    <span class="c">#     min_separation=min_gap, \</span>
-    <span class="c">#     min_duration=min_size)</span>
+    <span class="c1"># ctf_low_events = self.ctfEvents(surfaceflow, \</span>
+    <span class="c1">#     threshold=low_ctf, \</span>
+    <span class="c1">#     min_separation=min_gap, \</span>
+    <span class="c1">#     min_duration=min_size)</span>
     
-    <span class="c"># mid_ctf = self.getAssetParam(asset_table, gauge, &quot;CTF_mid&quot;)</span>
-    <span class="c"># ctf_mid_days = self.ctfDays(surfaceflow, \</span>
-    <span class="c">#     threshold=mid_ctf, \</span>
-    <span class="c">#     min_separation=min_gap, \</span>
-    <span class="c">#     min_duration=min_size)</span>
+    <span class="c1"># mid_ctf = self.getAssetParam(asset_table, gauge, &quot;CTF_mid&quot;)</span>
+    <span class="c1"># ctf_mid_days = self.ctfDays(surfaceflow, \</span>
+    <span class="c1">#     threshold=mid_ctf, \</span>
+    <span class="c1">#     min_separation=min_gap, \</span>
+    <span class="c1">#     min_duration=min_size)</span>
 
-    <span class="c"># ctf_mid_events = self.ctfEvents(surfaceflow, \</span>
-    <span class="c">#     threshold=mid_ctf, \</span>
-    <span class="c">#     min_separation=min_gap, \</span>
-    <span class="c">#     min_duration=min_size)</span>
+    <span class="c1"># ctf_mid_events = self.ctfEvents(surfaceflow, \</span>
+    <span class="c1">#     threshold=mid_ctf, \</span>
+    <span class="c1">#     min_separation=min_gap, \</span>
+    <span class="c1">#     min_duration=min_size)</span>
 
-    <span class="c"># high_ctf = self.getAssetParam(asset_table, gauge, &quot;CTF_high&quot;)</span>
-    <span class="c"># ctf_high_days = self.ctfDays(surfaceflow, \</span>
-    <span class="c">#     threshold=high_ctf, \</span>
-    <span class="c">#     min_separation=min_gap, \</span>
-    <span class="c">#     min_duration=min_size)</span>
+    <span class="c1"># high_ctf = self.getAssetParam(asset_table, gauge, &quot;CTF_high&quot;)</span>
+    <span class="c1"># ctf_high_days = self.ctfDays(surfaceflow, \</span>
+    <span class="c1">#     threshold=high_ctf, \</span>
+    <span class="c1">#     min_separation=min_gap, \</span>
+    <span class="c1">#     min_duration=min_size)</span>
 
-    <span class="c"># ctf_high_events = self.ctfEvents(surfaceflow, \</span>
-    <span class="c">#     threshold=high_ctf, \</span>
-    <span class="c">#     min_separation=min_gap, \</span>
-    <span class="c">#     min_duration=min_size )</span>
-</pre></div></div></div>
+    <span class="c1"># ctf_high_events = self.ctfEvents(surfaceflow, \</span>
+    <span class="c1">#     threshold=high_ctf, \</span>
+    <span class="c1">#     min_separation=min_gap, \</span>
+    <span class="c1">#     min_duration=min_size )</span>
+
+
+</pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../../search.html" method="get">
       <input type="text" name="q" />
@@ -584,7 +602,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -593,14 +611,14 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-01-28.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Last updated on 2016-02-16.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

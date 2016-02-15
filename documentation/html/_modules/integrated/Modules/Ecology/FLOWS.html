@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../readme.html" />
     <link rel="up" title="Module code" href="../../../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -33,9 +33,9 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,18 +44,18 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for integrated.Modules.Ecology.FLOWS</h1><div class="highlight"><pre>
-<span class="c">#FLOWS.py</span>
+<span class="c1">#FLOWS.py</span>
 
 <div class="viewcode-block" id="FLOWS"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FLOWS.FLOWS">[docs]</a><span class="k">class</span> <span class="nc">FLOWS</span><span class="p">:</span>
     
@@ -70,9 +70,9 @@
 <span class="sd">        eco_site: ecological model site</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">eco_site</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;eco_site&#39;</span><span class="p">,</span><span class="s">&#39;1&#39;</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">eco_site</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;eco_site&#39;</span><span class="p">,</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>  
         
-        <span class="c">#End init()</span>
+        <span class="c1">#End init()</span>
     
 <div class="viewcode-block" id="FLOWS.FlowsCategory"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FLOWS.FLOWS.FlowsCategory">[docs]</a>    <span class="k">def</span> <span class="nf">FlowsCategory</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow</span><span class="p">,</span> <span class="n">flows_thresholds</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -82,8 +82,8 @@
 <span class="sd">        Input: daily flow (Date, ML/d); thresholds for each type of flows (input csv)</span>
 <span class="sd">        Output: daily FLOWS category (Date, flows_cat)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">flows_cat</span>
-        </div>
+        <span class="k">return</span> <span class="n">flows_cat</span></div>
+        
 <div class="viewcode-block" id="FLOWS.FlowsAnnualSummary"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FLOWS.FLOWS.FlowsAnnualSummary">[docs]</a>    <span class="k">def</span> <span class="nf">FlowsAnnualSummary</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flows_cat</span><span class="p">,</span> <span class="n">flows_dur_req</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        convert daily FLOWS category (Date, flows_cat) into annual summary</span>
@@ -92,27 +92,27 @@
 <span class="sd">        Input: flows_cat, flows duration requirement</span>
 <span class="sd">        Output: annual summary of FLOWS (year, days/events)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">flows_annual_sum</span>
-        </div>
+        <span class="k">return</span> <span class="n">flows_annual_sum</span></div>
+        
 <div class="viewcode-block" id="FLOWS.FlowsAnnualComplience"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.FLOWS.FLOWS.FlowsAnnualComplience">[docs]</a>    <span class="k">def</span> <span class="nf">FlowsAnnualComplience</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flows_annual_sum</span><span class="p">,</span> <span class="n">flows_freq_req</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        calculate the annual complience of FLOWS requirement</span>
 <span class="sd">        Input: annual summary of FLOWS, flows_freq_req</span>
 <span class="sd">        Output: Percentage of days/events matches flows requirement (Year, cease_to_flow, etc)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">flows_annual_com</span>
+        <span class="k">return</span> <span class="n">flows_annual_com</span></div></div>
         
         
         
-        </div></div>
+        
 </pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../../search.html" method="get">
       <input type="text" name="q" />
@@ -129,7 +129,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -138,14 +138,14 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-01-28.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Last updated on 2016-02-16.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

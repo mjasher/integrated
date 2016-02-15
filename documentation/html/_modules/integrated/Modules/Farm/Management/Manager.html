@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../../readme.html" />
     <link rel="up" title="Module code" href="../../../../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -33,9 +33,9 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,28 +44,28 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for integrated.Modules.Farm.Management.Manager</h1><div class="highlight"><pre>
-<span class="c">#Manager</span>
+<span class="c1">#Manager</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">from</span> <span class="nn">integrated.Modules.Core.IntegratedModelComponent</span> <span class="kn">import</span> <span class="n">Component</span>
 <span class="kn">from</span> <span class="nn">integrated.Modules.Farm.Fields.Field</span> <span class="kn">import</span> <span class="n">FarmField</span>
 <span class="kn">from</span> <span class="nn">integrated.Modules.Farm.Fields.Soil</span> <span class="kn">import</span> <span class="n">SoilType</span>
 <span class="kn">from</span> <span class="nn">integrated.Modules.Farm.Irrigations.IrrigationPractice</span> <span class="kn">import</span> <span class="n">IrrigationPractice</span>
 
-<span class="c">#Linear programming</span>
+<span class="c1">#Linear programming</span>
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">linprog</span> <span class="k">as</span> <span class="n">lp</span>
 
-<span class="c">#remove this when ready</span>
+<span class="c1">#remove this when ready</span>
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
@@ -76,8 +76,8 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Farm Manager</span>
 
-<span class="sd">    .. inheritance-diagram:: integrated.Modules.Farm.Manager.FarmManager</span>
-<span class="sd">       :parts: 2</span>
+<span class="sd">    # .. inheritance-diagram:: integrated.Modules.Farm.Manager</span>
+<span class="sd">    #    :parts: 2</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -98,7 +98,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">crops</span> <span class="o">=</span> <span class="n">crops</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">livestocks</span> <span class="o">=</span> <span class="n">livestocks</span>
 
-    <span class="c">#End __init__()</span>
+    <span class="c1">#End __init__()</span>
 
 <div class="viewcode-block" id="FarmManager.estIrrigationWaterUse"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.estIrrigationWaterUse">[docs]</a>    <span class="k">def</span> <span class="nf">estIrrigationWaterUse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_water_use_ML</span><span class="p">,</span> <span class="n">irrigation_efficiency</span><span class="p">):</span>
 
@@ -108,50 +108,228 @@
 <span class="sd">        WARNING:</span>
 <span class="sd">        This is assuming that the given crop water use does not factor in irrigation efficiency.</span>
 <span class="sd">        However, it seems figures given in the literature already include water losses and precipitation.</span>
-<span class="sd">        e.g. if a crop is said to need 6ML/Ha/Season, it is with the given irrigation system + &quot;usual&quot; rainfall </span>
+<span class="sd">        e.g. if a crop is said to need 6ML/Ha/Season, it is with flood irrigation + &quot;usual&quot; rainfall </span>
 
 <span class="sd">        :param crop_water_use_ML: How much water the crop is said to require</span>
 <span class="sd">        :param irrigation_efficiency: A percentage indicating how much water actually gets to the field</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">crop_water_use_ML</span> <span class="o">/</span> <span class="n">irrigation_efficiency</span>
+        <span class="k">return</span> <span class="n">crop_water_use_ML</span> <span class="o">/</span> <span class="n">irrigation_efficiency</span></div>
 
-    <span class="c">#End estIrrigationWaterUse()</span>
-</div>
-<div class="viewcode-block" id="FarmManager.dp_dev_fieldcombos"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.dp_dev_fieldcombos">[docs]</a>    <span class="k">def</span> <span class="nf">dp_dev_fieldcombos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1">#End estIrrigationWaterUse()</span>
+
+<div class="viewcode-block" id="FarmManager.calcFieldCombination"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.calcFieldCombination">[docs]</a>    <span class="k">def</span> <span class="nf">calcFieldCombination</span><span class="p">(</span><span class="n">row_id</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">WaterSources</span><span class="p">,</span> <span class="n">storage_cost_per_Ha</span><span class="p">,</span> <span class="n">irrig_cost_per_Ha</span><span class="p">,</span> <span class="n">max_area</span><span class="p">,</span> <span class="n">logs</span><span class="p">):</span>
+
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param Field: Farm Field object </span>
-<span class="sd">        :param costs_per_Ha: List or Dict of functions or values that calculates each cost (?)</span>
-<span class="sd">        :param gross_margin_per_Ha: List or Dict of functions or values that relate to calculating the gross margin</span>
+<span class="sd">        If the Objective Function follows the form of </span>
+<span class="sd">        P_{n}*x_{n}</span>
 
-<span class="sd">        Plastic and Static Farm Managers have separate run() method that dictate the behaviour</span>
-<span class="sd">        e.g. Plastic runs the DP method every season; whilst static only runs it once a rotation</span>
+<span class="sd">        where </span>
+<span class="sd">        * P_{n} is the Negated Net Profit (Cost - Gross Margin) of a given option</span>
+<span class="sd">        * x_{n} is the Area constrained by Water Resources and Available Land</span>
 
-<span class="sd">        For each current field, decide what to do...</span>
+<span class="sd">        and the aim is to minimize the negated profits (i.e. maximise profits).</span>
 
+<span class="sd">        P_{n} then represents the Net Profit for a given combination of </span>
+<span class="sd">        * Field</span>
+<span class="sd">        * Storage</span>
+<span class="sd">        * Irrigation</span>
+<span class="sd">        * Crop (or livestock?)</span>
+
+<span class="sd">        As an example, consider a farm with two fields, a single storage, two irrigation choices, two crops, and the ability to pump water from a surface water </span>
+<span class="sd">        source or a groundwater source.</span>
+
+<span class="sd">        In total, there would be 16 possible combinations (eight possible field configurations watered from two sources of water)</span>
+
+<span class="sd">        ========= ========= ============ ======== ==============</span>
+<span class="sd">        Field      Storage   Irrigation   Crop     Water Source</span>
+<span class="sd">        ========= ========= ============ ======== ==============</span>
+<span class="sd">        Field A    Farm Dam   Flood       Wheat    Surface Water</span>
+<span class="sd">        Field A    Farm Dam   Flood       Wheat    Groundwater</span>
+<span class="sd">        Field A    Farm Dam   Flood       Canola   Surface Water</span>
+<span class="sd">        Field A    Farm Dam   Flood       Canola   Groundwater</span>
+<span class="sd">        Field A    Farm Dam   Spray       Wheat    Surface Water</span>
+<span class="sd">        Field A    Farm Dam   Spray       Wheat    Groundwater</span>
+<span class="sd">        Field A    Farm Dam   Spray       Canola   Surface Water</span>
+<span class="sd">        Field A    Farm Dam   Spray       Canola   Groundwater</span>
+
+<span class="sd">        --------------------------------------------------------</span>
+<span class="sd">        Field B    Farm Dam   Flood       Wheat    Surface Water</span>
+<span class="sd">        Field B    Farm Dam   Flood       Wheat    Groundwater</span>
+<span class="sd">        Field B    Farm Dam   Flood       Canola   Surface Water</span>
+<span class="sd">        Field B    Farm Dam   Flood       Canola   Groundwater</span>
+<span class="sd">        Field B    Farm Dam   Spray       Wheat    Surface Water</span>
+<span class="sd">        Field B    Farm Dam   Spray       Wheat    Groundwater</span>
+<span class="sd">        Field B    Farm Dam   Spray       Canola   Surface Water</span>
+<span class="sd">        Field B    Farm Dam   Spray       Canola   Groundwater</span>
+<span class="sd">        ========= ========= ============ ======== ==============</span>
+
+<span class="sd">        Linear Programming is used to determine the proportion of surface or groundwater use.</span>
+<span class="sd">        This is done for a given combination of field-crop configurations.</span>
+
+<span class="sd">        Hence the objective function for the farm fields, irrigation system, crop and soil type is:</span>
+
+<span class="sd">        :math:`min\Sigma_{n=1}{m} (G_{n}X_{n} + G_{n}Y_{n})`</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            s.t:</span>
+
+<span class="sd">            X_{n} &lt;= MIN(A_{n}, A_{sw}), A_{sw} = X_{e}/c_{nw}</span>
+
+<span class="sd">            Y_{n} &lt;= MIN(A_{n}, A_{gw}), A_{gw} = Y_{e}/c_{nw}</span>
+
+<span class="sd">            X_{n} + Y_{n} &lt;= A_{n}</span>
+
+<span class="sd">            \Sigma_{n=1}{m} (X_{n} + Y_{n}) &lt;= MIN(A_{T}, A_{p})</span>
+
+<span class="sd">        Where :math:`n` represents a given field with an irrigation system and crop choice and :math:`m` is the \\\\</span>
+<span class="sd">        number of fields associated with a farm; :math:`G` is the negated net profit per Hectare; and X_{n} and Y_{n} \\\\</span>
+<span class="sd">        represent the area to be watered by surface and groundwater respectively. Surface and groundwater entitlements \\\\</span>
+<span class="sd">        (:math:`X_{e}` and :math:`Y_{e}`) and crop water requirements per hectare (:math:`c_{nw}`) is used to calculate \\\\</span>
+<span class="sd">        the maximum possible irrigation area.</span>
+
+<span class="sd">        :math:`A_{T} = \Sigma_{n=1}{m}(A_{n})`</span>
+<span class="sd">        :math:`A_{p} = W_{ent}/\Sigma_{n=1}{m}(c_{nw})/m` is the maximum possible irrigation area</span>
+
+<span class="sd">        In Python Scipy LinProg, this is represented as </span>
+
+<span class="sd">        c = [Profit_A_sw, Profit_A_gw, Profit_B_sw, Profit_B_gw]</span>
+<span class="sd">        A_ub = [[1, 1, 0, 0], [0, 0, 1, 1]]</span>
+<span class="sd">        b_ub = [Area of Field A, Area of Field B]</span>
+<span class="sd">        bounds = (0, Total Field Area)</span>
+
+<span class="sd">        In cases where irrigation system is being implemented, the farmer cannot grow crops to make money, but still incurs costs (implementation, water storage, etc).</span>
+<span class="sd">        To reflect this an equality constraint is used:</span>
+
+<span class="sd">        :math:`G_{n} = 0`</span>
+<span class="sd">        :math:`X_{n}` and :math:`Y_{n} = A_{n}`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">possible_fields</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">b_ub</span><span class="p">,</span> <span class="n">b_eq</span><span class="p">,</span> <span class="n">lp_log</span><span class="p">,</span> <span class="n">b_ub_log</span><span class="p">,</span> <span class="n">b_eq_log</span><span class="p">,</span> <span class="n">water_req</span> <span class="o">=</span> <span class="n">logs</span>
 
-        <span class="k">for</span> <span class="n">field_i</span><span class="p">,</span> <span class="n">Field</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">fields</span><span class="p">):</span>
+        <span class="n">field_change</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">implementation_change</span> <span class="o">=</span> <span class="bp">False</span>
 
-            <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Possible actions:</span>
-<span class="sd">            Upgrade irrigation system (takes ~1-2 years for upgrade)</span>
-<span class="sd">            Change crop rotation</span>
-<span class="sd">            &quot;&quot;&quot;</span>
-            <span class="n">possible_fields</span><span class="p">[</span><span class="n">field_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">Store</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">Storage</span>
+        <span class="n">Irrig</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">Irrigation</span>
+        <span class="n">Crop</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">Crop</span>
 
-            <span class="k">pass</span>
-        <span class="c">#End for</span>
+        <span class="n">temp_name</span> <span class="o">=</span> <span class="s2">&quot;{F} {S} {I} {C}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">F</span><span class="o">=</span><span class="n">Field</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="n">Store</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">I</span><span class="o">=</span><span class="n">Irrig</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-        <span class="k">pass</span>
+        <span class="n">field_b_ub</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">field_b_eq</span> <span class="o">=</span> <span class="p">[]</span>
 
-        
-    <span class="c">#End dev</span>
-</div>
-<div class="viewcode-block" id="FarmManager.determineFieldCombinations"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.determineFieldCombinations">[docs]</a>    <span class="k">def</span> <span class="nf">determineFieldCombinations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">expected_rainfall_mm</span><span class="p">,</span> <span class="n">additional_costs</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">additional_income</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">Irrig</span><span class="o">.</span><span class="n">implemented</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">crop_GM</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">crop_GM</span> <span class="o">=</span> <span class="n">Crop</span><span class="o">.</span><span class="n">calcGrossMarginsPerHa</span><span class="p">()</span>
+        <span class="c1">#End if</span>
+
+        <span class="n">est_irrigation_water_ML_per_Ha</span> <span class="o">=</span> <span class="n">Crop</span><span class="o">.</span><span class="n">water_use_ML_per_Ha</span>
+        <span class="n">flow_rate_Lps</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">calcFlowRate</span><span class="p">()</span>
+
+        <span class="n">water_req</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">)</span>
+
+        <span class="n">profits</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">this_max_area</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">WS</span> <span class="ow">in</span> <span class="n">WaterSources</span><span class="p">:</span>
+
+            <span class="c1">#Amount of usable water dependent on irrigation efficiency</span>
+            <span class="n">water_entitlement</span> <span class="o">=</span> <span class="n">WS</span><span class="o">.</span><span class="n">entitlement</span> <span class="o">*</span> <span class="n">Irrig</span><span class="o">.</span><span class="n">irrigation_efficiency</span>
+
+            <span class="c1">#If irrigation is not yet implemented, pumping costs is 0</span>
+            <span class="k">if</span> <span class="n">Irrig</span><span class="o">.</span><span class="n">implemented</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+                <span class="n">pumping_cost_per_Ha</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">water_cost_per_Ha</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">total_margin</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">#- irrig_cost_per_Ha+storage_cost_per_Ha</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pumping_cost_per_Ha</span> <span class="o">=</span> <span class="n">WS</span><span class="o">.</span><span class="n">calcGrossPumpingCostsPerHa</span><span class="p">(</span><span class="n">flow_rate_Lps</span><span class="p">,</span> <span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">,</span> <span class="n">head_pressure</span><span class="o">=</span><span class="n">WS</span><span class="o">.</span><span class="n">water_level</span><span class="p">,</span> <span class="n">additional_head</span><span class="o">=</span><span class="n">Irrig</span><span class="o">.</span><span class="n">head_pressure</span><span class="p">)</span>
+
+                <span class="n">water_cost_per_Ha</span> <span class="o">=</span> <span class="n">WS</span><span class="o">.</span><span class="n">calcWaterCostsPerHa</span><span class="p">(</span><span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">)</span>
+                <span class="c1"># possible_irrigation_area = (water_entitlement/est_irrigation_water_ML_per_Ha)</span>
+                <span class="n">possible_irrigation_area</span> <span class="o">=</span> <span class="n">Irrig</span><span class="o">.</span><span class="n">calcIrrigationArea</span><span class="p">(</span><span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">,</span> <span class="n">water_entitlement</span><span class="p">)</span>
+
+                <span class="c1">#TODO:</span>
+                <span class="c1">#  We can set amount of water to be sold as a constraint:</span>
+                <span class="c1">#    i.e. assume that farmers sell 0-100% of saved water</span>
+                <span class="c1">#  This must be calculated at the end, so move the below outside of this loop</span>
+                <span class="c1">#  Currently assumes the entire field area used</span>
+                <span class="n">available_water_per_Ha</span> <span class="o">=</span> <span class="n">water_entitlement</span><span class="o">/</span><span class="n">Field</span><span class="o">.</span><span class="n">area</span>
+                <span class="n">saved_water_value_per_Ha</span> <span class="o">=</span> <span class="p">(</span><span class="n">available_water_per_Ha</span> <span class="o">-</span> <span class="p">((</span><span class="n">est_irrigation_water_ML_per_Ha</span> <span class="o">/</span> <span class="n">available_water_per_Ha</span><span class="p">)</span> <span class="o">*</span> <span class="n">available_water_per_Ha</span><span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="n">WS</span><span class="o">.</span><span class="n">water_value_per_ML</span>
+
+                <span class="c1">#Is it sensible to include value of unused water?</span>
+                <span class="n">total_margin</span> <span class="o">=</span> <span class="n">crop_GM</span> <span class="c1">#+ saved_water_value_per_Ha + additional_income</span>
+                
+            <span class="c1">#End if</span>
+
+            <span class="n">total_costs</span> <span class="o">=</span> <span class="p">(</span><span class="n">irrig_cost_per_Ha</span><span class="o">+</span><span class="n">pumping_cost_per_Ha</span><span class="o">+</span><span class="n">water_cost_per_Ha</span><span class="o">+</span><span class="n">storage_cost_per_Ha</span><span class="p">)</span> <span class="c1">#+ additional_costs #Crop costs already factored in</span>
+            <span class="n">negated_profit</span> <span class="o">=</span> <span class="n">total_costs</span> <span class="o">-</span> <span class="n">total_margin</span>
+
+            <span class="k">if</span> <span class="n">Irrig</span><span class="o">.</span><span class="n">implemented</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="n">this_max_area</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">this_max_area</span><span class="p">,</span> <span class="n">possible_irrigation_area</span><span class="p">)</span> <span class="c1">#min(possible_irrigation_area, Field.area)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1">#Determine areal costs when irrigation system is not yet implemented</span>
+                <span class="n">this_max_area</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">area</span> 
+
+            <span class="c1">#This represents &#39;c&#39; in LP matrix</span>
+            <span class="n">lp_log</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">row_id</span><span class="p">,</span> <span class="n">Field</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s2">&quot; &quot;</span><span class="o">+</span><span class="n">WS</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">negated_profit</span><span class="p">)</span>
+
+            <span class="n">profits</span><span class="p">[</span><span class="n">WS</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">negated_profit</span>
+
+            <span class="n">field_b_ub</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_max_area</span><span class="p">)</span>
+            
+        <span class="c1">#End Water Source loop</span>
+
+        <span class="n">this_max_area</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">this_max_area</span><span class="p">,</span> <span class="n">Field</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+        <span class="n">max_area</span> <span class="o">+=</span> <span class="n">this_max_area</span>
+
+        <span class="c1">#Mark as implemented after first year</span>
+        <span class="k">if</span> <span class="n">Irrig</span><span class="o">.</span><span class="n">implemented</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">Irrig</span><span class="o">.</span><span class="n">implemented</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">field_change</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">if</span> <span class="n">Store</span><span class="o">.</span><span class="n">implemented</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">Store</span><span class="o">.</span><span class="n">implemented</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">field_change</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="c1">#End if</span>
+
+        <span class="n">b_ub</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_area</span><span class="p">)</span>
+
+        <span class="c1">#Calculate total possible irrigation area</span>
+        <span class="n">total_water</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">WS</span><span class="o">.</span><span class="n">entitlement</span> <span class="k">for</span> <span class="n">WS</span> <span class="ow">in</span> <span class="n">Manager</span><span class="o">.</span><span class="n">water_sources</span><span class="p">])</span>
+        <span class="n">avg_water_req</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">water_req</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">water_req</span><span class="p">)</span>
+        <span class="n">possible_irrigation_area</span> <span class="o">=</span> <span class="n">total_water</span> <span class="o">/</span> <span class="n">avg_water_req</span>
+
+        <span class="c1">#Save results for this row</span>
+        <span class="n">b_ub_log</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">b_ub</span><span class="p">)</span>
+        <span class="n">b_eq_log</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">b_eq</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">row_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">b_ub_memo</span><span class="p">:</span>
+            <span class="n">b_ub_memo</span><span class="p">[</span><span class="n">row_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">b_ub</span><span class="p">)</span>
+        <span class="c1">#End if</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">total_area</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">area</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="ow">is</span> <span class="n">FarmField</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">row</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">field_change</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+                <span class="n">lp_log</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">row_id</span><span class="p">,</span> <span class="s1">&#39;bounds&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">possible_irrigation_area</span><span class="p">)</span> <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lp_log</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">row_id</span><span class="p">,</span> <span class="s1">&#39;bounds&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_area</span><span class="p">)</span> <span class="p">)</span>
+
+            <span class="n">lp_log</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">row_id</span><span class="p">,</span> <span class="s1">&#39;max_area&#39;</span><span class="p">,</span> <span class="n">total_area</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">lp_log</span>
+            <span class="kn">import</span> <span class="nn">sys</span><span class="p">;</span> <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="c1">#End try</span>
+
+        <span class="k">return</span> <span class="n">field_b_ub</span><span class="p">,</span> <span class="n">field_b_eq</span><span class="p">,</span> <span class="n">this_max_area</span><span class="p">,</span> <span class="n">field_change</span></div>
+
+    <span class="c1">#End calcFieldCombination()</span>
+
+<div class="viewcode-block" id="FarmManager.greedyFieldCombinations"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.greedyFieldCombinations">[docs]</a>    <span class="k">def</span> <span class="nf">greedyFieldCombinations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">expected_rainfall_mm</span><span class="p">,</span> <span class="n">additional_costs</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">additional_income</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        For a given crop, determine the optimum crop area and type, and with which water source.</span>
@@ -216,19 +394,19 @@
         <span class="n">Irrigation</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">Irrigation</span>
         <span class="n">infra_cost_per_Ha</span> <span class="o">=</span> <span class="n">Irrigation</span><span class="o">.</span><span class="n">calcOperationalCostPerHa</span><span class="p">()</span>
 
-        <span class="c">#Get the implemented storage</span>
-        <span class="c">#storage_name, Storage = self.Farm.getStorageInUse()</span>
+        <span class="c1">#Get the implemented storage</span>
+        <span class="c1">#storage_name, Storage = self.Farm.getStorageInUse()</span>
         <span class="n">Storage</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">Storage</span>
         <span class="n">storage_name</span> <span class="o">=</span> <span class="n">Storage</span><span class="o">.</span><span class="n">name</span>
 
-        <span class="c">#TODO: INCLUDE STORAGE COSTS</span>
+        <span class="c1">#TODO: INCLUDE STORAGE COSTS</span>
         <span class="n">storage_cost</span> <span class="o">=</span> <span class="n">Storage</span><span class="o">.</span><span class="n">calcStorageCosts</span><span class="p">(</span><span class="n">Storage</span><span class="o">.</span><span class="n">storage_capacity_ML</span><span class="p">)</span>
         <span class="n">storage_maintenance_cost</span> <span class="o">=</span> <span class="n">Storage</span><span class="o">.</span><span class="n">calcMaintenanceCosts</span><span class="p">(</span><span class="n">Storage</span><span class="o">.</span><span class="n">storage_capacity_ML</span><span class="p">)</span>
 
-        <span class="c">#Assumes total field area is used</span>
+        <span class="c1">#Assumes total field area is used</span>
         <span class="n">storage_cost_per_Ha</span> <span class="o">=</span> <span class="p">(</span><span class="n">storage_cost</span><span class="o">+</span><span class="n">storage_maintenance_cost</span><span class="p">)</span> <span class="o">/</span> <span class="n">Field</span><span class="o">.</span><span class="n">area</span>
 
-        <span class="c">#Build linear programming equation</span>
+        <span class="c1">#Build linear programming equation</span>
         <span class="n">optimum_field</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">optimum</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">crop_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">crops</span><span class="p">:</span>
@@ -237,15 +415,15 @@
 
             <span class="k">if</span> <span class="n">crop_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">optimum</span><span class="p">:</span>
                 <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="c">#End if</span>
+            <span class="c1">#End if</span>
 
-            <span class="n">RAW_mm</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">calcRAW</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="n">Crop</span><span class="o">.</span><span class="n">depletion_fraction</span><span class="p">)</span> <span class="c">#Per cubic metre</span>
+            <span class="n">RAW_mm</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">Soil</span><span class="o">.</span><span class="n">calcRAW</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="n">Crop</span><span class="o">.</span><span class="n">depletion_fraction</span><span class="p">)</span> <span class="c1">#Per cubic metre</span>
             <span class="n">predicted_crop_yield_per_Ha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcPotentialCropYield</span><span class="p">(</span><span class="n">RAW_mm</span><span class="p">,</span> <span class="n">expected_rainfall_mm</span><span class="p">,</span> <span class="n">Crop</span><span class="o">.</span><span class="n">et_coef</span><span class="p">,</span> <span class="n">Crop</span><span class="o">.</span><span class="n">wue_coef</span><span class="p">)</span>
 
             <span class="n">gross_margin_per_Ha</span> <span class="o">=</span> <span class="n">Crop</span><span class="o">.</span><span class="n">calcTotalCropGrossMarginsPerHa</span><span class="p">(</span><span class="n">predicted_crop_yield_per_Ha</span><span class="p">,</span> <span class="n">Crop</span><span class="o">.</span><span class="n">price_per_yield</span><span class="p">)</span>
 
-            <span class="c">#Estimated irrigation water use</span>
-            <span class="c"># est_irrigation_water_ML_per_Ha = Crop.water_use_ML_per_Ha</span>
+            <span class="c1">#Estimated irrigation water use</span>
+            <span class="c1"># est_irrigation_water_ML_per_Ha = Crop.water_use_ML_per_Ha</span>
             <span class="n">est_irrigation_water_ML_per_Ha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estIrrigationWaterUse</span><span class="p">(</span><span class="n">Crop</span><span class="o">.</span><span class="n">water_use_ML_per_Ha</span><span class="p">,</span> <span class="n">Irrigation</span><span class="o">.</span><span class="n">irrigation_efficiency</span><span class="p">)</span>
 
             <span class="n">c</span> <span class="o">=</span> <span class="p">[]</span>
@@ -260,7 +438,7 @@
                 <span class="k">if</span> <span class="n">water_source_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">]:</span>
                     <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">water_source_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
-                <span class="n">flow_rate_Lps</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">calcFlowRate</span><span class="p">()</span> <span class="c">#Field.pump_operation_hours, Field.pump_operation_days, Crop=Crop</span>
+                <span class="n">flow_rate_Lps</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">calcFlowRate</span><span class="p">()</span> <span class="c1">#Field.pump_operation_hours, Field.pump_operation_days, Crop=Crop</span>
                 <span class="n">pumping_cost_per_Ha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">water_sources</span><span class="p">[</span><span class="n">water_source_name</span><span class="p">]</span><span class="o">.</span><span class="n">calcGrossPumpingCostsPerHa</span><span class="p">(</span><span class="n">flow_rate_Lps</span><span class="p">,</span> <span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">)</span>
 
                 <span class="n">water_entitlement</span> <span class="o">=</span> <span class="n">water_source</span><span class="o">.</span><span class="n">entitlement</span>
@@ -269,8 +447,8 @@
                 
                 <span class="n">water_cost_per_Ha</span> <span class="o">=</span> <span class="n">water_source</span><span class="o">.</span><span class="n">calcWaterCostsPerHa</span><span class="p">(</span><span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">)</span>
 
-                <span class="c">#Include value of saved water. </span>
-                <span class="c">#Need to do this for each water source, as price of water depends on source</span>
+                <span class="c1">#Include value of saved water. </span>
+                <span class="c1">#Need to do this for each water source, as price of water depends on source</span>
                 <span class="n">available_water_per_Ha</span> <span class="o">=</span> <span class="n">water_entitlement</span><span class="o">/</span><span class="n">Field</span><span class="o">.</span><span class="n">area</span>
                 <span class="n">saved_water_value_per_Ha</span> <span class="o">=</span> <span class="p">(</span><span class="n">available_water_per_Ha</span> <span class="o">-</span> <span class="p">((</span><span class="n">est_irrigation_water_ML_per_Ha</span> <span class="o">/</span> <span class="n">available_water_per_Ha</span><span class="p">)</span> <span class="o">*</span> <span class="n">available_water_per_Ha</span><span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="n">water_value_per_ML</span>
 
@@ -279,84 +457,84 @@
 
                 <span class="n">c</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">total_costs</span> <span class="o">-</span> <span class="n">total_margin</span><span class="p">])</span>
 
-                <span class="c">#Irrigation area has to be between 0 and the area constrained by water resources</span>
+                <span class="c1">#Irrigation area has to be between 0 and the area constrained by water resources</span>
                 <span class="n">bounds</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">possible_irrigation_area</span><span class="p">,</span> <span class="n">available_water_per_Ha</span><span class="p">)))</span>
 
                 <span class="n">max_irrig_area</span> <span class="o">=</span> <span class="n">max_irrig_area</span> <span class="o">+</span> <span class="n">possible_irrigation_area</span>
 
-                <span class="n">b_ub</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">possible_irrigation_area</span><span class="p">)</span> <span class="c">#max possible irrigation area with this water source</span>
+                <span class="n">b_ub</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">possible_irrigation_area</span><span class="p">)</span> <span class="c1">#max possible irrigation area with this water source</span>
 
-                <span class="c">#Update information</span>
+                <span class="c1">#Update information</span>
                 <span class="n">temp_dict</span> <span class="o">=</span> <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">water_source_name</span><span class="p">]</span>
-                <span class="n">temp_dict</span><span class="p">[</span><span class="s">&#39;costs_per_Ha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_costs</span>
-                <span class="n">temp_dict</span><span class="p">[</span><span class="s">&#39;gross_margin_per_Ha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_margin</span>
+                <span class="n">temp_dict</span><span class="p">[</span><span class="s1">&#39;costs_per_Ha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_costs</span>
+                <span class="n">temp_dict</span><span class="p">[</span><span class="s1">&#39;gross_margin_per_Ha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_margin</span>
 
-            <span class="c">#End for</span>
+            <span class="c1">#End for</span>
             
-            <span class="c">#Generate upper bounds (A_ub) and dependent variable constraints (b_ub)</span>
+            <span class="c1">#Generate upper bounds (A_ub) and dependent variable constraints (b_ub)</span>
             <span class="n">A_ub</span> <span class="o">=</span> <span class="p">[]</span>
 
-            <span class="c">#Condition for each individual water resource type</span>
-            <span class="c">#[[1, 0, 0], [0, 1, 0], [0, 0, 1]]</span>
+            <span class="c1">#Condition for each individual water resource type</span>
+            <span class="c1">#[[1, 0, 0], [0, 1, 0], [0, 0, 1]]</span>
             <span class="n">water_sources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">water_sources</span>
             <span class="n">A_ub</span><span class="o">.</span><span class="n">extend</span><span class="p">([[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">water_sources</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">water_sources</span><span class="p">))])</span>
             
-            <span class="c">#Condition for using a mix of water resources</span>
+            <span class="c1">#Condition for using a mix of water resources</span>
             <span class="n">A_ub</span><span class="o">.</span><span class="n">extend</span><span class="p">([[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">c</span><span class="p">)]])</span>
 
-            <span class="c">#Irrigated area must not exceed area constrained by available water resources, or available land</span>
+            <span class="c1">#Irrigated area must not exceed area constrained by available water resources, or available land</span>
             <span class="n">b_ub</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">max_irrig_area</span><span class="p">,</span> <span class="n">Field</span><span class="o">.</span><span class="n">area</span><span class="p">)])</span>
 
-            <span class="n">res</span> <span class="o">=</span> <span class="n">lp</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">A_ub</span><span class="o">=</span><span class="n">A_ub</span><span class="p">,</span> <span class="n">b_ub</span><span class="o">=</span><span class="n">b_ub</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;disp&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">})</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">lp</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">A_ub</span><span class="o">=</span><span class="n">A_ub</span><span class="p">,</span> <span class="n">b_ub</span><span class="o">=</span><span class="n">b_ub</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">})</span>
 
-            <span class="c">#Determine water saved in ML per Ha</span>
+            <span class="c1">#Determine water saved in ML per Ha</span>
             <span class="n">water_saved</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ent</span><span class="p">,</span> <span class="n">area</span><span class="p">,</span> <span class="n">irrig_ML_per_Ha</span><span class="p">:</span> <span class="p">(</span><span class="n">ent</span><span class="o">/</span><span class="n">area</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span> <span class="p">(</span><span class="n">irrig_ML_per_Ha</span> <span class="o">/</span> <span class="p">(</span><span class="n">ent</span><span class="o">/</span><span class="n">area</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">ent</span><span class="o">/</span><span class="n">area</span><span class="p">))</span>
 
-            <span class="c">#Update information</span>
+            <span class="c1">#Update information</span>
             <span class="n">total_water_use</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">total_area</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">water_source</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">water_sources</span><span class="p">):</span>
-                <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">water_source</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&#39;area&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])),</span>
-                                                 <span class="s">&#39;water_applied&#39;</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">,</span> 
-                                                 <span class="s">&#39;total_crop_yield&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">predicted_crop_yield_per_Ha</span><span class="o">*</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> 
-                                                 <span class="s">&#39;WUI&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">predicted_crop_yield_per_Ha</span><span class="o">*</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">),</span>
-                                                 <span class="s">&#39;water_saved&#39;</span><span class="p">:</span> <span class="n">water_saved</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">water_sources</span><span class="p">[</span><span class="n">water_source</span><span class="p">]</span><span class="o">.</span><span class="n">entitlement</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">),</span>
-                                                 <span class="s">&#39;saved_water_value&#39;</span><span class="p">:</span> <span class="n">water_saved</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">water_sources</span><span class="p">[</span><span class="n">water_source</span><span class="p">]</span><span class="o">.</span><span class="n">entitlement</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">water_sources</span><span class="p">[</span><span class="n">water_source</span><span class="p">]</span><span class="o">.</span><span class="n">water_value_per_ML</span><span class="p">,</span>
-                                                 <span class="s">&#39;crop_margin_per_Ha&#39;</span><span class="p">:</span> <span class="n">predicted_crop_yield_per_Ha</span> <span class="o">*</span> <span class="n">Crop</span><span class="o">.</span><span class="n">price_per_yield</span> <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+                <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">water_source</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;area&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])),</span>
+                                                 <span class="s1">&#39;water_applied&#39;</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">,</span> 
+                                                 <span class="s1">&#39;total_crop_yield&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">predicted_crop_yield_per_Ha</span><span class="o">*</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> 
+                                                 <span class="s1">&#39;WUI&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">predicted_crop_yield_per_Ha</span><span class="o">*</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">),</span>
+                                                 <span class="s1">&#39;water_saved&#39;</span><span class="p">:</span> <span class="n">water_saved</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">water_sources</span><span class="p">[</span><span class="n">water_source</span><span class="p">]</span><span class="o">.</span><span class="n">entitlement</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">),</span>
+                                                 <span class="s1">&#39;saved_water_value&#39;</span><span class="p">:</span> <span class="n">water_saved</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">water_sources</span><span class="p">[</span><span class="n">water_source</span><span class="p">]</span><span class="o">.</span><span class="n">entitlement</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">est_irrigation_water_ML_per_Ha</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">water_sources</span><span class="p">[</span><span class="n">water_source</span><span class="p">]</span><span class="o">.</span><span class="n">water_value_per_ML</span><span class="p">,</span>
+                                                 <span class="s1">&#39;crop_margin_per_Ha&#39;</span><span class="p">:</span> <span class="n">predicted_crop_yield_per_Ha</span> <span class="o">*</span> <span class="n">Crop</span><span class="o">.</span><span class="n">price_per_yield</span> <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
                                                  <span class="p">})</span>
-                <span class="n">total_water_use</span> <span class="o">=</span> <span class="n">total_water_use</span> <span class="o">+</span> <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">water_source</span><span class="p">][</span><span class="s">&#39;water_applied&#39;</span><span class="p">]</span>
+                <span class="n">total_water_use</span> <span class="o">=</span> <span class="n">total_water_use</span> <span class="o">+</span> <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">water_source</span><span class="p">][</span><span class="s1">&#39;water_applied&#39;</span><span class="p">]</span>
                 <span class="n">total_area</span> <span class="o">=</span> <span class="n">total_area</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 
-            <span class="c">#End for</span>
-            <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;total_profit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">res</span><span class="o">.</span><span class="n">fun</span>
-            <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;total_area&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_area</span>
+            <span class="c1">#End for</span>
+            <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;total_profit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">res</span><span class="o">.</span><span class="n">fun</span>
+            <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;total_area&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_area</span>
 
-            <span class="c">#Create a class that encapsulates the above configuration.</span>
+            <span class="c1">#Create a class that encapsulates the above configuration.</span>
             <span class="k">if</span> <span class="n">total_area</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-                <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;fields&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="n">field_name</span> <span class="o">=</span> <span class="s">&#39;{fn}-{cn}-{a}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">Field</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">cn</span><span class="o">=</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">total_area</span><span class="p">)</span>
+                <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;fields&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">field_name</span> <span class="o">=</span> <span class="s1">&#39;{fn}-{cn}-{a}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">Field</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">cn</span><span class="o">=</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">total_area</span><span class="p">)</span>
 
-                <span class="c">#mark the crop as planted</span>
+                <span class="c1">#mark the crop as planted</span>
                 <span class="n">Crop</span><span class="o">.</span><span class="n">planted</span> <span class="o">=</span> <span class="bp">True</span>
-                <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;fields&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">FarmField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">field_name</span><span class="p">,</span> <span class="n">irrigation</span><span class="o">=</span><span class="n">Irrigation</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="n">Crop</span><span class="p">,</span> <span class="n">soil</span><span class="o">=</span><span class="n">Field</span><span class="o">.</span><span class="n">Soil</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">total_area</span><span class="p">))</span>
+                <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;fields&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">FarmField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">field_name</span><span class="p">,</span> <span class="n">irrigation</span><span class="o">=</span><span class="n">Irrigation</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="n">Crop</span><span class="p">,</span> <span class="n">soil</span><span class="o">=</span><span class="n">Field</span><span class="o">.</span><span class="n">Soil</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">total_area</span><span class="p">))</span>
 
-            <span class="c">#End if</span>
+            <span class="c1">#End if</span>
 
-            <span class="c">#Add percentage water use information</span>
+            <span class="c1">#Add percentage water use information</span>
             <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">water_source</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">water_sources</span><span class="p">):</span>
-                <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;percent_{ws}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ws</span><span class="o">=</span><span class="n">water_source</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">water_source</span><span class="p">][</span><span class="s">&#39;water_applied&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_water_use</span><span class="p">)</span> <span class="k">if</span> <span class="n">total_water_use</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
-            <span class="c">#End for</span>
+                <span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;percent_{ws}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ws</span><span class="o">=</span><span class="n">water_source</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">optimum</span><span class="p">[</span><span class="n">Crop</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">water_source</span><span class="p">][</span><span class="s1">&#39;water_applied&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_water_use</span><span class="p">)</span> <span class="k">if</span> <span class="n">total_water_use</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+            <span class="c1">#End for</span>
 
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">optimum</span><span class="p">,</span> <span class="n">res</span>
+        <span class="k">return</span> <span class="n">optimum</span><span class="p">,</span> <span class="n">res</span></div>
 
-    <span class="c">#End determineFieldCombinations()</span>
-</div>
+    <span class="c1">#End determineFieldCombinations()</span>
+
 <div class="viewcode-block" id="FarmManager.calcFieldIrrigationDepth"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.calcFieldIrrigationDepth">[docs]</a>    <span class="k">def</span> <span class="nf">calcFieldIrrigationDepth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Field</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Field</span><span class="o">.</span><span class="n">calcNetIrrigationDepth</span><span class="p">(</span><span class="n">Field</span><span class="p">)</span>
-    <span class="c">#End calcFieldIrrigationDepth()</span>
-</div>
+        <span class="k">return</span> <span class="n">Field</span><span class="o">.</span><span class="n">calcNetIrrigationDepth</span><span class="p">(</span><span class="n">Field</span><span class="p">)</span></div>
+    <span class="c1">#End calcFieldIrrigationDepth()</span>
+
 <div class="viewcode-block" id="FarmManager.calcGrossIrrigationWaterAmount"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.calcGrossIrrigationWaterAmount">[docs]</a>    <span class="k">def</span> <span class="nf">calcGrossIrrigationWaterAmount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">Crop</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate how much water is needed to be sent out to the fields per Hectare</span>
@@ -388,28 +566,28 @@
 
         <span class="n">net_irrigation_depth</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">calcNetIrrigationDepth</span><span class="p">(</span><span class="n">Crop</span><span class="o">.</span><span class="n">root_depth_m</span><span class="p">,</span> <span class="n">Crop</span><span class="o">.</span><span class="n">depletion_fraction</span><span class="p">)</span>
 
-        <span class="c">#Check current Soil Water Deficit</span>
+        <span class="c1">#Check current Soil Water Deficit</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">Field</span><span class="o">.</span><span class="n">c_swd</span> <span class="o">+</span> <span class="n">net_irrigation_depth</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
             <span class="n">water_to_send</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="k">else</span><span class="p">:</span>
 
             <span class="n">water_application</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="o">-</span> <span class="n">Field</span><span class="o">.</span><span class="n">c_swd</span>
 
-            <span class="c"># while (Field.c_swd + water_application) &lt; 0.0:</span>
-            <span class="c">#     water_application = water_application + net_irrigation_depth</span>
-            <span class="c"># #End while</span>
+            <span class="c1"># while (Field.c_swd + water_application) &lt; 0.0:</span>
+            <span class="c1">#     water_application = water_application + net_irrigation_depth</span>
+            <span class="c1"># #End while</span>
 
-            <span class="c">#Add again to get it over 0.0 (?)</span>
-            <span class="c">#water_application = water_application + net_irrigation_depth</span>
+            <span class="c1">#Add again to get it over 0.0 (?)</span>
+            <span class="c1">#water_application = water_application + net_irrigation_depth</span>
 
             <span class="n">water_to_send</span> <span class="o">=</span> <span class="p">(</span><span class="n">water_application</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">Field</span><span class="o">.</span><span class="n">area</span>
 
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
-        <span class="k">return</span> <span class="n">water_to_send</span>
+        <span class="k">return</span> <span class="n">water_to_send</span></div>
 
-    <span class="c">#End calcGrossIrrigationWaterAmount()</span>
-</div>
+    <span class="c1">#End calcGrossIrrigationWaterAmount()</span>
+
 <div class="viewcode-block" id="FarmManager.calcWaterApplication"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.calcWaterApplication">[docs]</a>    <span class="k">def</span> <span class="nf">calcWaterApplication</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -420,16 +598,16 @@
 <span class="sd">        :returns: Dict of {Field Object: amount of water to apply in ML}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c">#Calculate amount of water to apply to each field</span>
+        <span class="c1">#Calculate amount of water to apply to each field</span>
         <span class="n">water_to_apply</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">Field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
             <span class="n">water_to_apply</span><span class="p">[</span><span class="n">Field</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcGrossIrrigationWaterAmount</span><span class="p">(</span><span class="n">Field</span><span class="p">)</span>
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">water_to_apply</span>
+        <span class="k">return</span> <span class="n">water_to_apply</span></div>
 
-    <span class="c">#End calcWaterApplication()</span>
-</div>
+    <span class="c1">#End calcWaterApplication()</span>
+
 <div class="viewcode-block" id="FarmManager.calcFieldCumulativeSWD"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.calcFieldCumulativeSWD">[docs]</a>    <span class="k">def</span> <span class="nf">calcFieldCumulativeSWD</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">ETc</span><span class="p">,</span> <span class="n">gross_water_applied</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -443,12 +621,12 @@
         <span class="n">recharge</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
             <span class="n">recharge</span> <span class="o">=</span> <span class="n">recharge</span> <span class="o">+</span> <span class="n">field</span><span class="o">.</span><span class="n">updateCumulativeSWD</span><span class="p">(</span><span class="n">timestep</span><span class="p">,</span> <span class="n">ETc</span><span class="p">[</span><span class="n">field</span><span class="p">],</span> <span class="n">gross_water_applied</span><span class="p">[</span><span class="n">field</span><span class="p">])</span>
-        <span class="c">#End field</span>
+        <span class="c1">#End field</span>
 
-        <span class="k">return</span> <span class="n">recharge</span>
+        <span class="k">return</span> <span class="n">recharge</span></div>
 
-    <span class="c">#End calcCumulativeSWD()</span>
-</div>
+    <span class="c1">#End calcCumulativeSWD()</span>
+
 <div class="viewcode-block" id="FarmManager.applyWater"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.applyWater">[docs]</a>    <span class="k">def</span> <span class="nf">applyWater</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">water_to_apply</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -457,19 +635,18 @@
 <span class="sd">        :returns: total recharge</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c">#water_to_apply = self.calcWaterApplication(Fields)</span>
-
-        <span class="c">#Recharge = (Rainfall + Applied Water) - (ETc + SWD_i)</span>
+        <span class="c1">#water_to_apply = self.calcWaterApplication(Fields)</span>
+        <span class="c1">#Recharge = (Rainfall + Applied Water) - (ETc + SWD_i)</span>
 
         <span class="n">recharge</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
             <span class="n">recharge</span> <span class="o">=</span> <span class="n">recharge</span> <span class="o">+</span> <span class="n">field</span><span class="o">.</span><span class="n">applyWater</span><span class="p">(</span><span class="n">water_to_apply</span><span class="p">[</span><span class="n">field</span><span class="p">])</span>
 
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">recharge</span>
-    <span class="c">#End applyWater()</span>
-</div>
+        <span class="k">return</span> <span class="n">recharge</span></div>
+    <span class="c1">#End applyWater()</span>
+
 <div class="viewcode-block" id="FarmManager.getHarvestableCrops"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.getHarvestableCrops">[docs]</a>    <span class="k">def</span> <span class="nf">getHarvestableCrops</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -480,9 +657,9 @@
 
         <span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">fields</span>
 
-        <span class="k">return</span> <span class="n">fields</span>
-    <span class="c">#End</span>
-</div>
+        <span class="k">return</span> <span class="n">fields</span></div>
+    <span class="c1">#End</span>
+
 <div class="viewcode-block" id="FarmManager.harvestCrops"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.harvestCrops">[docs]</a>    <span class="k">def</span> <span class="nf">harvestCrops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields_to_harvest</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -495,17 +672,17 @@
 
             <span class="n">crop_yields</span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">crop</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">harvest</span><span class="p">()</span>
 
-        <span class="c">#End for        </span>
+        <span class="c1">#End for        </span>
 
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">crop_yields</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">crop_yields</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span></div>
         
-    <span class="c">#End harvestCrop()</span>
-</div>
+    <span class="c1">#End harvestCrop()</span>
+
 <div class="viewcode-block" id="FarmManager.calcPotentialCropYield"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.calcPotentialCropYield">[docs]</a>    <span class="k">def</span> <span class="nf">calcPotentialCropYield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ssm_mm</span><span class="p">,</span> <span class="n">gsr_mm</span><span class="p">,</span> <span class="n">crop_evap_mm_coef</span><span class="p">,</span> <span class="n">wue_mm_coef</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">        Uses French-Schultz equation</span>
+<span class="sd">        Uses French-Schultz equation, taken from Oliver et al. 2008</span>
 
 <span class="sd">        TODO: Adapt modified version of `French-Schultz &lt;http://www.regional.org.au/au/asa/2008/concurrent/assessing-yield-potential/5827_oliverym.htm/&gt;`_</span>
 
@@ -517,7 +694,7 @@
 <span class="sd">        where</span>
 
 <span class="sd">        * :math:`YP` is yield potential in kg/Ha </span>
-<span class="sd">        * :math:`SSM` is Stored Soil Moisture in mm</span>
+<span class="sd">        * :math:`SSM` is Stored Soil Moisture (at start of season) in mm</span>
 <span class="sd">        * :math:`GSR` is Growing Season Rainfall in mm</span>
 <span class="sd">        * :math:`E` is Crop Evaporation coefficient in mm</span>
 <span class="sd">        * :math:`WUE` is Water Use Efficiency coefficient in kg/mm</span>
@@ -531,41 +708,71 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c">#French-Schultz calculates yield in kg/Ha, so divide by 1000 to convert to tonnes per hectare.</span>
-        <span class="k">return</span> <span class="p">((</span><span class="n">ssm_mm</span> <span class="o">+</span> <span class="n">gsr_mm</span> <span class="o">-</span> <span class="n">crop_evap_mm_coef</span><span class="p">)</span> <span class="o">*</span> <span class="n">wue_mm_coef</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>
+        <span class="c1">#French-Schultz calculates yield in kg/Ha, so divide by 1000 to convert to tonnes per hectare.</span>
+        <span class="k">return</span> <span class="p">((</span><span class="n">ssm_mm</span> <span class="o">+</span> <span class="n">gsr_mm</span> <span class="o">-</span> <span class="n">crop_evap_mm_coef</span><span class="p">)</span> <span class="o">*</span> <span class="n">wue_mm_coef</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span></div>
 
-    <span class="c">#End calcPotentialCropYield()</span>
-</div>
-<div class="viewcode-block" id="FarmManager.calcFieldCosts"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.calcFieldCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcFieldCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Field</span><span class="p">):</span>
+    <span class="c1">#End calcPotentialCropYield()</span>
+
+<div class="viewcode-block" id="FarmManager.setFieldComponentStatus"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.setFieldComponentStatus">[docs]</a>    <span class="k">def</span> <span class="nf">setFieldComponentStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        IN PROGRESS...</span>
+<span class="sd">        Sets the initial implementation status of each field component</span>
+
+<span class="sd">        :param row: Pandas DataFrame Series representing a field combination</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">Irrigation</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">Irrigation</span>
-        <span class="n">infra_cost_per_Ha</span> <span class="o">=</span> <span class="p">(</span><span class="n">Irrigation</span><span class="o">.</span><span class="n">maintenance_rate</span> <span class="o">*</span> <span class="n">Irrigation</span><span class="o">.</span><span class="n">cost_per_Ha</span><span class="p">)</span> <span class="k">if</span> <span class="n">Irrigation</span><span class="o">.</span><span class="n">cost_per_Ha</span> <span class="o">!=</span> <span class="mf">0.0</span> <span class="k">else</span> <span class="n">Irrigation</span><span class="o">.</span><span class="n">maintenance_rate</span> <span class="o">*</span> <span class="n">Irrigation</span><span class="o">.</span><span class="n">replacement_cost_per_Ha</span>
-        <span class="n">infra_cost_per_Ha</span> <span class="o">+=</span> <span class="n">Irrigation</span><span class="o">.</span><span class="n">cost_per_Ha</span>
+        <span class="c1">#Because all_combinations are passed by reference, have to reassign a copy</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;fields&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;fields&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getCopy</span><span class="p">()</span>
 
-        <span class="n">est_irrigation_water_ML_per_Ha</span> <span class="o">=</span> <span class="n">Crop</span><span class="o">.</span><span class="n">water_use_ML_per_Ha</span> <span class="o">/</span> <span class="n">Irrigation</span><span class="o">.</span><span class="n">irrigation_efficiency</span>
+        <span class="n">Field</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;fields&#39;</span><span class="p">]</span>
 
-        <span class="n">flow_rate_Lps</span> <span class="o">=</span> <span class="n">Field</span><span class="o">.</span><span class="n">calcFlowRate</span><span class="p">(</span><span class="n">Field</span><span class="o">.</span><span class="n">pump_operation_hours</span><span class="p">,</span> <span class="n">Field</span><span class="o">.</span><span class="n">pump_operation_days</span><span class="p">,</span> <span class="n">Crop</span><span class="o">=</span><span class="n">Crop</span><span class="p">)</span>
-        <span class="n">pumping_cost_per_ML</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">water_sources</span><span class="p">[</span><span class="n">water_source_name</span><span class="p">]</span><span class="o">.</span><span class="n">calcPumpingCostsPerML</span><span class="p">(</span><span class="n">flow_rate_Lps</span><span class="o">=</span><span class="n">flow_rate_Lps</span><span class="p">)</span>
-        <span class="n">pumping_cost_per_Ha</span> <span class="o">=</span> <span class="n">pumping_cost_per_ML</span> <span class="o">*</span> <span class="n">est_irrigation_water_ML_per_Ha</span>
+        <span class="k">if</span> <span class="n">Field</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Storage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Storage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">implemented</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Irrigation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">implemented</span> <span class="o">=</span> <span class="bp">False</span>
 
-        <span class="k">pass</span>
+        <span class="k">if</span> <span class="n">Field</span><span class="o">.</span><span class="n">Irrigation</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Irrigation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Irrigation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">implemented</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Irrigation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">implemented</span> <span class="o">=</span> <span class="bp">False</span>
 
-        <span class="n">water_source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Farm</span><span class="o">.</span><span class="n">water_sources</span><span class="p">[</span><span class="n">water_source_name</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Irrigation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">irrigation_efficiency</span> <span class="o">&gt;=</span> <span class="n">Field</span><span class="o">.</span><span class="n">Irrigation</span><span class="o">.</span><span class="n">irrigation_efficiency</span><span class="p">:</span>
+            <span class="c1"># row[&#39;fields&#39;].WaterSource = row[&#39;WaterSource&#39;].getCopy()</span>
+            <span class="n">Field</span><span class="o">.</span><span class="n">Storage</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Storage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getCopy</span><span class="p">()</span>
+            <span class="n">Field</span><span class="o">.</span><span class="n">Irrigation</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Irrigation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getCopy</span><span class="p">()</span>
+            <span class="c1"># row[&#39;fields&#39;].Crop = row[&#39;Crop&#39;].getCopy()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1">#Non-beneficial change of irrigations, remove from list</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
 
-        <span class="n">water_cost_per_ML</span> <span class="o">=</span> <span class="n">water_source</span><span class="o">.</span><span class="n">cost_per_ML</span>
-        <span class="n">water_cost_per_Ha</span> <span class="o">=</span> <span class="n">water_cost_per_ML</span> <span class="o">*</span> <span class="n">est_irrigation_water_ML_per_Ha</span>
+        <span class="k">return</span> <span class="n">row</span></div>
+    <span class="c1">#End updateFieldComponents()</span>
 
+<div class="viewcode-block" id="FarmManager.generateFieldAub"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.generateFieldAub">[docs]</a>    <span class="k">def</span> <span class="nf">generateFieldAub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c_coefs</span><span class="p">,</span> <span class="n">num_set</span><span class="p">):</span>
 
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For scipy linprog, generates the A_ub constraints for a given c value list</span>
 
+<span class="sd">        linprog function expects inputs in the form of</span>
+<span class="sd">        c = [List of Static values]</span>
+<span class="sd">        A_ub = [List of Lists, Upper bound constraints for the left hand side of equation]</span>
+<span class="sd">        b_ub = [Upper bound constraints for the right hand side of equation]</span>
 
-        <span class="c">#calcFlowRate</span>
-    <span class="c">#End calcCosts()</span>
-</div>
-<div class="viewcode-block" id="FarmManager.generateLPConstraints"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Management.html#integrated.Modules.Farm.Management.Manager.FarmManager.generateLPConstraints">[docs]</a>    <span class="k">def</span> <span class="nf">generateLPConstraints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c_coefs</span><span class="p">,</span> <span class="n">num_set</span><span class="p">):</span>
+<span class="sd">        A_ub has to be the same length as c_coefs</span>
+
+<span class="sd">        objective function may be:</span>
+<span class="sd">        2x_{1} + 2x_{2} + 1_{3}</span>
+
+<span class="sd">        s.t.</span>
+
+<span class="sd">        x_{1} + x_{2} + x_{3} &lt;= 100</span>
+<span class="sd">        x_{1}                 &lt;= 25 </span>
+
+<span class="sd">        Then, </span>
+<span class="sd">        c = [2, 5, 10]</span>
+<span class="sd">        A_ub = [[1, 1, 1], [1, 0, 0]]</span>
+<span class="sd">        b_ub = [100, 25] </span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">num_coefs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">c_coefs</span><span class="p">)</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
@@ -573,21 +780,21 @@
             <span class="n">temp_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="p">(</span><span class="n">num_set</span><span class="p">))]</span>
 
             <span class="n">ret</span><span class="o">.</span><span class="n">extend</span><span class="p">([[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">temp_list</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">c_coefs</span><span class="p">)]])</span>
-        <span class="c">#End for</span>
+        <span class="c1">#End for</span>
 
-        <span class="k">return</span> <span class="n">ret</span>
-    <span class="c">#End generateLPConstraints()</span>
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+    <span class="c1">#End generateFieldAub()</span>
     
 
-<span class="c">#End FarmManagement()</span></div></div>
+<span class="c1">#End FarmManagement()</span>
 </pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../../../search.html" method="get">
       <input type="text" name="q" />
@@ -604,7 +811,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -613,14 +820,14 @@
         <li class="right" >
           <a href="../../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-01-28.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Last updated on 2016-02-16.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

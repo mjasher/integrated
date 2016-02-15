@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Integrated Framework 0.1 documentation" href="../../../../readme.html" />
     <link rel="up" title="Module code" href="../../../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -33,9 +33,9 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,18 +44,18 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for integrated.Modules.Ecology.WaterSuitability</h1><div class="highlight"><pre>
-<span class="c">#WaterSuitability.py</span>
+<span class="c1">#WaterSuitability.py</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
@@ -75,17 +75,17 @@
 <span class="sd">        eco_site: ecological model site</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">species</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;species&#39;</span><span class="p">,</span> <span class="s">&#39;RRGMS&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">eco_site</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;eco_site&#39;</span><span class="p">,</span><span class="s">&#39;1&#39;</span><span class="p">)</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">species</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;species&#39;</span><span class="p">,</span> <span class="s1">&#39;RRGMS&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eco_site</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;eco_site&#39;</span><span class="p">,</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>        
 
         
-    <span class="c">#End init()</span>
+    <span class="c1">#End init()</span>
 
 <div class="viewcode-block" id="WaterSuitability.getAssetParam"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.getAssetParam">[docs]</a>    <span class="k">def</span> <span class="nf">getAssetParam</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_table</span><span class="p">,</span> <span class="n">gauge</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">asset_table</span><span class="p">[</span><span class="n">asset_table</span><span class="p">[</span><span class="s">&quot;Gauge&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">gauge</span><span class="p">)][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="c">#End getAssetParam()</span>
+        <span class="k">return</span> <span class="n">asset_table</span><span class="p">[</span><span class="n">asset_table</span><span class="p">[</span><span class="s2">&quot;Gauge&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">gauge</span><span class="p">)][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+    <span class="c1">#End getAssetParam()</span>
 
-</div>
+
 <div class="viewcode-block" id="WaterSuitability.selectCoordinates"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectCoordinates">[docs]</a>    <span class="k">def</span> <span class="nf">selectCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index_input</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Select a set of xy coordinates (index_curve is a data imported from csv file, coded in core) for generating curve.</span>
@@ -98,16 +98,16 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c">#TODO</span>
-        <span class="c">#Create n column dataframe of x and desired column(s)</span>
+        <span class="c1">#TODO</span>
+        <span class="c1">#Create n column dataframe of x and desired column(s)</span>
 
         <span class="n">temp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">index_input</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">index_input</span><span class="p">[</span><span class="n">cols</span><span class="p">]))</span>
         <span class="n">temp_df</span> <span class="o">=</span> <span class="n">temp_df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
         
-        <span class="k">return</span> <span class="n">temp_df</span>
+        <span class="k">return</span> <span class="n">temp_df</span></div>
         
-    <span class="c">#End selectCoordinates()</span>
-</div>
+    <span class="c1">#End selectCoordinates()</span>
+
 <div class="viewcode-block" id="WaterSuitability.selectWeights"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectWeights">[docs]</a>    <span class="k">def</span> <span class="nf">selectWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight_input</span><span class="p">,</span> <span class="n">weight_option</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Select a set of weight (imported from csv file) for aggregating indexes.</span>
@@ -116,44 +116,44 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="n">weights</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">weights</span><span class="p">[</span><span class="s">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weight_input</span><span class="p">[</span><span class="n">weight_input</span><span class="p">[</span><span class="s">&#39;Attribute&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Duration&#39;</span><span class="p">][</span><span class="n">weight_option</span><span class="p">]</span>
-        <span class="n">weights</span><span class="p">[</span><span class="s">&#39;timing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weight_input</span><span class="p">[</span><span class="n">weight_input</span><span class="p">[</span><span class="s">&#39;Attribute&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Timing&#39;</span><span class="p">][</span><span class="n">weight_option</span><span class="p">]</span>
-        <span class="n">weights</span><span class="p">[</span><span class="s">&#39;dry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weight_input</span><span class="p">[</span><span class="n">weight_input</span><span class="p">[</span><span class="s">&#39;Attribute&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Dry&#39;</span><span class="p">][</span><span class="n">weight_option</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">weights</span>            
+        <span class="n">weights</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weight_input</span><span class="p">[</span><span class="n">weight_input</span><span class="p">[</span><span class="s1">&#39;Attribute&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Duration&#39;</span><span class="p">][</span><span class="n">weight_option</span><span class="p">]</span>
+        <span class="n">weights</span><span class="p">[</span><span class="s1">&#39;timing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weight_input</span><span class="p">[</span><span class="n">weight_input</span><span class="p">[</span><span class="s1">&#39;Attribute&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Timing&#39;</span><span class="p">][</span><span class="n">weight_option</span><span class="p">]</span>
+        <span class="n">weights</span><span class="p">[</span><span class="s1">&#39;dry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weight_input</span><span class="p">[</span><span class="n">weight_input</span><span class="p">[</span><span class="s1">&#39;Attribute&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Dry&#39;</span><span class="p">][</span><span class="n">weight_option</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">weights</span>            </div>
     
-    <span class="c">#End selectWeights()</span>
-</div>
+    <span class="c1">#End selectWeights()</span>
+
 <div class="viewcode-block" id="WaterSuitability.selectWeightForSpecies"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.selectWeightForSpecies">[docs]</a>    <span class="k">def</span> <span class="nf">selectWeightForSpecies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">species_name</span><span class="p">,</span> <span class="n">weight_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
         <span class="k">if</span> <span class="n">weight_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">weights</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">weights</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">species_name</span><span class="p">,</span> <span class="n">weight_name</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c">#Return all weights if none specified</span>
+            <span class="c1">#Return all weights if none specified</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">weights</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">weights</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">species_name</span><span class="p">]</span>
             
-        <span class="c">#End if</span>
+        <span class="c1">#End if</span>
 
-        <span class="k">return</span> <span class="n">df</span>
-    <span class="c">#End selectWeightForSpecies</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+    <span class="c1">#End selectWeightForSpecies</span>
         
-</div>
+
 <div class="viewcode-block" id="WaterSuitability.modifyCoordinates"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.modifyCoordinates">[docs]</a>    <span class="k">def</span> <span class="nf">modifyCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordinates</span><span class="p">,</span> <span class="n">adjust</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adjust the predefined xy coordinates e.g. +_ 10%</span>
 <span class="sd">        To be used for uncertainty analysis through allowing the predefined xy coordinates to move around</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">new_coordinates</span><span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">coordinates</span><span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">adjust</span>
-        <span class="n">new_coordiantes</span><span class="p">[</span><span class="s">&#39;y&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">coordinates</span><span class="p">[</span><span class="s">&#39;y&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">adjust</span>
-        <span class="k">return</span> <span class="n">new_coordinates</span>
+        <span class="n">new_coordinates</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">coordinates</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">adjust</span>
+        <span class="n">new_coordiantes</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">coordinates</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">adjust</span>
+        <span class="k">return</span> <span class="n">new_coordinates</span></div>
 
 
-<span class="c">#    def makeIndexCurve(self, coordinates):</span>
-<span class="c">#        &quot;&quot;&quot;</span>
-<span class="c">#        Create an index curve based on xy coordinates. </span>
-<span class="c">#        The two ends of the curve extend flat (i.e. the same as the first/last y value)</span>
-<span class="c">#        &quot;&quot;&quot;</span>
-<span class="c">#        return index_curve</span>
-    </div>
+<span class="c1">#    def makeIndexCurve(self, coordinates):</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+<span class="c1">#        Create an index curve based on xy coordinates. </span>
+<span class="c1">#        The two ends of the curve extend flat (i.e. the same as the first/last y value)</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+<span class="c1">#        return index_curve</span>
+    
 <div class="viewcode-block" id="WaterSuitability.waterIndexWeightedAvg"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.waterIndexWeightedAvg">[docs]</a>    <span class="k">def</span> <span class="nf">waterIndexWeightedAvg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow_index</span><span class="p">,</span> <span class="n">groundwater_index</span><span class="p">,</span> <span class="n">groundwater_weight</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate daily water index summary based on weighted average of daily flow index and groundwater index</span>
@@ -165,22 +165,27 @@
         <span class="n">flow_index</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">groundwater_index</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
         
         <span class="n">water_index</span> <span class="o">=</span> <span class="n">flow_index</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">groundwater_weight</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">groundwater_index</span> <span class="o">*</span> <span class="n">groundwater_weight</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">water_index</span>
-</div>
+        <span class="k">return</span> <span class="n">water_index</span></div>
+
 <div class="viewcode-block" id="WaterSuitability.calcWaterSuitabilityIndex"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.calcWaterSuitabilityIndex">[docs]</a>    <span class="k">def</span> <span class="nf">calcWaterSuitabilityIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gw_data</span><span class="p">,</span> <span class="n">sw_data</span><span class="p">,</span> <span class="n">gw_weight</span><span class="p">,</span> <span class="n">sw_weight</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :math:`I = w_{g}G + w_{s}S`</span>
 
-<span class="sd">        where \\\\</span>
+<span class="sd">        where </span>
+
 <span class="sd">        * :math:`I` denotes the water suitability index</span>
+
 <span class="sd">        * :math:`G` is the groundwater suitability index</span>
+
 <span class="sd">        * :math:`S` is the surface water suitability index</span>
+
 <span class="sd">        * :math:`w_{g}` weight for groundwater index</span>
+
 <span class="sd">        * :math:`w_{s}` weight for surface water index</span>
 
-<span class="sd">        Here groundwater data is daily data and surface water data reflects grouped flooding events. \\\\</span>
-<span class="sd">        Because of this, the surface water index is NaN for datetime with no observations. \\\\</span>
+<span class="sd">        Here groundwater data is daily data and surface water data reflects grouped flooding events. \\\</span>
+<span class="sd">        Because of this, the surface water index is NaN for datetime with no observations. \\\</span>
 <span class="sd">        To account for this, we fill these NAs with the weighted GW index as SW Index is 0 in those circumstances</span>
 
 <span class="sd">        :param gw_index: groundwater index</span>
@@ -192,101 +197,116 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c"># import time</span>
-        <span class="c"># start = time.time()</span>
-        <span class="c"># print &quot;Took {s} seconds&quot;.format(s = time.time() - start)</span>
+        <span class="c1"># import time</span>
+        <span class="c1"># start = time.time()</span>
+        <span class="c1"># print &quot;Took {s} seconds&quot;.format(s = time.time() - start)</span>
 
-        <span class="c">#Fill column with GW datatime. Use this to search the SW dataframe</span>
+        <span class="c1">#Fill column with GW datatime. Use this to search the SW dataframe</span>
         <span class="n">temp</span> <span class="o">=</span> <span class="n">gw_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-        <span class="c"># gw_data[&#39;sw_index&#39;] = temp.tolist()</span>
+        <span class="c1"># gw_data[&#39;sw_index&#39;] = temp.tolist()</span>
 
-        <span class="c">#Get the start and end dates to search between</span>
-        <span class="n">timeframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">sw_data</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]),</span> <span class="n">end</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">sw_data</span><span class="p">[</span><span class="s">&#39;end&#39;</span><span class="p">]),</span> <span class="n">sw_suit_index</span><span class="o">=</span><span class="n">sw_data</span><span class="p">[</span><span class="s">&#39;sw_suitability_index&#39;</span><span class="p">]))</span>
+        <span class="c1">#Get the start and end dates to search between</span>
+        <span class="n">timeframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">sw_data</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]),</span> <span class="n">end</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">sw_data</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">]),</span> <span class="n">sw_suit_index</span><span class="o">=</span><span class="n">sw_data</span><span class="p">[</span><span class="s1">&#39;sw_suitability_index&#39;</span><span class="p">]))</span>
 
-        <span class="c">#Create dataframe to house the suitability indexes</span>
-        <span class="n">series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">datetime</span><span class="o">=</span><span class="n">temp</span><span class="p">,</span> <span class="n">gw_suit_index</span><span class="o">=</span><span class="n">gw_data</span><span class="p">[</span><span class="s">&#39;gw_suitability_index&#39;</span><span class="p">],</span> <span class="n">sw_suit_index</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gw_data</span><span class="p">[</span><span class="s">&#39;gw_suitability_index&#39;</span><span class="p">]))</span> <span class="p">))</span>
+        <span class="c1">#Create dataframe to house the suitability indexes</span>
+        <span class="n">series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">datetime</span><span class="o">=</span><span class="n">temp</span><span class="p">,</span> <span class="n">gw_suit_index</span><span class="o">=</span><span class="n">gw_data</span><span class="p">[</span><span class="s1">&#39;gw_suitability_index&#39;</span><span class="p">],</span> <span class="n">sw_suit_index</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gw_data</span><span class="p">[</span><span class="s1">&#39;gw_suitability_index&#39;</span><span class="p">]))</span> <span class="p">))</span>
 
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">timeframe</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-            <span class="n">series</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]:</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;end&#39;</span><span class="p">],</span> <span class="s">&#39;sw_suit_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;sw_suit_index&#39;</span><span class="p">]</span>
-        <span class="c">#End for</span>
+            <span class="n">series</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]:</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">],</span> <span class="s1">&#39;sw_suit_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;sw_suit_index&#39;</span><span class="p">]</span>
+        <span class="c1">#End for</span>
 
-        <span class="n">gw_data</span><span class="p">[</span><span class="s">&#39;sw_suitability_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">series</span><span class="p">[</span><span class="s">&#39;sw_suit_index&#39;</span><span class="p">]</span>
-        <span class="n">gw_data</span><span class="p">[</span><span class="s">&#39;water_suitability_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">gw_weight</span><span class="o">*</span><span class="n">gw_data</span><span class="p">[</span><span class="s">&#39;gw_suitability_index&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">sw_weight</span><span class="o">*</span><span class="n">gw_data</span><span class="p">[</span><span class="s">&#39;sw_suitability_index&#39;</span><span class="p">]))</span>
+        <span class="n">gw_data</span><span class="p">[</span><span class="s1">&#39;sw_suitability_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">series</span><span class="p">[</span><span class="s1">&#39;sw_suit_index&#39;</span><span class="p">]</span>
+        <span class="n">gw_data</span><span class="p">[</span><span class="s1">&#39;water_suitability_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">gw_weight</span><span class="o">*</span><span class="n">gw_data</span><span class="p">[</span><span class="s1">&#39;gw_suitability_index&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">sw_weight</span><span class="o">*</span><span class="n">gw_data</span><span class="p">[</span><span class="s1">&#39;sw_suitability_index&#39;</span><span class="p">]))</span>
 
-        <span class="n">gw_data</span><span class="p">[</span><span class="n">gw_data</span><span class="p">[[</span><span class="s">&#39;sw_suitability_index&#39;</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="n">gw_data</span><span class="p">[</span><span class="n">gw_data</span><span class="p">[[</span><span class="s1">&#39;sw_suitability_index&#39;</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
-        <span class="k">return</span> <span class="n">gw_data</span>
+        <span class="k">return</span> <span class="n">gw_data</span></div>
 
-    <span class="c">#End calcWaterSuitabilityIndex()</span>
+    <span class="c1">#End calcWaterSuitabilityIndex()</span>
 
-</div>
+
 <div class="viewcode-block" id="WaterSuitability.calcGWSuitabilityIndex"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.calcGWSuitabilityIndex">[docs]</a>    <span class="k">def</span> <span class="nf">calcGWSuitabilityIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gw_index</span><span class="p">,</span> <span class="n">S_index</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        :math:`G = L(d) * E(S)`</span>
 
-<span class="sd">        where \\\\</span>
+<span class="sd">        where</span>
 <span class="sd">        * :math:`G` is groundwater suitability index</span>
+
 <span class="sd">        * :math:`L` is a function of groundwater depth which produces an index</span>
+
 <span class="sd">        * :math:`d` is groundwater depth</span>
+
 <span class="sd">        * :math:`E` is a function of salinity which produces a salinity index</span>
+
 <span class="sd">        * :math:`S` is salinity</span>
 
 <span class="sd">        :returns: groundwater suitability index</span>
 <span class="sd">        :return type: numeric (?)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="n">gw_index</span> <span class="o">*</span> <span class="n">S_index</span>
+        <span class="k">return</span> <span class="n">gw_index</span> <span class="o">*</span> <span class="n">S_index</span></div>
 
-    <span class="c">#End calcGWSuitabilityIndex()</span>
-</div>
+    <span class="c1">#End calcGWSuitabilityIndex()</span>
+
 <div class="viewcode-block" id="WaterSuitability.calcSWSuitabilityIndex"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.calcSWSuitabilityIndex">[docs]</a>    <span class="k">def</span> <span class="nf">calcSWSuitabilityIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">ft</span><span class="p">,</span> <span class="n">dp</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Currently a stub. Implementing child classes should (re)define this method</span>
 
-<span class="sd">        :param fd: Dict of flood duration parameters</span>
-<span class="sd">        :param ft: Dict of flood timing parameters</span>
-<span class="sd">        :param dp: Dict of flood dry period parameters</span>
-
 <span class="sd">        All dicts should consist of the weight and index for a given species</span>
 
 <span class="sd">        :math:`S = w_{d}D(f_{d}) + w_{t}T(f_{t}) + w_{f}F(f_{dp})`</span>
 
-<span class="sd">        where \\\\</span>
+<span class="sd">        where</span>
+
 <span class="sd">        * :math:`S` is surface water suitability index</span>
+
 <span class="sd">        * :math:`w_{d}` weight for flood duration</span>
+
 <span class="sd">        * :math:`D` is a function of flood duration which produces a flood duration index</span>
+
 <span class="sd">        * :math:`f_{d}` flood duration</span>
+
 <span class="sd">        * :math:`w_{t}` weight for flood timing</span>
+
 <span class="sd">        * :math:`T` is a function of flood timing which produces a flood timing index</span>
+
 <span class="sd">        * :math:`f_{t}` flood timing</span>
+
 <span class="sd">        * :math:`w_{f}` weight for inter-flood dry period</span>
+
 <span class="sd">        * :math:`F` is a function of inter-flood dry period which produces a dry period index</span>
+
 <span class="sd">        * :math:`f_{dp}` inter-flood dry period</span>
+
+<span class="sd">        :param fd: Dict of flood duration parameters</span>
+<span class="sd">        :param ft: Dict of flood timing parameters</span>
+<span class="sd">        :param dp: Dict of flood dry period parameters</span>
 
 <span class="sd">        :returns: surface water suitability index</span>
 <span class="sd">        :return type: time series (?)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">pass</span>
+        <span class="k">pass</span></div>
 
-    <span class="c">#End calcSWSuitability</span>
-</div>
+    <span class="c1">#End calcSWSuitability</span>
+
 <div class="viewcode-block" id="WaterSuitability.calcSalinityIndex"><a class="viewcode-back" href="../../../../integrated.Modules.Ecology.html#integrated.Modules.Ecology.WaterSuitability.WaterSuitability.calcSalinityIndex">[docs]</a>    <span class="k">def</span> <span class="nf">calcSalinityIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-</pre></div></div></div>
+        <span class="k">pass</span></div></div>
+
+</pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../../search.html" method="get">
       <input type="text" name="q" />
@@ -303,7 +323,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -312,14 +332,14 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
-          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../../readme.html">Integrated Framework 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-01-28.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Last updated on 2016-02-16.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

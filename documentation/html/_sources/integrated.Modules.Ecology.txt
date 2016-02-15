@@ -20,14 +20,6 @@ integrated.Modules.Ecology.FlowSuitability module
     :undoc-members:
     :show-inheritance:
 
-integrated.Modules.Ecology.GwSuitabiilty module
------------------------------------------------
-
-.. automodule:: integrated.Modules.Ecology.GwSuitabiilty
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 integrated.Modules.Ecology.PlatypusFlow module
 ----------------------------------------------
 
