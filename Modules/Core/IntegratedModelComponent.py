@@ -17,6 +17,11 @@ class Component(object):
         setattr(self, name, value) if value is not None else setattr(self, name, default_val)
     #End setAttribute
 
+    def getCopy(self):
+        import copy
+        return copy.deepcopy(self)
+    #End getCopy()
+
 
     def setMethod(self, name, func):
 
@@ -138,8 +143,14 @@ class Component(object):
         """
 
         component = kwargs['component']
-        comp_name = kwargs['comp_name'] if 'comp_name' in kwargs else getattr(self, component).keys()[0]
-        attr_name = kwargs['attr_name']
+
+        try:
+            comp_name = kwargs['comp_name'] if 'comp_name' in kwargs else getattr(self, component).keys()[0]
+        except AttributeError:
+            comp_name = getattr(self, component).name
+        #End try
+
+        attr_name = kwargs['attr_name'] if 'attr_name' in kwargs else None
 
         #Get farm component collection (storages, crops, irrigations, etc.)
         comp = getattr(self, component)
@@ -149,14 +160,17 @@ class Component(object):
             comp = getattr(comp[comp_name], subcomponent)
         else:
             comp = comp[comp_name]
+        #End if
 
-        try:
-            val = getattr(comp, attr_name)
-        except AttributeError:
-            return None
+        if attr_name is not None:
 
-        #set parameter for given farm component
-        return val
+            try:
+                val = getattr(comp, attr_name)
+            except AttributeError:
+                return None
+
+            #return parameter for given farm component
+            return val
 
     #End getParam()
 
