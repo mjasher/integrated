@@ -1,6 +1,6 @@
-from integrated.Modules.Core.IntegratedModelComponent import Component
+from integrated.Modules.Farm.Farms.FarmComponent import FarmComponent
 
-class WaterSources(Component):
+class WaterSources(FarmComponent):
 
     """
     Represents a source of water
@@ -10,7 +10,7 @@ class WaterSources(Component):
 
         """
         :param name: Name of water source 
-        :param water_level: Current water level
+        :param water_level: Current water level, depth below ground level
         :param entitlement: Amount of water entitled from this water source
         :param water_value_per_ML: Market value of the water
         :param cost_per_ML: Cost of ordering the water
@@ -40,14 +40,15 @@ class WaterSources(Component):
         pass
     #End extractWater()
 
-    def calcPumpingCostsPerML(self, flow_rate_Lps, head_pressure=None, pump_efficiency=0.7, derating=1, fuel_per_Kw=0.25, fuel_price_per_Litre=1.25):
+    def calcPumpingCostsPerML(self, flow_rate_Lps, head_pressure=None, additional_head=0.0, pump_efficiency=0.7, derating=0.75, fuel_per_Kw=0.25, fuel_price_per_Litre=1.0):
 
         """
         :param flow_rate_Lps: required flow rate in Litres per second over the irrigation duration
-        :param head_pressure: Total head pressure in metres. Uses water level of water source if not given
+        :param head_pressure: Head pressure of pumping system in metres. Uses water level of water source if not given.
+        :param additional_head: Additional head pressure, typically factored in from the implemented irrigation system
         :param pump_efficiency: Efficiency of pump. Defaults to 0.7 (70%)
         :param derating: Accounts for efficiency losses between the energy required at the pump shaft and the total energy required. Defaults to 1
-        :param fuel_per_Kw: Amount of fuel required for a Kilowatt hour. Defaults to 0.25L for diesel.
+        :param fuel_per_Kw: Amount of fuel (in litres) required for a Kilowatt hour. Defaults to 0.25L for diesel.
 
         See 
           * `Robinson, D. W., 2002 <http://www.clw.csiro.au/publications/technical2002/tr20-02.pdf>`_
@@ -67,6 +68,8 @@ class WaterSources(Component):
         if head_pressure is None:
             head_pressure = self.water_level
 
+        head_pressure = head_pressure + additional_head
+
         constant = 102
         energy_required_Kw = (head_pressure * flow_rate_Lps) / ((constant * pump_efficiency) * derating)
 
@@ -76,28 +79,34 @@ class WaterSources(Component):
 
         cost_per_ML = (fuel_price_per_Litre * fuel_required_per_Hour) * hours_per_ML
 
-        print "---- Pumping Cost Calculation ----"
-        print "Water Level: {wl}".format(wl=self.water_level)
-        print "Given flow rate: {f}".format(f=flow_rate_Lps)
-        print "Energy Kw: {kw}".format(kw=energy_required_Kw)
-        print "Fuel / Hour: {f}".format(f=fuel_required_per_Hour)
-        print "Hours / ML: {f}".format(f=hours_per_ML)
-        print "Cost per ML: {f}".format(f=cost_per_ML)
-        print "=================================="
+        # print "---- Pumping Cost Calculation ----"
+        # print "Head pressure: {h}".format(h=head_pressure)
+        # print "Water Level: {wl}".format(wl=self.water_level)
+        # print "Given flow rate: {f}".format(f=flow_rate_Lps)
+        # print "Energy Kw: {kw}".format(kw=energy_required_Kw)
+        # print "Fuel / Hour: {f}".format(f=fuel_required_per_Hour)
+        # print "Hours / ML: {f}".format(f=hours_per_ML)
+        # print "Cost per ML: {f}".format(f=cost_per_ML)
+        # print "=================================="
 
         return cost_per_ML
 
     #End calcPumpingCostsPerML()
 
-    def calcGrossPumpingCostsPerHa(self, flow_rate_Lps, est_irrigation_water_ML_per_Ha, pump_efficiency=0.7, derating=1, fuel_per_Kw=0.25):
-        pumping_cost_per_Ha = self.calcPumpingCostsPerML(flow_rate_Lps, pump_efficiency, derating, fuel_per_Kw) * est_irrigation_water_ML_per_Ha
+    def calcGrossPumpingCostsPerHa(self, flow_rate_Lps, est_irrigation_water_ML_per_Ha, head_pressure=None, additional_head=0.0, pump_efficiency=0.7, derating=0.75, fuel_per_Kw=0.25):
+        pumping_cost_per_Ha = self.calcPumpingCostsPerML(flow_rate_Lps, head_pressure, additional_head, pump_efficiency, derating, fuel_per_Kw) * est_irrigation_water_ML_per_Ha
 
         return pumping_cost_per_Ha
-    #End calcGrossPumpingCosts()
+    #End calcGrossPumpingCostsPerHa()
+
 
     def calcWaterCostsPerHa(self, water_amount_ML_per_Ha):
         return self.cost_per_ML * water_amount_ML_per_Ha
     #End calcWaterCostsPerHa()
+
+    def calcTotalCostsPerHa(self, water_amount_ML_per_Ha):
+        return self.cost_per_ML * water_amount_ML_per_Ha
+    #End calcTotalCostsPerHa()
 
         
 
