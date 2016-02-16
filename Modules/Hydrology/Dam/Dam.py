@@ -1,78 +1,58 @@
 from __future__ import division
-import pandas as pd 
+import pandas as pd
+import numpy as np
 from integrated.Modules.Core.IntegratedModelComponent import Component
+from integrated.Modules.Core.Handlers.FileHandler import FileHandler
 
-class Dam():
+class Dam(Component):
+    def __init__(self, Climate, water_volume):
+        """
+        comment
+        """
 
-	__init__(self, Climate, parameters, network):
-		
+        self.Climate = Climate 
+        self.water_volume = water_volume
 
-		"""
-		parameters: Dict of IHACRES, Routing, Dam, Network parameters
-		"""
+    def run(self):
 
-		self.Climate = Climate
-		self.parameters = parameters
-		self.network = network
+        pass
+    #End init()
 
-		# parameters = {
-		# 	"IHACRES": None,
-		# 	"Routing": None,
-		# 	"Dam": None,
-		# 	"Network": None
-		# }
+    def calcFlow(self, node_id, climate, node_inflow, irrig_ext, base_flow, deep_drainage, Damparams):
 
-	#End init()
+        """
+        :math:`g = f * d`
 
-	def run(self):
-		"""
-		Outputs
+        :sup:`a`:math:`E_{k}` if :math:`M_{k} < g`
 
-		Outflow and Storage
-		O_{k}, S_{k}
-		"""
-	#End run()
+        :math:`eE_{k}e^-2(M_{k}-g)` if :math:`M_{k} > g`
 
-	def overflow(self):
+        """
 
-		"""
-		f(S_{k})
-		"""
+        evap, rain = climate
 
-		pass
+        Gamma_k = base_flow - deep_drainage
+        
+        storage_coef, area, max_storage = Damparams
 
-	def release(self):
-		pass
+        #Fastest data extraction method so far
+        gauge_id, n_id, water_volume = self.water_volume.loc[node_id]
 
-	def infiltration(self):
+        # print(node_id,gauge_id,n_id,water_volume)  
+        # print(self.water_volume)
+        
+        tmp_vol = water_volume + (node_inflow + Gamma_k) + (rain - evap)*area - irrig_ext
 
-		#self.water_level
-		"""
-		g*(S_{k})
-		"""
+        if tmp_vol > max_storage:
+            water_volume = 1/(1+storage_coef) * (tmp_vol-max_storage)
+            outflow=storage_coef*(water_volume)
+            water_volume = water_volume + max_storage
+        else:
+            water_volume = tmp_vol
+            outflow=0.0
 
-		pass
+        return outflow, water_volume
 
-	def calcStorage(self):
-		pass
-
-	def calc(self, inflow, rainfall, evap, infil, recharge, spill, area):
-
-		"""
-
-		S_{k} : Current node
-
-		inflow : f_{k} from IHACRES
-
-		rainfall : p_{k} from Climate
-
-		evap : E_{k} from Climate
-
-		infil : I_{k}, an equation - depends on water depth
-
-		recharge : R_{k}, from integrated model
-
-		spill : O_{k}
-		"""
-
-		#S_{k} = S_{k-1} + inflow + rainfall*area - evap*area - infil*area - recharge*area - spill
+    #End calcFlow()
+    
+#End Dam
