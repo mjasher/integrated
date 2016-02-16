@@ -25,6 +25,14 @@ integrated.Modules.Farm.SWD_main module
     :undoc-members:
     :show-inheritance:
 
+integrated.Modules.Farm.farm_dev_main module
+--------------------------------------------
+
+.. automodule:: integrated.Modules.Farm.farm_dev_main
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 integrated.Modules.Farm.farmer_decision_example module
 ------------------------------------------------------
 

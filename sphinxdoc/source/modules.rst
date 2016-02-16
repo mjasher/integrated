@@ -1,5 +1,5 @@
-..
-==
+integrated
+==========
 
 .. toctree::
    :maxdepth: 4

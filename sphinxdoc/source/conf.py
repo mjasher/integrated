@@ -39,7 +39,7 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
-    'sphinx.ext.graphviz', #Must install from http://www.graphviz.org/
+    #'sphinx.ext.graphviz', #Must install from http://www.graphviz.org/
     'sphinx.ext.inheritance_diagram'
 ]
 
@@ -80,7 +80,9 @@ release = '0.1'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = []
+exclude_patterns = ['*flopy*']
+
+
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -157,6 +159,8 @@ html_last_updated_fmt = '%Y-%m-%d'
 
 # Custom sidebar templates, maps document names to template names.
 #html_sidebars = {}
+
+sidebarwidth = 360
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.

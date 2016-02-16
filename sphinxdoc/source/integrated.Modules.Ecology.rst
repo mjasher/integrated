@@ -20,10 +20,10 @@ integrated.Modules.Ecology.FlowSuitability module
     :undoc-members:
     :show-inheritance:
 
-integrated.Modules.Ecology.GwSuitabiilty module
------------------------------------------------
+integrated.Modules.Ecology.PlatypusFlow module
+----------------------------------------------
 
-.. automodule:: integrated.Modules.Ecology.GwSuitabiilty
+.. automodule:: integrated.Modules.Ecology.PlatypusFlow
     :members:
     :undoc-members:
     :show-inheritance:
@@ -40,6 +40,22 @@ integrated.Modules.Ecology.baihua_example module
 ------------------------------------------------
 
 .. automodule:: integrated.Modules.Ecology.baihua_example
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+integrated.Modules.Ecology.flow_dev module
+------------------------------------------
+
+.. automodule:: integrated.Modules.Ecology.flow_dev
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+integrated.Modules.Ecology.platypus_main module
+-----------------------------------------------
+
+.. automodule:: integrated.Modules.Ecology.platypus_main
     :members:
     :undoc-members:
     :show-inheritance:

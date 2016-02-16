@@ -4,6 +4,14 @@ integrated.Modules.Farm.Farms package
 Submodules
 ----------
 
+integrated.Modules.Farm.Farms.FarmComponent module
+--------------------------------------------------
+
+.. automodule:: integrated.Modules.Farm.Farms.FarmComponent
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 integrated.Modules.Farm.Farms.FarmInfo module
 ---------------------------------------------
 
