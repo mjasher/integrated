@@ -1,5 +1,5 @@
 """
-Example for determining irrigated area that maximises profits
+Example use of Linear Programming for determining irrigated area that maximises profits
 
 Function to be optimised takes the form of negated sum of profits multiplied by area.
 This is then constrained by:
@@ -10,7 +10,7 @@ This is then constrained by:
 
 Profits are negated as the solver attempts to minimize
 
-:math:`f(x) = P_{1}*x_{1} + P_{2}*x_{2} + P_{3}*x_{3}  ... + P_{n}*x_{n}`, where :math:`P` is negated profits
+:math:`f(x) = P_{1}*x_{1} + P_{2}*x_{2} + P_{3}*x_{3}  ... + P_{n}*x_{n}`, where :math:`P` is negated profits and :math:`x_{n}` represents possible area
 
 :math:`x_{1} + x_{2} + x_{3} ... + x_{n} = A`, where :math:`A` is total available area
 
@@ -21,6 +21,8 @@ Profits are negated as the solver attempts to minimize
 Each :math:`x` therefore represents a combination of soil, crop, irrigation, water source, and soil characteristics
 
 Example::
+
+	area = 300 #Maximum possible area for irrigation
 
 	tomato_cost = Tomato.variable_cost_per_Ha + flood_infra_cost + (pumping_cost*Tomato.water_use_ML_per_Ha)
 	wheat_cost = Wheat.variable_cost_per_Ha + flood_infra_cost + (pumping_cost*Wheat.water_use_ML_per_Ha)
@@ -36,6 +38,9 @@ Example::
 	#Constrain by total area
 	A_eq = [[1, 1, 1]] #1*x[1] + 1*x[2] + 1*x[3] ... + 1*x[n] = Total Area
 	b_eq = [area]
+
+	#Here, x represents irrigated area for each crop
+	#So the negated profit * area is being minimized
 
 	#Costs per Ha of producing the negated profit
 	A_ub = [
@@ -64,11 +69,11 @@ Example::
 
 """
 
-from scipy.optimize import linprog as lp
-from setup_dev import *
-from Crops.CropInfo import CropInfo
-
 if __name__ == '__main__':
+
+	from scipy.optimize import linprog as lp
+	from setup_dev import *
+	from Crops.CropInfo import CropInfo
 
 	Tomato = CropInfo(**Tomato_params.getParams())
 	Wheat = CropInfo(**Wheat_params.getParams())
@@ -105,9 +110,11 @@ if __name__ == '__main__':
 	b_eq = [area]
 
 	#Costs per Ha of producing the negated profit
-	A_ub = [
-		[Wheat.water_use_ML_per_Ha, Canola.water_use_ML_per_Ha, Tomato.water_use_ML_per_Ha],
-	]
+	# A_ub = [
+	# 	[Wheat.water_use_ML_per_Ha, Canola.water_use_ML_per_Ha, Tomato.water_use_ML_per_Ha],
+	# ]
+
+	A_ub = [Wheat.water_use_ML_per_Ha, Canola.water_use_ML_per_Ha, Tomato.water_use_ML_per_Ha]
 
 	#Constraints to producing negated profit 
 	b_ub = [
