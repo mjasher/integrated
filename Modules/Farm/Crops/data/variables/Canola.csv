@@ -1,9 +1,0 @@
-Variable, Best Guess, Min, Max
-yield_per_Ha, 9.5, 5, 11
-price_per_yield, 300, 250, 650
-variable_cost_per_Ha, 221.0, 180, 350
-water_use_ML_per_Ha, 6.0, 4.0, 7.0
-root_depth_m, 0.55, 0.35, 1.0
-depletion_fraction, 0.4, 0.3, 0.5
-et_coef, 110, 90, 120
-wue_coef, 15, 10, 30
