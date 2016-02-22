@@ -1,0 +1,48 @@
+{
+  "name": "PipeAndRiser",
+  "irrigation_rate": {
+    "Best Guess":1,
+    "Min":0,
+    "Max":1
+  },
+  "irrigation_efficiency": {
+    "Best Guess":0.74,
+    "Min":0.3,
+    "Max":0.9
+  },
+  "lifespan": {
+    "Best Guess":15,
+    "Min":10,
+    "Max":20
+  },
+  "cost_per_Ha": {
+    "Best Guess":2400,
+    "Min":2400,
+    "Max":3300
+  },
+  "replacement_cost_per_Ha": {
+    "Best Guess":2400,
+    "Min":2000,
+    "Max":2500
+  },
+  "maintenance_rate": {
+    "Best Guess":0.02,
+    "Min":0.02,
+    "Max":0.02
+  },
+  "flow_ML_day": {
+    "Best Guess":12,
+    "Min":5,
+    "Max":25
+  },
+  "pumping_cost_per_ML": {
+    "Best Guess":8,
+    "Min":8,
+    "Max":15
+  },
+  "head_pressure": {
+    "Best Guess":10,
+    "Min":8,
+    "Max":15
+  }
+}

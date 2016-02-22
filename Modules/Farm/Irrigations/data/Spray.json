@@ -1,0 +1,48 @@
+{
+  "name": "Spray",
+  "irrigation_rate": {
+    "Best Guess":1,
+    "Min":0,
+    "Max":1
+  },
+  "irrigation_efficiency": {
+    "Best Guess":0.8,
+    "Min":0.7,
+    "Max":0.9
+  },
+  "lifespan": {
+    "Best Guess":15,
+    "Min":10,
+    "Max":20
+  },
+  "cost_per_Ha": {
+    "Best Guess":2800,
+    "Min":2500,
+    "Max":3500
+  },
+  "replacement_cost_per_Ha": {
+    "Best Guess":2500,
+    "Min":2000,
+    "Max":3500
+  },
+  "maintenance_rate": {
+    "Best Guess":0.02,
+    "Min":0.02,
+    "Max":0.02
+  },
+  "flow_ML_day": {
+    "Best Guess":12,
+    "Min":5,
+    "Max":25
+  },
+  "pumping_cost_per_ML": {
+    "Best Guess":35,
+    "Min":30,
+    "Max":100
+  },
+  "head_pressure": {
+    "Best Guess":30,
+    "Min":30,
+    "Max":60
+  }
+}

@@ -1,8 +1,9 @@
-from integrated.Modules.Core.IntegratedModelComponent import Component
+from __future__ import division
+from integrated.Modules.Farm.Farms.FarmComponent import FarmComponent
 from integrated.Modules.Core.GeneralFunctions import *
 import copy
 
-class IrrigationPractice(Component):
+class IrrigationPractice(FarmComponent):
 
     """
     Represents an irrigation practice/technology.
@@ -10,11 +11,12 @@ class IrrigationPractice(Component):
     Methods defined in this parent class should be considered stubs, to be redefined by child Classes.
     """
 
-    def __init__(self, name, irrigation_efficiency, cost_per_Ha, replacement_cost_per_Ha=None, irrigation_rate=None, lifespan=None, max_irrigation_area_Ha=None, maintenance_rate=None, **kwargs): #discount_rate=0.07
+    def __init__(self, name, irrigation_efficiency, cost_per_Ha, replacement_cost_per_Ha=None, irrigation_rate=None, lifespan=None, max_irrigation_area_Ha=None, maintenance_rate=None, implemented=False, pumping_cost_per_ML=None, **kwargs): #discount_rate=0.07
 
         self.name = name
 
-        self.irrigation_rate = 1 if irrigation_rate is None else irrigation_rate
+        self.setAttribute('irrigation_rate', 1, irrigation_rate)
+
         self.irrigation_efficiency = irrigation_efficiency
 
         #Cost of replacing the irrigation system after lifespan.
@@ -24,10 +26,20 @@ class IrrigationPractice(Component):
         self.cost_per_Ha = cost_per_Ha
         
         #max irrigation area default value (782 Ha) from Powell & Scott (2011), Representative farm model, p 25
-        self.max_irrigation_area_Ha = max_irrigation_area_Ha if max_irrigation_area_Ha is not None else 782.0
-        self.lifespan = lifespan if lifespan is not None else 10
+        self.setAttribute('max_irrigation_area_Ha', max_irrigation_area_Ha, 782.0)
+        
+        self.setAttribute('lifespan', lifespan, 10)
+
+        self.setAttribute('pumping_cost_per_ML', pumping_cost_per_ML, None)
 
         self.maintenance_rate = maintenance_rate
+
+        #Default of 12 taken from DEPI 2014, Rotating linear movei rrigation system: is it a good investment?
+        self.flow_ML_day = kwargs.pop('flow_ML_day', 12)
+
+        self.implemented = implemented
+
+        self.pumping_cost_per_ML = pumping_cost_per_ML
 
         #Set all other kwargs as class attributes
         for key, value in kwargs.items():
@@ -154,7 +166,7 @@ class IrrigationPractice(Component):
     def calcWaterAppliedMLperHa(self, base_application_ML_per_Ha):
 
         """
-        WARNING: DEPRECATED, DO NOT USE
+        USE WITH CAUTION
 
         Calculate how much water needs to be applied in MegaLitres per Hectare
 
@@ -172,7 +184,7 @@ class IrrigationPractice(Component):
 
         """
 
-        return ((base_application_ML_per_Ha / (self.irrigation_efficiency * 100)) * 100) * self.irrigation_rate
+        return (base_application_ML_per_Ha / self.irrigation_efficiency) * self.irrigation_rate
 
     #End calcWaterAppliedMLperHa
 
@@ -209,7 +221,7 @@ class IrrigationPractice(Component):
 
         return op_cost_per_Ha
 
-    def calcCapitalCost(self, irrigation_area_Ha):
+    def calcCapitalCost(self, irrigation_area_Ha=None):
 
         """
         Calculate the implementation cost of this irrigation practice
@@ -219,7 +231,10 @@ class IrrigationPractice(Component):
         :return type: numeric
         """
 
-        return irrigation_area_Ha * self.cost_per_Ha
+        if self.implemented is True:
+            return 0.0
+        else:
+            return irrigation_area_Ha * self.cost_per_Ha
 
     #End calcCapitalCost()
 
@@ -249,6 +264,19 @@ class IrrigationPractice(Component):
 
         return 0
     #End calcOngoingCost()
+
+    def calcTotalCostsPerHa(self, other_costs=0):
+
+        if self.implemented == True:
+            implementation_cost = 0
+            maintenance_cost = self.maintenance_rate * self.replacement_cost_per_Ha
+        else:
+            implementation_cost = self.cost_per_Ha
+            maintenance_cost = self.maintenance_rate * implementation_cost
+
+        return implementation_cost + maintenance_cost + other_costs
+        
+    #End calcTotalCostsPerHa()
 
     def calcAnnualCapitalCost(self, irrigation_area_Ha, discount_rate):
 
