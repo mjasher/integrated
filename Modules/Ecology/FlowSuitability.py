@@ -272,11 +272,12 @@ class FlowSuitability(WaterSuitability):
 
         #Get GW level data with datetime
         gw_data = scen_data["gwlevel"][["A{a}".format(a=asset_id+1)]].dropna()
+#        gw_data = scen_data["gwlevel"][gauge].dropna()
 
         try:
             #TODO: Refactor this to reflect format of data files
             #If using data, number of observations has to equal GW data
-            salinity_data = scen_data["salinity"]
+            salinity_data = scen_data["gw_salinity"]
         except KeyError:
             #Use default value
             salinity_data = salinity
