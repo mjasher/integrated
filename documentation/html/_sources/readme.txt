@@ -13,14 +13,12 @@ Be sure to follow the instructions in :ref:`dev_setup`
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+	:maxdepth: 1
    
-   dev_setup
-       required_software
-
-   includeme
+	dev_setup
+	required_software
    
-   modules
+	modules
 
 
 Indices and tables

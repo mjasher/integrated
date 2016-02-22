@@ -74,7 +74,7 @@
 <span id="integrated-modules-farm-management-manager-module"></span><h2>integrated.Modules.Farm.Management.Manager module<a class="headerlink" href="#module-integrated.Modules.Farm.Management.Manager" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.Management.Manager.FarmManager">
-<em class="property">class </em><code class="descclassname">integrated.Modules.Farm.Management.Manager.</code><code class="descname">FarmManager</code><span class="sig-paren">(</span><em>Farm</em>, <em>water_sources</em>, <em>storages</em>, <em>irrigations</em>, <em>crops</em>, <em>livestocks=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Manager.html#FarmManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Manager.FarmManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">FarmManager</code><span class="sig-paren">(</span><em>Farm</em>, <em>water_sources</em>, <em>storages</em>, <em>irrigations</em>, <em>crops</em>, <em>livestocks=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Manager.html#FarmManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Manager.FarmManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component" title="integrated.Modules.Core.IntegratedModelComponent.Component"><code class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Core.IntegratedModelComponent.Component</span></code></a></p>
 <p>Farm Manager</p>
 <p># .. inheritance-diagram:: integrated.Modules.Farm.Manager
@@ -177,7 +177,11 @@ source or a groundwater source.</p>
 <td>Canola</td>
 <td>Surface Water</td>
 </tr>
-<tr class="row-odd"><td colspan="5">Field A    Farm Dam   Spray       Canola   Groundwater</td>
+<tr class="row-odd"><td>Field A</td>
+<td>Farm Dam</td>
+<td>Spray</td>
+<td>Canola</td>
+<td>Groundwater</td>
 </tr>
 <tr class="row-even"><td>Field B</td>
 <td>Farm Dam</td>
@@ -232,25 +236,29 @@ source or a groundwater source.</p>
 <p>Linear Programming is used to determine the proportion of surface or groundwater use.
 This is done for a given combination of field-crop configurations.</p>
 <p>Hence the objective function for the farm fields, irrigation system, crop and soil type is:</p>
-<p><span class="math">\(min\Sigma_{n=1}{m} (G_{n}X_{n} + G_{n}Y_{n})\)</span></p>
 <div class="math">
-\[s.t:\]\[\begin{split}X_{n} &lt;= MIN(A_{n}, A_{sw}), A_{sw} = X_{e}/c_{nw}\end{split}\]\[\begin{split}Y_{n} &lt;= MIN(A_{n}, A_{gw}), A_{gw} = Y_{e}/c_{nw}\end{split}\]\[\begin{split}X_{n} + Y_{n} &lt;= A_{n}\end{split}\]\[\begin{split}\Sigma_{n=1}{m} (X_{n} + Y_{n}) &lt;= MIN(A_{T}, A_{p})\end{split}\]</div>
-<p>Where <span class="math">\(n\)</span> represents a given field with an irrigation system and crop choice and <span class="math">\(m\)</span> is the \
-number of fields associated with a farm; <span class="math">\(G\)</span> is the negated net profit per Hectare; and X_{n} and Y_{n} \
-represent the area to be watered by surface and groundwater respectively. Surface and groundwater entitlements \
-(<span class="math">\(X_{e}\)</span> and <span class="math">\(Y_{e}\)</span>) and crop water requirements per hectare (<span class="math">\(c_{nw}\)</span>) is used to calculate \
+\[\min\sum_{n=1}^{m}(G_{n}X_{n} + G_{n}Y_{n})\]</div>
+<p>s.t:</p>
+<div class="math">
+\[X_{n} \leqslant \min(A_{n}, A_{sw}), A_{sw} = \frac{X_{e}}{c_{nw}}\]\[Y_{n} \leqslant \min(A_{n}, A_{gw}), A_{gw} = \frac{Y_{e}}{c_{nw}}\]\[X_{n} + Y_{n} \leqslant A_{n}\]\[\sum_{n=1}^{m}(X_{n} + Y_{n}) \leqslant \min(A_{T}, A_{p})\]</div>
+<p>Where <span class="math">\(n\)</span> represents a given field with an irrigation system and crop choice and <span class="math">\(m\)</span> is the
+number of fields associated with a farm; <span class="math">\(G\)</span> is the negated net profit per Hectare; and <span class="math">\(X_{n}\)</span> and <span class="math">\(Y_{n}\)</span>
+represent the area to be watered by surface and groundwater respectively. Surface and groundwater entitlements 
+(<span class="math">\(X_{e}\)</span> and <span class="math">\(Y_{e}\)</span>) and crop water requirements per hectare (<span class="math">\(c_{nw}\)</span>) is used to calculate
 the maximum possible irrigation area.</p>
-<p><span class="math">\(A_{T} = \Sigma_{n=1}{m}(A_{n})\)</span>
-<span class="math">\(A_{p} = W_{ent}/\Sigma_{n=1}{m}(c_{nw})/m\)</span> is the maximum possible irrigation area</p>
-<p>In Python Scipy LinProg, this is represented as</p>
-<p>c = [Profit_A_sw, Profit_A_gw, Profit_B_sw, Profit_B_gw]
+<p><span class="math">\(A_{T} = \sum_{n=1}^{m}(A_{n})\)</span></p>
+<p><span class="math">\(A_{p} = \frac{W_{ent}}{\sum_{n=1}^{m}(c_{nw})/m}\)</span> is the maximum possible irrigation area</p>
+<p>In Python Scipy LinProg, this is represented as:</p>
+<div class="highlight-python"><div class="highlight"><pre>c = [Profit_A_sw, Profit_A_gw, Profit_B_sw, Profit_B_gw]
 A_ub = [[1, 1, 0, 0], [0, 0, 1, 1]]
 b_ub = [Area of Field A, Area of Field B]
-bounds = (0, Total Field Area)</p>
+bounds = (0, Total Field Area)
+</pre></div>
+</div>
 <p>In cases where irrigation system is being implemented, the farmer cannot grow crops to make money, but still incurs costs (implementation, water storage, etc).
 To reflect this an equality constraint is used:</p>
-<p><span class="math">\(G_{n} = 0\)</span>
-<span class="math">\(X_{n}\)</span> and <span class="math">\(Y_{n} = A_{n}\)</span></p>
+<p><span class="math">\(G_{n} = 0\)</span></p>
+<p><span class="math">\(X_{n}\)</span> and <span class="math">\(Y_{n} = A_{n}\)</span></p>
 </dd></dl>
 
 <dl class="method">
@@ -471,20 +479,46 @@ Return harvest amount as DataFrame</p>
 <dt id="integrated.Modules.Farm.Management.Manager.FarmManager.generateFieldAub">
 <code class="descname">generateFieldAub</code><span class="sig-paren">(</span><em>c_coefs</em>, <em>num_set</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Manager.html#FarmManager.generateFieldAub"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Manager.FarmManager.generateFieldAub" title="Permalink to this definition">¶</a></dt>
 <dd><p>For scipy linprog, generates the A_ub constraints for a given c value list</p>
-<p>linprog function expects inputs in the form of
-c = [List of Static values]
-A_ub = [List of Lists, Upper bound constraints for the left hand side of equation]
-b_ub = [Upper bound constraints for the right hand side of equation]</p>
+<p>linprog function expects inputs in the form of</p>
+<ul class="simple">
+<li>c = [List of Static values]</li>
+<li>A_ub = [List of Lists, Upper bound constraints for the left hand side of equation]</li>
+<li>b_ub = [Upper bound constraints for the right hand side of equation]</li>
+</ul>
 <p>A_ub has to be the same length as c_coefs</p>
-<p>objective function may be:
-2x_{1} + 2x_{2} + 1_{3}</p>
+<p>objective function may be:</p>
+<div class="math">
+\[2x_{1} + 2x_{2} + 1x_{3}\]</div>
 <p>s.t.</p>
-<p>x_{1} + x_{2} + x_{3} &lt;= 100
-x_{1}                 &lt;= 25</p>
-<p>Then, 
-c = [2, 5, 10]
-A_ub = [[1, 1, 1], [1, 0, 0]]
-b_ub = [100, 25]</p>
+<div class="math">
+\[\begin{split}x_{1} + x_{2} + x_{3} \leqslant 100 \\
+x_{1}                 \leqslant 25 \\
+        x_{2}         \leqslant 20 \\
+                x_{3} \leqslant 10\end{split}\]</div>
+<p>Then:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">A_ub</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="n">b_ub</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>c_coefs</strong> &#8211; array-like representing <span class="math">\(c\)</span></li>
+<li><strong>num_set</strong> &#8211; Number of items in a grouping of <span class="math">\(c\)</span></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A_ub constraints</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -494,9 +528,11 @@ b_ub = [100, 25]</p>
 <span id="integrated-modules-farm-management-plastic-module"></span><h2>integrated.Modules.Farm.Management.Plastic module<a class="headerlink" href="#module-integrated.Modules.Farm.Management.Plastic" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.Management.Plastic.PlasticManager">
-<em class="property">class </em><code class="descclassname">integrated.Modules.Farm.Management.Plastic.</code><code class="descname">PlasticManager</code><span class="sig-paren">(</span><em>Farm</em>, <em>water_sources</em>, <em>storages</em>, <em>irrigations</em>, <em>crops</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Plastic.html#PlasticManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Plastic.PlasticManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">PlasticManager</code><span class="sig-paren">(</span><em>Farm</em>, <em>water_sources</em>, <em>storages</em>, <em>irrigations</em>, <em>crops</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Plastic.html#PlasticManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Plastic.PlasticManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Farm.Management.Manager.FarmManager" title="integrated.Modules.Farm.Management.Manager.FarmManager"><code class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Farm.Management.Manager.FarmManager</span></code></a></p>
 <p>Plastic Farm Manager - Highly opportunistic management style</p>
+<p># .. inheritance-diagram:: integrated.Modules.Farm.Farms.Management.FarmManager
+#    :parts: 2</p>
 <dl class="method">
 <dt id="integrated.Modules.Farm.Management.Plastic.PlasticManager.dp_dev_all_fields">
 <code class="descname">dp_dev_all_fields</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Management/Plastic.html#PlasticManager.dp_dev_all_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Management.Plastic.PlasticManager.dp_dev_all_fields" title="Permalink to this definition">¶</a></dt>

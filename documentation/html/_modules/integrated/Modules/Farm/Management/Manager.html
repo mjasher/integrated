@@ -153,8 +153,6 @@
 <span class="sd">        Field A    Farm Dam   Spray       Wheat    Groundwater</span>
 <span class="sd">        Field A    Farm Dam   Spray       Canola   Surface Water</span>
 <span class="sd">        Field A    Farm Dam   Spray       Canola   Groundwater</span>
-
-<span class="sd">        --------------------------------------------------------</span>
 <span class="sd">        Field B    Farm Dam   Flood       Wheat    Surface Water</span>
 <span class="sd">        Field B    Farm Dam   Flood       Wheat    Groundwater</span>
 <span class="sd">        Field B    Farm Dam   Flood       Canola   Surface Water</span>
@@ -170,40 +168,43 @@
 
 <span class="sd">        Hence the objective function for the farm fields, irrigation system, crop and soil type is:</span>
 
-<span class="sd">        :math:`min\Sigma_{n=1}{m} (G_{n}X_{n} + G_{n}Y_{n})`</span>
+<span class="sd">        .. math::</span>
+<span class="sd">            \min\sum_{n=1}^{m}(G_{n}X_{n} + G_{n}Y_{n})</span>
+
+<span class="sd">        s.t:</span>
 
 <span class="sd">        .. math::</span>
 
-<span class="sd">            s.t:</span>
+<span class="sd">            X_{n} \leqslant \min(A_{n}, A_{sw}), A_{sw} = \\frac{X_{e}}{c_{nw}}</span>
 
-<span class="sd">            X_{n} &lt;= MIN(A_{n}, A_{sw}), A_{sw} = X_{e}/c_{nw}</span>
+<span class="sd">            Y_{n} \leqslant \min(A_{n}, A_{gw}), A_{gw} = \\frac{Y_{e}}{c_{nw}}</span>
 
-<span class="sd">            Y_{n} &lt;= MIN(A_{n}, A_{gw}), A_{gw} = Y_{e}/c_{nw}</span>
+<span class="sd">            X_{n} + Y_{n} \leqslant A_{n}</span>
 
-<span class="sd">            X_{n} + Y_{n} &lt;= A_{n}</span>
+<span class="sd">            \sum_{n=1}^{m}(X_{n} + Y_{n}) \leqslant \min(A_{T}, A_{p})</span>
 
-<span class="sd">            \Sigma_{n=1}{m} (X_{n} + Y_{n}) &lt;= MIN(A_{T}, A_{p})</span>
-
-<span class="sd">        Where :math:`n` represents a given field with an irrigation system and crop choice and :math:`m` is the \\\\</span>
-<span class="sd">        number of fields associated with a farm; :math:`G` is the negated net profit per Hectare; and X_{n} and Y_{n} \\\\</span>
-<span class="sd">        represent the area to be watered by surface and groundwater respectively. Surface and groundwater entitlements \\\\</span>
-<span class="sd">        (:math:`X_{e}` and :math:`Y_{e}`) and crop water requirements per hectare (:math:`c_{nw}`) is used to calculate \\\\</span>
+<span class="sd">        Where :math:`n` represents a given field with an irrigation system and crop choice and :math:`m` is the</span>
+<span class="sd">        number of fields associated with a farm; :math:`G` is the negated net profit per Hectare; and :math:`X_{n}` and :math:`Y_{n}`</span>
+<span class="sd">        represent the area to be watered by surface and groundwater respectively. Surface and groundwater entitlements </span>
+<span class="sd">        (:math:`X_{e}` and :math:`Y_{e}`) and crop water requirements per hectare (:math:`c_{nw}`) is used to calculate</span>
 <span class="sd">        the maximum possible irrigation area.</span>
 
-<span class="sd">        :math:`A_{T} = \Sigma_{n=1}{m}(A_{n})`</span>
-<span class="sd">        :math:`A_{p} = W_{ent}/\Sigma_{n=1}{m}(c_{nw})/m` is the maximum possible irrigation area</span>
+<span class="sd">        :math:`A_{T} = \sum_{n=1}^{m}(A_{n})`</span>
 
-<span class="sd">        In Python Scipy LinProg, this is represented as </span>
+<span class="sd">        :math:`A_{p} = \\frac{W_{ent}}{\sum_{n=1}^{m}(c_{nw})/m}` is the maximum possible irrigation area</span>
 
-<span class="sd">        c = [Profit_A_sw, Profit_A_gw, Profit_B_sw, Profit_B_gw]</span>
-<span class="sd">        A_ub = [[1, 1, 0, 0], [0, 0, 1, 1]]</span>
-<span class="sd">        b_ub = [Area of Field A, Area of Field B]</span>
-<span class="sd">        bounds = (0, Total Field Area)</span>
+<span class="sd">        In Python Scipy LinProg, this is represented as:: </span>
+
+<span class="sd">            c = [Profit_A_sw, Profit_A_gw, Profit_B_sw, Profit_B_gw]</span>
+<span class="sd">            A_ub = [[1, 1, 0, 0], [0, 0, 1, 1]]</span>
+<span class="sd">            b_ub = [Area of Field A, Area of Field B]</span>
+<span class="sd">            bounds = (0, Total Field Area)</span>
 
 <span class="sd">        In cases where irrigation system is being implemented, the farmer cannot grow crops to make money, but still incurs costs (implementation, water storage, etc).</span>
 <span class="sd">        To reflect this an equality constraint is used:</span>
 
 <span class="sd">        :math:`G_{n} = 0`</span>
+
 <span class="sd">        :math:`X_{n}` and :math:`Y_{n} = A_{n}`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -754,24 +755,41 @@
 <span class="sd">        For scipy linprog, generates the A_ub constraints for a given c value list</span>
 
 <span class="sd">        linprog function expects inputs in the form of</span>
-<span class="sd">        c = [List of Static values]</span>
-<span class="sd">        A_ub = [List of Lists, Upper bound constraints for the left hand side of equation]</span>
-<span class="sd">        b_ub = [Upper bound constraints for the right hand side of equation]</span>
+
+<span class="sd">        * c = [List of Static values]</span>
+
+<span class="sd">        * A_ub = [List of Lists, Upper bound constraints for the left hand side of equation]</span>
+
+<span class="sd">        * b_ub = [Upper bound constraints for the right hand side of equation]</span>
 
 <span class="sd">        A_ub has to be the same length as c_coefs</span>
 
 <span class="sd">        objective function may be:</span>
-<span class="sd">        2x_{1} + 2x_{2} + 1_{3}</span>
+<span class="sd">        </span>
+<span class="sd">        .. math::</span>
+<span class="sd">            2x_{1} + 2x_{2} + 1x_{3}</span>
 
 <span class="sd">        s.t.</span>
 
-<span class="sd">        x_{1} + x_{2} + x_{3} &lt;= 100</span>
-<span class="sd">        x_{1}                 &lt;= 25 </span>
+<span class="sd">        .. math::</span>
 
-<span class="sd">        Then, </span>
-<span class="sd">        c = [2, 5, 10]</span>
-<span class="sd">        A_ub = [[1, 1, 1], [1, 0, 0]]</span>
-<span class="sd">        b_ub = [100, 25] </span>
+<span class="sd">            x_{1} + x_{2} + x_{3} \leqslant 100 \\\\</span>
+<span class="sd">            x_{1}                 \leqslant 25 \\\\</span>
+<span class="sd">                    x_{2}         \leqslant 20 \\\\</span>
+<span class="sd">                            x_{3} \leqslant 10</span>
+
+<span class="sd">        Then::</span>
+
+<span class="sd">            c = [2, 2, 1]</span>
+<span class="sd">            A_ub = [[1, 1, 1], [1, 0, 0], [0, 1, 0], [0, 0, 1]]</span>
+<span class="sd">            b_ub = [100, 25, 20, 10]</span>
+
+<span class="sd">        :param c_coefs: array-like representing :math:`c`</span>
+<span class="sd">        :param num_set: Number of items in a grouping of :math:`c`</span>
+
+<span class="sd">        :returns: A_ub constraints</span>
+<span class="sd">        :return type: list</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">num_coefs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">c_coefs</span><span class="p">)</span>
