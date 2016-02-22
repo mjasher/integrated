@@ -1,3 +1,4 @@
+from __future__ import division
 from integrated.Modules.Core.IntegratedModelComponent import Component
 
 class SoilType(Component):
@@ -6,10 +7,11 @@ class SoilType(Component):
 	Represents soil types
 	"""
 
-	def __init__(self, name, TAW_mm, current_TAW_mm):
+	def __init__(self, name, TAW_mm, current_TAW_mm, group=None):
 		self.name = name
 		self.TAW_mm = TAW_mm #Total Available Water in soil in mm per cubic metre
 		self.current_TAW_mm = current_TAW_mm #Water currently in the soil in mm per cubic metre
+		self.group = group #Soil Grouping
 	#End __init__()
 
 	def calcRAW(self, current_TAW_mm=None, fraction=None):
@@ -33,7 +35,7 @@ class SoilType(Component):
 		if fraction is None:
 			fraction = 0.4
 
-		return float(current_TAW_mm) * float(fraction)
+		return float(current_TAW_mm) * fraction
 		
 	#End calcRAW()
 
