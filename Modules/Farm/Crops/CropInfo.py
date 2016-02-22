@@ -5,8 +5,6 @@ from datetime import datetime
 
 from integrated.Modules.Core.IntegratedModelComponent import Component
 
-
-
 class CropInfo(Component):
 
     """
@@ -55,12 +53,6 @@ class CropInfo(Component):
             setattr(self, key, copy.deepcopy(value))
         #End For
 
-        #Set default params
-        # self.default_params = {}
-        # for key, value in self.__dict__.iteritems():
-        #     self.default_params[key] = copy.deepcopy(value)
-        # #End For
-
     #End init()
 
     def updateWaterNeedsSatisfied(self, water_use_ML, area_Ha):
@@ -100,10 +92,9 @@ class CropInfo(Component):
 
         if len(coef) == 0:
             return 0.0
-        else:
-            #Return the coefficient for the given timestep
-            return temp_df[(pd.to_datetime(temp_df['temp_dt']) <= timestep)]['Coefficient'][0]
-        #End if
+        
+        #Return the coefficient for the given timestep
+        return temp_df[(pd.to_datetime(temp_df['temp_dt']) <= timestep)]['Coefficient'][0]
         
     #End getCurrentStageCoef()
 
@@ -115,15 +106,17 @@ class CropInfo(Component):
         #Prepend year to each crop coefficient entry
         temp_df['temp_dt'] = "{y}-".format(y=year)+temp_df['Month-Day'].astype(str)
 
-        # harvest_time = "{y}-".format(y=year)+temp_df["harvest":]["Month-Day"].astype(str)
-        
-        harvest_time = pd.to_datetime(temp_df['temp_dt']['harvest'])
+        # harvest_time = pd.to_datetime(temp_df['temp_dt']['harvest'])
+        harvest_time = pd.to_datetime(temp_df.loc['harvest', 'temp_dt']).date()
 
-        if timestep >= harvest_time.date():
-            print harvest_time.date()
-            print timestep
+        print timestep
+        print harvest_time
+
+        if timestep >= harvest_time: #harvest_time.date():
             return True
-        #End if
+
+        return False
+
     #End harvest
 
     def calcTotalCropGrossMarginsPerHa(self, yield_per_Ha=None, price_per_yield=None):
@@ -131,7 +124,14 @@ class CropInfo(Component):
         """
         Calculate gross income from crop per Hectare
 
+        :math:`Crop Yield * Crop Price`
+
+        :param yield_per_Ha: Estimated or assumed crop yield per Ha. Defaults to assumed value.
+        :param price_per_yield: Estimated or assumed crop price per unit (Tons/Bales/etc). Defaults to assumed value.
+
         :returns: total gross margins per Hectare based on the assumed or given crop yield and crop price
+
+
         """
 
         if yield_per_Ha is None:
@@ -144,9 +144,9 @@ class CropInfo(Component):
 
         return gross_margin_per_Ha
 
-    #End calcCropGrossMarginsPerHa()
+    #End calcTotalCropGrossMarginsPerHa()
 
-    def calcGrossMarginsPerHa(self, yield_per_Ha, price_per_yield):
+    def calcGrossMarginsPerHa(self, yield_per_Ha=None, price_per_yield=None):
 
         """
         Calculate $/ML/Ha 

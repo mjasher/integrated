@@ -1,22 +1,24 @@
-import pandas as pd
-import simplejson as json
 
-# t = pd.read_json('data/variables/wheat.json')
+if __name__ == '__main__':
+    import pandas as pd
+    import simplejson as json
 
-data_file = 'data/variables/wheat.json'
+    # t = pd.read_json('data/variables/wheat.json')
 
-with open(data_file, 'rb') as json_data:
-	d = json.load(json_data)
-	json_data.close()
+    data_file = 'data/variables/wheat.json'
 
-	plant_info = d['planting_info']
+    with open(data_file, 'rb') as json_data:
+        d = json.load(json_data)
+        json_data.close()
 
-	crop_coefs = pd.DataFrame(plant_info)
+        plant_info = d['planting_info']
 
-	crop_coefs = pd.DataFrame(dict(Kc=crop_coefs.loc[1].values), index=crop_coefs[0:].loc[0]).sort_index()
+        crop_coefs = pd.DataFrame(plant_info)
 
-	d['planting_info'] = None
+        crop_coefs = pd.DataFrame(dict(Kc=crop_coefs.loc[1].values), index=crop_coefs[0:].loc[0]).sort_index()
 
-	print d
+        d['planting_info'] = None
 
-	#TODO: Extract best guess values and convert to ParameterSet()
+        print d
+
+        #TODO: Extract best guess values and convert to ParameterSet()
