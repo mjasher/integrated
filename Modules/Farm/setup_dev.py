@@ -31,18 +31,20 @@ WATER_SOURCE = {'flood_harvest': 200}
 #I thought there would be more, so used a ParameterSet.
 #Climate = ParameterSet(surface_evap_rate=0.4)
 
+#Have moved some of this to CSV files
 FarmDam_params = ParameterSet(
     include_farm_dam_capital_costs=False,
     name='Farm Dam',
     num_years=30,
-    storage_capacity_ML=200,
+    storage_capacity_ML=40,
     storage_cost_per_ML=1000,
     cost_capital=0,
     pump_vol_ML=0,
     maintenance_rate=0.005,
     capture_pump_cost_ratio=0.5,
     pump_cost_dollar_per_ML=35,
-    ClimateVariables=ParameterSet(surface_evap_rate=0.4),
+    ClimateVariables=ParameterSet(surface_evap_rate=0.4)
+    # implemented=True
     # WaterSources=WaterSources(water_source={'flood_harvest': 200})
 )
 
@@ -62,13 +64,13 @@ Dam_params = ParameterSet(
 )
 
 SurfaceWater_params = ParameterSet(
-        name='SurfaceWater',
-        water_level=50.0
-    )
+    name='SurfaceWater',
+    water_level=50.0
+)
 Groundwater_params = ParameterSet(
-        name='Groundwater',
-        water_level=50.0
-    )
+    name='Groundwater',
+    water_level=50.0
+)
 
 
 Basin_params = ParameterSet(
@@ -98,63 +100,40 @@ ASR_params = ParameterSet(
     # WaterSources=WaterSources(water_source={'flood_harvest': 200})
 )
 
-#Create irrigation strategies
-Flood_params = ParameterSet(
-    name='Flood',
-    irrigation_rate=1,
-    irrigation_efficiency=0.55,
-    lifespan=10,
-    cost_per_Ha=0.0,
-    replacement_cost_per_Ha=2000.0,
-    maintenance_rate=0.02 
-    #Pipe and Riser irrigation system: www.murraydairy.com.au/LiteratureRetrieve.aspx?ID=138617
-    #2% maintenance rate seems to be the usual assumed value, as it is the value used in Arshad et al. (2013) and others
-)
-Flood = IrrigationPractice(**Flood_params.getParams())
-
-PipeAndRiser = IrrigationPractice(**Flood_params.getParams())
-PipeAndRiser.name = 'Pipe and Riser'
-
-#DUMMY VALUES
-PipeAndRiser.irrigation_efficiency = 0.74
-PipeAndRiser.lifespan = 10
-PipeAndRiser.cost_per_Ha=0.0 #3300 / Ha "Pipe and risers irrigation system: is it a good investment" DEPI 2013
-PipeAndRiser.replacement_cost_per_Ha=3300 #Assume PipeAndRiser already installed.
-PipeAndRiser.pumping_cost=15
-
-
-Spray_params = ParameterSet(
-    name='Spray',
-    irrigation_rate=1,
-    #0.8 From Smith, NSW DPI agronomist, table of comparative irrigation costs and from Ticehurst et al. under review, p 6
-    irrigation_efficiency=0.8,
-    lifespan=15,
-    #2000-3000 River, 2500-3500 Bore, Smith, NSW DPI agronomist 2012, table of comparative irrigation costs
-    cost_per_Ha=2500,
-    maintenance_rate=0.02
-)
-Spray = IrrigationPractice(**Spray_params.getParams())
-Spray.cost_per_Ha=0.0
-
-Drip_params = ParameterSet(
-    name='Drip',
-    irrigation_rate=1,
-    #0.85 from Smith and from Ticehurst et al. under review, p 6
-    irrigation_efficiency=0.85,
-    lifespan=15,
-    #6000 - 9000 Smith, NSW DPI agronomist 2012, table of comparative irrigation costs
-    cost_per_Ha=6000,
-    maintenance_rate=0.02
-)
-Drip = IrrigationPractice(**Drip_params.getParams())
-
-
 ### Import data from files ###
 
 DataHandle = FileHandler()
 
-crop_data_files = DataHandle.importFiles('Crops/data/variables', walk=True, index_col=0, skipinitialspace=True)
+#Irrigations
+irrigation_data = {}
+irrigation_files = DataHandle.importFiles('Irrigations/data', index_col=0, skipinitialspace=True)
+irrigation_params = {}
+for folder in irrigation_files:
+    for irrigation_name in irrigation_files[folder]:
+        irrigation_data[irrigation_name] = irrigation_files[folder][irrigation_name]
 
+        temp_data = irrigation_data[irrigation_name]['Best Guess'].to_dict()
+        temp_data['irrigation_name'] = irrigation_name
+
+        irrigation_params[irrigation_name] = ParameterSet(**temp_data)
+
+        globals()[irrigation_name+"_params"] = irrigation_params[irrigation_name]
+
+        temp_params = irrigation_params[irrigation_name].getParams()
+        temp_params['name'] = irrigation_name
+
+        globals()[irrigation_name] = IrrigationPractice(**temp_params)
+
+    #End for
+#End for
+
+# Flood = IrrigationPractice(**irrigation_params['Flood'].getParams())
+# PipeAndRiser = IrrigationPractice(**irrigation_params['PipeAndRiser'].getParams())
+# Spray = IrrigationPractice(**irrigation_params['Spray'].getParams())
+# Drip = IrrigationPractice(**irrigation_params['Drip'].getParams())
+
+#Crops
+crop_data_files = DataHandle.importFiles('Crops/data/variables', walk=True, index_col=0, skipinitialspace=True)
 crop_data = {}
 crop_params = {}
 for folder in crop_data_files:
@@ -176,6 +155,7 @@ for folder in crop_coefficients:
 
 #Values for soil TAW taken from
 #http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use
+#Available as CSVs
 Light_clay_params = ParameterSet(
     name='Light Clay',
     TAW_mm=172,
