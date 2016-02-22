@@ -1,16 +1,17 @@
+from __future__ import division
 import math
 import copy
 
-from integrated.Modules.Core.IntegratedModelComponent import Component
+from integrated.Modules.Farm.Farms.FarmComponent import FarmComponent
 
-class FarmInfo(Component):
+class FarmInfo(FarmComponent):
 
     def __init__(self, name, storages, irrigations, crops, water_sources, max_irrigation_area_Ha=None, fields=None, discount_rate=None, **kwargs): #discount_rate=0.07
 
         """
-        storages     : Dict of storage objects
-        crops        : Dict of Crop objects
-        irrigations  : Dict of irrigation objects
+        storages     : Dict of storage objects representing storages that is available for use
+        crops        : Dict of Crop objects representing crops that could be produced by the farm
+        irrigations  : Dict of irrigation objects that could be adopted
         """
 
         self.storages = storages
@@ -121,6 +122,16 @@ class FarmInfo(Component):
         return self.irrigations[irrigation_name].irrigation_efficiency
     #End getIrrigationEfficiency()
 
+    def getStorageInUse(self):
+        for storage_name, Storage in self.storages.iteritems():
+            if Storage.implemented == True:
+                break
+            #End if
+        #End for
+
+        return storage_name, Storage
+    #End getStorageInUse()
+
     def getFarmArea(self):
         total = 0.0
         for f in self.fields:
@@ -173,7 +184,8 @@ class FarmInfo(Component):
         """
         Calculate required amount of water to be applied in ML per Ha
         NOTE: This is calculated for each irrigation strategy
-        returns (dict)
+
+        :return type: Dict
         """
 
         target_crop = self.crops[crop_name]
@@ -242,7 +254,7 @@ class FarmInfo(Component):
 
         return irrigation_area
 
-    #End calcWaterStoreIrrigationArea()
+    #End calcIrrigationAreas()
 
     def calcIrrigationCapitalCosts(self, irrigation_area, irrigation_name):
 
