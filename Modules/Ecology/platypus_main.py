@@ -25,13 +25,19 @@ if __name__ == '__main__':
     #eflow_req_path = "Inputs/Ecology/Env_flow_obj.csv"
     eflow_req = FileHandle.loadCSV(eflow_req_path)
 
-    climate_cond = 'dry' ## TODO after toy: need to link up to scenario data and identify climate condition: dry, average or wet
-    summerlow = eflow_req[eflow_req['climate'] == climate_cond]['summer_low'].iloc[0]
-    winterlow = eflow_req[eflow_req['climate'] == climate_cond]['winter_low'].iloc[0]
+    climate_cond = 'wet' ## TODO after toy: need to link up to scenario data and identify climate condition: dry, average or wet
+    # inputs for low flow index
     summerlow = eflow_req[eflow_req['climate'] == climate_cond]['summer_low'].iloc[0]
     winterlow = eflow_req[eflow_req['climate'] == climate_cond]['winter_low'].iloc[0]
     summerlowday = 120
     winterlowday = 60 #winter low is limiting the low flow index -> u/c required
+    
+    # input for food index and dispersal index
+    fresh = eflow_req[eflow_req['climate'] == climate_cond]['fresh'].iloc[0]
+    summerdur = 1
+    autumndur = 2
+    summerfreq = 1
+    autumnfreq = 2
 
 
     Platypus = PlatypusFlow()
@@ -58,7 +64,7 @@ if __name__ == '__main__':
 
     burrow_startmonth = 7
     burrow_endmonth = 8
-    entrance_buffer = 30
+    entrance_buffer = 30 #ML/day
     breeding_startmonth = 9
     breeding_endmonth = 2
 
@@ -95,18 +101,16 @@ if __name__ == '__main__':
         #Calculate indexes if there is enough data for the hydrological year
         if len(year_data) >= 363:
 
-            ## TODO after toy: two more indexes
             
-            #food_index = 
-            #dispersal_index = 
+            food_index, dispersal_index = Platypus.calcFoodDispIndex(year_data, flow_col, fresh, summerdur, autumndur, summerfreq, autumnfreq)
 
             lowflow_index = Platypus.calcLowFlowIndex(year_data, flow_col, summerlow, winterlow, summerlowday, winterlowday)
             burrow_index = Platypus.calcBurrowIndex(year_data, flow_col, burrow_startmonth, burrow_endmonth, entrance_buffer, breeding_startmonth, breeding_endmonth)
             #platypus_index = pd.DataFrame(index=["{y}/{s0}/{s1}-{y1}/{e0}/{e1}".format(y=year, y1=year+1, s0=start_time[0], s1=start_time[1], e0=end_time[0], e1=end_time[1])])
             platypus_index = pd.DataFrame(index=["{y}/{s0}-{y1}/{e0}".format(y=year, y1=year+1, s0=start_time[0], e0=end_time[0])])
             platypus_index['lowflow_index'] = lowflow_index
-        #   platypus_index['food_index'] = food_index
-        #   platypus_index['dispersal_index'] = dispersal_index
+            platypus_index['food_index'] = food_index
+            platypus_index['dispersal_index'] = dispersal_index
             platypus_index['burrow_index'] = burrow_index
 
             #Add to benchmark dataframe

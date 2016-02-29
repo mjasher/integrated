@@ -58,10 +58,79 @@ class PlatypusFlow(FlowSuitability):
 
     #End calcHabitatIndex()
  
-    ## component2: calculate summer and autumn freshes for food
-      
-    ## component3: calcualte autumn freshes for junenile dispersal.
-    
+    ## component2: calculate summer and autumn freshes for food, and autumn freshes for junenile dispersal.
+    def calcFoodDispIndex(self, yearly_flow_data, flow_col, fresh_thd, summer_dur_thd, autumn_dur_thd, summer_freq_thd, autumn_freq_thd):
+        """
+        calculate food index
+        1.For each ecology year, identify three model periods (1 Dec-28 Feb; 1 Mar-31 May; 1 Apr-31 May)
+        2.Calculate the number of events. The events are defined as if the flow is above the fresh threshold depending on climate, and the minimum duration depend on the start date of the event.
+                    
+            ============    ============    =============    =============
+            Condition       Summer_food      Autumn_food       Dispersal  
+            ============    ============    =============    =============
+            Dry climate                  >= 50 ML/days                    
+            Avg climate                  >= 75 ML/day                     
+            Wet climate                  >= 125 ML/days                   
+            Month             Dec-Feb         Mar-May           Apr-May
+            Duration         >= 1 day        >= 2 days        >= 2 days
+            Frequency        >= 1 event      >= 2 events      >= 2 events
+            ============    ============    =============    =============
+        
+        3. Calculate food index. The index is 1 when summer and autumn food event frequency are met; 0.5 being the frequency for summer and autumn food are partially met; Otherwise, it is 0.
+        4. Calculate dispersal index. The index is 1 when there are at least 2 events; 0.5 when 1 event; Otherwise, it is 0.
+        
+        
+        :param yearly_flow_data: Pandas dataframe of daily flow data for the given year in ML/Day
+        :param flow_col: Name of flow data column
+        :param fresh_thd: flow threshold (in ML/day) above which is a fresh. 
+        :param summer_dur_thd: the fresh duration threshold (in days) for summer fresh
+        :param autumn_dur_thd: the fresh duration threshold (in days) for autumn fresh
+        :parm summer_freq_thd: the event freqency threshold (in number of events) for summer fresh
+        :parm autumn_freq_thd: the event freqency threshold (in number of events) for autumn fresh
+        
+
+        :returns: food index with a value between 0 and 1. 
+        """
+        year = yearly_flow_data.index.year[0] #an ecology year run from July to June next year
+        summer_food_start = pd.to_datetime(datetime.date(year, 12, 1))
+        summer_food_end = pd.to_datetime(datetime.date(year+1, 3, 1)) - timedelta(days=1)
+        
+        autumn_food_start = pd.to_datetime(datetime.date(year+1, 3, 1))
+        autumn_food_end = pd.to_datetime(datetime.date(year+1, 6, 1)) - timedelta(days=1)
+        
+        dispersal_start = pd.to_datetime(datetime.date(year+1, 4, 1))
+        dispersal_end = pd.to_datetime(datetime.date(year+1, 6, 1)) - timedelta(days=1)
+        
+        summer_food_flow = yearly_flow_data[(yearly_flow_data.index >= summer_food_start) & (yearly_flow_data.index <= summer_food_end)]
+        
+        autumn_food_flow = yearly_flow_data[(yearly_flow_data.index >= autumn_food_start) & (yearly_flow_data.index <= autumn_food_end)]
+        
+        dispersal_flow = yearly_flow_data[(yearly_flow_data.index >= dispersal_start) & (yearly_flow_data.index <= dispersal_end)]
+        
+        summer_food_events = self.floodEvents(summer_food_flow, threshold=fresh_thd, min_separation=0, min_duration=summer_dur_thd)
+
+        print summer_food_events
+        
+        autumn_food_events = self.floodEvents(autumn_food_flow, threshold=fresh_thd, min_separation=0, min_duration=autumn_dur_thd)
+
+        dispersal_events = self.floodEvents(dispersal_flow, threshold=fresh_thd, min_separation=0, min_duration=autumn_dur_thd)
+        
+        if (len(summer_food_events) == 0) and (len(autumn_food_events) == 0):
+            food_index = 0
+        elif (len(summer_food_events) >= summer_freq_thd) and (len(autumn_food_events) >= autumn_freq_thd):
+            food_index = 1
+        else:
+            food_index = 0.5
+        
+        if len(dispersal_events) == 0 :
+            dispersal_index = 0
+        elif len(dispersal_events) >= autumn_freq_thd:
+            dispersal_index = 1
+        else:
+            dispersal_index = 0.5
+
+        return food_index, dispersal_index
+
     ## component4: calcualte the index for burrow flooding
     def calcBurrowIndex(self, yearly_flow_data, flow_col, burrow_startmonth, burrow_endmonth, entrance_buffer, breeding_startmonth, breeding_endmonth):
 
