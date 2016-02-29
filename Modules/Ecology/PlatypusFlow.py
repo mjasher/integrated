@@ -92,14 +92,18 @@ class PlatypusFlow(FlowSuitability):
         :returns: food index with a value between 0 and 1. 
         """
         year = yearly_flow_data.index.year[0] #an ecology year run from July to June next year
+
+        next_march = pd.to_datetime(datetime.date(year+1, 3, 1))
+        next_june = pd.to_datetime(datetime.date(year+1, 6, 1))
+
         summer_food_start = pd.to_datetime(datetime.date(year, 12, 1))
-        summer_food_end = pd.to_datetime(datetime.date(year+1, 3, 1)) - timedelta(days=1)
+        summer_food_end = next_march - timedelta(days=1)
         
-        autumn_food_start = pd.to_datetime(datetime.date(year+1, 3, 1))
-        autumn_food_end = pd.to_datetime(datetime.date(year+1, 6, 1)) - timedelta(days=1)
+        autumn_food_start = next_march
+        autumn_food_end = next_june - timedelta(days=1)
         
         dispersal_start = pd.to_datetime(datetime.date(year+1, 4, 1))
-        dispersal_end = pd.to_datetime(datetime.date(year+1, 6, 1)) - timedelta(days=1)
+        dispersal_end = next_june - timedelta(days=1)
         
         summer_food_flow = yearly_flow_data[(yearly_flow_data.index >= summer_food_start) & (yearly_flow_data.index <= summer_food_end)]
         
@@ -108,8 +112,6 @@ class PlatypusFlow(FlowSuitability):
         dispersal_flow = yearly_flow_data[(yearly_flow_data.index >= dispersal_start) & (yearly_flow_data.index <= dispersal_end)]
         
         summer_food_events = self.floodEvents(summer_food_flow, threshold=fresh_thd, min_separation=0, min_duration=summer_dur_thd)
-
-#        print summer_food_events
         
         autumn_food_events = self.floodEvents(autumn_food_flow, threshold=fresh_thd, min_separation=0, min_duration=autumn_dur_thd)
 

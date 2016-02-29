@@ -114,10 +114,11 @@ class FlowSuitability(WaterSuitability):
         #and the flow time is >= min_duration, count as event
         events = events[events.Flow >= threshold]
 
+        flow_events = pd.DataFrame()
         if len(events) == 0:
-            flow_events = pd.DataFrame()
-            flow_events['start'] = np.nan
-            flow_events['end'] = np.nan
+            
+            flow_events['start'] = np.zeros
+            flow_events['end'] = np.zeros
             flow_events['duration'] = np.timedelta64(0, 'D')
             flow_events['dry_period'] = np.timedelta64(0, 'D')
             flow_events['timing'] = np.timedelta64(0, 'D')
@@ -132,6 +133,7 @@ class FlowSuitability(WaterSuitability):
             self.min_sep = min_separation
 
             events.loc[:, 'counter'] = events['dry_period'].apply(self.rollingCounter)
+            events['dry_period'] = events['dry_period'] / np.timedelta64(1, 'D')
             
             #Select all the rows that have a duration of 1, and the next row is also a duration of 1
             #These will be the start of an event
@@ -155,23 +157,35 @@ class FlowSuitability(WaterSuitability):
 
             group = events.groupby(['group'], sort=False)
 
+            #Dry period is counted sequentially with rollingCounter().
+            #Therefore the dry period between flood events is the max number within a grouping
             temp = group['dry_period'].max()
 
-            #Replace NaNs with a timedelta of 0 (i.e. no dry period)
-            temp[temp.isnull()] = np.timedelta64(0, 'D')
+            #Replace NaNs with a count of 0 (i.e. no dry period)
+            temp[temp.isnull()] = 0 #pd.Timedelta('0 Days')
 
-            flow_events = pd.DataFrame()
             flow_events['start'] = group['datetime'].min()
             flow_events['end'] = group['datetime'].max()
+
+            #Early exit if no flood events found
+            if len(flow_events) == 0:
+
+                flow_events['start'] = np.zeros
+                flow_events['end'] = np.zeros
+                flow_events['duration'] = np.timedelta64(0, 'D')
+                flow_events['dry_period'] = temp
+                flow_events['timing'] = np.timedelta64(0, 'D')
+
+                return flow_events
+            #End if
 
             #Convert to Pandas datetime
             flow_events['start'] = pd.to_datetime(flow_events['start'])
             flow_events['end'] = pd.to_datetime(flow_events['end'])
 
             #Calculate difference between end and start in days
-            flow_events['duration'] = ((flow_events['end'] - flow_events['start']) / np.timedelta64(1, 'D')) + 1
-
-            flow_events['dry_period'] = temp.astype('timedelta64[ns]').apply(lambda x: int(x / np.timedelta64(1, 'D'))) #Convert to integer of days
+            flow_events['duration'] = (pd.to_timedelta(flow_events['end'] - flow_events['start']) / np.timedelta64(1, 'D')).astype(int) + 1
+            flow_events['dry_period'] = temp
             flow_events['timing'] = flow_events['start'].map(lambda x: x.to_datetime().month)
         #End if
 
