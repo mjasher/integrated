@@ -109,7 +109,7 @@ class PlatypusFlow(FlowSuitability):
         
         summer_food_events = self.floodEvents(summer_food_flow, threshold=fresh_thd, min_separation=0, min_duration=summer_dur_thd)
 
-        print summer_food_events
+#        print summer_food_events
         
         autumn_food_events = self.floodEvents(autumn_food_flow, threshold=fresh_thd, min_separation=0, min_duration=autumn_dur_thd)
 
