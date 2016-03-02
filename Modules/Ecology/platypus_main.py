@@ -4,7 +4,7 @@ import numpy as np
 
 if __name__ == '__main__':
     #import os
-    # os.chdir('C:\\UserData\\fub\\work09\\MDB')
+    os.chdir('C:\\UserData\\fub\\work09\\MDB')
 
     from integrated.Modules.Core.Handlers.FileHandler import FileHandler
     from integrated.Modules.Ecology.PlatypusFlow import PlatypusFlow
@@ -20,10 +20,8 @@ if __name__ == '__main__':
     # dev_data_path = "Inputs"
 
     # Read in flow data
-    # scenarios = [dev_data_path+"/Hydrology/sce1", dev_data_path+"/Hydrology/sce2"]
-    # date_range = ["1900-01-01", None]
     
-    flow_data_path = "integrated/Modules/Ecology/Inputs/Hydrology/sce1/406202.csv"
+    flow_data_path = "integrated/Modules/Ecology/Inputs/Hydrology/sce1/406201.csv"
     # flow_data_path = dev_data_path+"/Hydrology/sce1/406202.csv"
 
     flow_data = FileHandle.loadCSV(flow_data_path, index_col="Date", parse_dates=True, dayfirst=True)
@@ -32,8 +30,8 @@ if __name__ == '__main__':
     flow_col = "Flow"
 
     #import environmental flow requirement data
-    # eflow_req_path = "Integrated/Modules/Ecology/Inputs/Ecology/Env_flow_obj.csv"
-    eflow_req_path = "Inputs/Ecology/Env_flow_obj.csv"
+    eflow_req_path = "integrated/Modules/Ecology/Inputs/Ecology/Env_flow_obj.csv"
+#    eflow_req_path = "Inputs/Ecology/Env_flow_obj.csv"
     eflow_req = FileHandle.loadCSV(eflow_req_path)
 
     # inputs for low flow index
@@ -49,6 +47,9 @@ if __name__ == '__main__':
 
     Platypus = PlatypusFlow()
 
+#    scenarios = [dev_data_path+"/Hydrology/sce1", dev_data_path+"/Hydrology/sce2"]
+#    date_range = ["1900-01-01", None]
+    
 #    for scenario_dir in xrange(0, len(scenarios)):
 #
 #        scen = scenarios[scenario_dir]

@@ -102,7 +102,7 @@ class PlatypusFlow(FlowSuitability):
         autumn_food_start = next_march
         autumn_food_end = next_june - timedelta(days=1)
         
-        dispersal_start = pd.to_datetime(datetime.date(year+1, 4, 1))
+        dispersal_start = pd.to_datetime(datetime.date(year+1, 4, 1)) #next april
         dispersal_end = next_june - timedelta(days=1)
         
         summer_food_flow = yearly_flow_data[(yearly_flow_data.index >= summer_food_start) & (yearly_flow_data.index <= summer_food_end)]
