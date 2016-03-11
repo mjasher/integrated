@@ -1,65 +1,19 @@
 from __future__ import division
-from integrated.Modules.Ecology.FlowSuitability import FlowSuitability
+from integrated.Modules.Ecology.SpeciesFlow import SpeciesFlow
 
 import pandas as pd
-import numpy as np
+#import numpy as np
 import datetime
 from datetime import timedelta
 
-class PlatypusFlow(FlowSuitability):
+class PlatypusFlow(SpeciesFlow):
 
     def __init__(self):
         pass
 
     #End init()
 
-    ## component1: calculate low flow index for food and movement
-    def calcLowFlowIndex(self, yearly_flow_data, flow_col, summer_low_thd, winter_low_thd,summer_index_thd, winter_index_thd):
-
-        """
-        calculate low flow index:
-        
-        1.  Identify climate condition of the input scenario (dry, average or wet) (TO DO, FOR TOY MODEL JUST USE AS AN INPUT)
-        2.  Extract summer and winter low flow thresholds based on climate condition, as per table below:
-            
-            ============    ============    =============
-            Condition       Summer_low      Winter_low
-            ============    ============    =============
-            Month           Dec-May         Jun-Nov
-            Dry climate     >= 10 ML/day    >=50 ML/day
-            Avg climate     >= 20 ML/day    >= 100 ML/day
-            Wet climate     >= 50 ML/day    >= 200 ML/day
-            Minimum days    150 days        150 days
-            ============    ============    =============
-
-        3.  For each year calculate the number of days between 1st Dec and 31st May that flow is >= summer low flow threshold, and the number of days between 1st Jun and 30st Nov that flow is >= winter low flow threshold. 
-        4.  For each year, if the minimum days for summer AND winter low flows are met, then low flow index for platypus = 1, else, index = 0.
-        
-        :param yearly_flow_data: Pandas dataframe of daily flow data for the given year in ML/Day
-        :param flow_col: Name of flow data column
-        :param summer_low_thd: flow threshold (in ML/day) above which summer low flow requirememnt is  satisfied
-        :param winter_low_thd: flow threshold (in ML/day) above which winter low flow requirement is satisfied
-        :param summer_index_thd: a threshold (in days) above which the number of days summer low are satisfied
-        :param winter_index_thd: a threshold (in days) above which the number of days summer low are satisfied      
-
-        :returns: lowflow index with a value of 0 or 1. 
-
-        """
-        above_summer_low =  yearly_flow_data[(yearly_flow_data[flow_col] >= summer_low_thd) & (yearly_flow_data.index.month >= 12) | (yearly_flow_data.index.month <= 5)][flow_col].count()
-        
-        above_winter_low =  yearly_flow_data[(yearly_flow_data[flow_col] >= winter_low_thd) & (yearly_flow_data.index.month >= 6) & (yearly_flow_data.index.month <= 11)][flow_col].count()
-
-        if (above_summer_low >=summer_index_thd) & (above_winter_low >= winter_index_thd):
-            lowflow_index = 1
-        else:
-            lowflow_index = 0
-
-        return lowflow_index
-
-    #End calcHabitatIndex()
- 
-    ## component2: calculate summer and autumn freshes for food, and autumn freshes for junenile dispersal.
-    def calcFoodDispIndex(self, yearly_flow_data, flow_col, fresh_thd, summer_dur_thd, autumn_dur_thd, summer_freq_thd, autumn_freq_thd):
+    def calcFoodDispIndex(self, yearly_flow_data, flow_col, fresh_thd, durations, frequencies, timing):
         """
         calculate food index
         1.For each ecology year, identify three model periods (1 Dec-28 Feb; 1 Mar-31 May; 1 Apr-31 May)
@@ -78,45 +32,27 @@ class PlatypusFlow(FlowSuitability):
         
         3. Calculate food index. The index is 1 when summer and autumn food event frequency are met; 0.5 being the frequency for summer and autumn food are partially met; Otherwise, it is 0.
         4. Calculate dispersal index. The index is 1 when there are at least 2 events; 0.5 when 1 event; Otherwise, it is 0.
-        
-        
+             
         :param yearly_flow_data: Pandas dataframe of daily flow data for the given year in ML/Day
         :param flow_col: Name of flow data column
         :param fresh_thd: flow threshold (in ML/day) above which is a fresh. 
-        :param summer_dur_thd: the fresh duration threshold (in days) for summer fresh
-        :param autumn_dur_thd: the fresh duration threshold (in days) for autumn fresh
-        :parm summer_freq_thd: the event freqency threshold (in number of events) for summer fresh
-        :parm autumn_freq_thd: the event freqency threshold (in number of events) for autumn fresh
+        :param durations: the fresh duration thresholds (in days) 
+        :parm frequencies: the event freqency threshold (in number of events)
+        :parm timing: the starting and ending date for a model period (e.g. dispersal)
         
-
         :returns: food index with a value between 0 and 1. 
         """
-        year = yearly_flow_data.index.year[0] #an ecology year run from July to June next year
-
-        next_march = pd.to_datetime(datetime.date(year+1, 3, 1))
-        next_june = pd.to_datetime(datetime.date(year+1, 6, 1))
-
-        summer_food_start = pd.to_datetime(datetime.date(year, 12, 1))
-        summer_food_end = next_march - timedelta(days=1)
         
-        autumn_food_start = next_march
-        autumn_food_end = next_june - timedelta(days=1)
+        flow_conditions, condition_events = self.calcFreshIndex(yearly_flow_data, flow_col, fresh_thd, durations, frequencies, timing)
         
-        dispersal_start = pd.to_datetime(datetime.date(year+1, 4, 1)) #next april
-        dispersal_end = next_june - timedelta(days=1)
-        
-        summer_food_flow = yearly_flow_data[(yearly_flow_data.index >= summer_food_start) & (yearly_flow_data.index <= summer_food_end)]
-        
-        autumn_food_flow = yearly_flow_data[(yearly_flow_data.index >= autumn_food_start) & (yearly_flow_data.index <= autumn_food_end)]
-        
-        dispersal_flow = yearly_flow_data[(yearly_flow_data.index >= dispersal_start) & (yearly_flow_data.index <= dispersal_end)]
-        
-        summer_food_events = self.floodEvents(summer_food_flow, threshold=fresh_thd, min_separation=0, min_duration=summer_dur_thd)
-        
-        autumn_food_events = self.floodEvents(autumn_food_flow, threshold=fresh_thd, min_separation=0, min_duration=autumn_dur_thd)
-
-        dispersal_events = self.floodEvents(dispersal_flow, threshold=fresh_thd, min_separation=0, min_duration=autumn_dur_thd)
-        
+        summer_food_events = condition_events["summerfood"]
+        autumn_food_events = condition_events["autumnfood"]
+        dispersal_events = condition_events["dispersal"]
+       
+        summer_freq_thd = frequencies["summerfood"]
+        autumn_freq_thd = frequencies["autumnfood"]
+       
+       
         if (len(summer_food_events) == 0) and (len(autumn_food_events) == 0):
             food_index = 0
         elif (len(summer_food_events) >= summer_freq_thd) and (len(autumn_food_events) >= autumn_freq_thd):
@@ -132,6 +68,9 @@ class PlatypusFlow(FlowSuitability):
             dispersal_index = 0.5
 
         return food_index, dispersal_index
+    #End calcFoodDispIndex
+        
+        
 
     ## component4: calcualte the index for burrow flooding
     def calcBurrowIndex(self, yearly_flow_data, flow_col, burrow_startmonth, burrow_endmonth, entrance_buffer, breeding_startmonth, breeding_endmonth):
