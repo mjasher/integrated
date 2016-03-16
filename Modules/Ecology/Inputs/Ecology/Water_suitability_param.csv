@@ -1,3 +1,4 @@
 Eco_site,Gauge,Name,ctf_low,ctf_mid,ctf_high,ctf_default,Event_gap,Event_dur
-4,406202,Rochester,100,1500,12000,1500,2,3
-5,406265,Echuca,100,1500,9000,1500,2,3
+A2,406201,Barnadown,125,1200,14000,1200,1,1
+A4,406202,Rochester,100,1500,12000,1500,1,1
+A5,406265,Echuca,100,1500,9000,1500,1,1

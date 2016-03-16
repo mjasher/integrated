@@ -150,6 +150,7 @@ class WaterSuitability(object):
 
         #Get the start and end dates to search between
         timeframe = pd.DataFrame(dict(start=pd.to_datetime(sw_data['start']), end=pd.to_datetime(sw_data['end']), sw_suit_index=sw_data['sw_suitability_index']))
+        
 
         #Create dataframe to house the suitability indexes
         series = pd.DataFrame(dict(datetime=temp, gw_suit_index=gw_data['gw_suitability_index'], sw_suit_index=np.zeros(len(gw_data['gw_suitability_index'])) ))
