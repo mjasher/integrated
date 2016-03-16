@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 #Linear programming
 from scipy.optimize import linprog as lp
@@ -6,30 +7,70 @@ from scipy.optimize import linprog as lp
 class LpInterface(object):
 
 
-    def genLogTemplates(self, num_field_water_sources, num_field_combinations):
+    def genLogTemplates(self, num_fields, num_water_sources, num_field_combinations):
 
         """
         Generate Pandas DataFrames to store LP :math:`c` and right hand upper bound (b_ub) coefficients
 
-        :param num_field_water_sources: Number of field and water source combinations (num fields * num water sources)
+        :param num_fields_water_sources: Number of fields for farm
+        :param num_water_sources: Number of Water Sources
         :param num_field_combinations: Number of possible field configurations (all possible mixes of field components)
 
+        :returns: Tuple of logging templates
+
+        lp_log_template:
+
+            Stores the :math:`c` left hand values for each field combination
+
+            ========================  ========================  ========================  ========================
+            Field 1, Water Source 1   Field 1, Water Source 2   Field 2, Water Source 1   Field 2, Waater Source 2
+            ========================  ========================  ========================  ========================
+            Possible Profit per Ha    Possible Profit per       Possible Profit per Ha    Possible Profit per Ha
+            ========================  ========================  ========================  ========================
+
+        b_ub_log_template:
+
+            Stores the :math:`b_{ub}` right hand upper bound constraints for each field combination
+
+            ========================  ========================  ========================  ========================
+            Field 1, Water Source 1   Field 1, Water Source 2   Field 2, Water Source 1   Field 2, Waater Source 2
+            ========================  ========================  ========================  ========================
+            Possible Irrigation Area  Possible Irrigation Area  Possible Irrigation Area  Possible Irrigation Area
+            ========================  ========================  ========================  ========================
+
+        b_eq_log_template:
+
+            Stores the :math:`b_{eq}` right hand equality constraints for each field combination
+            
+            If a field system is not implemented, it is because the irrigation system is being up/down graded \\
+            (note that this is different from a fallow field)
+
+            In such a case, the Field Area is enforced to its maximum area to factor in irrigation upgrade cost across \\
+            the entire field.
+
+            If equality constraints do not apply, then the value is left as NaN
+
+            ========  ========  ==========
+            Field 1   Field 2   Total Area
+            ========  ========  ==========
+            Max Area  Max Area  Total Area
+            ========  ========  ==========
+            
         """
+
+        num_field_water_sources = num_fields * num_water_sources
 
         lp_log_template = pd.DataFrame(columns=['max_area', 'bounds'], index=[i for i in xrange(num_field_combinations)])
         b_ub_log_template = pd.DataFrame(columns=[i for i in xrange(0, num_field_water_sources )])
+        b_eq_log_template = pd.DataFrame(columns=[i for i in xrange(0, num_fields)])
 
-        return (lp_log_template, b_ub_log_template, b_ub_log_template.copy())
+        return (lp_log_template, b_ub_log_template, b_eq_log_template)
 
     #End genLogTemplates
 
-    def setLogTemplates(self, num_field_water_sources, num_field_combinations):
+    def setLogTemplates(self, num_fields, num_water_sources, num_field_combinations):
 
-        lp_log, b_ub_log, b_eq_log = self.genLogTemplates(num_field_water_sources, num_field_combinations)
-
-        self.lp_log_template = lp_log
-        self.b_ub_log_template = b_ub_log
-        self.b_eq_log_template = b_eq_log
+        self.lp_log_template, self.b_ub_log_template, self.b_eq_log_template = self.genLogTemplates(num_fields, num_water_sources, num_field_combinations)
 
     #End setLogTemplates()
 
@@ -98,7 +139,10 @@ class LpInterface(object):
 
         A_ub = self.generateFieldAub(dummy_c, 1)
         A_ub.extend(self.generateFieldAub(dummy_c, num_water_sources))
-        A_ub.extend(self.generateFieldAub(dummy_c, num_fields_water_sources))
+
+        if num_fields > 1:
+            A_ub.extend(self.generateFieldAub(dummy_c, num_fields_water_sources))
+        #End if
 
         self.A_ub = A_ub
 
@@ -120,6 +164,7 @@ class LpInterface(object):
         c_length = self.c_length
 
         for i, row in c_bnds.iterrows():
+
             c = []
 
             for j in temp_df.iloc[i]:
@@ -130,31 +175,56 @@ class LpInterface(object):
                 elif type(j) is tuple:
                     bounds = j
             #End for
-            # del temp_df
 
             #Insert a list at an index as we
             #need to include bounds for each GW+SW combination
             b_ub = b_ub_log.iloc[i].tolist()
             b_ub = [x for x in b_ub if str(x) != 'nan'] #Template is copied from b_ub which has extra elements; remove the unneeded entries
             b_ub = b_ub[0:c_length] + [f.area for f in fields] + b_ub[c_length: ]
-            b_ub.append(c_bnds.iloc[i]['max_area'])
 
             b_eq = b_eq_log.iloc[i].tolist()
-            b_eq = [x for x in b_eq if str(x) != 'nan'] #Template is copied from b_ub which has extra elements; remove the unneeded entries
-            b_eq.append(sum(b_eq)) #Use of all fields is bounded by total possible irrigation area as constrained by water availability
+
+            #If there is only one equality constraint, ensure that it matches possible farm area
+            #LP crashes out if this is not set
+            if len(b_eq) == 1:
+                b_eq[0] = bounds[1]
+            #End if
+
+            if len(fields) > 1:
+                b_ub.append(c_bnds.iloc[i]['max_area'])
+                A_eq = A_ub[c_length:-1]
+            else:
+                A_eq = A_ub[c_length:]
 
             try:
+
                 bounds = (bounds, )*c_length
-                res = lp(c=c, A_ub=A_ub, A_eq=A_ub[c_length:], b_ub=b_ub, b_eq=b_eq, bounds=bounds)
+
+                A_eq = [A_eq[j] for j in xrange(len(b_eq)) if np.isnan(b_eq[j]) == False]
+                b_eq = [x for x in b_eq if str(x) != 'nan'] #Template is copied from b_ub which has extra elements; remove the unneeded entries
+
+                if (len(A_eq) == 0) and (len(b_eq) == 0):
+                    A_eq = None
+                    b_eq = None
+                #End if
+
+                # assert len(A_eq) == len(b_eq), "Number of equality constraints do not match ({A} != {b}, A_eq != b_eq)".format(A=len(A_eq), b=len(b_eq))
+
+                res = lp(c=c, A_ub=A_ub, A_eq=A_eq, b_ub=b_ub, b_eq=b_eq, bounds=bounds)
             except ValueError as e:
                 print "====================="
                 print c_bnds
-                print c
-                print A_ub
-                print b_ub
-                print A_ub[c_length:]
-                print b_eq
+                print "c: ", c
+                print "A_ub: ", A_ub
+                print "b_ub: ", b_ub
+                print "--------------"
+                print "A_ub[c]: ", A_ub[c_length:]
+                print "A_eq: ", A_eq
+                print "b_eq: ", b_eq
                 print bounds
+
+                print "b_eq_log: "
+                print b_eq_log
 
                 print len(c)
                 print len(A_ub)
@@ -169,16 +239,19 @@ class LpInterface(object):
             #End try
 
             if res.success is False:
+                print "-------------------"
                 print res
-                print c
-                print A_ub
-                print b_ub
-                print A_ub[c_length:]
-                print b_eq
-                print bounds
-                print c_length
+                print "c: ", c
+                print "A_ub: ", A_ub
+                print "b_ub", b_ub
+                print "A_eq", A_eq
+                print "b_eq", b_eq
+                print "bounds: ", bounds
+                print "c_length: ", c_length
+                # print Field.name, Field.Irrigation.name, Field.Crop.name, Field.area
                 print "------------------\n\n"
-                import sys; sys.exit('LP Failed!')
+                print "LP failed!"
+                import sys; sys.exit()
 
             k = 0
             for Field in fields:
@@ -187,7 +260,6 @@ class LpInterface(object):
                     k += 1
                 #End for
             #End for
-
 
             results.loc[i, 'profit'] = res.fun
             results.loc[i, 'farm_area'] = sum(res.x)
