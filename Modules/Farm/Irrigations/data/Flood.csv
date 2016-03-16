@@ -1,8 +1,8 @@
 Variable, Best Guess, Min, Max
 irrigation_rate, 1, 0, 1
-irrigation_efficiency, 0.74, 0.3, 0.9
+irrigation_efficiency, 0.7, 0.3, 0.9
 lifespan, 15, 10, 20
-cost_per_Ha, 0.0, 0.0, 2500
+cost_per_Ha, 2000.0, 0.0, 2500
 replacement_cost_per_Ha, 2000.0, 1500, 2500
 maintenance_rate, 0.02, 0.02, 0.02
 flow_ML_day, 12, 5, 25
