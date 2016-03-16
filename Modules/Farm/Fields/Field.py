@@ -33,14 +33,8 @@ class FarmField(Component):
         self.water_applied = 0
 
         if crop is not None:
-            #Cumulative Soil Water Deficit
-            self.setSWD()
-
-            #self.Soil.TAW_mm - self.Soil.current_TAW_mm
-
-            # if self.Crop.required_water_ML_per_Ha is None:
-            #     self.Crop.required_water_ML_per_Ha = self.Irrigation.irrigation_efficiency * self.Crop.water_use_ML_per_Ha
-            # #End if
+            #Cumulative Soil Water Deficit (monitors allowable depletion)
+            self.setIniSWD()
         #End if
 
         #Unused for now
@@ -49,7 +43,7 @@ class FarmField(Component):
         
     #End init()
 
-    def status(self):
+    def status(self, timestep):
 
         return {
             'irrigation': self.Irrigation.name,
@@ -57,36 +51,47 @@ class FarmField(Component):
             'soil water deficit': self.c_swd,
             'area': self.area,
             'crop': self.Crop.name,
-            'root zone': self.Crop.root_depth_m,
-            'nid': self.calcNetIrrigationDepth(self.Crop.root_depth_m, self.Crop.depletion_fraction)
+            'root zone': self.Crop.root_depth_m
+            #'nid': self.calcNetIrrigationDepth(timestep)
         }
 
     #End status()
 
-    def setSWD(self):
+    def setIniSWD(self):
 
         """
-        Set initial soil water deficit
+        Set initial soil water deficit. This is essentially a counter that monitors allowable depletion
         """
 
         #Cumulative Soil Water Deficit
-        self.c_swd = self.Soil.calcRAW(self.Soil.TAW_mm, self.Crop.depletion_fraction) - self.Soil.calcRAW(self.Soil.current_TAW_mm, self.Crop.depletion_fraction)
+        self.c_swd = self.Soil.calcRAW(self.Soil.current_TAW_mm, self.Crop.depletion_fraction) - self.Soil.calcRAW(self.Soil.TAW_mm, self.Crop.depletion_fraction) 
+
+        # print "Initial SWD: ", self.c_swd
+        # print "Max RAW: ", self.Soil.calcRAW(self.Soil.TAW_mm, self.Crop.depletion_fraction)
+        # print "C RAW: ", self.Soil.calcRAW(self.Soil.current_TAW_mm, self.Crop.depletion_fraction)
+        # print "TAW: ", self.Soil.TAW_mm
+        # print "C TAW: ", self.Soil.current_TAW_mm
+
+        # assert self.c_swd <= 0.0
+        assert self.c_swd >= -self.Soil.TAW_mm
 
         if self.c_swd > 0.0:
             self.c_swd = 0.0
-    #End setSWD()
+    #End setIniSWD()
 
     def applyWater(self, gross_applied_water_ML):
 
         """
         Puts water on the field
 
+        DEPRECATED
+
         :param gross_applied_water_ML: water in ML applied to field
         :returns: Water in ML that goes to recharge
         :return type: float
         """
 
-        #Calculate crop water use (ET_c)
+        #Calculate crop water use (ETc)
         crop_water_use = gross_applied_water_ML * self.irrigation.irrigation_efficiency
         seepage = gross_applied_water_ML - crop_water_use
 
@@ -110,7 +115,7 @@ class FarmField(Component):
     #End applyCropLoss()
 
 
-    def harvest(self, ):
+    def harvest(self):
 
         """
         Get crop harvest.
@@ -123,11 +128,7 @@ class FarmField(Component):
         return harvest
     #End harvest()
 
-    def cropWaterUse(self, timestep_ETc):
-        self.c_swd = self.c_swd - timestep_ETc
-    #End cropWaterUse()
-
-    def updateCumulativeSWD(self, gross_water_applied):
+    def updateCumulativeSWD(self, gross_water_applied_ML, ETc):
 
         """
         Follows calculation method outlined in
@@ -135,56 +136,51 @@ class FarmField(Component):
 
         Calculates the Soil Water Deficit based on the amount of water applied, the crop ET for the timestep, and the crop coefficient for its current growth stage 
 
-        c_swd = c_swd - ET_c, ET_c = reference_ET * Crop ET Coefficient for current stage of development
+        c_swd = c_swd - ETc, ETc = (reference_ET * Crop Coefficient for current stage of development)
 
-        :param timestep_ETc: Crop ET for this timestep (:math:ETc) to be multiplied with Crop ET Coefficient for this timestep
+        :param timestep_ETc: Crop ET for this timestep (:math:`ETc`) to be multiplied with Crop ET Coefficient for this timestep
         :param gross_water_applied: Gross amount of water applied to the field in ML
 
-        :returns: Total recharge for field
+        :returns: Total recharge for field in ML
 
         May have to rethink this cumulative SWD approach.
 
         K_sat = Max Soil saturation of soil type
 
-        SWD_i <= K_sat
+        SWD_{i} <= K_sat
 
-        SWD = (SWD_i - ETc) + (Rainfall + Applied Water)
+        SWD_i = (SWD_{i-1} - ETc) + (Rainfall + Applied Water)
 
-        Recharge = (Rainfall + Applied Water) - (ETc + SWD_i)
+        Recharge = (Rainfall + Applied Water) - (ETc + SWD_{i})
 
         Simplified version:
         SWD_i = Rainfall + Irrigation - Crop Water Use
+
+        :returns seepage: Seepage/recharge in ML
+
+        Also see "Tindall Method" as in:
+        http://www.nt.gov.au/d/Content/File/p/Tech_Bull/TB337.pdf
     
         """
 
         #mm -> ML = division by 100
         #ML -> mm = multiplication by 100
 
-        # self.c_swd = self.c_swd - timestep_ETc
+        assert gross_water_applied_ML >= 0.0, "Water input into soil cannot be less than 0"
 
-        water_applied_mm_Ha = ((gross_water_applied / self.area) * 100.0)
+        self.c_swd = (self.c_swd - ETc) + ((gross_water_applied_ML * 100) / self.area)
 
-        #Multiply by 100 to convert Total ML into mm/Ha - mm/Ha
-        self.c_swd = self.c_swd + water_applied_mm_Ha  #(timestep_ETc/100)/ self.area
+        if self.c_swd > 0.0:
 
-        if self.c_swd >= 0.0:
+            tmp = (self.c_swd - self.Soil.TAW_mm)
 
-            seepage = 0.0
-
-            if self.Soil.current_TAW_mm < self.Soil.TAW_mm:
-                if (self.Soil.current_TAW_mm + self.c_swd) > self.Soil.TAW_mm:
-                    seepage = (self.Soil.current_TAW_mm + self.c_swd) - self.c_swd
-                    self.Soil.current_TAW_mm = self.Soil.TAW_mm
-                else:
-                    self.Soil.current_TAW_mm = self.Soil.current_TAW_mm + self.c_swd
-                    seepage = self.c_swd
-            
+            seepage = tmp if tmp > 0.0 else 0.0
             self.c_swd = 0.0
-
-            seepage = (seepage / 100) #ML per Hectare
         else:
             seepage = 0.0
-            
+        #End if
+
+        #water_applied_mm_Ha = (gross_water_applied_ML * 100.0 ) / self.area   
         return seepage
 
     #End calcCumulativeSWD()
@@ -196,14 +192,61 @@ class FarmField(Component):
         return {'cwu': cwu, 'recharge': water_input-cwu}
     #End simpleCropWaterUse()
 
-    def calcNetIrrigationDepth(self, crop_root_depth_m, crop_depletion_fraction):
+    def calcNetIrrigationDepth(self, timestep, base_irrig_efficiency, val_type='Best Guess', e_rz_coef=0.55):
 
         """
-        Calculate net irrigation depth in mm
+        Calculate net irrigation depth in mm, subject to irrigation efficiency
+
+        Equation taken from 
+        http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use
+
+        See also: \\
+        * http://www.fao.org/docrep/x5560e/x5560e03.htm
+
+        * https://www.bae.ncsu.edu/programs/extension/evans/ag452-1.html
+
+        * http://dpipwe.tas.gov.au/Documents/Soil-water_factsheet_14_12_2011a.pdf
+
+
+        :math:`NID` = Effective root depth (:math:`D_{rz}`) :math:`*` Readily Available Water (:math:`RAW`)
+
+        :math:`NID = D_{rz} * RAW`
+
+        where:
+
+        * :math:`D_{rz}` = :math:`Crop_{root_depth} * Crop_{e_rz}`, where :math:`Crop_{root_depth}` is the estimated root depth for current stage of crop (initial, late, etc.) and :math:`Crop_{e_rz}` is the effective root zone coefficient for the crop. \\
+        * :math:`Crop_{e_rz}` is said to be between 1 and 2/3rds of total root depth \\
+
+        * see https://www.agric.wa.gov.au/water-management/calculating-readily-available-water?nopaging=1 \\
+          as well as the resources listed above
+
+        * RAW = :math:`p * TAW`, :math:`p` is depletion fraction of crop, :math:`TAW` is Total Available Water in Soil
+
+        As an example, if a crop has a root depth (:math:`RD_{r}`) of 1m, an effective root zone (:math:`RD_{erz}`) coefficient of 0.55, a depletion fraction (p) of 0.4 and the soil has a TAW of 180mm: \\
+        :math:`(RD_{r} * RD_{erz}) * (p * TAW)`
+        :math:`(1 * 0.55) * (0.4 * 180)`
+
         """
 
-        RAW_mm = self.Soil.calcRAW(fraction=crop_depletion_fraction)
-        net_irrigation_depth = crop_root_depth_m * RAW_mm
+        crop_depletion_fraction = self.Crop.getCurrentStageDepletionCoef(timestep, val_type)
+
+        # if (self.Crop.root_depth_m * self.Crop.getCurrentStageCropCoef(timestep, val_type)) > self.Crop.root_depth_m:
+        #     effective_rz = (self.Crop.root_depth_m * crop_depletion_fraction)
+        # else:
+        #     effective_rz = (self.Crop.root_depth_m * self.Crop.getCurrentStageCropCoef(timestep, val_type)) * crop_depletion_fraction
+
+        #Effective root zone is roughly half to 2/3rds of root depth
+        #https://www.bae.ncsu.edu/programs/extension/evans/ag452-1.html
+        #http://dpipwe.tas.gov.au/Documents/Soil-water_factsheet_14_12_2011a.pdf
+        #effective_rz = (self.Crop.root_depth_m * crop_depletion_fraction)
+        effective_rz = (self.Crop.root_depth_m * e_rz_coef)
+
+        net_irrigation_depth = ( effective_rz * self.Soil.calcRAW(fraction=crop_depletion_fraction))
+
+        #Change net irrigation depth based on irrigation efficiency
+        #net_irrigation_depth = net_irrigation_depth * (self.Irrigation.irrigation_efficiency / base_irrig_efficiency)
+
+        assert net_irrigation_depth >= 0.0, "Net irrigation depth will be calculated as above ground!"
 
         return net_irrigation_depth
     #End calcNetIrrigationDepth()
@@ -241,7 +284,7 @@ class FarmField(Component):
     #     if irrig_efficiency is None:
     #         irrig_efficiency = self.Irrigation.irrigation_efficiency
 
-    #     nid = self.calcNetIrrigationDepth(Crop.root_depth_m, Crop.depletion_fraction)
+    #     nid = self.calcNetIrrigationDepth(timestep, Manager.base_irrigation_efficiency)
 
     #     #total_flow_rate = (((27154 * nid) * self.area) / (60 * (duration * operational_days))) / irrig_efficiency
     #     # total_flow_rate = ((nid * self.area) / (duration * operational_days)) / irrig_efficiency
@@ -292,7 +335,6 @@ class FarmField(Component):
 
         return days_to_apply
     #End calcFlowDuration()
-        
 
     def flowPerIrrigation(self, RAW, area, irrigation_efficiency):
 
@@ -300,6 +342,8 @@ class FarmField(Component):
         A method to determine how much water (volume) needed to irrigate a field.
         Need soil Readily Available Water (RAW). area to be irrigated, and efficiency of supply and field application.
         To determine how much water (volume) you need to irrigate your field
+
+        Currently unused as LP determines field area (and is therefore an unknown).
 
         See page 4 of `this 2002 DPI document <http://www.dpi.nsw.gov.au/__data/assets/pdf_file/0006/176694/surface-irrigation-notes.pdf>`_
 
@@ -309,7 +353,7 @@ class FarmField(Component):
 
         return (RAW * area) / irrigation_efficiency
 
-    def irrigationArea(self, water_Litres, irrigation_efficiency, RAW):
+    def calcIrrigationArea(self, water_Litres, irrigation_efficiency, RAW):
 
         """
         If available water volume is known, area that can be irrigated can be determined
