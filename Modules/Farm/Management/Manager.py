@@ -18,7 +18,7 @@ class FarmManager(Component):
 
     """
 
-    def __init__(self, Farm, water_sources, storages, irrigations, crops, LpInterface, livestocks=None):
+    def __init__(self, Farm, water_sources, storages, irrigations, crops, LpInterface, Finance, livestocks=None):
 
         """
         :param Farm: Farm Object representing the Farm to manage
@@ -26,6 +26,7 @@ class FarmManager(Component):
         :param irrigations: List of irrigation systems to choose from
         :param crops: List of crops to choose from
         :param LpInterface: Interface to use for Linear Programming
+        :param Finance: object housing financial calculations to use
         :param livestocks: List of livestock to choose from
         """
 
@@ -35,7 +36,15 @@ class FarmManager(Component):
         self.irrigations = irrigations
         self.crops = crops
         self.LpInterface = LpInterface
+        self.Finance = Finance
         self.livestocks = livestocks
+
+        self.crop_rotations = {
+            'irrigated': [Crop for Crop in self.crops if 'irrigated' in Crop.name.lower()],
+            'dry': [Crop for Crop in self.crops if 'dryland' in Crop.name.lower()],
+        }
+
+        self.season_started = False
 
 
     #End __init__()
@@ -43,7 +52,8 @@ class FarmManager(Component):
     def estIrrigationWaterUse(self, crop_water_use_ML, irrigation_efficiency, base_irrigation_efficiency=0.7):
 
         """
-        Estimate amount of irrigation water to send out.
+        Simple estimate of irrigation water to apply.
+        Used to determine irrigation investment.
 
         It seems figures given in the literature already include water losses and precipitation.
         e.g. if a crop is said to need 6ML/Ha/Season, it is with flood irrigation + "usual" rainfall
@@ -69,12 +79,71 @@ class FarmManager(Component):
 
         """
 
-        return (crop_water_use_ML * base_irrigation_efficiency) / irrigation_efficiency
+        return crop_water_use_ML * (base_irrigation_efficiency / irrigation_efficiency) 
         # return crop_water_use_ML / irrigation_efficiency
 
     #End estIrrigationWaterUse()
 
-    def calcFieldCombination(self, row_id, Field, WaterSources, storage_cost_per_Ha, irrig_cost_per_Ha, max_area, logs):
+    def getTotalFieldArea(self):
+        total_area = 0
+        for f in self.Farm.fields:
+            total_area += f.area
+        #End for
+
+        return total_area
+    #End getTotalFieldArea()
+
+    def getNextCropInRotation(self, Field):
+
+        """
+        Rigid Crop Rotation
+        Each crop is used for :math:`n` seasons within a rotation
+
+        Return the current or next crop within the specified rotation
+        
+        """
+
+        irrig_name = Field.Irrigation.name.lower()
+
+        if 'dryland' in irrig_name:
+            crop_type = 'dry'
+        elif 'irrigated' in irrig_name:
+            crop_type = 'irrigated'
+        else:
+            #Default if not found
+            crop_type = 'irrigated'
+
+        Crop = Field.Crop
+
+        #Count number of seasons crop has been in rotation
+        if (Crop is None) or (Crop.rotation_count == Crop.rotation_length):
+
+            crop_rotation = self.crop_rotations[crop_type]
+
+            try:
+                next_crop_index = [i.name for i in crop_rotation].index(Crop.name)+1
+            except AttributeError:
+                next_crop_index = 0
+            #End try
+
+            try:
+                #Get next crop in rotation, or first crop in rotation if not found
+                next_crop = crop_rotation[next_crop_index].getCopy()
+                
+            except (IndexError, ValueError, AttributeError) as e:
+                #Otherwise get first crop in rotation
+                next_crop = crop_rotation[0].getCopy()
+
+        else:
+            Crop.rotation_count += 1
+            next_crop = Crop
+        #End if
+
+        return next_crop
+
+    #End getNextCropInRotation()
+
+    def calcFieldCombination(self, row_id, Field, WaterSources, storage_cost_per_Ha, irrig_cost_per_Ha, max_area, logs, field_change=False, logger={}):
 
         """
         If the Objective Function follows the form of 
@@ -164,9 +233,9 @@ class FarmManager(Component):
         :math:`X_{n}` and :math:`Y_{n} = A_{n}`
         """
 
-        b_ub, b_eq, lp_log, b_ub_log, b_eq_log, water_req = logs
+        b_ub, b_eq, lp_log, water_req = logs
 
-        field_change = False
+        # field_change = False
         implementation_change = False
 
         Store = Field.Storage
@@ -175,8 +244,8 @@ class FarmManager(Component):
 
         temp_name = "{F} {S} {I} {C}".format(F=Field.name, S=Store.name, I=Irrig.name, C=Crop.name)
 
-        field_b_ub = []
-        field_b_eq = []
+        field_b_ub = [] #right hand constraints for this field
+        field_b_eq = [] #right hand equality constraints for this field
 
         if Irrig.implemented == False:
             crop_GM = 0
@@ -185,37 +254,45 @@ class FarmManager(Component):
         #End if
 
         est_irrigation_water_ML_per_Ha = self.estIrrigationWaterUse(Crop.water_use_ML_per_Ha, Irrig.irrigation_efficiency, self.base_irrigation_efficiency)
-        flow_rate_Lps = Field.calcFlowRate()
 
+        flow_rate_Lps = Field.calcFlowRate()
         water_req.append(est_irrigation_water_ML_per_Ha)
 
         profits = {}
-        this_max_area = 0 #Max possible area with a water source
+        #ws_max_possible_area = 0 #Max possible area with a water source
         max_possible_area = 0 #Total possible area
         for WS in WaterSources:
 
-            #Amount of usable water dependent on irrigation efficiency
-            water_entitlement = WS.entitlement #* Irrig.irrigation_efficiency
+            water_entitlement = WS.entitlement 
 
             #If irrigation is not yet implemented, pumping costs is 0
             if Irrig.implemented == False:
                 pumping_cost_per_Ha = 0
                 water_cost_per_Ha = 0
                 total_margin = 0 #- irrig_cost_per_Ha+storage_cost_per_Ha
+                possible_irrigation_area = Field.area
             else:
-                pumping_cost_per_Ha = WS.calcGrossPumpingCostsPerHa(flow_rate_Lps, est_irrigation_water_ML_per_Ha, head_pressure=WS.water_level, additional_head=Irrig.head_pressure)
 
-                water_cost_per_Ha = WS.calcWaterCostsPerHa(est_irrigation_water_ML_per_Ha)
-                # possible_irrigation_area = (water_entitlement/est_irrigation_water_ML_per_Ha)
-                possible_irrigation_area = Irrig.calcIrrigationArea(est_irrigation_water_ML_per_Ha, water_entitlement)
+                if 'dryland' in Irrig.name.lower():
+                    pumping_cost_per_Ha = 0.0
+                    water_cost_per_Ha = 0.0
+                    possible_irrigation_area = Field.area
+                else:
 
-                #TODO:
-                #  We can set amount of water to be sold as a constraint:
-                #    i.e. assume that farmers sell 0-100% of saved water
-                #  This must be calculated at the end, so move the below outside of this loop
-                #  Currently assumes the entire field area used
-                available_water_per_Ha = water_entitlement/Field.area
-                saved_water_value_per_Ha = (available_water_per_Ha - ((est_irrigation_water_ML_per_Ha / available_water_per_Ha) * available_water_per_Ha) ) * WS.water_value_per_ML
+                    pumping_cost_per_Ha = WS.calcGrossPumpingCostsPerHa(flow_rate_Lps, est_irrigation_water_ML_per_Ha, head_pressure=WS.water_level, additional_head=Irrig.head_pressure)
+
+                    water_cost_per_Ha = WS.calcWaterCostsPerHa(est_irrigation_water_ML_per_Ha)
+                    # possible_irrigation_area = (water_entitlement/est_irrigation_water_ML_per_Ha)
+                    possible_irrigation_area = Irrig.calcIrrigationArea(est_irrigation_water_ML_per_Ha, water_entitlement)
+
+                    #TODO:
+                    #  We can set amount of water to be sold as a constraint:
+                    #    i.e. assume that farmers sell 0-100% of saved water
+                    #  This must be calculated at the end, so move the below outside of this loop
+                    #  Currently assumes the entire field area used
+                    available_water_per_Ha = water_entitlement/Field.area
+                    saved_water_value_per_Ha = (available_water_per_Ha - ((est_irrigation_water_ML_per_Ha / available_water_per_Ha) * available_water_per_Ha) ) * WS.water_value_per_ML
+                #End if
 
                 #Is it sensible to include value of unused water?
                 total_margin = crop_GM #+ saved_water_value_per_Ha + additional_income
@@ -223,27 +300,41 @@ class FarmManager(Component):
             #End if
 
             total_costs = (irrig_cost_per_Ha+pumping_cost_per_Ha+water_cost_per_Ha+storage_cost_per_Ha) #+ additional_costs #Crop costs already factored in
+
+            if row_id not in logger:
+                logger[row_id] = {}
+            #End if
+            
+            logger['irrigation_costs'] = irrig_cost_per_Ha
+            logger['pumping_costs'] = pumping_cost_per_Ha
+            logger['water_costs'] = water_cost_per_Ha
+            logger['storage_costs'] = storage_cost_per_Ha
+            logger['total_costs'] = total_costs
+            logger['total_margin'] = total_margin
+
             negated_profit = total_costs - total_margin
 
             if Irrig.implemented == True:
-                this_max_area = min(Field.area, possible_irrigation_area) #min(possible_irrigation_area, Field.area)
+                ws_max_possible_area = min(Field.area, possible_irrigation_area)
             else:
                 #Determine areal costs when irrigation system is not yet implemented
-                this_max_area = Field.area 
+                ws_max_possible_area = possible_irrigation_area
+            #End if
+
+            b_ub.append(ws_max_possible_area)
+            max_possible_area += min(Field.area, possible_irrigation_area)
 
             #This represents 'c' in LP matrix
+            #Set by reference, note that this variable is not returned
             lp_log.set_value(row_id, Field.name+" "+WS.name, negated_profit)
 
             profits[WS.name] = negated_profit
-
-            max_possible_area += this_max_area
-
-            field_b_ub.append(this_max_area)
             
         #End Water Source loop
 
-        # this_max_area = min(max_possible_area, Field.area)
-        # max_area += this_max_area
+        if max_possible_area > Field.area:
+            max_possible_area = Field.area
+        #End if
 
         #Mark as implemented after first year
         if Irrig.implemented == False:
@@ -255,18 +346,14 @@ class FarmManager(Component):
             field_change = True
         #End if
 
-        b_ub.append(this_max_area)
+        b_eq.append(Field.area) if field_change else b_eq.append(None)
 
         #Calculate total possible irrigation area
         total_water = sum([WS.entitlement for WS in self.water_sources])
         avg_water_req = sum(water_req)/len(water_req)
         possible_irrigation_area = total_water / avg_water_req
 
-        #Save results for this row
-        b_ub_log.loc[row_id] = pd.Series(b_ub)
-        b_eq_log.loc[row_id] = pd.Series(b_eq)
-
-        return field_b_ub, field_b_eq, this_max_area, field_change, max_possible_area
+        return field_change, max_possible_area
 
     #End calcFieldCombination()
 
@@ -380,7 +467,7 @@ class FarmManager(Component):
                     optimum[Crop.name][water_source_name] = {}
 
                 flow_rate_Lps = Field.calcFlowRate() #Field.pump_operation_hours, Field.pump_operation_days, Crop=Crop
-                pumping_cost_per_Ha = self.Farm.water_sources[water_source_name].calcGrossPumpingCostsPerHa(flow_rate_Lps, est_irrigation_water_ML_per_Ha)
+                pumping_cost_per_Ha = self.Farm.water_sources[water_source_name].calcGrossPumpingCostsPerHa(flow_rate_Lps, est_irrigation_water_ML_per_Ha, calc_func=self.Finance.calcPumpingCostsPerML)
 
                 water_entitlement = water_source.entitlement
                 possible_irrigation_area = (water_entitlement/est_irrigation_water_ML_per_Ha)
@@ -472,85 +559,159 @@ class FarmManager(Component):
 
     #End greedyFieldCombinations()
 
-    def calcFieldIrrigationDepth(self, Field):
-        return Field.calcNetIrrigationDepth(Field)
-    #End calcFieldIrrigationDepth()
+    def updateCSWD(self, Field, ETc, effective_rain, RAW):
+        #Update cumulative Soil Water Deficit
+        Field.c_swd = min((Field.c_swd + effective_rain) - ETc, 0)
 
-    def calcGrossIrrigationWaterAmount(self, Field, Crop=None):
-        """
-        Calculate how much water is needed to be sent out to the fields per Hectare
-        Calculations are done in millimeters and then converted to ML.
-
-        See `Estimating Vegetable Crop Water Use (Vic Ag) <http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use/>`_
-
-        Especially Table 4
-
-        .. math::
-            NID = D_{rz} * RAW
-
-        where
-
-        * :math:`NID` is Net Irrigation Depth
-        * :math:`D_{rz}` is Effective Root Depth (Depth of root zone)
-        * :math:`RAW` is Readily Available Water, see calcRAW() method in Soil class
-
-        .. math:: 
-
-
-        :param Field: Field object
-        :returns: Total amount of water to apply in ML
-        
-        """
-
-        if Crop is None:
-            Crop = Field.Crop
-
-        net_irrigation_depth = Field.calcNetIrrigationDepth(Crop.root_depth_m, Crop.depletion_fraction)
-
-        #Check current Soil Water Deficit
-        if (Field.c_swd + net_irrigation_depth) >= 0.0 or (Field.c_swd > (0.0-net_irrigation_depth)):
-            water_to_send = 0.0
-            print "above zero, sending no water"
-        else:
-
-            water_application = 0.0 - Field.c_swd
-
-            while (Field.c_swd + water_application) < 0.0:
-                water_application = water_application + net_irrigation_depth
-            #End while
-
-            #Add again to get it over 0.0 (?)
-            #water_application = water_application + net_irrigation_depth
-
-            print water_application
-            print 0.0-net_irrigation_depth
-            print "here------"
-
-            water_to_send = ((water_application / 100.0) / Field.Irrigation.irrigation_efficiency) * Field.area
-
-            print "water application"
-            print water_to_send, water_application, Field.c_swd
-
+        #Max possible soil water depletion
+        if -Field.c_swd > RAW:
+            Field.c_swd = -RAW
         #End if
 
-        return water_to_send
+    #End updateCSWD()
 
-    #End calcGrossIrrigationWaterAmount()
+    def calcGrossIrrigationMLPerHa(self, Field, climate_params, soil_params, Crop=None, proportion=None, base_irrigation_efficiency=None):
 
-    def calcWaterApplication(self):
+        """
+        WARNING: Currently updates Cumulative Soil Water Deficit
+        """
+
+        if 'dryland' in Field.Irrigation.name.lower():
+            return 0.0
+
+        if base_irrigation_efficiency == None:
+            base_irrigation_efficiency = self.base_irrigation_efficiency
+
+        if Crop == None:
+            Crop = Field.Crop
+        #End if
+
+        ETc = climate_params["ETc"]
+        effective_rain = climate_params["e_rainfall"]
+        nid = soil_params["nid"]
+        RAW = soil_params["RAW"]
+
+        #Update cumulative Soil Water Deficit
+        self.updateCSWD(Field, ETc, effective_rain, RAW)
+
+        #Check current Soil Water Deficit
+        adj_water_to_send_ML_Ha = 0.0
+
+        #Apply Crop Water Use once NID is reached
+        #Only apply enough water for it to maintain water level at NID
+        if -Field.c_swd >= nid:
+
+            water_to_send_mm = -Field.c_swd - nid
+
+            debug_msg = "Need to apply water"
+            
+        else:
+            water_to_send_mm = 0.0 #max((ETc - effective_rain), 0)
+
+            debug_msg = "No need to apply water"
+            
+        #End if
+
+        print debug_msg
+        print "    c_swd: ", Field.c_swd
+        print "    wd: ", (ETc - effective_rain)
+        print "    nid: ", -nid
+        #print "    WTS: ", water_to_send_mm
+        print "    Sending (mm/Ha)", water_to_send_mm
+
+
+        water_to_send_ML_Ha = water_to_send_mm / 100
+        adj_water_to_send_ML_Ha = (water_to_send_mm / Field.Irrigation.irrigation_efficiency) / 100
+        assert adj_water_to_send_ML_Ha >= 0, "Cannot send negative amounts of water!"
+
+
+        if (Field.c_swd > 0.0): #(0.0-nid): #or (Field.c_swd > -nid)
+            print "SWD is above 0 or NID, sending no water"
+            print "    ", Field.c_swd
+            print "    ", nid
+        #End if
+
+        # if Field.c_swd > -nid:
+        #     assert water_to_send_ML_Ha == 0, "Sent water unnecessarily"
+
+        if adj_water_to_send_ML_Ha == 0.0:
+            return adj_water_to_send_ML_Ha
+
+        #TODO:
+        #Generate adjusted water source proportions to determine pumping costs
+
+        # adjusted_water_to_send_per_Ha = 0.0
+        # for WS in self.Farm.water_sources:
+        #     temp_adj = (water_to_send_ML_Ha * proportion[WS.name]) #* Field.area
+        #     temp_adj_ML = (temp_adj*Field.area)
+
+        #     if (WS.entitlement - (temp_adj*Field.area)) < 0.0:
+        #         adjusted_water_to_send_per_Ha += (WS.entitlement/Field.area)
+        #         WS.entitlement = 0.0
+        #     else:
+        #         adjusted_water_to_send_per_Ha += temp_adj
+        #         WS.entitlement = WS.entitlement - temp_adj_ML
+        #     #End if
+        # #End for
+
+        #Get the difference from an available water source
+        # total_water_to_send_ML = (water_to_send_ML_Ha*Field.area)
+        # if adjusted_water_to_send_per_Ha < water_to_send_ML_Ha:
+        #     for WS in self.Farm.water_sources:
+        #         if WS.entitlement > 0.0:
+
+        #             total_adj_water_ML = adjusted_water_to_send_per_Ha * Field.area
+
+        #             if (WS.entitlement - (total_water_to_send_ML - total_adj_water_ML)) > 0.0:
+        #                 adjusted_water_to_send_per_Ha += water_to_send_ML_Ha - adjusted_water_to_send_per_Ha
+        #                 WS.entitlement = WS.entitlement - (total_water_to_send_ML - total_adj_water_ML)
+        #             else:
+        #                 adjusted_water_to_send_per_Ha += (WS.entitlement/Field.area)
+        #                 WS.entitlement = 0.0
+        #             #End if
+        #         #End if
+        #     #End for
+        # #End if
+
+        adjusted_water_to_send_per_Ha = adj_water_to_send_ML_Ha
+        #actual_water_input_ML_per_Ha = adj_water_to_send_ML_Ha * Field.Irrigation.irrigation_efficiency
+
+        # print "    Adj. irrigation (mm)", (adjusted_water_to_send_per_Ha*100)
+        #Field.c_swd = min(Field.c_swd + (actual_water_input_ML_per_Ha*100), 0)
+        #Field.c_swd = Field.c_swd + (adjusted_water_to_send_per_Ha*100) if Field.c_swd + (adjusted_water_to_send_per_Ha*100) < 0 else 0
+
+        Field.c_swd = min(Field.c_swd + (adjusted_water_to_send_per_Ha*100), 0)
+
+        return adj_water_to_send_ML_Ha
+
+    #End calcGrossIrrigationMLPerHa()
+
+    def calcWaterApplication(self, ETc, effective_rain, timestep, proportion, base_irrigation_efficiency=None, crop=None):
 
         """
         Calculate amount of water to apply to each field
 
         Note: 100mm of water on 1 Hectare is equal to 1ML/Ha
 
+        :param ETc: Dict of ETc for each field
+        :param effective_rain: Effective rain for area (we are assuming uniform distribution)
+        :param proportion: Dict of proportion of water to be taken from each water source, for each field
+        :param base_irrigation_efficiency: Irrigation efficiency to compare against; defaults to None, which uses the value set for Manager
+        :param crop: Dict of crops grown in each field. Defaults to none.
+
         :returns: Dict of {Field Object: amount of water to apply in ML}
         """
 
         #Calculate amount of water to apply to each field
         water_to_apply = {}
+
+        if base_irrigation_efficiency == None:
+            base_irrigation_efficiency = self.base_irrigation_efficiency
+
         for Field in self.Farm.fields:
-            water_to_apply[Field] = self.calcGrossIrrigationWaterAmount(Field)
+
+            nid = Field.calcNetIrrigationDepth(timestep, base_irrigation_efficiency)
+            water_to_apply[Field] = self.calcGrossIrrigationMLPerHa(Field, ETc[Field], effective_rain, nid, crop, proportion[Field], base_irrigation_efficiency)
         #End for
 
         return water_to_apply
@@ -564,12 +725,12 @@ class FarmManager(Component):
 
         :param timestep: Datetime (REMOVE?)
         :param ETc: Amount of evapotranspiration that occured in this timestep (irrigation efficiency)
-        :param gross_water_applied: Total water applied to the field in ML
+        :param gross_water_applied: Dict of total water applied to each field in ML
         """
 
         recharge = 0.0
         for field in self.Farm.fields:
-            recharge = recharge + field.updateCumulativeSWD(ETc[field], gross_water_applied[field])
+            recharge = recharge + field.updateCumulativeSWD(gross_water_applied[field], ETc[field])
         #End field
 
         return recharge
@@ -662,18 +823,52 @@ class FarmManager(Component):
 
     #End calcPotentialCropYield()
 
-    def calcEffectiveRainfallML(self, rainfall, field_area):
+    def calcEffectiveRainfallML(self, timestep, num_events, rainfall, field_area):
 
         """
-        Calculates effective rainfall, in ML, over the Field area
+        Calculates effective rainfall (in ML) over the Field area
+        Assumes uniform distribution of rainfall
+
+        :param timestep: Current time step
+        :param num_events: Number of rainfall events
+        :param rainfall: Total rainfall that occured within time step
+        :param field_area: Area
         """
 
-        e_rainfall = (rainfall - 5.0) if (rainfall - 5.0) > 0.0 else 0.0
+        #All rainfall in winter months are considered effective
+        e_rainfall = self.calcEffectiveRainfallmm(timestep, num_events, rainfall)
+
         return (e_rainfall / 100) * field_area
     #End calcEffectiveRainfallML()
 
+    def calcEffectiveRainfallmm(self, timestep, num_events, rainfall):
+        """
+        Calculate effective rainfall in mm
 
-    def setFieldComponentStatus(self, row):
+        All rainfall in winter months is considered to be effective (June - August).
+
+        Effective daily rainfall in other months is considered to be
+        :math:`E_{p} = P - 5, E_{p} >= 0.0`
+
+        Therefore, by receiving the total rainfall within a timestep, we subtract (5 * number of events)
+
+        :math:`E_{p} = P - (5*n), E_{p} >= 0.0, n =` Number of Rainfall events
+
+        :param timestep: Current time step
+        :param num_events: Number of rainfall events
+        :param rainfall: Total rainfall that occured within time step
+
+        """
+        #All rainfall in winter months are considered effective
+        month = timestep.month
+        e_rainfall = (rainfall - (5.0*num_events)) if month not in [6, 7, 8] else rainfall
+        e_rainfall = e_rainfall if e_rainfall >= 0.0 else 0.0
+
+        return e_rainfall
+    #End calcEffectiveRainfallmm
+
+
+    def setFieldComponentStatus(self, row, ignore_efficiency=False):
 
         """
         Sets the initial implementation status of each field component
@@ -696,14 +891,20 @@ class FarmManager(Component):
         else:
             row['Irrigation'].implemented = False
 
-        if row['Irrigation'].irrigation_efficiency >= Field.Irrigation.irrigation_efficiency:
-            # row['fields'].WaterSource = row['WaterSource'].getCopy()
+        if ignore_efficiency == False:
+            if (row['Irrigation'].irrigation_efficiency >= Field.Irrigation.irrigation_efficiency) or ('dryland' in Field.Irrigation.name.lower()):
+                # row['fields'].WaterSource = row['WaterSource'].getCopy()
+                Field.Storage = row['Storage'].getCopy()
+                Field.Irrigation = row['Irrigation'].getCopy()
+                # row['fields'].Crop = row['Crop'].getCopy()
+            else:
+                #Non-beneficial change of irrigations, remove from list
+                return [np.nan, ] * len(row)
+            #End if
+        else:
             Field.Storage = row['Storage'].getCopy()
             Field.Irrigation = row['Irrigation'].getCopy()
-            # row['fields'].Crop = row['Crop'].getCopy()
-        else:
-            #Non-beneficial change of irrigations, remove from list
-            return (np.nan, ) * len(row)
+        #End if
 
         return row
     #End updateFieldComponents()
@@ -716,19 +917,22 @@ class FarmManager(Component):
         """
 
         field_combi = {}
+
+        #Ignore irrigation efficiency check if only one combination available
+        if len(combinations) == 1:
+            
+            ignore_efficiency = True
+        else:
+            ignore_efficiency = False
+        #End if
+        
         for i, row in combinations.iterrows():
-            row = self.setFieldComponentStatus(row)
 
-            if type(row[0]) == float:
+            row = self.setFieldComponentStatus(row, ignore_efficiency)
 
-                try:
-                    if np.isnan(row[0]):
-                        continue
-                    #End if
-                except TypeError as e:
-                    import sys; sys.exit(e)
-                #End try
-            #End if
+            #If field element is NaN
+            if (type(row[0]) is np.number) and np.isnan(row[0]):
+                continue
 
             field_name = row['fields'].name
             if field_name not in field_combi:
@@ -736,6 +940,8 @@ class FarmManager(Component):
 
             field_combi[field_name].append(row['fields'].getCopy())
         #End for
+
+        assert len(field_combi) > 0, "List of field combinations cannot be empty"
 
         return field_combi
 
@@ -748,8 +954,6 @@ class FarmManager(Component):
         Generate all possible combinations of fields, storages and irrigations
         """
 
-        import itertools
-
         all_combinations = {
             'fields': [field.getCopy() for field in self.Farm.fields],
             # 'WaterSource': Manager.water_sources[:],
@@ -758,14 +962,32 @@ class FarmManager(Component):
             # 'Crop': Manager.crops[:]
         }
 
-        combination_keys = all_combinations.keys()
+        # combination_keys = all_combinations.keys()
 
-        #Generate all combinations of available farm components
-        all_combinations = [dict(itertools.izip_longest(all_combinations, v)) for v in itertools.product(*all_combinations.values())]
-
-        return pd.DataFrame(all_combinations)
+        return self.generateCombinations(all_combinations)
 
     #End generateFieldCombinations()
+
+    def generateCombinations(self, combs):
+
+        """
+        Generates all possible combinations of farm components
+        """
+
+        import itertools
+        #Generate all combinations of available farm components
+        all_combinations = [dict(itertools.izip_longest(combs, v)) for v in itertools.product(*combs.values())]
+        all_combinations = pd.DataFrame(all_combinations)
+
+        #Replace with a copy; these objects should be compartmentalised
+        for col in all_combinations:
+            for i, Field in all_combinations[col].iteritems():
+                all_combinations.loc[i, col] = Field.getCopy()
+            #End for
+        #End for
+
+        return all_combinations
+    #End generateCombinations()
 
     def forwardTraceFieldCombinations(self, years_ahead):
 
@@ -774,6 +996,7 @@ class FarmManager(Component):
         # for n in xrange(years_ahead)
 
         pass
+    #End 
 
         
     
