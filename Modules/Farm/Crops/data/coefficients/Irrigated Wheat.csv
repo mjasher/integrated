@@ -1,7 +1,7 @@
-Stage, Month-Day, Coefficient
-initial, 06-01, 0.2
-development, 07-01, 0.4
-mid-season, 08-01, 0.5
-mid-season2, 09-01, 0.7
-late, 10-01, 0.8
-harvest, 11-30, 0.6
+Stage,Crop Coefficient,Depletion Fraction
+initial,0.2,0.6
+development,0.3,0.6
+mid-season,0.9,0.6
+mid-season2,0.9,0.6
+late,0.3,0.6
+harvest,0.3,0.6

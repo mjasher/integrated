@@ -3,7 +3,8 @@ yield_per_Ha, 3.5, 2.0, 5.0
 price_per_yield, 500.57, 150, 650
 variable_cost_per_Ha, 400.0, 180, 550
 water_use_ML_per_Ha, 3.5, 2.5, 6.0
-root_depth_m, 0.55, 0.35, 1.0
-depletion_fraction, 0.4, 0.3, 0.5
+root_depth_m, 1.0, 0.35, 1.5
+depletion_fraction, 0.6, 0.3, 0.7
 et_coef, 110, 90, 120
 wue_coef, 15, 10, 30
+rotation_length, 2, 2, 4
