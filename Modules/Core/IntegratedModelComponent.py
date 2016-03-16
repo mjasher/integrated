@@ -1,3 +1,4 @@
+import copy
 class Component(object):
 
     """
@@ -18,7 +19,6 @@ class Component(object):
     #End setAttribute
 
     def getCopy(self):
-        import copy
         return copy.deepcopy(self)
     #End getCopy()
 
