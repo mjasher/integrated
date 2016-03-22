@@ -95,6 +95,7 @@ class FileHandler(object):
 
         for f in files:
             fname = os.path.splitext(f)[0] #Get filename without extension
+            
             path, fname = os.path.split(fname) #Get filename by itself
 
             #Get parent directory of file

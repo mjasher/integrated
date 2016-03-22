@@ -54,7 +54,7 @@ class SpeciesFlow(FlowSuitability):
         above_summer_low =  yearly_flow_data[(yearly_flow_data[flow_col] >= summer_low_thd) & (yearly_flow_data.index.month >= 12) | (yearly_flow_data.index.month <= 5)][flow_col].count()
         
         above_winter_low =  yearly_flow_data[(yearly_flow_data[flow_col] >= winter_low_thd) & (yearly_flow_data.index.month >= 6) & (yearly_flow_data.index.month <= 11)][flow_col].count()
-
+        
         if (above_summer_low >=summer_index_thd) & (above_winter_low >= winter_index_thd):
             lowflow_index = 1
         else:

@@ -16,7 +16,7 @@ if __name__ == '__main__':
     #dev_data_path = "Inputs"
 
     # Read in flow data
-    scenarios = [dev_data_path+"/Hydrology/sce1", dev_data_path+"/Hydrology/sce2"]
+    scenarios = [dev_data_path+"/Hydrology/sce1"]#, dev_data_path+"/Hydrology/sce2"]
 
     date_range = ["1900-01-01", None]
 
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     # read in asset table
     #This could be set as class attribute as it is used as a global in the R script
     asset_table = FileHandle.loadCSV(dev_data_path+"/Ecology/Water_suitability_param.csv")
-    eco_assets = ['A1', 'A2','A4']
+    eco_assets = ['A2','A4','A5']
 
     # read in weights
     weights = indexes["weights"]
@@ -38,11 +38,11 @@ if __name__ == '__main__':
 
     # Set up additional parameters:
     # Set up weight for groundwater index
-    gw_weight = 1
-    sw_weight = 2
+    gw_weight = 0.4
+    sw_weight = 0.6
 
     # For DSS, can use RRGMS only as a minimum.
-    specieslist = ["RRGMS", "RRGRR"]
+    specieslist = ["RRGMS","RRGRR"]
 
     FlowIndexer = FlowSuitability(asset_table, specieslist, indexes, weights)
 
@@ -99,7 +99,7 @@ if __name__ == '__main__':
         for eco_site in eco_assets:
         #for j in xrange(0, len(asset_table.index)):
 
-            flow_indexes = FlowIndexer.generateEnvIndex(eco_site=eco_site, scen_data=scenario_data, ecospecies=specieslist, species_cols=species_cols, gw_weight=gw_weight, sw_weight=sw_weight) #species_cols=FlowIndexer.default_index_cols, gswfun=weighted
+            flow_indexes = FlowIndexer.generateEnvIndex(eco_site=eco_site, scen_data=scenario_data, ecospecies=specieslist, species_cols=species_cols, gw_weight=gw_weight, sw_weight=sw_weight, gwsw_method="weighted_avg") #species_cols=FlowIndexer.default_index_cols, gswfun=weighted
             
             if flow_indexes is None:
                 continue
@@ -117,7 +117,9 @@ if __name__ == '__main__':
                 all_index_rolling = pd.rolling_mean(all_index_annual,3)
                 
                 print scen_name,eco_site, species
-                FileHandle.writeCSV(all_index, save_folder, "all_index.csv")
+                all_index_annual.plot()
+                
+                FileHandle.writeCSV(all_index, save_folder, "all_index_daily.csv")
                 FileHandle.writeCSV(all_index_annual, save_folder, "all_index_annual.csv")
                 FileHandle.writeCSV(all_index_rolling, save_folder, "all_index_rolling.csv")
                 

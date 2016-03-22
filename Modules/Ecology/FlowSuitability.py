@@ -266,7 +266,7 @@ class FlowSuitability(WaterSuitability):
 
     #End flowSummary()
     
-    def generateEnvIndex(self, eco_site, scen_data, salinity=10000, ctf_col='ctf_low', species_cols=None, gw_weight=1, sw_weight=1, **kwargs):
+    def generateEnvIndex(self, eco_site, scen_data, salinity=10000, ctf_col='ctf_low', species_cols=None, gw_weight=1, sw_weight=1, gwsw_method="weighted_avg", **kwargs):
 
         """
         Generate environmental indexes for the given list of species
@@ -291,17 +291,26 @@ class FlowSuitability(WaterSuitability):
         #baseflow = scen_data[gauge]["Baseflow"]
 
         #Get GW level data with datetime
-        gw_data = scen_data["gwlevel"][[eco_site]].dropna()
+        
+        gw_data = scen_data["gwlevel"][[eco_site]] #.dropna()
 #        gw_data = scen_data["gwlevel"][gauge].dropna()
         
-        try:
-            #TODO: Refactor this to reflect format of data files
-            #If using data, number of observations has to equal GW data
-            salinity_data = scen_data["gwsalinity"][[eco_site]].dropna()
-        except KeyError:
-            #Use default value
-            salinity_data = salinity
+  
+#        try:
+        first = gw_data.index[0]
+        last = gw_data.index[-1]
+            
+        sd = pd.DataFrame(np.nan, index=gw_data.index, columns=['gwsalinity'])
+        gw_sd = scen_data["gwsalinity"][[eco_site]]
         
+#        mask = (sd.index >= first) & (sd.index <= last)
+        sd['gwsalinity'] = gw_sd[(gw_sd.index >= first) & (gw_sd.index <= last)]
+        salinity_data = sd["gwsalinity"]
+#        except KeyError:
+#            #Use default value
+#            salinity_data = salinity
+        #End try
+                    
 
         ## provide summary of flow and groundwater statistics.
         # gw_mean = self.flowSummary(gw_data, "mean")
@@ -371,8 +380,8 @@ class FlowSuitability(WaterSuitability):
 
             #Assume 10,000 ppm, could be replaced with daily data
 #            temp_gw_data['salinity'] = temp_gw_data['gw_index'] * salinity_data
-
-            temp_gw_data['salinity_index'] = self.calcIndex(salinity_data, salinity_coords)
+            
+            temp_gw_data['salinity_index'] = self.calcIndex(salinity_data*0.64, salinity_coords) # *0.64 to convert salinity from us/cm (in inputs) to ppm (used in index curve)
 
             # weight_for_species = self.weights.loc[species]
             species_flow_events['sw_suitability_index'] = self.calcSWSuitabilityIndex(species_flow_events, species_weights)
@@ -381,7 +390,7 @@ class FlowSuitability(WaterSuitability):
             temp_gw_data['gw_suitability_index'] = self.calcGWSuitabilityIndex(temp_gw_data['gw_index'], temp_gw_data['salinity_index'])
 
             #Adds SW suitability and Water suitability indexes to GW dataframe
-            temp_gw_data = self.calcWaterSuitabilityIndex(temp_gw_data, species_flow_events, gw_weight, sw_weight)
+            temp_gw_data = self.calcWaterSuitabilityIndex(temp_gw_data, species_flow_events, gw_weight, sw_weight, method = gwsw_method)
 
 
             # print flow_events[['start', 'end', 'sw_suitability_index']].head()
