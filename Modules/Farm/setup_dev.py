@@ -37,10 +37,10 @@ FarmDam_params = ParameterSet(
     name='Farm Dam',
     num_years=30,
     storage_capacity_ML=40,
-    storage_cost_per_ML=1000,
+    storage_cost_per_ML=100,
     cost_capital=0,
     pump_vol_ML=0,
-    maintenance_rate=0.005,
+    maintenance_rate=0.02,
     capture_pump_cost_ratio=0.5,
     pump_cost_dollar_per_ML=35,
     ClimateVariables=ParameterSet(surface_evap_rate=0.4)
@@ -56,7 +56,7 @@ Dam_params = ParameterSet(
     storage_cost_per_ML=1000,
     cost_capital=0,
     pump_vol_ML=0,
-    maintenance_rate=0.0,
+    maintenance_rate=0.2,
     capture_pump_cost_ratio=0.0,
     pump_cost_dollar_per_ML=35,
     ClimateVariables=ParameterSet(surface_evap_rate=0.4),
@@ -146,6 +146,13 @@ for folder in crop_data_files:
     #End for
 #End for
 
+crop_seasons = DataHandle.importFiles('Crops/data/seasons', index_col=0, skipinitialspace=True)
+for folder in crop_seasons:
+    for crop_name in crop_seasons[folder]:
+        crop_params[crop_name].season_info = crop_seasons[folder][crop_name] 
+    #End for
+#End for
+
 crop_coefficients = DataHandle.importFiles('Crops/data/coefficients', index_col=0, skipinitialspace=True)
 for folder in crop_coefficients:
     for crop_name in crop_coefficients[folder]:
@@ -159,19 +166,19 @@ for folder in crop_coefficients:
 Light_clay_params = ParameterSet(
     name='Light Clay',
     TAW_mm=172,
-    current_TAW_mm=35
+    current_TAW_mm=86
 )
 
 Clay_loam_params = ParameterSet(
     name='Clay Loam',
     TAW_mm=164,
-    current_TAW_mm=15
+    current_TAW_mm=140
 )
 
 Loam_params = ParameterSet(
     name='Loam',
     TAW_mm=164,
-    current_TAW_mm=10
+    current_TAW_mm=125
 )
 
 MIN_BOUND = 0.3

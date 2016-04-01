@@ -25,7 +25,7 @@ class LpInterface(object):
             ========================  ========================  ========================  ========================
             Field 1, Water Source 1   Field 1, Water Source 2   Field 2, Water Source 1   Field 2, Waater Source 2
             ========================  ========================  ========================  ========================
-            Possible Profit per Ha    Possible Profit per       Possible Profit per Ha    Possible Profit per Ha
+            Possible Profit per Ha    Possible Profit per Ha    Possible Profit per Ha    Possible Profit per Ha
             ========================  ========================  ========================  ========================
 
         b_ub_log_template:

@@ -11,6 +11,8 @@ from scipy.optimize import linprog as lp
 import pandas as pd
 import numpy as np
 
+DEBUG = False
+
 class FarmManager(Component):
 
     """
@@ -79,7 +81,7 @@ class FarmManager(Component):
 
         """
 
-        return crop_water_use_ML * (base_irrigation_efficiency / irrigation_efficiency) 
+        return (crop_water_use_ML * base_irrigation_efficiency) / irrigation_efficiency
         # return crop_water_use_ML / irrigation_efficiency
 
     #End estIrrigationWaterUse()
@@ -248,9 +250,9 @@ class FarmManager(Component):
         field_b_eq = [] #right hand equality constraints for this field
 
         if Irrig.implemented == False:
-            crop_GM = 0
+            crop_profit = 0
         else:
-            crop_GM = Crop.calcGrossMarginsPerHa()
+            crop_profit = Crop.calcGrossMarginsPerHa()
         #End if
 
         est_irrigation_water_ML_per_Ha = self.estIrrigationWaterUse(Crop.water_use_ML_per_Ha, Irrig.irrigation_efficiency, self.base_irrigation_efficiency)
@@ -282,7 +284,7 @@ class FarmManager(Component):
                     pumping_cost_per_Ha = WS.calcGrossPumpingCostsPerHa(flow_rate_Lps, est_irrigation_water_ML_per_Ha, head_pressure=WS.water_level, additional_head=Irrig.head_pressure)
 
                     water_cost_per_Ha = WS.calcWaterCostsPerHa(est_irrigation_water_ML_per_Ha)
-                    # possible_irrigation_area = (water_entitlement/est_irrigation_water_ML_per_Ha)
+
                     possible_irrigation_area = Irrig.calcIrrigationArea(est_irrigation_water_ML_per_Ha, water_entitlement)
 
                     #TODO:
@@ -295,7 +297,7 @@ class FarmManager(Component):
                 #End if
 
                 #Is it sensible to include value of unused water?
-                total_margin = crop_GM #+ saved_water_value_per_Ha + additional_income
+                total_margin = crop_profit #+ saved_water_value_per_Ha + additional_income
                 
             #End if
 
@@ -560,6 +562,12 @@ class FarmManager(Component):
     #End greedyFieldCombinations()
 
     def updateCSWD(self, Field, ETc, effective_rain, RAW):
+
+        """
+        Updates Cumulative Soil Water Deficit.
+        WARNING: Not the same as the function in the Field module, which should be used with caution.
+        """
+
         #Update cumulative Soil Water Deficit
         Field.c_swd = min((Field.c_swd + effective_rain) - ETc, 0)
 
@@ -573,7 +581,7 @@ class FarmManager(Component):
     def calcGrossIrrigationMLPerHa(self, Field, climate_params, soil_params, Crop=None, proportion=None, base_irrigation_efficiency=None):
 
         """
-        WARNING: Currently updates Cumulative Soil Water Deficit
+        WARNING: Currently updates Cumulative Soil Water Deficit (method with side effect)
         """
 
         if 'dryland' in Field.Irrigation.name.lower():
@@ -612,12 +620,13 @@ class FarmManager(Component):
             
         #End if
 
-        print debug_msg
-        print "    c_swd: ", Field.c_swd
-        print "    wd: ", (ETc - effective_rain)
-        print "    nid: ", -nid
-        #print "    WTS: ", water_to_send_mm
-        print "    Sending (mm/Ha)", water_to_send_mm
+        if DEBUG:
+            print debug_msg
+            print "    c_swd: ", Field.c_swd
+            print "    wd: ", (ETc - effective_rain)
+            print "    nid: ", -nid
+            #print "    WTS: ", water_to_send_mm
+            print "    Sending (mm/Ha)", water_to_send_mm
 
 
         water_to_send_ML_Ha = water_to_send_mm / 100
@@ -626,9 +635,12 @@ class FarmManager(Component):
 
 
         if (Field.c_swd > 0.0): #(0.0-nid): #or (Field.c_swd > -nid)
-            print "SWD is above 0 or NID, sending no water"
-            print "    ", Field.c_swd
-            print "    ", nid
+
+            if DEBUG:
+                print "SWD is above 0 or NID, sending no water"
+                print "    ", Field.c_swd
+                print "    ", nid
+            #End if
         #End if
 
         # if Field.c_swd > -nid:
@@ -709,8 +721,7 @@ class FarmManager(Component):
             base_irrigation_efficiency = self.base_irrigation_efficiency
 
         for Field in self.Farm.fields:
-
-            nid = Field.calcNetIrrigationDepth(timestep, base_irrigation_efficiency)
+            nid = Field.calcNetIrrigationDepth(timestep)
             water_to_apply[Field] = self.calcGrossIrrigationMLPerHa(Field, ETc[Field], effective_rain, nid, crop, proportion[Field], base_irrigation_efficiency)
         #End for
 
@@ -792,14 +803,16 @@ class FarmManager(Component):
 
         """
 
-        Uses French-Schultz equation, taken from Oliver et al. 2008
-
-        TODO: Adapt modified version of `French-Schultz <http://www.regional.org.au/au/asa/2008/concurrent/assessing-yield-potential/5827_oliverym.htm/>`_
+        Uses French-Schultz equation, taken from `Oliver et al. 2008 (Equation 1) <http://www.regional.org.au/au/asa/2008/concurrent/assessing-yield-potential/5827_oliverym.htm/>`_
+        
+        Could use the farmer friendly modified version as given in the above.
 
         Represents Readily Available Water - (Crop evapotranspiration * Crop Water Use Efficiency Coefficient)
 
         .. math::
             YP = (SSM + GSR - E) * WUE
+
+        where :math:`GSR` represents the sum of the monthly 
 
         where
 
@@ -823,50 +836,49 @@ class FarmManager(Component):
 
     #End calcPotentialCropYield()
 
-    def calcEffectiveRainfallML(self, timestep, num_events, rainfall, field_area):
+    def calcEffectiveRainfallML(self, timestep, rainfall_data, field_area, winter_months=[6,7,8]):
 
         """
-        Calculates effective rainfall (in ML) over the Field area
-        Assumes uniform distribution of rainfall
+        Calculate effective rainfall in ML
 
-        :param timestep: Current time step
-        :param num_events: Number of rainfall events
-        :param rainfall: Total rainfall that occured within time step
-        :param field_area: Area
         """
 
         #All rainfall in winter months are considered effective
-        e_rainfall = self.calcEffectiveRainfallmm(timestep, num_events, rainfall)
+        e_rainfall = self.calcEffectiveRainfallmm(timestep, rainfall_data, winter_months)
 
         return (e_rainfall / 100) * field_area
     #End calcEffectiveRainfallML()
 
-    def calcEffectiveRainfallmm(self, timestep, num_events, rainfall):
+    def calcEffectiveRainfallmm(self, timestep, rainfall_data, winter_months):
         """
         Calculate effective rainfall in mm
 
         All rainfall in winter months is considered to be effective (June - August).
 
         Effective daily rainfall in other months is considered to be
-        :math:`E_{p} = P - 5, E_{p} >= 0.0`
+        :math:`E_{p} = max{P - 5, 0}`
 
-        Therefore, by receiving the total rainfall within a timestep, we subtract (5 * number of events)
+        Therefore, for each rainfall event within the given timestep we apply the above:
 
-        :math:`E_{p} = P - (5*n), E_{p} >= 0.0, n =` Number of Rainfall events
+        :math:`E_{p} = { \sum_{t=1}^{m}(P) if month is June to August, or \sum_{t=1}^{m}(max{P - 5, 0}) if other months`
 
         :param timestep: Current time step
-        :param num_events: Number of rainfall events
-        :param rainfall: Total rainfall that occured within time step
+        :param rainfall_data: Rainfall data for timestep
+        :param winter_months: List of month numbers to consider as winter
 
         """
-        #All rainfall in winter months are considered effective
+
         month = timestep.month
-        e_rainfall = (rainfall - (5.0*num_events)) if month not in [6, 7, 8] else rainfall
-        e_rainfall = e_rainfall if e_rainfall >= 0.0 else 0.0
 
-        return e_rainfall
-    #End calcEffectiveRainfallmm
+        #Calculate effective rainfall
+        if month not in winter_months:
+            rainfall_data = rainfall_data - 5
+            rainfall_data.loc[rainfall_data < 0] = 0
+        #End if
 
+        return rainfall_data.sum()
+
+    #End calcEffectiveRainfallmm()
 
     def setFieldComponentStatus(self, row, ignore_efficiency=False):
 

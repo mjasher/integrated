@@ -1,6 +1,7 @@
 #WaterStorage.py
+from integrated.Modules.Farm.Farms.FarmComponent import FarmComponent
 
-class WaterStore(object):
+class WaterStore(FarmComponent):
 
     """
     Defines a water store
@@ -12,7 +13,7 @@ class WaterStore(object):
         name: name of Water Storage Practice
         storage_capacity_ML: Storage capacity in ML
         storage_cost_per_ML: Cost of storage per ML
-        cost_capital: How much it costs to change to this storage type
+        cost_capital: How much it costs to change to this storage type (total implementation cost)
         maintenance_rate: cost of maintenance for this storage type
         pump_cost_dollar_per_ML: how much it costs to pump water = $35
         discount_rate: Rate at which future returns have to be decreased by to be comparable with present value; 7 percent
@@ -21,12 +22,14 @@ class WaterStore(object):
         self.name = kwargs.pop('name', 'Farm Dam')
         self.num_years = kwargs.pop('num_years', 30)
         self.storage_capacity_ML = kwargs.pop('storage_capacity_ML', 200)
+        self.stored_water_vol_ML = kwargs.pop('water_vol_ML', 200)
         self.storage_cost_per_ML = kwargs.pop('storage_cost_per_ML', 1000)
         self.cost_capital = kwargs.pop('cost_capital', 0)
         self.maintenance_rate = kwargs.pop('maintenance_rate', 0.005)
         self.capture_pump_cost_ratio = kwargs.pop('capture_pump_cost_ratio', 0.5)
         self.pump_cost_dollar_per_ML = kwargs.pop('pump_cost_dollar_per_ML', 35)
         self.discount_rate = kwargs.pop('discount_rate', 0.07)
+        self.implemented = kwargs.pop('implemented', False)
 
         self.WaterSources = kwargs.pop('WaterSources', None)
         self.ClimateVariables = kwargs.pop('ClimateVariables', None)
@@ -40,9 +43,11 @@ class WaterStore(object):
         #End For
 
         self.default_waterstores = {}
-        for key, value in self.WaterSources.__dict__.iteritems():
-            self.default_waterstores[key] = value
-        #End for
+        if self.WaterSources is not None:
+            for key, value in self.WaterSources.__dict__.iteritems():
+                self.default_waterstores[key] = value
+            #End for
+        #End if
 
         self.default_climatevariables = {}
         for key, value in self.ClimateVariables.__dict__.iteritems():
@@ -159,6 +164,15 @@ class WaterStore(object):
 
         return maintenance_cost
     #End calcMaintenanceCosts()
+
+    def calcTotalCostsPerHa(self, farm_area):
+
+        if self.implemented is True:
+            return (self.calcMaintenanceCosts(self.storage_capacity_ML) / farm_area)
+        else:
+            return (self.calcMaintenanceCosts(self.storage_capacity_ML) + self.calcTotalCapitalCosts() ) / farm_area
+        #End if
+    #End calcTotalCostsPerHa()
 
     def calcOngoingCosts(self):
 

@@ -49,7 +49,7 @@ class WaterSources(FarmComponent):
         :param additional_head: Additional head pressure, typically factored in from the implemented irrigation system
         :param pump_efficiency: Efficiency of pump. Defaults to 0.7 (70%)
         :param derating: Accounts for efficiency losses between the energy required at the pump shaft and the total energy required. Defaults to 1
-        :param fuel_per_Kw: Amount of fuel (in litres) required for a Kilowatt hour. Defaults to 0.25L for diesel.
+        :param fuel_per_Kw: Amount of fuel (in litres) required for a Kilowatt hour. Defaults to 0.25L for diesel (Robinson 2002).
         :param fuel_price_per_Litre: Price of fuel per Litre, defaults to 1.25
 
         See 
