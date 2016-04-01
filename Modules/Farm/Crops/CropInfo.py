@@ -1,6 +1,7 @@
 from __future__ import division
 import copy
 import pandas as pd
+import numpy as np
 from datetime import datetime
 
 from integrated.Modules.Core.IntegratedModelComponent import Component
@@ -48,6 +49,15 @@ class CropInfo(Component):
         self.water_need_satisfied = 0.0
         self.planted = False
 
+        #Count number of seasons it has been in rotation
+        self.rotation_count = 0
+
+
+        # self.plant_date = plant_date #Estimated season start
+
+        #also set, but not here
+        #season_info
+
         #Set all other kwargs as class attributes
         for key, value in kwargs.items():
             setattr(self, key, copy.deepcopy(value))
@@ -71,14 +81,10 @@ class CropInfo(Component):
 
     #End updateWaterNeedsSatisfied()
 
-    def getCurrentStageCoef(self, timestep):
+    def _preparePlantingInfo(self, timestep):
 
         """
-        Get crop coefficient for current stage of crop development as indicated by the timestep
-        TODO: Not sure if this method will be used
-
-        :param timestep: Date Object representing current timestep
-        :returns: Coefficient for the development stage of plant
+        Modifies planting dataframe for queries
         """
 
         year = timestep.year
@@ -88,34 +94,120 @@ class CropInfo(Component):
         #Prepend year to each crop coefficient entry
         temp_df['temp_dt'] = "{y}-".format(y=year)+temp_df['Month-Day'].astype(str)
 
-        coef = temp_df[(pd.to_datetime(temp_df['temp_dt']) <= timestep)]['Coefficient']
+        return temp_df
+    #End _preparePlantingInfo()
 
-        if len(coef) == 0:
-            return 0.0
-        
-        #Return the coefficient for the given timestep
-        return temp_df[(pd.to_datetime(temp_df['temp_dt']) <= timestep)]['Coefficient'][0]
-        
-    #End getCurrentStageCoef()
+    def _prepareSeasonInfo(self, timestep, val_type="Best Guess"):
 
-    def harvest(self, timestep):
-        temp_df = self.planting_info.copy()
+        temp_df = self.season_info.copy()
 
-        year = timestep.year
+        #Remove all non-numeric columns
+        temp_df = temp_df.select_dtypes(include=[np.number])
+        assert len(temp_df) > 0, "No seasonal crop growth information found"
 
-        #Prepend year to each crop coefficient entry
-        temp_df['temp_dt'] = "{y}-".format(y=year)+temp_df['Month-Day'].astype(str)
+        #Cumulatively sum all rows
+        temp_df = temp_df.cumsum(axis=1)
 
-        # harvest_time = pd.to_datetime(temp_df['temp_dt']['harvest'])
-        harvest_time = pd.to_datetime(temp_df.loc['harvest', 'temp_dt']).date()
+        return temp_df
+    #End _prepareSeasonInfo()
 
-        print timestep
-        print harvest_time
+    def getCurrentStage(self, timestep, val_type="Best Guess"):
 
-        if timestep >= harvest_time: #harvest_time.date():
-            return True
+        try:
+            season_info = self.prepped_season_info
+        except AttributeError:
+            season_info = self._prepareSeasonInfo(timestep, val_type)
+            self.prepped_season_info = season_info
+        #End try
 
-        return False
+        days_from_season_start = ((pd.to_datetime(timestep) - self.plant_date) / np.timedelta64(1, 'D')).astype(int)
+
+        temp = (days_from_season_start <= season_info).loc[val_type, :]
+
+        try:
+            stage = temp[temp == True].index[0].lower()
+        except IndexError:
+            #Gone past seasonal growth stages, (past 'late'/'harvest' date)
+            stage = temp.index[-1].lower()
+
+        return stage
+    #End getCurrentStage()
+
+    def getStageCoef(self, timestep, coef_name, val_type="Best Guess"):
+
+        stage = self.getCurrentStage(timestep, val_type)
+
+        pi = self.planting_info
+        coef = pi.loc[pi.index.str.lower() == stage, coef_name]
+
+        assert len(coef) >= 1, "Plant coefficient not found"
+
+        return coef.iloc[0]
+    #End getStageCoef()
+
+    def getCurrentStageDepletionCoef(self, timestep, val_type="Best Guess"):
+
+        """
+        Get Plant Depletion Coefficient for current stage
+        """
+
+        assert self.plant_date != None, "Plant date not set!"
+
+        return self.getStageCoef(timestep, "Depletion Fraction", val_type)
+    #End getCurrentStageDepletionCoef()
+
+    def getCurrentStageCropCoef(self, timestep, val_type="Best Guess"):
+        """
+        Get current stage crop coefficient (:math:`Kc`)
+        """
+        return self.getStageCoef(timestep, "Crop Coefficient", val_type)
+    #End getCurrentStageCropCoef()
+
+    # def getCurrentStageRootDepth(self, timestep, val_type="Best Guess"):
+    #     return self.getStageCoef(timestep, "Root Depth", val_type)
+    # #End getCurrentStageRootDepth()
+
+    def getSeasonStart(self, timestep):
+
+        # temp_df = self._preparePlantingInfo(timestep)
+        # #Return datetime of season start
+        # return temp_df.iloc[0]['temp_dt']
+
+        return "{y}-{md}".format(y=timestep.year, md=self.plant_date)
+
+    #End getSeasonStart()
+
+    def getNextStageDate(self, timestep):
+
+        temp_df = self._preparePlantingInfo(timestep)
+
+        return temp_df[(pd.to_datetime(temp_df['temp_dt']) > timestep)]['temp_dt'][0]
+    #End getNextStageDate()
+
+    def getSeasonStartRange(self, timestep, step, format='%Y-%m-%d'):
+
+        """
+        Gets the season start date and the next timestep datetime for a crop. 
+        """
+
+        start = "{y}-{md}".format(y=timestep.year, md=self.season_info.loc["Best Guess", "plant_date"])
+        end = pd.to_datetime(datetime.strptime(start, format) + pd.Timedelta(days=step))
+
+        return start, end
+    #End getSeasonStartRange
+
+    def harvest(self, timestep, val_type='Best Guess'):
+
+        try:
+            season_info = self.prepped_season_info
+        except AttributeError:
+            season_info = self._prepareSeasonInfo(timestep, val_type) #season info with cumulatively summed growth stages
+            self.prepped_season_info = season_info
+        #End try
+
+        days_from_season_start = ((pd.to_datetime(timestep) - self.plant_date) / np.timedelta64(1, 'D')).astype(int)
+
+        return days_from_season_start >= season_info.loc[val_type, 'Harvest']
 
     #End harvest
 
@@ -159,9 +251,26 @@ class CropInfo(Component):
         if price_per_yield is None:
             price_per_yield = self.price_per_yield
 
-        return (self.calcTotalCropGrossMarginsPerHa(yield_per_Ha, price_per_yield) / self.water_use_ML_per_Ha)
+        return self.calcTotalCropGrossMarginsPerHa(yield_per_Ha, price_per_yield)
 
     #End calcGrossMarginsML()
+
+    def calcGrossMarginsPerMLHa(self, yield_per_Ha=None, price_per_yield=None):
+
+        """
+        Calculate $/ML/Ha 
+        :returns: Dollar value per MegaLitre, per Hectare
+        """
+
+        if yield_per_Ha is None:
+            yield_per_Ha = self.yield_per_Ha
+
+        if price_per_yield is None:
+            price_per_yield = self.price_per_yield
+
+        return (self.calcTotalCropGrossMarginsPerHa(yield_per_Ha, price_per_yield) / self.water_use_ML_per_Ha)
+
+    #End calcGrossMarginsMLHa()
 
     def calcTotalCropGrossMargin(self, land_used_Ha, yield_per_Ha, price_per_yield):
 
@@ -181,5 +290,21 @@ class CropInfo(Component):
         return total_crop_gross_margin
 
     #End calcTotalFarmGrossMargin()
+
+    def determineCropCoefficient(self):
+
+        """
+        From Doorenbos & Pruitt 1992, Crop water requirements
+
+        1. Determine the planting/sowing date (from local input or data regarding similar climatic zones)
+        2. Determine the growing season length, and the length of crop development stages
+        3. To calculate initial Kc, predict the irrigation and/or rainfall frequency. If predetermined ETo values are available, use
+           Figure 6 (see Page 38) and plot initial Kc values as shown in Figure 7 (see Page 39)
+        4. For the mid-season stage, select Kc value from Table 21 (see Page 40) and plot as a straight line
+        5. Crop has reached full maturity (or ready for harvest within a few days).
+           Select Kc value from Table 21 (Page 41) for climate conditions (need wind and relative humidity data). Here we make assumptions.
+           Assume straight line from mid-season to end of growing season
+        6. Can also assume straight line between end of initial stage to start of mid-season stage.
+        """
 
 #End class
