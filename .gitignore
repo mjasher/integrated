@@ -94,3 +94,5 @@ target/
 *.out
 *.synctex.gz
 *.csv
+*.ipynb
+*.doctree

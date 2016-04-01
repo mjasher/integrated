@@ -28,6 +28,38 @@ integrated.Modules.Ecology.PlatypusFlow module
     :undoc-members:
     :show-inheritance:
 
+integrated.Modules.Ecology.PlatypusFlow_BACKUP_5384 module
+----------------------------------------------------------
+
+.. automodule:: integrated.Modules.Ecology.PlatypusFlow_BACKUP_5384
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+integrated.Modules.Ecology.PlatypusFlow_BASE_5384 module
+--------------------------------------------------------
+
+.. automodule:: integrated.Modules.Ecology.PlatypusFlow_BASE_5384
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384 module
+---------------------------------------------------------
+
+.. automodule:: integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384 module
+----------------------------------------------------------
+
+.. automodule:: integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 integrated.Modules.Ecology.WaterSuitability module
 --------------------------------------------------
 

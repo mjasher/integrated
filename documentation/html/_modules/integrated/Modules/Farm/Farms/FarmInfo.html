@@ -241,7 +241,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate required amount of water to be applied in ML per Ha</span>
 <span class="sd">        NOTE: This is calculated for each irrigation strategy</span>
-<span class="sd">        returns (dict)</span>
+
+<span class="sd">        :return type: Dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">target_crop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crops</span><span class="p">[</span><span class="n">crop_name</span><span class="p">]</span>
@@ -310,7 +311,7 @@
 
         <span class="k">return</span> <span class="n">irrigation_area</span></div>
 
-    <span class="c1">#End calcWaterStoreIrrigationArea()</span>
+    <span class="c1">#End calcIrrigationAreas()</span>
 
 <div class="viewcode-block" id="FarmInfo.calcIrrigationCapitalCosts"><a class="viewcode-back" href="../../../../../integrated.Modules.Farm.Farms.html#integrated.Modules.Farm.Farms.FarmInfo.FarmInfo.calcIrrigationCapitalCosts">[docs]</a>    <span class="k">def</span> <span class="nf">calcIrrigationCapitalCosts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrigation_area</span><span class="p">,</span> <span class="n">irrigation_name</span><span class="p">):</span>
 
@@ -577,7 +578,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-02-16.
+      Last updated on 2016-02-26.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>

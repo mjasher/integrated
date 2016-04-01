@@ -329,11 +329,12 @@
 
         <span class="c1">#Get GW level data with datetime</span>
         <span class="n">gw_data</span> <span class="o">=</span> <span class="n">scen_data</span><span class="p">[</span><span class="s2">&quot;gwlevel&quot;</span><span class="p">][[</span><span class="s2">&quot;A{a}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">asset_id</span><span class="o">+</span><span class="mi">1</span><span class="p">)]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="c1">#        gw_data = scen_data[&quot;gwlevel&quot;][gauge].dropna()</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="c1">#TODO: Refactor this to reflect format of data files</span>
             <span class="c1">#If using data, number of observations has to equal GW data</span>
-            <span class="n">salinity_data</span> <span class="o">=</span> <span class="n">scen_data</span><span class="p">[</span><span class="s2">&quot;salinity&quot;</span><span class="p">]</span>
+            <span class="n">salinity_data</span> <span class="o">=</span> <span class="n">scen_data</span><span class="p">[</span><span class="s2">&quot;gw_salinity&quot;</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="c1">#Use default value</span>
             <span class="n">salinity_data</span> <span class="o">=</span> <span class="n">salinity</span>
@@ -617,7 +618,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-02-16.
+      Last updated on 2016-02-26.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>

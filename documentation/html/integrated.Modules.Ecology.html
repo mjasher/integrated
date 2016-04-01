@@ -293,15 +293,100 @@ Date, flow_index</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-integrated.Modules.Ecology.PlatypusFlow">
-<span id="integrated-modules-ecology-platypusflow-module"></span><h2>integrated.Modules.Ecology.PlatypusFlow module<a class="headerlink" href="#module-integrated.Modules.Ecology.PlatypusFlow" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="integrated-modules-ecology-platypusflow-module">
+<h2>integrated.Modules.Ecology.PlatypusFlow module<a class="headerlink" href="#integrated-modules-ecology-platypusflow-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="integrated-modules-ecology-platypusflow-backup-5384-module">
+<h2>integrated.Modules.Ecology.PlatypusFlow_BACKUP_5384 module<a class="headerlink" href="#integrated-modules-ecology-platypusflow-backup-5384-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-integrated.Modules.Ecology.PlatypusFlow_BASE_5384">
+<span id="integrated-modules-ecology-platypusflow-base-5384-module"></span><h2>integrated.Modules.Ecology.PlatypusFlow_BASE_5384 module<a class="headerlink" href="#module-integrated.Modules.Ecology.PlatypusFlow_BASE_5384" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="integrated.Modules.Ecology.PlatypusFlow.PlatypusFlow">
-<em class="property">class </em><code class="descname">PlatypusFlow</code><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow.html#PlatypusFlow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow.PlatypusFlow" title="Permalink to this definition">¶</a></dt>
+<dt id="integrated.Modules.Ecology.PlatypusFlow_BASE_5384.PlatypusFlow">
+<em class="property">class </em><code class="descname">PlatypusFlow</code><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow_BASE_5384.html#PlatypusFlow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow_BASE_5384.PlatypusFlow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability" title="integrated.Modules.Ecology.FlowSuitability.FlowSuitability"><code class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Ecology.FlowSuitability.FlowSuitability</span></code></a></p>
 <dl class="method">
-<dt id="integrated.Modules.Ecology.PlatypusFlow.PlatypusFlow.calcLowFlowIndex">
-<code class="descname">calcLowFlowIndex</code><span class="sig-paren">(</span><em>yearly_flow_data</em>, <em>flow_col</em>, <em>summer_low_thd</em>, <em>winter_low_thd</em>, <em>summer_index_thd</em>, <em>winter_index_thd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow.html#PlatypusFlow.calcLowFlowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow.PlatypusFlow.calcLowFlowIndex" title="Permalink to this definition">¶</a></dt>
+<dt id="integrated.Modules.Ecology.PlatypusFlow_BASE_5384.PlatypusFlow.calcLowFlowIndex">
+<code class="descname">calcLowFlowIndex</code><span class="sig-paren">(</span><em>yearly_flow_data</em>, <em>flow_col</em>, <em>summer_low_thd</em>, <em>winter_low_thd</em>, <em>summer_index_thd</em>, <em>winter_index_thd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow_BASE_5384.html#PlatypusFlow.calcLowFlowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow_BASE_5384.PlatypusFlow.calcLowFlowIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate low flow index:
+1.      Identify climate condition of the input scenario (dry, average or wet) (TO DO, FOR TOY MODEL JUST USE AS AN INPUT)
+2.      Extract summer and winter low flow thresholds based on climate condition, as per table below:</p>
+<blockquote>
+<div><blockquote>
+<div>Summer_low      Winter_low</div></blockquote>
+<p>Month   Dec-May Jun-Nov
+Dry climate     &gt;= 10 ML/day    &gt;=50 ML/day
+Average climate &gt;= 20 ML/day    &gt;= 100 ML/day
+Wet climate     &gt;= 50 ML/day    &gt;= 200 ML/day
+Minimum days     150 days       150 days</p>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>For each year calculate the number of days between 1st Dec and 31st May that flow is &gt;= summer low flow threshold, and the number of days between 1st Jun and 30st Nov that flow is &gt;= winter low flow threshold.</li>
+<li>For each year, if the minimum days for summer AND winter low flows are met, then low flow index for platypus = 1, else, index = 0.</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>yearly_flow_data</strong> &#8211; Pandas dataframe of daily flow data for the given year in ML/Day</li>
+<li><strong>flow_col</strong> &#8211; Name of flow data column</li>
+<li><strong>summer_low_thd</strong> &#8211; flow threshold (in ML/day) above which summer low flow requirememnt is  satisfied</li>
+<li><strong>winter_low_thd</strong> &#8211; flow threshold (in ML/day) above which winter low flow requirement is satisfied</li>
+<li><strong>summer_index_thd</strong> &#8211; a threshold (in days) above which the number of days summer low are satisfied</li>
+<li><strong>winter_index_thd</strong> &#8211; a threshold (in days) above which the number of days summer low are satisfied</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">lowflow index with a value of 0 or 1.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.PlatypusFlow_BASE_5384.PlatypusFlow.calcBurrowIndex">
+<code class="descname">calcBurrowIndex</code><span class="sig-paren">(</span><em>yearly_flow_data</em>, <em>flow_col</em>, <em>burrow_startmonth</em>, <em>burrow_endmonth</em>, <em>entrance_buffer</em>, <em>breeding_startmonth</em>, <em>breeding_endmonth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow_BASE_5384.html#PlatypusFlow.calcBurrowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow_BASE_5384.PlatypusFlow.calcBurrowIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given specs:
+1. Within each burrowing season window (1 July-31 Aug), identify max flow level (ML/day).       
+2. Calculate the platypus flow benchmark for this season: benchmark = max flow (ML/day) + burrow buffer (x ML/day). x ranges from 0 to a certain positive number to account for platypus barrow a little above the max flow.
+3. Following each burrowing season, scan the breeding season (1st Sep-28th Feb), events are identified if flow reaches above the benchmark. 
+4. The longest event is used to calculate burrow flood index. If the duration of the duration is below or equal 1 days, the index is 1 (indicating the event is fine for platypus); if the duration is between 2-3 days, the index is 0.5, indicating a lower preference due to risk of drowning; if duration is 4 days or above, the index value is zero indicating the worst outcome for platypus due to flooding of the burrows.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>yearly_flow_data</strong> &#8211; Pandas dataframe of daily flow data for the given year in ML/Day</li>
+<li><strong>flow_col</strong> &#8211; Name of flow data column</li>
+<li><strong>burrow_startmonth</strong> &#8211; the starting month of platypus burrowing period</li>
+<li><strong>burrow_endmonth</strong> &#8211; the end month of platypus burrowing period,</li>
+<li><strong>entrance_buffer</strong> &#8211; some buffer (ML/day) to add to max flow, allowing burrow entrance to be slightly higher than the max flow level</li>
+<li><strong>breeding_startmonth</strong> &#8211; the starting month of platypus breeding period</li>
+<li><strong>breeding_endmonth</strong> &#8211; the ending month of platypus breeding period</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">burrow index with a value of 0 or 1</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384">
+<span id="integrated-modules-ecology-platypusflow-local-5384-module"></span><h2>integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384 module<a class="headerlink" href="#module-integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384.PlatypusFlow">
+<em class="property">class </em><code class="descname">PlatypusFlow</code><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow_LOCAL_5384.html#PlatypusFlow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384.PlatypusFlow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability" title="integrated.Modules.Ecology.FlowSuitability.FlowSuitability"><code class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Ecology.FlowSuitability.FlowSuitability</span></code></a></p>
+<dl class="method">
+<dt id="integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384.PlatypusFlow.calcLowFlowIndex">
+<code class="descname">calcLowFlowIndex</code><span class="sig-paren">(</span><em>yearly_flow_data</em>, <em>flow_col</em>, <em>summer_low_thd</em>, <em>winter_low_thd</em>, <em>summer_index_thd</em>, <em>winter_index_thd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow_LOCAL_5384.html#PlatypusFlow.calcLowFlowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384.PlatypusFlow.calcLowFlowIndex" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate low flow index:</p>
 <ol class="arabic">
 <li><p class="first">Identify climate condition of the input scenario (dry, average or wet) (TO DO, FOR TOY MODEL JUST USE AS AN INPUT)</p>
@@ -370,10 +455,89 @@ Date, flow_index</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="integrated.Modules.Ecology.PlatypusFlow.PlatypusFlow.calcBurrowIndex">
-<code class="descname">calcBurrowIndex</code><span class="sig-paren">(</span><em>yearly_flow_data</em>, <em>flow_col</em>, <em>burrow_startmonth</em>, <em>burrow_endmonth</em>, <em>entrance_buffer</em>, <em>breeding_startmonth</em>, <em>breeding_endmonth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow.html#PlatypusFlow.calcBurrowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow.PlatypusFlow.calcBurrowIndex" title="Permalink to this definition">¶</a></dt>
+<dt id="integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384.PlatypusFlow.calcBurrowIndex">
+<code class="descname">calcBurrowIndex</code><span class="sig-paren">(</span><em>yearly_flow_data</em>, <em>flow_col</em>, <em>burrow_startmonth</em>, <em>burrow_endmonth</em>, <em>entrance_buffer</em>, <em>breeding_startmonth</em>, <em>breeding_endmonth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow_LOCAL_5384.html#PlatypusFlow.calcBurrowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384.PlatypusFlow.calcBurrowIndex" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given specs:
 1. Within each burrowing season window (1 July-31 Aug), identify max flow level (ML/day).   
+2. Calculate the platypus flow benchmark for this season: benchmark = max flow (ML/day) + burrow buffer (x ML/day). x ranges from 0 to a certain positive number to account for platypus barrow a little above the max flow.
+3. Following each burrowing season, scan the breeding season (1st Sep-28th Feb), events are identified if flow reaches above the benchmark. 
+4. The longest event is used to calculate burrow flood index. If the duration of the duration is below or equal 1 days, the index is 1 (indicating the event is fine for platypus); if the duration is between 2-3 days, the index is 0.5, indicating a lower preference due to risk of drowning; if duration is 4 days or above, the index value is zero indicating the worst outcome for platypus due to flooding of the burrows.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>yearly_flow_data</strong> &#8211; Pandas dataframe of daily flow data for the given year in ML/Day</li>
+<li><strong>flow_col</strong> &#8211; Name of flow data column</li>
+<li><strong>burrow_startmonth</strong> &#8211; the starting month of platypus burrowing period</li>
+<li><strong>burrow_endmonth</strong> &#8211; the end month of platypus burrowing period,</li>
+<li><strong>entrance_buffer</strong> &#8211; some buffer (ML/day) to add to max flow, allowing burrow entrance to be slightly higher than the max flow level</li>
+<li><strong>breeding_startmonth</strong> &#8211; the starting month of platypus breeding period</li>
+<li><strong>breeding_endmonth</strong> &#8211; the ending month of platypus breeding period</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">burrow index with a value of 0 or 1</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384">
+<span id="integrated-modules-ecology-platypusflow-remote-5384-module"></span><h2>integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384 module<a class="headerlink" href="#module-integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384.PlatypusFlow">
+<em class="property">class </em><code class="descname">PlatypusFlow</code><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow_REMOTE_5384.html#PlatypusFlow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384.PlatypusFlow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Ecology.FlowSuitability.FlowSuitability" title="integrated.Modules.Ecology.FlowSuitability.FlowSuitability"><code class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Ecology.FlowSuitability.FlowSuitability</span></code></a></p>
+<dl class="method">
+<dt id="integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384.PlatypusFlow.calcLowFlowIndex">
+<code class="descname">calcLowFlowIndex</code><span class="sig-paren">(</span><em>yearly_flow_data</em>, <em>flow_col</em>, <em>summer_low_thd</em>, <em>winter_low_thd</em>, <em>summer_index_thd</em>, <em>winter_index_thd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow_REMOTE_5384.html#PlatypusFlow.calcLowFlowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384.PlatypusFlow.calcLowFlowIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate low flow index:
+1.      Identify climate condition of the input scenario (dry, average or wet) (TO DO, FOR TOY MODEL JUST USE AS AN INPUT)
+2.      Extract summer and winter low flow thresholds based on climate condition, as per table below:</p>
+<blockquote>
+<div><blockquote>
+<div>Summer_low      Winter_low</div></blockquote>
+<p>Month   Dec-May Jun-Nov
+Dry climate     &gt;= 10 ML/day    &gt;=50 ML/day
+Average climate &gt;= 20 ML/day    &gt;= 100 ML/day
+Wet climate     &gt;= 50 ML/day    &gt;= 200 ML/day
+Minimum days     150 days       150 days</p>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>For each year calculate the number of days between 1st Dec and 31st May that flow is &gt;= summer low flow threshold, and the number of days between 1st Jun and 30st Nov that flow is &gt;= winter low flow threshold.</li>
+<li>For each year, if the minimum days for summer AND winter low flows are met, then low flow index for platypus = 1, else, index = 0.</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>yearly_flow_data</strong> &#8211; Pandas dataframe of daily flow data for the given year in ML/Day</li>
+<li><strong>flow_col</strong> &#8211; Name of flow data column</li>
+<li><strong>summer_low_thd</strong> &#8211; flow threshold (in ML/day) above which summer low flow requirememnt is  satisfied</li>
+<li><strong>winter_low_thd</strong> &#8211; flow threshold (in ML/day) above which winter low flow requirement is satisfied</li>
+<li><strong>summer_index_thd</strong> &#8211; a threshold (in days) above which the number of days summer low are satisfied</li>
+<li><strong>winter_index_thd</strong> &#8211; a threshold (in days) above which the number of days summer low are satisfied</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">lowflow index with a value of 0 or 1.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384.PlatypusFlow.calcBurrowIndex">
+<code class="descname">calcBurrowIndex</code><span class="sig-paren">(</span><em>yearly_flow_data</em>, <em>flow_col</em>, <em>burrow_startmonth</em>, <em>burrow_endmonth</em>, <em>entrance_buffer</em>, <em>breeding_startmonth</em>, <em>breeding_endmonth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/PlatypusFlow_REMOTE_5384.html#PlatypusFlow.calcBurrowIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384.PlatypusFlow.calcBurrowIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given specs:
+1. Within each burrowing season window (1 July-31 Aug), identify max flow level (ML/day).       
 2. Calculate the platypus flow benchmark for this season: benchmark = max flow (ML/day) + burrow buffer (x ML/day). x ranges from 0 to a certain positive number to account for platypus barrow a little above the max flow.
 3. Following each burrowing season, scan the breeding season (1st Sep-28th Feb), events are identified if flow reaches above the benchmark. 
 4. The longest event is used to calculate burrow flood index. If the duration of the duration is below or equal 1 days, the index is 1 (indicating the event is fine for platypus); if the duration is between 2-3 days, the index is 0.5, indicating a lower preference due to risk of drowning; if duration is 4 days or above, the index value is zero indicating the worst outcome for platypus due to flooding of the burrows.</p>
@@ -574,99 +738,19 @@ Date, water_index</p>
 </div>
 <div class="section" id="module-integrated.Modules.Ecology.baihua_example">
 <span id="integrated-modules-ecology-baihua-example-module"></span><h2>integrated.Modules.Ecology.baihua_example module<a class="headerlink" href="#module-integrated.Modules.Ecology.baihua_example" title="Permalink to this headline">¶</a></h2>
-<p>Example class structure</p>
-<dl class="class">
-<dt id="integrated.Modules.Ecology.baihua_example.Ecological">
-<em class="property">class </em><code class="descname">Ecological</code><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Ecological"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Ecological" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
-<p>Documentation example</p>
-<p>flow sequence</p>
-<p>flood attributes</p>
-<p>weightings</p>
-<dl class="docutils">
-<dt>For each:</dt>
-<dd><p class="first">duration</p>
-<p class="last">time</p>
-</dd>
-</dl>
-<p>inter_flood dry period</p>
-<blockquote>
-<div><p>calculate an index</p>
-<p>and weighting based on preferences</p>
-</div></blockquote>
-<p>Range of CTF</p>
-<dl class="docutils">
-<dt>SW:</dt>
-<dd><p class="first">gw level
-salinity</p>
-<p>calculate curves and index for gw and salinity</p>
-<p class="last">calculate suitability of gw factoring in salinity (adjustment factor)</p>
-</dd>
-<dt>Flow methodology:</dt>
-<dd><p class="first">Rules based on environmental flow definitions (low flow, freshes, etc.) frequency based on percentage</p>
-<p class="last">Calculate # of days</p>
-</dd>
-</dl>
-<dl class="method">
-<dt id="integrated.Modules.Ecology.baihua_example.Ecological.threshold_func1">
-<code class="descname">threshold_func1</code><span class="sig-paren">(</span><em>z1</em>, <em>w1</em>, <em>z2</em>, <em>w2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Ecological.threshold_func1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Ecological.threshold_func1" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="integrated.Modules.Ecology.baihua_example.Ecological.other_threshold">
-<code class="descname">other_threshold</code><span class="sig-paren">(</span><em>z1</em>, <em>w1</em>, <em>z2</em>, <em>w2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Ecological.other_threshold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Ecological.other_threshold" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="integrated.Modules.Ecology.baihua_example.Example">
-<em class="property">class </em><code class="descname">Example</code><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Example"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Example" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
-<dl class="method">
-<dt id="integrated.Modules.Ecology.baihua_example.Example.threshold_func">
-<code class="descname">threshold_func</code><span class="sig-paren">(</span><em>z1</em>, <em>w1</em>, <em>z2</em>, <em>w2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Example.threshold_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Example.threshold_func" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="integrated.Modules.Ecology.baihua_example.Example.determineEcologicalHealth">
-<code class="descname">determineEcologicalHealth</code><span class="sig-paren">(</span><em>list_of_species</em>, <em>ecological_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Example.determineEcologicalHealth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Example.determineEcologicalHealth" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="integrated.Modules.Ecology.baihua_example.Example.speciesHealth">
-<code class="descname">speciesHealth</code><span class="sig-paren">(</span><em>list_of_species</em>, <em>ecological_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Example.speciesHealth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Example.speciesHealth" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="integrated.Modules.Ecology.baihua_example.Example.calcCurves">
-<code class="descname">calcCurves</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#Example.calcCurves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.Example.calcCurves" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="integrated.Modules.Ecology.baihua_example.NewStudyArea">
-<em class="property">class </em><code class="descname">NewStudyArea</code><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#NewStudyArea"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.NewStudyArea" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#integrated.Modules.Ecology.baihua_example.Example" title="integrated.Modules.Ecology.baihua_example.Example"><code class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Ecology.baihua_example.Example</span></code></a></p>
-<dl class="method">
-<dt id="integrated.Modules.Ecology.baihua_example.NewStudyArea.threshold_func">
-<code class="descname">threshold_func</code><span class="sig-paren">(</span><em>z1</em>, <em>w1</em>, <em>z2</em>, <em>w2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#NewStudyArea.threshold_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.NewStudyArea.threshold_func" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="integrated.Modules.Ecology.baihua_example.NewStudyArea.calcDurationCurves">
-<code class="descname">calcDurationCurves</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Ecology/baihua_example.html#NewStudyArea.calcDurationCurves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Ecology.baihua_example.NewStudyArea.calcDurationCurves" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<p>My notes</p>
+<p># to show plots in a seperate window in spyder ipython console:
+%matplotlib qt</p>
+<p># to show plots inline in spyder ipython console:
+%matplotlib inline</p>
+<p># to plot selected columns:
+species_index[&#8216;gw&#8217;].iloc[:,4:].plot()</p>
 </div>
 <div class="section" id="module-integrated.Modules.Ecology.flow_dev">
 <span id="integrated-modules-ecology-flow-dev-module"></span><h2>integrated.Modules.Ecology.flow_dev module<a class="headerlink" href="#module-integrated.Modules.Ecology.flow_dev" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-integrated.Modules.Ecology.platypus_main">
-<span id="integrated-modules-ecology-platypus-main-module"></span><h2>integrated.Modules.Ecology.platypus_main module<a class="headerlink" href="#module-integrated.Modules.Ecology.platypus_main" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="integrated-modules-ecology-platypus-main-module">
+<h2>integrated.Modules.Ecology.platypus_main module<a class="headerlink" href="#integrated-modules-ecology-platypus-main-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-integrated.Modules.Ecology">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-integrated.Modules.Ecology" title="Permalink to this headline">¶</a></h2>
@@ -686,11 +770,15 @@ salinity</p>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Ecology.FLOWS">integrated.Modules.Ecology.FLOWS module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Ecology.FlowSuitability">integrated.Modules.Ecology.FlowSuitability module</a></li>
-<li><a class="reference internal" href="#module-integrated.Modules.Ecology.PlatypusFlow">integrated.Modules.Ecology.PlatypusFlow module</a></li>
+<li><a class="reference internal" href="#integrated-modules-ecology-platypusflow-module">integrated.Modules.Ecology.PlatypusFlow module</a></li>
+<li><a class="reference internal" href="#integrated-modules-ecology-platypusflow-backup-5384-module">integrated.Modules.Ecology.PlatypusFlow_BACKUP_5384 module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Ecology.PlatypusFlow_BASE_5384">integrated.Modules.Ecology.PlatypusFlow_BASE_5384 module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384">integrated.Modules.Ecology.PlatypusFlow_LOCAL_5384 module</a></li>
+<li><a class="reference internal" href="#module-integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384">integrated.Modules.Ecology.PlatypusFlow_REMOTE_5384 module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Ecology.WaterSuitability">integrated.Modules.Ecology.WaterSuitability module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Ecology.baihua_example">integrated.Modules.Ecology.baihua_example module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Ecology.flow_dev">integrated.Modules.Ecology.flow_dev module</a></li>
-<li><a class="reference internal" href="#module-integrated.Modules.Ecology.platypus_main">integrated.Modules.Ecology.platypus_main module</a></li>
+<li><a class="reference internal" href="#integrated-modules-ecology-platypus-main-module">integrated.Modules.Ecology.platypus_main module</a></li>
 <li><a class="reference internal" href="#module-integrated.Modules.Ecology">Module contents</a></li>
 </ul>
 </li>
@@ -742,7 +830,7 @@ salinity</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-02-16.
+      Last updated on 2016-02-26.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>

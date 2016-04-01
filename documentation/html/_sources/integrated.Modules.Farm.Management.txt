@@ -4,6 +4,14 @@ integrated.Modules.Farm.Management package
 Submodules
 ----------
 
+integrated.Modules.Farm.Management.LpInterface module
+-----------------------------------------------------
+
+.. automodule:: integrated.Modules.Farm.Management.LpInterface
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 integrated.Modules.Farm.Management.Manager module
 -------------------------------------------------
 

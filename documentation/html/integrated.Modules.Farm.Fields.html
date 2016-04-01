@@ -83,6 +83,12 @@
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="integrated.Modules.Farm.Fields.Field.FarmField.setSWD">
+<code class="descname">setSWD</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.setSWD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.setSWD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set initial soil water deficit</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="integrated.Modules.Farm.Fields.Field.FarmField.applyWater">
 <code class="descname">applyWater</code><span class="sig-paren">(</span><em>gross_applied_water_ML</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.applyWater"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.applyWater" title="Permalink to this definition">¶</a></dt>
 <dd><p>Puts water on the field</p>
@@ -121,8 +127,14 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="integrated.Modules.Farm.Fields.Field.FarmField.cropWaterUse">
+<code class="descname">cropWaterUse</code><span class="sig-paren">(</span><em>timestep_ETc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.cropWaterUse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.cropWaterUse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract crop water use from cumulative soil water deficit</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="integrated.Modules.Farm.Fields.Field.FarmField.updateCumulativeSWD">
-<code class="descname">updateCumulativeSWD</code><span class="sig-paren">(</span><em>timestep</em>, <em>timestep_ETc</em>, <em>gross_water_applied</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.updateCumulativeSWD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.updateCumulativeSWD" title="Permalink to this definition">¶</a></dt>
+<code class="descname">updateCumulativeSWD</code><span class="sig-paren">(</span><em>gross_water_applied</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.updateCumulativeSWD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.updateCumulativeSWD" title="Permalink to this definition">¶</a></dt>
 <dd><p>Follows calculation method outlined in
 <a class="reference external" href="http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use">http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use</a></p>
 <p>Calculates the Soil Water Deficit based on the amount of water applied, the crop ET for the timestep, and the crop coefficient for its current growth stage</p>
@@ -132,7 +144,6 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>timestep</strong> &#8211; Current Timestep (date) [UNUSED]</li>
 <li><strong>timestep_ETc</strong> &#8211; Crop ET for this timestep (:math:ETc) to be multiplied with Crop ET Coefficient for this timestep</li>
 <li><strong>gross_water_applied</strong> &#8211; Gross amount of water applied to the field in ML</li>
 </ul>
@@ -190,15 +201,18 @@ SWD_i = Rainfall + Irrigation - Crop Water Use</p>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Fields.Field.FarmField.flowPerIrrigation">
-<code class="descname">flowPerIrrigation</code><span class="sig-paren">(</span><em>nid</em>, <em>area</em>, <em>irrigation_efficiency</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.flowPerIrrigation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.flowPerIrrigation" title="Permalink to this definition">¶</a></dt>
-<dd><p>From <a class="reference external" href="http://www.dpi.nsw.gov.au/__data/assets/pdf_file/0006/176694/surface-irrigation-notes.pdf">This 2002 DPI document</a></p>
+<code class="descname">flowPerIrrigation</code><span class="sig-paren">(</span><em>RAW</em>, <em>area</em>, <em>irrigation_efficiency</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.flowPerIrrigation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.flowPerIrrigation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method to determine how much water (volume) needed to irrigate a field.
+Need soil Readily Available Water (RAW). area to be irrigated, and efficiency of supply and field application.
+To determine how much water (volume) you need to irrigate your field</p>
+<p>See page 4 of <a class="reference external" href="http://www.dpi.nsw.gov.au/__data/assets/pdf_file/0006/176694/surface-irrigation-notes.pdf">this 2002 DPI document</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>nid</strong> &#8211; Net Irrigation Depth</li>
-<li><strong>area</strong> &#8211; </li>
+<li><strong>area</strong> &#8211; irrigation area</li>
 </ul>
 </td>
 </tr>
@@ -208,8 +222,9 @@ SWD_i = Rainfall + Irrigation - Crop Water Use</p>
 
 <dl class="method">
 <dt id="integrated.Modules.Farm.Fields.Field.FarmField.irrigationArea">
-<code class="descname">irrigationArea</code><span class="sig-paren">(</span><em>flow</em>, <em>irrigation_efficiency</em>, <em>nid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.irrigationArea"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.irrigationArea" title="Permalink to this definition">¶</a></dt>
-<dd><p>From <a class="reference external" href="http://www.dpi.nsw.gov.au/__data/assets/pdf_file/0006/176694/surface-irrigation-notes.pdf">This DPI document</a></p>
+<code class="descname">irrigationArea</code><span class="sig-paren">(</span><em>water_Litres</em>, <em>irrigation_efficiency</em>, <em>RAW</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Field.html#FarmField.irrigationArea"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Field.FarmField.irrigationArea" title="Permalink to this definition">¶</a></dt>
+<dd><p>If available water volume is known, area that can be irrigated can be determined
+See page 4 of <a class="reference external" href="http://www.dpi.nsw.gov.au/__data/assets/pdf_file/0006/176694/surface-irrigation-notes.pdf">this DPI document</a></p>
 </dd></dl>
 
 </dd></dl>
@@ -219,7 +234,7 @@ SWD_i = Rainfall + Irrigation - Crop Water Use</p>
 <span id="integrated-modules-farm-fields-soil-module"></span><h2>integrated.Modules.Farm.Fields.Soil module<a class="headerlink" href="#module-integrated.Modules.Farm.Fields.Soil" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="integrated.Modules.Farm.Fields.Soil.SoilType">
-<em class="property">class </em><code class="descname">SoilType</code><span class="sig-paren">(</span><em>name</em>, <em>TAW_mm</em>, <em>current_TAW_mm</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Soil.html#SoilType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Soil.SoilType" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">SoilType</code><span class="sig-paren">(</span><em>name</em>, <em>TAW_mm</em>, <em>current_TAW_mm</em>, <em>group=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/integrated/Modules/Farm/Fields/Soil.html#SoilType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#integrated.Modules.Farm.Fields.Soil.SoilType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="integrated.Modules.Core.html#integrated.Modules.Core.IntegratedModelComponent.Component" title="integrated.Modules.Core.IntegratedModelComponent.Component"><code class="xref py py-class docutils literal"><span class="pre">integrated.Modules.Core.IntegratedModelComponent.Component</span></code></a></p>
 <p>Represents soil types</p>
 <dl class="method">
@@ -364,7 +379,7 @@ In winter, all the rainfall is assumed to be effective.</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Takuya Iwanaga.
-      Last updated on 2016-02-16.
+      Last updated on 2016-02-26.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
