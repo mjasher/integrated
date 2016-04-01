@@ -27,7 +27,7 @@ class ParameterSet(object):
         :return type: int
         """
 
-        return len(dir(self))
+        return len(self.__dict__)
     #End numParameters()
 
 

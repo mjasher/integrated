@@ -132,6 +132,8 @@ class Component(object):
         """
         Gets the value of a specific attribute.
 
+        TODO: Refactor to accept arbitrary number of components/sub-components
+
         kwargs are expected in the format as given in setParam()
 
         :param component: object that represents a (store/irrigation/etc)
@@ -183,7 +185,7 @@ class Component(object):
         :return type: int
         """
 
-        return len(dir(self))
+        return len(self.__dict__)
 
     #End getNumParams()
 
