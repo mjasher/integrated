@@ -3,6 +3,8 @@ from __future__ import division
 from scipy.optimize import linprog as lp
 from integrated.Modules.Climate.ClimateVariables import Climate
 
+DEBUG = False
+
 # from scipy.optimize import linprog as lp
 
 # c = [-500, -400, -600, -350]
@@ -194,7 +196,7 @@ if __name__ == "__main__":
 
     storages = [FarmDam(**FarmConfig.FarmDam_params.getParams())]
     #irrigations = [FarmConfig.PipeAndRiser.getCopy(), FarmConfig.Spray.getCopy(), FarmConfig.Flood.getCopy(), FarmConfig.Dryland.getCopy()]
-    irrigations = [FarmConfig.Flood.getCopy()]
+    irrigations = [FarmConfig.Flood.getCopy(), FarmConfig.Dryland.getCopy()]
 
     #crops = [CropInfo(**cp.getParams()) for crop_name, cp in FarmConfig.crop_params.iteritems()]
     crops = [CropInfo(**FarmConfig.crop_params['Irrigated Wheat'].getParams())]
@@ -216,7 +218,7 @@ if __name__ == "__main__":
     fields = [
         FarmField(name='Field A', irrigation=FarmConfig.Flood.getCopy(), area=135, storage=FarmDam.getCopy(), soil=SoilType(**FarmConfig.Loam_params.getParams())),
         # FarmField(name='Field A', irrigation=FarmConfig.Flood.getCopy(), area=88, storage=FarmDam.getCopy(), soil=SoilType(**FarmConfig.Loam_params.getParams())),
-        #FarmField(name='Field B', irrigation=FarmConfig.Spray.getCopy(), area=40, storage=FarmDam.getCopy(), soil=SoilType(**FarmConfig.Light_clay_params.getParams())),
+        # FarmField(name='Field B', irrigation=FarmConfig.Spray.getCopy(), area=40, storage=FarmDam.getCopy(), soil=SoilType(**FarmConfig.Light_clay_params.getParams())),
         # FarmField(name='Field C', irrigation=FarmConfig.PipeAndRiser.getCopy(), area=10, storage=FarmDam.getCopy(), soil=SoilType(**FarmConfig.Clay_loam_params.getParams())),
         # FarmField(name='Field D', irrigation=FarmConfig.Spray.getCopy(), area=10, storage=FarmDam.getCopy(), soil=SoilType(**FarmConfig.Clay_loam_params.getParams()))
     ]
@@ -302,6 +304,7 @@ if __name__ == "__main__":
 
     #End years ahead loop
 
+    #Get best performing configuration
     best_field_config_index = results[n]['total_profit'].idxmax()
 
     Manager.Farm.fields = orig_field_combinations.iloc[best_field_config_index].tolist()
@@ -333,8 +336,19 @@ if __name__ == "__main__":
     #    Generate 'c' each step if irrigations are implemented
     #    Remember, irrigations are not implemented until end of season...
     #
-    step = 7 #days for each timestep
+    step = 14 #days for each timestep
     step_ahead = datetime.timedelta(days=step)
+
+    #TODO: RUN 2ND STEP FOR EACH FIELD COMBINATION
+    """
+    for field_combi in orig_field_combinations.itertuples():
+        Manager.Farm.fields = list(field_combi)[1:]
+
+        #While loop here
+
+    """
+    #Manager.Farm.fields = orig_field_combinations.iloc[best_field_config_index].tolist()
+
 
     results_obs = pd.DataFrame(lp_log[lp_log.index == 0].copy())
 
@@ -342,7 +356,7 @@ if __name__ == "__main__":
     total_effective_rainfall = 0
     total_water_applied = 0
 
-    results = {}
+    long_results = {}
     irrigation_log = {}
     season_counter = 0
     while timestep < end_date:
@@ -352,8 +366,10 @@ if __name__ == "__main__":
 
         current_ts = pd.to_datetime(timestep)
 
-        #Show end date of timestep
-        print "--- Start time step {s}-{e} ---\n".format(s=timestep, e=loop_timestep)
+        if DEBUG:
+            #Show end date of timestep
+            print "--- Start time step {s}-{e} ---\n".format(s=timestep, e=loop_timestep)
+        #End if
         
         timestep_mask = (ClimateData.index >= str(timestep)) & (ClimateData.index < str(loop_timestep))
 
@@ -364,13 +380,14 @@ if __name__ == "__main__":
 
         #Sum of rainfall that occured in this timestep
         total_timestep_rainfall = ClimateData.rainfall[timestep_mask].sum()
+        timestep_rainfall = ClimateData.rainfall[timestep_mask].copy()
         num_rainfall_events = (ClimateData.rainfall[timestep_mask] > 0).sum()
 
         total_field_area = 0
         timestep_pumping_cost = 0
 
-        #TODO - THIS IS TO BE DONE ONCE AT START OF SEASON
-        #Determine areal proportion to be watered by each water source
+        #TODO 
+        #  LP to run once every timestep to determine areal proportion to be watered by each water source
         
         if (Manager.season_started == False) and (current_ts >= pd.to_datetime(str(timestep.year)+"-06-15")):
 
@@ -381,8 +398,10 @@ if __name__ == "__main__":
                     WS.entitlement = 5000
                 else:
                     WS.entitlement = 75
+                #End if
+            #End for
 
-            lp_log, b_ub_log, b_eq_log = Manager.LpInterface.genLogTemplates(len(Manager.Farm.fields), len(Manager.Farm.water_sources), num_field_combinations=1) #1 because we're doing 1 field at a time here
+            lp_log, b_ub_log, b_eq_log = Manager.LpInterface.genLogTemplates(len(Manager.Farm.fields), len(Manager.Farm.water_sources), num_field_combinations=1) #1 because we're doing 1 field at a time here, should be set to number of fields
             memoFieldCombinations(Manager.Farm.fields, Manager.calcFieldCombination, Manager.Farm.water_sources, crop_rotations, lp_log, b_ub_log, b_eq_log, b_ub_memo={}, comp_memo={})
             results_obs = Manager.LpInterface.runLP(results_obs, lp_log, A_ub, b_ub_log, b_eq_log, Manager.Farm.fields, Manager.Farm.water_sources)
             Manager.season_started = True
@@ -413,23 +432,29 @@ if __name__ == "__main__":
                     field_area += results_obs.loc[0, Field.name+" "+WS.name+" Area"]
                 #End for
 
-                print "::: Water Source Proportions: "
+                if DEBUG:
+                    print "::: Water Source Proportions: "
+                #End if
                 water_source_proportion = {}
                 for WS in Manager.Farm.water_sources:
                     water_source_proportion[WS.name] = results_obs.loc[0, Field.name+" "+WS.name+" Area"] / field_area
-                    print WS.name, water_source_proportion[WS.name]
+
+                    if DEBUG:
+                        print WS.name, water_source_proportion[WS.name]
+                    #End if
+
                 #End for
 
-                print "::: Setting stored soil water, 25-30 percent of summer rainfall as in Oliver et al."
+                if DEBUG:
+                    print "::: Setting stored soil water, 25-30 percent of summer rainfall as in Oliver et al."
+                #End if
+
                 season_data = Climate.getSummerRainfall(timestep, data=ClimateData)
 
                 Field.c_swd = -(season_data['rainfall'].sum() * 0.3) #Field.setIniSWD()
 
-                #Field.Soil.current_TAW_mm = (season_data['rainfall'].sum() * 0.3)
-
                 Field.area = field_area
 
-                #TODO: Something about planting dates is stuffing the model up
                 Field.Crop.planted = True
                 Field.season_ended = False
                 Field.Crop.plant_date = current_ts
@@ -446,7 +471,10 @@ if __name__ == "__main__":
             #Or follow crop rotation
 
             if Field.Crop.planted == False:
-                print "Crop not planted!"
+
+                if DEBUG:
+                    print "Crop not planted!"
+                #End if
 
                 #WARNING DIRECT COPY OF THE PROCESS BELOW
                 try:
@@ -483,16 +511,19 @@ if __name__ == "__main__":
             #scaling_coef = (Field.Irrigation.irrigation_efficiency/Manager.base_irrigation_efficiency)
             #crop_water_use = (timestep_ETo * Field.Crop.getCurrentStageDepletionCoef(loop_timestep)) - Manager.calcEffectiveRainfallmm(timestep, total_timestep_rainfall)
 
-            e_rainfall_ML = Manager.calcEffectiveRainfallML(loop_timestep, num_rainfall_events, total_timestep_rainfall, Field.area)
+            e_rainfall_ML = Manager.calcEffectiveRainfallML(loop_timestep, timestep_rainfall, Field.area)
+            #e_rainfall_ML = Manager.calcEffectiveRainfallML(loop_timestep, num_rainfall_events, total_timestep_rainfall, Field.area)
             ETc = (timestep_ETo * Field.Crop.getCurrentStageCropCoef(loop_timestep)) 
             water_deficit = (ETc - e_rainfall_ML) if (ETc - e_rainfall_ML) > 0 else 0.0
-            nid = Field.calcNetIrrigationDepth(loop_timestep, Manager.base_irrigation_efficiency)
+            nid = Field.calcNetIrrigationDepth(loop_timestep)
 
             temp_SWD = Field.c_swd
-            print "SWD before crop water use: ", Field.c_swd
-            print "ETc: ", ETc
-            print "Rain:", e_rainfall_ML
-            print "WD: ", water_deficit
+
+            if DEBUG:
+                print "SWD before crop water use: ", Field.c_swd
+                print "ETc: ", ETc
+                print "Rain:", e_rainfall_ML
+                print "WD: ", water_deficit
 
             flow_rate_Lps = Field.calcFlowRate()
 
@@ -529,8 +560,10 @@ if __name__ == "__main__":
             #recharge = Field.updateCumulativeSWD(water_input_ML, 0.0)
             recharge = 0.0
 
-            print "Water Applied (ML): ", gross_water_to_apply_ML
-            print "SWD after irrigation: ", Field.c_swd
+            if DEBUG:
+                print "Water Applied (ML): ", gross_water_to_apply_ML
+                print "SWD after irrigation: ", Field.c_swd
+            #End if
 
             total_effective_rainfall += total_timestep_rainfall
             total_water_applied += water_input_ML
@@ -540,17 +573,17 @@ if __name__ == "__main__":
 
             #Save results into pandas df
             try:
-                df = results[Field.name]
+                df = long_results[Field.name]
             except:
-                results[Field.name] = pd.DataFrame(columns=['Field Name', 'Crop Name', 'SWD (mm)', 'SWD (Irrig+Rain) (mm)', 'Field Area (Ha)', 'Soil Type', \
+                long_results[Field.name] = pd.DataFrame(columns=['Field Name', 'Crop Name', 'SWD (mm)', 'SWD (Irrig+Rain) (mm)', 'Field Area (Ha)', 'Soil Type', \
                                                             'Max TAW (mm)', 'Current TAW (mm)', 'RAW (mm)', 'ETo (mm)', 'ETc (mm)', 'Crop Coef', \
                                                             'Rainfall (mm)', 'Effective Rainfall (mm)', \
                                                             'Irrigation (mm)', 'Flow Rate (Lps)', 'Pumping Cost ($)', 'Net Irrigation Depth (mm)',\
                                                             'Gross Water Input (mm)', 'Recharge (mm)'])
 
-                results[Field.name].index.name = 'Timestep'
+                long_results[Field.name].index.name = 'Timestep'
 
-                df = results[Field.name]
+                df = long_results[Field.name]
             #End try
 
             tmp = [
@@ -571,7 +604,7 @@ if __name__ == "__main__":
                 avg_ML_Ha * 100,
                 flow_rate_Lps, 
                 timestep_pumping_cost, 
-                -abs(Field.calcNetIrrigationDepth(loop_timestep, Manager.base_irrigation_efficiency)),
+                -abs(Field.calcNetIrrigationDepth(loop_timestep)),
                 (water_input_ML/Field.area)*100, 
                 (recharge*100)
             ]
@@ -586,7 +619,6 @@ if __name__ == "__main__":
                                                                    'Field_water'])
 
                 irrigation_log[Field.name].index.name = 'Timestep'
-
                 irrig_log = irrigation_log[Field.name]
             #End try
 
@@ -597,7 +629,7 @@ if __name__ == "__main__":
                 ETc,
                 total_timestep_rainfall, 
                 (e_rainfall_ML/Field.area)*100,
-                -abs(Field.calcNetIrrigationDepth(loop_timestep, Manager.base_irrigation_efficiency)),
+                -abs(Field.calcNetIrrigationDepth(loop_timestep)),
                 temp_SWD,
                 (gross_water_to_apply_ML*100) / Field.area,
                 Field.c_swd,
@@ -613,7 +645,9 @@ if __name__ == "__main__":
 
             #Check if crop is ready for harvest (if applicable)
             if Field.Crop.harvest(loop_timestep) == True:
-                print "Setting crop as not planted (harvested)"
+
+                if DEBUG:
+                    print "Setting crop as not planted (harvested)"
                 Field.Crop.plant_date = None
                 Field.Crop.planted = False
                 Field.season_ended = True
@@ -621,9 +655,11 @@ if __name__ == "__main__":
 
             if gross_water_to_apply_ML > 0:
 
-                print "Gross Water to Apply (ML): ", gross_water_to_apply_ML
-                print "Area (Ha): ", Field.area
-                print "Total Rainfall (mm): ", total_timestep_rainfall
+                if DEBUG:
+                    print "Gross Water to Apply (ML): ", gross_water_to_apply_ML
+                    print "Area (Ha): ", Field.area
+                    print "Total Rainfall (mm): ", total_timestep_rainfall
+                #End if
 
                 # if Field.Crop.plant_date != None:
 
@@ -647,7 +683,9 @@ if __name__ == "__main__":
 
             #If all fields have been harvested
             if counter == len(Manager.Farm.fields):
-                print "Season Ended!"
+                if DEBUG:
+                    print "Season Ended!"
+                #End if
                 Manager.season_started = False
                 season_counter = 0
             #End if
@@ -660,8 +698,8 @@ if __name__ == "__main__":
 
     # OUTPUT RESULTS ABOVE INTO CSV FOR VISUALIZATION
     for Field in Manager.Farm.fields:
-        results[Field.name].loc['Total'] = results[Field.name].sum(axis=0, numeric_only=True)
-        FileHandler.writeCSV(results[Field.name], 'output', '2nd_phase_{f}.csv'.format(f=Field.name))
+        long_results[Field.name].loc['Total'] = long_results[Field.name].sum(axis=0, numeric_only=True)
+        FileHandler.writeCSV(long_results[Field.name], 'output', '2nd_phase_{f}.csv'.format(f=Field.name))
         FileHandler.writeCSV(irrigation_log[Field.name], 'output', '2nd_phase_{f}_irrig_log.csv'.format(f=Field.name))
     #End for
 
