@@ -110,7 +110,7 @@ class WaterSuitability(object):
         water_index = flow_index * (1-groundwater_weight) + (groundwater_index * groundwater_weight)
         return water_index
 
-    def calcWaterSuitabilityIndex(self, gw_data, sw_data, gw_weight, sw_weight):
+    def calcWaterSuitabilityIndex(self, gw_data, sw_data, gw_weight, sw_weight, method):
 
         """
         :math:`I = w_{g}G + w_{s}S`
@@ -161,8 +161,13 @@ class WaterSuitability(object):
         #End for
 
         gw_data['sw_suitability_index'] = series['sw_suit_index']
-        gw_data['water_suitability_index'] = ((gw_weight*gw_data['gw_suitability_index']) + (sw_weight*gw_data['sw_suitability_index']))
-
+        
+        if method == "weighted_avg":
+            gw_data['water_suitability_index'] = ((gw_weight*gw_data['gw_suitability_index']) + (sw_weight*gw_data['sw_suitability_index']))
+            
+        if method == "max":
+            gw_data['water_suitability_index'] = gw_data[["gw_suitability_index","sw_suitability_index"]].max(axis=1)
+            
         gw_data[gw_data[['sw_suitability_index']] == 0] = np.nan
 
         return gw_data

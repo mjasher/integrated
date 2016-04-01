@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
     # Read in flow data
     
-    flow_data_path = "integrated/Modules/Ecology/Inputs/Hydrology/sce1/406201.csv" #201,202, 265
+    flow_data_path = "integrated/Modules/Ecology/Inputs/Hydrology/sce1/406265.csv" #201,202, 265
     # flow_data_path = dev_data_path+"/Hydrology/sce1/406202.csv"
 
     flow_data = FileHandle.loadCSV(flow_data_path, index_col="Date", parse_dates=True, dayfirst=True)
@@ -35,8 +35,8 @@ if __name__ == '__main__':
     eflow_req = FileHandle.loadCSV(eflow_req_path)
 
     # minimum duration requirements for low flow index
-    summerlowday = 120
-    winterlowday = 60 #winter low is limiting the low flow index -> u/c required
+    summerlowday = 180
+    winterlowday = 180 #winter low is limiting the low flow index -> u/c required
     
     # inputs for food index and dispersal index
     durations = {
