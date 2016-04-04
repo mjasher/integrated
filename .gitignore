@@ -69,8 +69,7 @@ target/
 *.sublime-workspace
 
 #Ecology
-Modules/Ecology/Outputs/*.csv
-Modules/Ecology/Outputs/sce2/A5/RRGRR/all_index_rolling.csv
+Modules/Ecology/Outputs
 
 # LATEX
 *.aux
