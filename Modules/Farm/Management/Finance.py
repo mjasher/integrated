@@ -1,3 +1,4 @@
+import pandas as pd
 import numpy as np
 from moneyed import Money, AUD
 
@@ -36,11 +37,14 @@ class FarmFinance(object):
 
         annuity_factor = (1 - 1/(1 + discount_rate)**num_years)/discount_rate
 
-        if (type(capital) != str) and (type(capital) != np.number):
+        if (type(capital) != str) and (type(capital) in (list, np.ndarray, pd.Series)):
             return capital.apply(lambda value: Money(value/annuity_factor, self.currency))
-        #End if
+
+        # if (type(capital) != str) and (type(capital) != np.number):
+        #     return capital.apply(lambda value: Money(value/annuity_factor, self.currency))
+        # #End if
         
-        return Money(capital/annuity_factor, self.currency)
+        return Money(capital/annuity_factor, self.currency).amount
 
     #End calcCapitalCostPerYear()
 

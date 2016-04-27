@@ -271,34 +271,22 @@ class PlasticManager(FarmManager):
 
         #End field
 
-        
-        # A_ub.extend(self.generateFieldAub(c, len(self.crops)))
-        # A_ub.extend(self.generateFieldAub(c, len(self.water_sources)))
-
-        # A_ub.extend(self.generateFieldAub(c, len(self.irrigations)*len(self.crops) ))
-        # A_ub.extend(self.generateFieldAub(c, len(self.irrigations)*len(self.crops)*len(self.water_sources) ))
-
-        # A_ub.extend(self.generateFieldAub(c, len(self.storages)*len(self.irrigations)*len(self.crops)*len(self.water_sources) ))
-
         A_ub.extend(self.generateFieldAub([0]*num_combinations, 1))
         A_ub.extend(self.generateFieldAub([0]*num_combinations, len(self.water_sources)))
         
         A_ub.extend(self.generateFieldAub(c, num_combinations))
-
-        print len(A_ub)
-        print len(b_ub)
 
         # b_ub.extend([Field.area]*((len(A_ub) - len(b_ub)) - 1) )
 
         #Total area cannot exceed total farm area
         b_ub.extend([total_farm_area])
 
-        print len(self.Farm.fields)*len(self.storages)*len(self.irrigations)*len(self.crops)*len(self.water_sources)
+        # print len(self.Farm.fields)*len(self.storages)*len(self.irrigations)*len(self.crops)*len(self.water_sources)
 
-        for i in A_ub:
-            print i
+        # for i in A_ub:
+        #     print i
 
-        print b_ub
+        # print b_ub
 
         import pandas as pd
 
@@ -309,25 +297,17 @@ class PlasticManager(FarmManager):
 
         res = lp(c, A_ub=A_ub, b_ub=b_ub, bounds=bounds, options={"disp": False})
 
-        
-
-        print res.x
-        print res.fun
+        # print res.x
+        # print res.fun
 
         combi_indexes = [i for i, v in enumerate(res.x) if v > 0.0]
 
-        print combi_indexes
+        # print combi_indexes
 
-        import pprint
-        pprint.pprint([name_map.loc[v, 'names'] for v in combi_indexes])
-        pprint.pprint([v for v in res.x if v > 0.0])
+        # import pprint
+        # pprint.pprint([name_map.loc[v, 'names'] for v in combi_indexes])
+        # pprint.pprint([v for v in res.x if v > 0.0])
 
-        # print name_map
-
-        # print c
-        # print A_ub
-        # print b_ub
-        # print bounds
     #End dp_dev_all_fields()
 
     def dpDetFieldCombi(self, years_ahead):
@@ -430,9 +410,32 @@ class PlasticManager(FarmManager):
                     # print "---- Surface Water ----"
                     # print pd.DataFrame(results['surface_water'], index=[0])
                     print "======================="
+        #End for
+    #End function
 
+    def getAvailableCropChoices(self):
+        crop_choices = {}
+        for Field in self.Farm.fields:
+            crop_choices[Field.name] = self.getNextCropInRotation(Field)
+        #End for
+        
+        return crop_choices
+    #End getAvailableCropChoices()
 
+    def getNextCropInRotation(self, fields):
 
+        #Get crop that isn't current crop, if rotation length has been reached.
+        available_crops = {}
+        for Field in fields:
+            if Field.Crop.checkRotationEnd():
+                available_crops[Field.name] = [Crop.name for Crop in crops if Crop.name != Field.Crop.name]
+            else:
+                available_crops[Field.name] = [Crop.name]
+                Crop.rotation_count += 1
+            #End if
+        #End for
 
+        return available_crops
+    #End getNextCropInRotation()
 
 #End FarmManagement()
