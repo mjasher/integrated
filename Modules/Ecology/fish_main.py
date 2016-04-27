@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
     # Read in flow data
     
-    flow_data_path = "integrated/Modules/Ecology/Inputs/Hydrology/sce1/406265.csv" #201,202, 265
+    flow_data_path = "integrated/Modules/Ecology/Inputs/Hydrology/sce1/406202.csv" #201,202, 265
     # flow_data_path = dev_data_path+"/Hydrology/sce1/406202.csv"
 
     flow_data = FileHandle.loadCSV(flow_data_path, index_col="Date", parse_dates=True, dayfirst=True)
@@ -130,7 +130,7 @@ if __name__ == '__main__':
             }
     
             
-            lowflow_index = Fish.calcLowFlowIndex(year_data, flow_col, summerlow, winterlow, summerlowday, winterlowday)
+            lowflow_index = Fish.calcLowFlowIndex(year_data, flow_col, summerlow, winterlow, summerlowday, winterlowday, index_method="linear_scaling")
             spawn_index, dispersal_index, washout_index = Fish.calcSpawnIndex(year_data, flow_col, freshes, durations, frequencies, timing)
 
             
@@ -153,11 +153,11 @@ if __name__ == '__main__':
     fishIndexes['short_lived_fish_index']=fishIndexes['lowflow_index']
     
     fishIndexes['short_lived_fish_rindex']=pd.rolling_mean(fishIndexes['short_lived_fish_index'],2)
-    fishIndexes['long_lived_fish_rindex']=pd.rolling_mean(fishIndexes['long_lived_fish_index'],4)  
+    fishIndexes['long_lived_fish_rindex']=pd.rolling_mean(fishIndexes['long_lived_fish_index'],4)
 
     print fishIndexes.describe()
     fishIndexes["short_lived_fish_rindex"].plot()
-    fishIndexes["long_lived_fish_rindex"].plot()   
+    fishIndexes["long_lived_fish_rindex"].plot(color="red")   
 
 FileHandle.writeCSV(fishIndexes, "./Integrated/Modules/Ecology/Outputs", "fish_index.csv")
 

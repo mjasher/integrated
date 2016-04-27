@@ -20,7 +20,7 @@ class SpeciesFlow(FlowSuitability):
     #End init()
     
     ## component1: calculate low flow index for food and movement
-    def calcLowFlowIndex(self, yearly_flow_data, flow_col, summer_low_thd, winter_low_thd,summer_index_thd, winter_index_thd):
+    def calcLowFlowIndex(self, yearly_flow_data, flow_col, summer_low_thd, winter_low_thd,summer_index_thd, winter_index_thd, index_method="linear_scaling"):
 
         """
         calculate low flow index:
@@ -55,10 +55,16 @@ class SpeciesFlow(FlowSuitability):
         
         above_winter_low =  yearly_flow_data[(yearly_flow_data[flow_col] >= winter_low_thd) & (yearly_flow_data.index.month >= 6) & (yearly_flow_data.index.month <= 11)][flow_col].count()
         
-        if (above_summer_low >=summer_index_thd) & (above_winter_low >= winter_index_thd):
-            lowflow_index = 1
-        else:
-            lowflow_index = 0
+        
+        if index_method == "min_duration":
+        #low flow index are calcuated via duration. 
+            if (above_summer_low >=summer_index_thd) & (above_winter_low >= winter_index_thd):
+                lowflow_index = 1
+            else:
+                lowflow_index = 0
+        if index_method == "linear_scaling":
+        # low flow index are calculated based on linear relationshiops between index and number of days above thresholds between 0 and 180, with 180 being rough estimate of the number of days for 6 months.  
+            lowflow_index = ((above_summer_low/180)+(above_winter_low/180))/2
 
         return lowflow_index
 
