@@ -7,19 +7,19 @@ class WaterSources(FarmComponent):
     Represents a source of water
     """
 
-    def __init__(self, name, water_level, entitlement, water_value_per_ML, cost_per_ML, **kwargs):
+    def __init__(self, name, water_level, allocation, water_value_per_ML, cost_per_ML, **kwargs):
 
         """
         :param name: Name of water source 
         :param water_level: Current water level, depth below ground level
-        :param entitlement: Amount of water entitled from this water source
+        :param allocation: Volume of water (ML) allocated from this water source
         :param water_value_per_ML: Market value of the water
         :param cost_per_ML: Cost of ordering the water
         """
 
         self.name = name
         self.water_level = water_level
-        self.entitlement = entitlement
+        self.allocation = allocation
         self.water_value_per_ML = water_value_per_ML
         self.cost_per_ML = cost_per_ML
 
@@ -41,7 +41,7 @@ class WaterSources(FarmComponent):
         pass
     #End extractWater()
 
-    def calcPumpingCostsPerML(self, flow_rate_Lps, head_pressure=None, additional_head=0.0, pump_efficiency=0.7, derating=0.75, fuel_per_Kw=0.25, fuel_price_per_Litre=1.25):
+    def calcPumpingCostsPerML(self, flow_rate_Lps, head_pressure=None, additional_head=0.0, pump_efficiency=0.7, derating=0.75, fuel_per_Kw=0.25, fuel_price_per_Litre=1.20):
 
         """
         :param flow_rate_Lps: required flow rate in Litres per second over the irrigation duration

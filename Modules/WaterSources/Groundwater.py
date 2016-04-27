@@ -20,4 +20,13 @@ class GroundwaterSource(WaterSources.WaterSources):
         pass
     #End extractWater()
 
+    def calcCapitalCosts(self):
+
+        #http://www.g-mwater.com.au/downloads/gmw/Groundwater/Fact_Sheets/11_August_2015_-_DELWP_-_BoreLicence-Consultant-final.pdf
+        licence_cost = 235
+
+        total_cost = licence_cost
+        return total_cost
+    #End calcCapitalCosts()
+
 #End GroundwaterSource()
