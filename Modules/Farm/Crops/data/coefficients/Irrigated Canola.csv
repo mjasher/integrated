@@ -1,7 +1,0 @@
-Stage,Crop Coefficient,Depletion Fraction
-initial,0.2,0.3
-development,0.4,0.5
-mid-season,0.5,1.05
-mid-season2,0.7,1.05
-late,0.8,0.35
-harvest,0.6,0.35
