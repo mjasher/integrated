@@ -102,17 +102,19 @@ class CropInfo(Component):
         temp_df = self.season_info.copy()
 
         #Remove all non-numeric columns
-        temp_df = temp_df.select_dtypes(include=[np.number])
+        temp_df = temp_df.select_dtypes(include=['float64', 'int64'])
+
         assert len(temp_df) > 0, "No seasonal crop growth information found"
 
         #Cumulatively sum all rows
         temp_df = temp_df.cumsum(axis=1)
 
+        temp_df['plant_date'] = self.season_info.loc[:, 'plant_date']
+
         return temp_df
     #End _prepareSeasonInfo()
 
-    def getCurrentStage(self, timestep, val_type="Best Guess"):
-
+    def _getPreparedSeasonInfo(self, timestep, val_type):
         try:
             season_info = self.prepped_season_info
         except AttributeError:
@@ -120,9 +122,17 @@ class CropInfo(Component):
             self.prepped_season_info = season_info
         #End try
 
+        return season_info.loc[val_type, :].copy()
+    #End getPreparedSeasonInfo()
+
+    def getCurrentStage(self, timestep, val_type="Best Guess"):
+
+        season_info = self._getPreparedSeasonInfo(timestep, val_type)
+        season_info = season_info.drop('plant_date')
+
         days_from_season_start = ((pd.to_datetime(timestep) - self.plant_date) / np.timedelta64(1, 'D')).astype(int)
 
-        temp = (days_from_season_start <= season_info).loc[val_type, :]
+        temp = ([days_from_season_start, ] * len(season_info)) <= season_info
 
         try:
             stage = temp[temp == True].index[0].lower()
@@ -140,7 +150,7 @@ class CropInfo(Component):
         pi = self.planting_info
         coef = pi.loc[pi.index.str.lower() == stage, coef_name]
 
-        assert len(coef) >= 1, "Plant coefficient not found"
+        assert len(coef) > 0, "Plant coefficient not found"
 
         return coef.iloc[0]
     #End getStageCoef()
@@ -177,37 +187,43 @@ class CropInfo(Component):
 
     #End getSeasonStart()
 
-    def getNextStageDate(self, timestep):
-
-        temp_df = self._preparePlantingInfo(timestep)
-
-        return temp_df[(pd.to_datetime(temp_df['temp_dt']) > timestep)]['temp_dt'][0]
-    #End getNextStageDate()
-
-    def getSeasonStartRange(self, timestep, step, format='%Y-%m-%d'):
+    def getSeasonStartRange(self, timestep, step, val_type='Best Guess', format='%Y-%m-%d'):
 
         """
         Gets the season start date and the next timestep datetime for a crop. 
         """
 
-        start = "{y}-{md}".format(y=timestep.year, md=self.season_info.loc["Best Guess", "plant_date"])
+        season_info = self._getPreparedSeasonInfo(timestep, val_type)
+
+        start = "{y}-{md}".format(y=timestep.year, md=season_info["plant_date"])
         end = pd.to_datetime(datetime.strptime(start, format) + pd.Timedelta(days=step))
 
         return start, end
     #End getSeasonStartRange
 
+    def getSeasonStartEnd(self, timestep, val_type="Best Guess"):
+
+        season_info = self._getPreparedSeasonInfo(timestep, val_type)
+
+        start = pd.to_datetime("{y}-{md}".format(y=timestep.year, md=season_info['plant_date']))
+        days_to_end = season_info.drop('plant_date')[-1]
+
+        end = pd.to_datetime(start) + pd.Timedelta(days=days_to_end)
+
+        return start, end
+    #End getSeasonStartEnd()
+
     def harvest(self, timestep, val_type='Best Guess'):
 
-        try:
-            season_info = self.prepped_season_info
-        except AttributeError:
-            season_info = self._prepareSeasonInfo(timestep, val_type) #season info with cumulatively summed growth stages
-            self.prepped_season_info = season_info
-        #End try
+        """
+        Check that it is time for harvesting the crop
+        """
+
+        season_info = self._getPreparedSeasonInfo(timestep, val_type)
 
         days_from_season_start = ((pd.to_datetime(timestep) - self.plant_date) / np.timedelta64(1, 'D')).astype(int)
 
-        return days_from_season_start >= season_info.loc[val_type, 'Harvest']
+        return days_from_season_start >= season_info['Harvest']
 
     #End harvest
 
@@ -222,7 +238,6 @@ class CropInfo(Component):
         :param price_per_yield: Estimated or assumed crop price per unit (Tons/Bales/etc). Defaults to assumed value.
 
         :returns: total gross margins per Hectare based on the assumed or given crop yield and crop price
-
 
         """
 
@@ -290,6 +305,16 @@ class CropInfo(Component):
         return total_crop_gross_margin
 
     #End calcTotalFarmGrossMargin()
+
+    def checkRotationEnd(self):
+        """
+        Check if this crop has come to the end of its rotation length
+
+        :returns: bool, True (end has been reached)/False (continue cultivating this crop)
+        """
+
+        return self.rotation_count == self.rotation_length
+    #End 
 
     def determineCropCoefficient(self):
 
