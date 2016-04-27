@@ -1,6 +1,6 @@
 Variable, Best Guess, Min, Max
 irrigation_rate, 1, 0, 1
-irrigation_efficiency, 0.74, 0.3, 0.9
+irrigation_efficiency, 0.70, 0.6, 0.9
 lifespan, 15, 10, 20
 cost_per_Ha, 2222.0, 2000.0, 3300.0
 replacement_cost_per_Ha, 2400.0, 2000, 2500

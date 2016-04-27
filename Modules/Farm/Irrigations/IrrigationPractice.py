@@ -191,7 +191,10 @@ class IrrigationPractice(FarmComponent):
     def calcIrrigationArea(self, water_applied_ML_per_Ha, available_water_ML):
 
         """
-        Calculate irrigation area, capped to max irrigation area
+        Calculate irrigation area, capped to max irrigation area.
+
+        Note that this does not modify the area based on irrigation efficiency.
+        The water applied per Ha is assumed to already factor this in. 
 
         :param water_applied_ML_per_Ha: Amount of water applied in ML per Hectare
         :param available_water_ML: Amount of water currently available
