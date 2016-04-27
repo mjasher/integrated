@@ -1,4 +1,5 @@
 {
+	"name": "Wheat",
 	"yield_per_Ha": {
 		"min": 150,
 		"max": 480,
@@ -50,6 +51,7 @@
 		"min": 15,
 		"max": 25,
 		"best_guess": 20,
+		"UoM": "mm",
 		"_comment": "Crop WUE coefficient for French-Schultz (mm)"
 	},
 	"planting_info": {
