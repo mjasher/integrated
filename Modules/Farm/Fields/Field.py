@@ -32,8 +32,10 @@ class FarmField(Component):
         self.area = area
         self.water_applied = 0
 
+        self.season_ended = None
+
         if crop is not None:
-            #Cumulative Soil Water Deficit (monitors allowable depletion)
+            #set initial Cumulative Soil Water Deficit (monitors allowable depletion)
             self.setIniSWD()
         #End if
 
@@ -60,7 +62,7 @@ class FarmField(Component):
     def setIniSWD(self):
 
         """
-        Set initial soil water deficit. This is essentially a counter that monitors allowable depletion
+        Set initial soil water deficit. CSWD is essentially a counter that monitors allowable depletion
         """
 
         #Cumulative Soil Water Deficit
@@ -105,6 +107,8 @@ class FarmField(Component):
 
         """
         Apply losses to crop due to lack of water or other
+
+        NOT IMPLEMENTED
         
         """
 
@@ -121,6 +125,7 @@ class FarmField(Component):
         Get crop harvest.
         
         :returns: Gross crop yield
+        :return type: numeric
         """
 
         harvest = self.Crop.yield_per_Ha * self.area
@@ -134,6 +139,8 @@ class FarmField(Component):
         Follows calculation method outlined in
         http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/estimating-vegetable-crop-water-use
 
+        WARNING: DEFUNCT. KEPT FOR LEGACY PURPOSES. USE METHOD IN MANAGER MODULE
+
         Calculates the Soil Water Deficit based on the amount of water applied, the crop ET for the timestep, and the crop coefficient for its current growth stage 
 
         c_swd = c_swd - ETc, ETc = (reference_ET * Crop Coefficient for current stage of development)
@@ -142,8 +149,7 @@ class FarmField(Component):
         :param gross_water_applied: Gross amount of water applied to the field in ML
 
         :returns: Total recharge for field in ML
-
-        May have to rethink this cumulative SWD approach.
+        :return type: numeric
 
         K_sat = Max Soil saturation of soil type
 
@@ -158,7 +164,7 @@ class FarmField(Component):
 
         :returns seepage: Seepage/recharge in ML
 
-        Also see "Tindall Method" as in:
+        See also "Tindall Method" as in:
         http://www.nt.gov.au/d/Content/File/p/Tech_Bull/TB337.pdf
     
         """
@@ -192,7 +198,7 @@ class FarmField(Component):
         return {'cwu': cwu, 'recharge': water_input-cwu}
     #End simpleCropWaterUse()
 
-    def calcNetIrrigationDepth(self, timestep, base_irrig_efficiency, val_type='Best Guess', e_rz_coef=0.55):
+    def calcNetIrrigationDepth(self, timestep, val_type='Best Guess', e_rz_coef=0.55):
 
         """
         Calculate net irrigation depth in mm, subject to irrigation efficiency
@@ -243,7 +249,7 @@ class FarmField(Component):
 
         net_irrigation_depth = ( effective_rz * self.Soil.calcRAW(fraction=crop_depletion_fraction))
 
-        #Change net irrigation depth based on irrigation efficiency
+        #Change net irrigation depth based on irrigation efficiency; increased efficiency is more effective at refilling soil water...
         #net_irrigation_depth = net_irrigation_depth * (self.Irrigation.irrigation_efficiency / base_irrig_efficiency)
 
         assert net_irrigation_depth >= 0.0, "Net irrigation depth will be calculated as above ground!"
@@ -251,64 +257,19 @@ class FarmField(Component):
         return net_irrigation_depth
     #End calcNetIrrigationDepth()
 
-    # def calcFlowRate_old(self, duration, operational_days, Crop, irrig_efficiency=None):
-
-    #     """
-    #     Calculate flow requirements for this field, factoring in crop water requirements
-
-    #     See `this calculator <http://irrigation.wsu.edu/Content/Calculators/Center-Pivot/System-Pumping-Requirements.php>`_ as an example
-
-    #     :param duration: Number of hours available for pump operation per day.
-    #     :param operational_days: Number of days the pump will be operated over
-    #     :param Crop: Crop object
-    #     :param irrig_efficiency: Irrigation Efficiency. Defaults to value set in Irrigation object.
-
-    #     :returns: required flow rate in Litres per second
-
-    #     From Gallons of water
-    #     .. math::
-    #         Q = (((27154 * Net_{app}) * A) / (60 * (Hrs * Days))) / E
-
-    #     .. math::
-    #         Q = ((NID / 100)A / (D*T)) * 1000000 / 60 / 60
-
-    #     where
-    #     * :math:`Q` is total flow rate 
-    #     * :math:`Net_{app}` is the required application amount per week
-    #     * :math:`A` is the area under irrigation
-    #     * :math:`Hrs` is the total hours available for pump operation per day
-    #     * :math:`Days` is the number of days the pump will be operated over
-    #     * :math:`E` is the efficiency of the irrigation system
-    #     """
-
-    #     if irrig_efficiency is None:
-    #         irrig_efficiency = self.Irrigation.irrigation_efficiency
-
-    #     nid = self.calcNetIrrigationDepth(timestep, Manager.base_irrigation_efficiency)
-
-    #     #total_flow_rate = (((27154 * nid) * self.area) / (60 * (duration * operational_days))) / irrig_efficiency
-    #     # total_flow_rate = ((nid * self.area) / (duration * operational_days)) / irrig_efficiency
-    #     ML_to_apply = ((nid / 100) * self.area)
-    #     ML_per_hour = ML_to_apply / (duration * operational_days) #ML per Hour
-
-    #     total_flow_rate = (((ML_per_hour * 1000000) / 60) / 60) / irrig_efficiency
-
-    #     #Convert from Gallons to Lps
-    #     # total_flow_rate = total_flow_rate / 0.0630902
-
-    #     return total_flow_rate
-    # #End calcFlowRate_old()
-
     def calcFlowRate(self, irrigation_flow_capacity=None):
 
         """
+
+        Calculate flow rate (:math:`Q`) in Litres per second
+
         .. :math:
             Q = (F * 1000000) / 24 / 60 / 60
 
         where:
         * :math:`Q` is Flow in Litres per second
         * :math:`F` is flow rate in ML per day
-        * 1000000 converts :math:`F` from ML to Litres
+        * 1000000 is the constant for converting :math:`F` from ML to Litres
         * 24 is the hours per day
         * First 60 is the minutes per hour
         * Second 60 is the seconds per minute
@@ -353,13 +314,36 @@ class FarmField(Component):
 
         return (RAW * area) / irrigation_efficiency
 
-    def calcIrrigationArea(self, water_Litres, irrigation_efficiency, RAW):
+    # def calcIrrigationArea(self, water_Litres, irrigation_efficiency): #, RAW
 
-        """
-        If available water volume is known, area that can be irrigated can be determined
-        See page 4 of `this DPI document <http://www.dpi.nsw.gov.au/__data/assets/pdf_file/0006/176694/surface-irrigation-notes.pdf>`_
-        """
+    #     """
+    #     If available water volume is known, area that can be irrigated can be determined.
 
-        return (water_Litres * irrigation_efficiency) / RAW
+    #     Dividing the result by RAW can give area that can be irrigated "per shift" (irrigation event)
+
+    #     See page 4 of `this DPI document <http://www.dpi.nsw.gov.au/__data/assets/pdf_file/0006/176694/surface-irrigation-notes.pdf>`_
+    #     """
+
+    #     return (water_Litres * irrigation_efficiency) #/ RAW
+        
+    # #End calcIrrigationArea()
+
+    def calcNetProfitPerHa(self, farm_area, additional_income=0, additional_costs=0):
+
+        storage_cost_per_Ha = self.Storage.calcTotalCostsPerHa(farm_area)
+        irrig_cost_per_Ha = self.Irrigation.calcTotalCostsPerHa()
+
+        crop_income = (self.Crop.yield_per_Ha * self.Crop.price_per_yield) + additional_income
+
+        total_margin = crop_income
+        total_costs = (irrig_cost_per_Ha+pumping_cost_per_Ha+water_cost_per_Ha+storage_cost_per_Ha) + additional_costs
+        negated_profit = total_costs - crop_income
+
+        return negated_profit
+    #End calcNetProfitPerHa()
+
+    def calcTotalCostsPerHa(self):
+        pass
+    #End calcTotalCostsPerHa()
 
 #End FarmField()
