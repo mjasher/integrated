@@ -4,7 +4,7 @@ import numpy as np
 
 if __name__ == '__main__':
     #import os
-    os.chdir('C:\\UserData\\fub\\work09\\MDB')
+    #os.chdir('C:\\UserData\\fub\\work09\\MDB')
 
     from integrated.Modules.Core.Handlers.FileHandler import FileHandler
     from integrated.Modules.Ecology.PlatypusFlow import PlatypusFlow
@@ -12,17 +12,17 @@ if __name__ == '__main__':
     import pandas as pd
     import datetime
     from datetime import timedelta
-
+    
     #import flow dev data
     FileHandle = FileHandler()
     #Paths to files
-    dev_data_path = "integrated/Modules/Ecology/Inputs"
-    # dev_data_path = "Inputs"
+    #dev_data_path = "integrated/Modules/Ecology/Inputs"
+    dev_data_path = "Inputs"
 
     # Read in flow data
     
-    flow_data_path = "integrated/Modules/Ecology/Inputs/Hydrology/sce1/406201.csv" #201,202, 265
-    # flow_data_path = dev_data_path+"/Hydrology/sce1/406202.csv"
+    #flow_data_path = "integrated/Modules/Ecology/Inputs/Hydrology/sce1/406201.csv" #201,202, 265
+    flow_data_path = dev_data_path+"/Hydrology/sce1/406201.csv"
 
     flow_data = FileHandle.loadCSV(flow_data_path, index_col="Date", parse_dates=True, dayfirst=True)
     flow_data[flow_data<0] = np.nan
@@ -30,8 +30,8 @@ if __name__ == '__main__':
     flow_col = "Flow"
 
     #import environmental flow requirement data
-    eflow_req_path = "integrated/Modules/Ecology/Inputs/Ecology/Platypus_flow_req.csv"
-#    eflow_req_path = "Inputs/Ecology/Platypus_flow_req.csv"
+    #eflow_req_path = "integrated/Modules/Ecology/Inputs/Ecology/Platypus_flow_req.csv"
+    eflow_req_path = dev_data_path+"/Ecology/Platypus_flow_req.csv"
     eflow_req = FileHandle.loadCSV(eflow_req_path)
 
     # minimum duration requirements for low flow index
