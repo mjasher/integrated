@@ -3,27 +3,38 @@ from integrated.Modules.Core.IntegratedModelComponent import Component
 
 class FarmComponent(Component):
 
-	"""
-	Interface Class for Farm Components.
-	All methods defined here should be redefined by implementing child classes.
-	"""
+    """
+    Interface Class for Farm Components.
+    All methods defined here should be redefined by implementing child classes.
+    """
 
-	def __init__(self, implemented=False):
-		self.implemented = implemented
-	#End init()
+    def __init__(self, implemented=False):
+        self.implemented = implemented
+    #End init()
 
-	def calcTotalCostsPerHa(self):
-		pass
-	#End calcTotalCosts()
+    def calcTotalCostsPerHa(self):
 
-	def calcGrossMarginsPerHa(self):
-		pass
-	#End calcGrossMargins()
+        """
+        Cost of implementation and operation
+        """
 
-	def calcOperationalCostPerHa(self):
-		pass
-	#End calcOperationalCostPerHa()
+        pass
+    #End calcTotalCosts()
 
-	def calcImplementationCostPerHa(self):
-		pass
-	#End calcImplementationCostPerHa()
+    def calcGrossMarginsPerHa(self):
+        pass
+    #End calcGrossMargins()
+
+    def calcOperationalCostPerHa(self):
+        """
+        Calculate cost of operation per year
+        """
+        pass
+    #End calcOperationalCostPerHa()
+
+    def calcImplementationCostPerHa(self):
+        """
+        Calculate the capital cost 
+        """
+        pass
+    #End calcImplementationCostPerHa()
