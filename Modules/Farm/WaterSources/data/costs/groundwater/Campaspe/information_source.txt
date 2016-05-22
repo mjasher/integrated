@@ -1,0 +1,40 @@
+Surface and Groundwater Account fees: http://www.g-mwater.com.au/downloads/gmw/Pricing_Table_June15.pdf
+Supply costs taken from East Loddon (North)
+
+Licence Renewal:
+Licence renewal occurs every 5-15 years http://www.g-mwater.com.au/downloads/gmw/Forms_Surface_Water/2015/30_Nov_2015_-_2811974-v10-APPLICATION_TO_RENEW_A_LICENCE_TO_TAKE_AND_USE_SURFACEWATER_OPERATE_WORKS.pdf
+
+
+#Groundwater entitlement is an average of total licence volume / number of licences in Echuca.
+#Average across entire lower Campaspe is ~407ML
+#see http://www.g-mwater.com.au/downloads/gmw/Groundwater/Lower_Campaspe_Valley_WSPA/Nov_2013_-_Lower_Campaspe_Valley_WSPA_Plan_A4_FINAL-fixed_for_web.pdf
+# esp. Section 2.2 (Groundwater Use) page 8, 
+
+Groundwater fees: http://www.g-mwater.com.au/downloads/gmw/Forms_Groundwater/2015/TATDOC-2264638-2015-16_Schedule_of_Fees_and_Charges_-_Groundwater_and_Bore_Construction.pdf
+
+#Other 
+#Bore Construction fee: $1440
+#Replacement bore: $900
+#Each Additional bore: $170
+#licence amendment: $527 (alter number of bores, alter depth of bore, change bore site)
+
+#Groundwater entitlement calculated by assuming 2 bores per licence
+#Total licence volume in lower Campaspe: 55870.4
+#Total Number of licences: 138 = 404.85
+#  55870.4 / 138 = 405 (rounded up)
+#Irrigators used 65% of GW entitlement for reasons unknown
+
+#Entitlement statistics from http://waterregister.vic.gov.au/water-entitlements/entitlement-statistics
+#Surface water entitlements calculated by dividing total volume with number of water shares for Zone 4C (Lower Campaspe)
+# (high reliability) 1633.5 / 52 = 31.41
+# (low reliability) No data
+
+#But this doesn't look right
+#DEPI 2014 looks at a case study in which the farmer had 435ML of high reliability water + an unspecified amount of low reliability water
+#with trading, the total water use in the case study was a planned 600ML over a 135Ha property
+
+
+In some cases, farmers may need a licence to perform on-farm MAR
+See under section entitled "Managed Aquifer Recharge (MAR)"
+http://www.srw.com.au/page/page.asp?page_Id=113#BM4730
+
