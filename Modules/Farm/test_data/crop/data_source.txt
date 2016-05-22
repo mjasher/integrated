@@ -1,0 +1,11 @@
+http://agriculture.vic.gov.au/agriculture/grains-and-other-crops/crop-production/victorian-winter-crop-summary
+
+http://www.abs.gov.au/ausstats/abs@.nsf/Previousproducts/7124.0Main%20Features12009-10?opendocument&tabname=Summary&prodno=7124.0&issue=2009-10&num=&view=
+
+#Latest of the above
+http://www.abs.gov.au/AUSSTATS/abs@.nsf/allprimarymainfeatures/317C72EE05CF20AECA25709E003C52B0?opendocument
+
+To convert XML data from the above ABS page, I used a program called xmlstarlet
+
+commandline command used 
+xml sel -T -t -m /data/group/series -v "concat(x,',',y1,',',y2)" -n test.xml > new_file.csv
