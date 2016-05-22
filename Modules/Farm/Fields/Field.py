@@ -330,7 +330,7 @@ class FarmField(Component):
 
     def calcNetProfitPerHa(self, farm_area, additional_income=0, additional_costs=0):
 
-        storage_cost_per_Ha = self.Storage.calcTotalCostsPerHa(farm_area)
+        storage_cost_per_Ha = self.Storage.calcOperationalCostsPerHa(farm_area)
         irrig_cost_per_Ha = self.Irrigation.calcTotalCostsPerHa()
 
         crop_income = (self.Crop.yield_per_Ha * self.Crop.price_per_yield) + additional_income
