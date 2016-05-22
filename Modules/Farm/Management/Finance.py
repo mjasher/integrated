@@ -10,17 +10,21 @@ class FarmFinance(object):
         self.currency = currency
     #End init()
 
-    def calcPumpingCostsPerML(self, fuel_per_Hour, hours_per_ML, fuel_price_per_Litre='1.25'):
+    # def calcPumpingCostsPerML(self, fuel_per_Hour, hours_per_ML, fuel_price_per_Litre='1.20'):
 
-        fuel_price_per_Litre = Money(fuel_price_per_Litre, self.currency)
+    #     fuel_price_per_Litre = Money(fuel_price_per_Litre, self.currency)
 
-        return (fuel_price_per_Litre * fuel_per_Hour) * hours_per_ML
+    #     return (fuel_price_per_Litre * fuel_per_Hour) * hours_per_ML
 
-    #End calcPumpingCostsPerML()
+    # #End calcPumpingCostsPerML()
 
     def convertFloatToMoney(self, val):
         return Money(val, self.currency)
     #End convertFloatToMoney()
+
+    def calcTotalCostsForSeason(self):
+        pass
+    #End calcTotalCostsForSeason
 
     def annualizeCapital(self, capital, discount_rate=0.07, num_years=20):
 
@@ -46,7 +50,11 @@ class FarmFinance(object):
         
         return Money(capital/annuity_factor, self.currency).amount
 
-    #End calcCapitalCostPerYear()
+    #End annualizeCapital()
+
+    def calcProfitPerHa(self, Field):
+        pass
+    #End calcProfitPerHa()
 
 
 #End class
