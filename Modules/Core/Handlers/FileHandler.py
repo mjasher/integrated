@@ -83,7 +83,7 @@ class FileHandler(object):
         :param folder: Folder to search
         :param ext: File extension to search for
         :param walk: (True | False) search subfolders in the given folder
-        :param date_range: Date range to extract; index must be set for this to work
+        :param date_range: If data is a time series, date range to extract; index must be set for this to work
         :param kwargs: Other arguments accepted by Pandas read_csv()
         :returns: Dict of Pandas DataFrame for each file found
 
@@ -104,7 +104,10 @@ class FileHandler(object):
             if parent_dir not in imported:
                 imported[parent_dir] = {}
 
-            imported[parent_dir][fname] = pd.read_csv(f, **kwargs)
+            try:
+                imported[parent_dir][fname] = pd.read_csv(f, **kwargs)
+            except ValueError as e:
+                print "Error occured while trying to import {}".format(f)
 
             if date_range is not None:
                 start = date_range[0]
@@ -123,6 +126,7 @@ class FileHandler(object):
 
                 if end is not None:
                     imported[fname] = temp[temp.index <= pd.to_datetime(end)]
+            #End if
 
         #End for
 
