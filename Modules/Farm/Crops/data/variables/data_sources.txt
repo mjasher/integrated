@@ -1,9 +1,43 @@
-WARNING: DATA IN THIS FOLDER ARE DUMMY VALUES INTENDED FOR DEVELOPMENT PURPOSES ONLY
+WARNING: DATA IN THIS FOLDER SHOULD BE USED WITH CARE
+Data is largely taken from FAO which should be replaced with location specific values if possible
 
+Vegetable yields
 http://agriculture.vic.gov.au/agriculture/horticulture/vegetables/vegetable-growing-and-management/vegetable-growing
 
 et_coef is in mm
-wue_coef for French-Schultz is in kg/mm
+wue_coef for French-Schultz is in kg/mm, is a value derived from historic data - the "usual" yield per mm of rainfall.
+see Sadras & McDonald 2012 (esp. Table 3 on p 17)
 
 Annual Pasture re-establishment cost
 Hansen, D., Irrigation Supply system modernisation enables farm irrigation upgrades, Victoria Dept. of Economic Development, Jobs, Transport and Resources
+
+Growth Coefficients taken from FAO
+http://www.fao.org/docrep/x0490e/x0490e0b.htm#length of growth stages
+(see table 11 and 12)
+These should be verified and validated for the local study area
+
+Crop growth stages
+http://www.fao.org/nr/water/cropinfo_wheat.html
+http://www.fao.org/docrep/x0490e/x0490e0b.htm#length of growth stages
+
+Crop yields and Prices
+
+Yields
+http://www.abs.gov.au/ausstats/abs@.nsf/Latestproducts/7124.0Main%20Features12010-11?opendocument&tabname=Summary&prodno=7124.0&issue=2010-11&num=&view=
+
+Tomato yields (2001-2)
+http://www.abs.gov.au/AUSSTATS/abs@.nsf/Previousproducts/A72AFE7C14DBFDE3CA2570DC0009D30D?opendocument
+http://www.abs.gov.au/ausstats/abs@.nsf/Lookup/7121.0main+features72012-2013
+
+Tomatoes (2002-2015)
+http://www.abs.gov.au/AUSSTATS/abs@.nsf/Latestproducts/7121.0Main%20Features42014-15?opendocument&tabname=Summary&prodno=7121.0&issue=2014-15&num=&view=
+Values given in the above include processing and fresh market
+
+
+
+Prices
+http://www.awb.com.au/growers/awbgrainprices/dailygrainprices/
+http://www.awb.com.au/NR/rdonlyres/D0C878F5-6397-4BFB-B617-916290BCAA72/0/Wheat_Vic_Riverina.pdf
+
+
+
