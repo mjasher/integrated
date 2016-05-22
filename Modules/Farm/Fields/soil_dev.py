@@ -17,7 +17,7 @@
 
 from sympy import symbols
 
-ET_c = 5 #mm / day
+ETc = 5 #mm / day
 
 #Define mathematical and SI units of measurement
 m = symbols('m')
@@ -40,12 +40,12 @@ net_irrigation_depth = (0.55 * m) * RAW
 Calculation for each timestep
   Need: 
     ET_0 in timestep, in mm
-    ET_c in timestep, in mm
+    ETc in timestep, in mm
     Rainfall that occured in timestep, in mm
 
-  ET_0 * ET_c = Crop Water Use
+  ET_0 * ETc = Crop Water Use
 
-  Effective Rainfall (in mm) = Rainfall - ET_c
+  Effective Rainfall (in mm) = Rainfall - ETc
 
   Net Irrigation Application = amount of water applied (in mm)
 
@@ -67,11 +67,11 @@ So we have irrigation efficiency of 0.55 percent (made up number for example pur
 
   Irrigation water applied = 6ML
 
-  ET_c during irrigation events is assumed to be
+  ETc during irrigation events is assumed to be
     Irrigation Water * Irrigation Efficiency
 
   Therefore: 
-    ET_c = 6 * 0.55 
+    ETc = 6 * 0.55 
          = 3.3
 
   Cumulative Soil Water Deficit = (0.0 + 6.0) - 3.3
