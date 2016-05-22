@@ -141,27 +141,56 @@ class LpInterface(object):
         #Generate Aubs for case in which a single field is used with a single water source
         A_ub = self.generateFieldAub(A_ub, 1)
 
+        assert len(A_ub) > 0, "Left hand constraints cannot be empty!"
+
+        num_water_sources = len(water_sources)
+
         #Generate list of lists, '1' set for each Field-WaterSource combination
-        A_ub.extend(self.generateFieldAub(A_ub[0], len(water_sources)))
+        A_ub.extend(self.generateFieldAub(A_ub[0], num_water_sources))
 
-        t = temp_c.copy()
-        t_mask = ((np.isnan(t)) == False)
-        t = t_mask.applymap(lambda x: 1 if x else 0).as_matrix()
+        #num_fields = len(A_ub) / len(water_sources)
 
-        A_ub = np.append(A_ub, t, axis=0)
+        #Add Aub for alternate combinations (?)
 
-        #Fields are completely used
-        # if len(t[0]) > len(water_sources):
-        #     A_ub = np.append(A_ub, [[1, ]*len(t[0])], axis=0)
-        # #End if
+        #Add constraints for when all fields and water sources are used if necessary
+        #Checks if the last Aub entry is of identical values (all 1s)
+        if [A_ub[-1][0]]*len(A_ub[-1]) != A_ub[-1]:
+            t = temp_c.copy()
+            t_mask = ((np.isnan(t)) == False)
+            t = t_mask.applymap(lambda x: 1 if x else 0).as_matrix()
+
+            #A_ub = np.append(A_ub, t, axis=0)
+
+            #Fields are completely used
+            if len(t[0]) > len(water_sources):
+                A_ub = np.append(A_ub, [[1, ]*len(t[0])], axis=0)
+            #End if
+        #End if
 
         return A_ub
     #End genAubs()
+
+    def genAubMap(self, fields, water_sources):
+
+        num_water_sources = len(water_sources)
+
+        list_of_fields = []
+        for f in fields:
+            list_of_fields.append(f)
+        #End for
+
+        A_ub_map = np.array(list_of_fields)
+        self.A_ub_map = np.repeat(A_ub_map, num_water_sources)
+
+    #End genAubMap()
+
 
     def genAllAubs(self, fields_combinations, crops, water_sources):
 
         """
         Generate left-hand upper bound constraints for use with SciPy Linear Programming function
+
+        Also generates a field to Aub map and assigns as object attribute (self.A_ub_map)
 
         :param fields_combinations: Pandas Dataframe of field combinations to consider
         :param crops: List of crops to consider for each field
@@ -187,6 +216,7 @@ class LpInterface(object):
         if num_crops > 1:
             for row in fields_combinations.itertuples():
                 t = []
+                #t_map = []
                 for Field in row[1:]:
                     for f in crops:
                         for WS in water_sources:
@@ -194,7 +224,9 @@ class LpInterface(object):
                         #End for
                     #end for
                 #End for
-                A_ub.append(t)    
+                A_ub.append(t)
+
+                #A_ub_map.append(t_map)
             #End for
 
         #Set '1' for each field-WaterSource combination
@@ -202,45 +234,8 @@ class LpInterface(object):
             A_ub.extend(self.generateFieldAub(temp_c, num_fields_water_sources))
         #End if
 
-        return A_ub
-
-    #End genAllAubs()
-
-
-
-    def old_genAllAubs(self, num_fields, num_water_sources):
-
-        """
-        Generate left-hand upper bound constraints for use with SciPy Linear Programming function
-
-        Does not consider combinations of crops as this is taken as part of the field configuration
-
-        :param num_fields: Number of fields to consider
-        :param num_water_sources: Number of water sources to consider
-
-        """
-
-        num_fields_water_sources = num_fields * num_water_sources
-
-        #Temp c to generate A_ub as this only needs to be done once
-        dummy_c = [0 for f in xrange(num_fields_water_sources) ]
-
-        self.c_length = len(dummy_c)
-
-        A_ub = self.generateFieldAub(dummy_c, 1)
-        A_ub.extend(self.generateFieldAub(dummy_c, num_water_sources))
-
-        #A_ub.extend(self.generateFieldAub(dummy_c, num_fields))
-
-        # if num_crops > 1:
-        #     A_ub.extend(self.generateFieldAub(dummy_c, (num_fields * num_fields)))
-        # #End if
-
-        if num_fields > 1:
-            A_ub.extend(self.generateFieldAub(dummy_c, num_fields_water_sources))
-        #End if
-
-        self.A_ub = A_ub
+        A_ub_map = np.array(row[1:])
+        self.A_ub_map = np.repeat(A_ub_map, num_water_sources)
 
         return A_ub
 
@@ -253,8 +248,12 @@ class LpInterface(object):
         :params c_bnds: Pandas dataframe of c coefficients and bounds for each field and water source
         :param A_ub: left hand side upper bounds
         :param b_ub: right hand side upper bounds
+        :param b_eq_log: right hand equality constraints
+        :param fields: Pandas DataFrame of FarmField objects to consider
+        :param water_sources: Water Sources to consider
         """
 
+        #Create a list of all fields, column by column
         f = []
         for field in fields:
             f += fields[field].tolist()
@@ -295,10 +294,32 @@ class LpInterface(object):
 
             #Insert a list at an index as we
             #need to include bounds for each GW+SW combination
-
-            #b_ub = b_ub_log.iloc[0].tolist()
             b_ub_list = b_ub_log.iloc[0].tolist()
-            b_ub = map(lambda x: min(sum(x * b_ub_list), c_bnds['max_area'][0]), A_ub)
+            b_ub = []
+
+            #Generate maximum bounds for b_ub
+            #Generate a map between fields and Aub constraints
+            self.genAubMap(fields, water_sources)
+
+            #Calculate max area possible with each water source
+            max_ws_areas = [f.area for f in self.A_ub_map]
+
+            #Grab the maximum field area and farm area
+            max_field_areas = [f.area for f in np.unique(self.A_ub_map)]
+            max_b_ub = max_ws_areas + max_field_areas + [sum(max_field_areas)]
+            
+            #Generate b_ub for each A_ub entry
+            #Calculate total sum for each right hand upper bound combination
+            for idx, ub in enumerate(A_ub):
+
+                temp = np.array([])
+                #Create association between Field-WaterSource irrigation area and b_ub True/False
+                for f, b in zip(b_ub_list, ub):
+                    temp = np.append(temp, f) if b == True else temp
+                #End for
+
+                b_ub.append(min(sum(temp), max_b_ub[idx]))
+            #End for
 
             assert len(A_ub) == len(b_ub), "Number of A ub rows must be equal to number of elements in b_ub"
 
@@ -323,7 +344,7 @@ class LpInterface(object):
 
             try:
 
-                bounds = [(0, c_bnds['max_area'][0]) for b in b_ub_list ]
+                bounds = [(0, None)] * len(c) #[(0, c_bnds['max_area'][0]) for b in b_ub_list ]
                 #bounds = [(0, min(b, c_bnds['max_area'][0])) for b in b_ub_list]
 
                 A_eq = [A_eq[j] for j in xrange(len(b_eq)) if np.isnan(b_eq[j]) == False]
@@ -337,6 +358,7 @@ class LpInterface(object):
                 # assert len(A_eq) == len(b_eq), "Number of equality constraints do not match ({A} != {b}, A_eq != b_eq)".format(A=len(A_eq), b=len(b_eq))
 
                 res = lp(c=c, A_ub=A_ub, A_eq=A_eq, b_ub=b_ub, b_eq=b_eq, bounds=bounds)
+
             except (ValueError, IndexError) as e:
                 print "====================="
                 print c_bnds
@@ -374,13 +396,15 @@ class LpInterface(object):
                 print "b_eq", b_eq
                 print "bounds: ", bounds
                 print "c_length: ", c_length
-                # print Field.name, Field.Irrigation.name, Field.Crop.name, Field.area
+                print results
                 print "------------------\n\n"
                 print "LP failed!"
                 import sys; sys.exit()
             #End if
 
             #import sys; sys.exit('Exit inside LP run for debug')
+
+            #Area of each field/water source, (estimated) profit made, area breakdown
             row = np.append(res.x, [res.fun, sum(res.x)]).tolist() + ['| '.join(str(e) for e in res.x.tolist())]
 
             results.loc[i] = row
