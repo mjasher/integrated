@@ -69,15 +69,27 @@ Example::
 
 """
 
+# from scipy.optimize import linprog as lp
+
+# c = [-500, -400, -600, -350]
+# A_ub = [[1, 1, 0, 0], [0, 0, 1, 1]]
+# b_ub = [50, 45]
+# bounds = ((0, 95), ) * 4
+
+# x = lp(c=c, A_ub=A_ub, b_ub=b_ub, bounds=bounds)
+# print x
+
 if __name__ == '__main__':
+
+	from setup_dev import *
 
 	from scipy.optimize import linprog as lp
 	from setup_dev import *
 	from Crops.CropInfo import CropInfo
 
-	Tomato = CropInfo(**Tomato_params.getParams())
-	Wheat = CropInfo(**Wheat_params.getParams())
-	Canola = CropInfo(**Canola_params.getParams())
+	Tomato = CropInfo(**crop_params['Processing Tomato'].getParams())
+	Wheat = CropInfo(**crop_params['Irrigated Winter Wheat'].getParams())
+	Canola = CropInfo(**crop_params['Irrigated Winter Canola'].getParams())
 
 	crops = [Tomato, Wheat, Canola]
 
@@ -126,6 +138,10 @@ if __name__ == '__main__':
 	res = lp(c, A_eq=A_eq, b_eq=b_eq, A_ub=A_ub, b_ub=b_ub, bounds=bounds, options={"disp": True})
 
 	print(res)
+
+	print c
+	print A_ub
+	print b_ub
 
 	# print (tomato_cost - tomato_profit) * area
 	# print (wheat_cost - wheat_profit) * area
