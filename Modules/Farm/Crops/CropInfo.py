@@ -97,7 +97,7 @@ class CropInfo(Component):
         return temp_df
     #End _preparePlantingInfo()
 
-    def _prepareSeasonInfo(self, timestep, val_type="Best Guess"):
+    def _prepareSeasonInfo(self, val_type="Best Guess"):
 
         temp_df = self.season_info.copy()
 
@@ -114,11 +114,11 @@ class CropInfo(Component):
         return temp_df
     #End _prepareSeasonInfo()
 
-    def _getPreparedSeasonInfo(self, timestep, val_type):
+    def _getPreparedSeasonInfo(self, val_type):
         try:
             season_info = self.prepped_season_info
         except AttributeError:
-            season_info = self._prepareSeasonInfo(timestep, val_type)
+            season_info = self._prepareSeasonInfo(val_type)
             self.prepped_season_info = season_info
         #End try
 
@@ -127,7 +127,7 @@ class CropInfo(Component):
 
     def getCurrentStage(self, timestep, val_type="Best Guess"):
 
-        season_info = self._getPreparedSeasonInfo(timestep, val_type)
+        season_info = self._getPreparedSeasonInfo(val_type)
         season_info = season_info.drop('plant_date')
 
         days_from_season_start = ((pd.to_datetime(timestep) - self.plant_date) / np.timedelta64(1, 'D')).astype(int)
@@ -190,10 +190,13 @@ class CropInfo(Component):
     def getSeasonStartRange(self, timestep, step, val_type='Best Guess', format='%Y-%m-%d'):
 
         """
-        Gets the season start date and the next timestep datetime for a crop. 
+        Gets the season start date and the next timestep datetime for a crop.
+        Essentially returns the step range in which the crop might be planted.
+        e.g. If time step is 7 days and plant date is May 15, then the crop season might be planted between
+            May 15 and May 22
         """
 
-        season_info = self._getPreparedSeasonInfo(timestep, val_type)
+        season_info = self._getPreparedSeasonInfo(val_type)
 
         start = "{y}-{md}".format(y=timestep.year, md=season_info["plant_date"])
         end = pd.to_datetime(datetime.strptime(start, format) + pd.Timedelta(days=step))
@@ -203,10 +206,10 @@ class CropInfo(Component):
 
     def getSeasonStartEnd(self, timestep, val_type="Best Guess"):
 
-        season_info = self._getPreparedSeasonInfo(timestep, val_type)
+        season_info = self._getPreparedSeasonInfo(val_type)
 
         start = pd.to_datetime("{y}-{md}".format(y=timestep.year, md=season_info['plant_date']))
-        days_to_end = season_info.drop('plant_date')[-1]
+        days_to_end = season_info['Harvest']
 
         end = pd.to_datetime(start) + pd.Timedelta(days=days_to_end)
 
@@ -219,11 +222,19 @@ class CropInfo(Component):
         Check that it is time for harvesting the crop
         """
 
-        season_info = self._getPreparedSeasonInfo(timestep, val_type)
+        assert self.plant_date != None, "Cannot harvest None crop"
 
-        days_from_season_start = ((pd.to_datetime(timestep) - self.plant_date) / np.timedelta64(1, 'D')).astype(int)
+        if (self.plant_date == False) or (self.plant_date == None):
+            return False
+        else:
+            season_info = self._getPreparedSeasonInfo(val_type)
+            return timestep >= (self.plant_date + pd.Timedelta(days=season_info['Harvest']))
 
-        return days_from_season_start >= season_info['Harvest']
+        # season_info = self._getPreparedSeasonInfo(val_type)
+
+        # days_from_season_start = ((pd.to_datetime(timestep) - self.plant_date) / np.timedelta64(1, 'D')).astype(int)
+
+        # return days_from_season_start >= season_info['Harvest']
 
     #End harvest
 
@@ -247,7 +258,7 @@ class CropInfo(Component):
         if price_per_yield is None:
             price_per_yield = self.price_per_yield
 
-        gross_margin_per_Ha = yield_per_Ha * price_per_yield
+        gross_margin_per_Ha = (yield_per_Ha * price_per_yield) - self.variable_cost_per_Ha
 
         return gross_margin_per_Ha
 
@@ -305,16 +316,6 @@ class CropInfo(Component):
         return total_crop_gross_margin
 
     #End calcTotalFarmGrossMargin()
-
-    def checkRotationEnd(self):
-        """
-        Check if this crop has come to the end of its rotation length
-
-        :returns: bool, True (end has been reached)/False (continue cultivating this crop)
-        """
-
-        return self.rotation_count == self.rotation_length
-    #End 
 
     def determineCropCoefficient(self):
 

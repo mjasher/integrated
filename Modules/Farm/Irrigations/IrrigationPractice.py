@@ -16,7 +16,6 @@ class IrrigationPractice(FarmComponent):
         self.name = name
 
         self.setAttribute('irrigation_rate', 1, irrigation_rate)
-
         self.irrigation_efficiency = irrigation_efficiency
 
         #Cost of replacing the irrigation system after lifespan.
@@ -27,10 +26,8 @@ class IrrigationPractice(FarmComponent):
         
         #max irrigation area default value (782 Ha) from Powell & Scott (2011), Representative farm model, p 25
         self.setAttribute('max_irrigation_area_Ha', max_irrigation_area_Ha, 782.0)
-        
         self.setAttribute('lifespan', lifespan, 10)
-
-        self.setAttribute('pumping_cost_per_ML', pumping_cost_per_ML, None)
+        self.setAttribute('pumping_cost_per_ML', pumping_cost_per_ML, None) #DEPRECATED
 
         self.maintenance_rate = maintenance_rate
 
@@ -260,24 +257,22 @@ class IrrigationPractice(FarmComponent):
     def calcOngoingCost(self):
 
         """
-        Not included due to lack of information
-          See Powell & Scott 2011 (p 42) for overhead costs
-        
+        Defined as 2 percent of capital/implementation cost
+        DEPRECATED
         """
+        print('Use of deprecated function calcOngoingCost(), use calcOperationalCostPerHa() instead')
 
-        return 0
+        return self.calcOperationalCostPerHa()
     #End calcOngoingCost()
 
     def calcTotalCostsPerHa(self, other_costs=0):
 
         if self.implemented == True:
-            implementation_cost = 0
-            maintenance_cost = self.maintenance_rate * self.replacement_cost_per_Ha
+            maintenance_cost = (self.maintenance_rate * self.cost_per_Ha)
+            return maintenance_cost + other_costs
         else:
-            implementation_cost = self.cost_per_Ha
-            maintenance_cost = self.maintenance_rate * implementation_cost
-
-        return implementation_cost + maintenance_cost + other_costs
+            return self.cost_per_Ha + other_costs
+        #End if
         
     #End calcTotalCostsPerHa()
 

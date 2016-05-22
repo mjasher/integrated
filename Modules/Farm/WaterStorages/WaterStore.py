@@ -174,7 +174,7 @@ class WaterStore(FarmComponent):
         #End if
     #End calcTotalCostsPerHa()
 
-    def calcOngoingCosts(self):
+    def calcOperationalCosts(self):
 
         #Stub, to be defined in child classes
         #ongoing_costs = basin.maintenance.rate * basin.capital.cost.per.ml * asr.capacity.ml + surface.pump.cost + pump.vol.ml * pump.cost.dollar.per.ml
