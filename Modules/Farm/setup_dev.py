@@ -16,10 +16,10 @@ from integrated.Modules.Core.GeneralFunctions import *
 from integrated.Modules.Core.ParameterSet import *
 from integrated.Modules.Core.Handlers.FileHandler import FileHandler
 
-from integrated.Modules.WaterSources import WaterSources
-
+from integrated.Modules.Farm.WaterSources import WaterSources
 from integrated.Modules.Farm.Irrigations.IrrigationPractice import IrrigationPractice
 from integrated.Modules.Farm.Crops.CropInfo import CropInfo
+from integrated.Modules.Farm.PumpingSystems.PumpingSystem import Pumps
 
 #Water sources in MegaLitres
 #200ML = 20-25% of average long term seasonal balance for regulated surface water licences on the Namoi river
@@ -104,12 +104,20 @@ ASR_params = ParameterSet(
 
 DataHandle = FileHandler()
 
+#Water Costs
+#Groundwater
+gw_costs = DataHandle.importFiles('WaterSources/data/costs/groundwater', index_col=0, skipinitialspace=True, walk=True)
+sw_costs = DataHandle.importFiles('WaterSources/data/costs/surface_water', index_col=0, skipinitialspace=True, walk=True)
+
 #Irrigations
 irrigation_data = {}
 irrigation_files = DataHandle.importFiles('Irrigations/data', index_col=0, skipinitialspace=True)
 irrigation_params = {}
+
 for folder in irrigation_files:
+
     for irrigation_name in irrigation_files[folder]:
+
         irrigation_data[irrigation_name] = irrigation_files[folder][irrigation_name]
 
         temp_data = irrigation_data[irrigation_name]['Best Guess'].to_dict()
@@ -127,10 +135,12 @@ for folder in irrigation_files:
     #End for
 #End for
 
-# Flood = IrrigationPractice(**irrigation_params['Flood'].getParams())
-# PipeAndRiser = IrrigationPractice(**irrigation_params['PipeAndRiser'].getParams())
-# Spray = IrrigationPractice(**irrigation_params['Spray'].getParams())
-# Drip = IrrigationPractice(**irrigation_params['Drip'].getParams())
+#Pumping System
+DieselPump = DataHandle.loadCSV('PumpingSystems/data/shallow.csv', index_col=0, skipinitialspace=True)
+DieselPump = Pumps(name='Diesel Pump', **DieselPump['Best Guess'].to_dict())
+
+NoPump = DataHandle.loadCSV('PumpingSystems/data/no_pump.csv', index_col=0, skipinitialspace=True)
+NoPump = Pumps(name='No Pump', **NoPump['Best Guess'].to_dict())
 
 #Crops
 crop_data_files = DataHandle.importFiles('Crops/data/variables', walk=True, index_col=0, skipinitialspace=True)
@@ -145,6 +155,8 @@ for folder in crop_data_files:
         crop_params[crop_name] = ParameterSet(**temp_data)
     #End for
 #End for
+
+#Attach seasonal and coefficient data to crop parameters
 
 crop_seasons = DataHandle.importFiles('Crops/data/seasons', index_col=0, skipinitialspace=True)
 for folder in crop_seasons:
